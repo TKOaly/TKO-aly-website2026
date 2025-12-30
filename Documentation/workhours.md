@@ -6,6 +6,7 @@
 |29.12.2025|1h|Studied Astro framework if it would work as a framework for the page (NO)|
 |29.12.2025|3h|Site desing planning|
 |29.12.2025|4h|Navbar and routing|
+|30.12.2025|5h|Index page content and styling|
 
 
-Yhteensä 12.5h
+Yhteensä 17.5h
