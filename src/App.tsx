@@ -13,8 +13,7 @@ function App() {
     <>
       <div id="main-app">
         <Navbar />
-        <div id="content">
-          <Header />
+          {/* <Header /> */}
           <Routes>
             {appRoutes.map((route) => (
               <Route key={route.path} path={route.path} element={route.element} />
@@ -25,9 +24,8 @@ function App() {
               count is {count}
             </button>
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </div>
-      </div>
     </>
   )
 }

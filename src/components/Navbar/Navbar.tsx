@@ -1,6 +1,6 @@
 import './Navbar.css'
 import { Link } from 'react-router-dom'
-import externalLinkIcon from '../../assets/external-link-icon.png';
+import externalLinkIcon from '../../assets/external-url-10.png';
 
 function Navbar() {
     return (
@@ -26,7 +26,7 @@ function Navbar() {
                             <Link role="menuitem" to="/yhteystiedot">Yhteystiedot</Link>
                             <Link role="menuitem" to="/brandiohje">Brandiohje</Link>
                             <Link role="menuitem" to="https://arkisto.tko-aly.fi/">
-                                Arkisto <img src={externalLinkIcon} alt="External link" width="12" height="12" /></Link>
+                                Arkisto <img src={externalLinkIcon} alt="External link" /></Link>
                         </li>
                     </ul>
                 </li>
@@ -44,7 +44,7 @@ function Navbar() {
                             <Link role="menuitem" to="/ruokavalitys">Ruokavälitys</Link>
                             <Link role="menuitem" to="/README">README</Link>
                             <Link role="menuitem" to="https://blog.tko-aly.fi/">
-                            Blogi <img src={externalLinkIcon} alt="External link" width="12" height="12" /></Link>
+                            Blogi <img src={externalLinkIcon} alt="External link" /></Link>
                         </li>
                     </ul>
                 </li>
@@ -67,7 +67,7 @@ function Navbar() {
                         <li role="none">
                             <Link role="menuitem" to="/hairinta">Häirintä</Link>
                             <Link role="menuitem" to="https://www.tko-aly.fi/attachments/files/399/Yhdenvertaisuussuunnitelma_2024.pdf?1715249780">
-                            Yhdenvertaisuus <img src={externalLinkIcon} alt="External link" width="12" height="12" /></Link>
+                            Yhdenvertaisuus <img src={externalLinkIcon} alt="External link" /></Link>
                             <Link role="menuitem" to="/tietosuoja">Tietosuoja</Link>
                         </li>
                     </ul>
@@ -79,10 +79,10 @@ function Navbar() {
                     <ul className="dropdown-menu" role="menu">
                         <li role="none">
                             <Link role="menuitem" to="https://fuksiwiki.tko-aly.fi/Fuksiwiki">
-                            Fuksiwiki <img src={externalLinkIcon} alt="External link" width="12" height="12" /></Link>
+                            Fuksiwiki <img src={externalLinkIcon} alt="External link" /></Link>
                             <Link role="menuitem" to="/fuksi-info">Fuksi-info</Link>
                             <Link role="menuitem" to="https://passi.tko-aly.fi/">
-                            Fuksipassi <img src={externalLinkIcon} alt="External link" width="12" height="12" /></Link>
+                            Fuksipassi <img src={externalLinkIcon} alt="External link" /></Link>
                         </li>
                     </ul>
                 </li>
@@ -93,7 +93,7 @@ function Navbar() {
                     <ul className="dropdown-menu" role="menu">
                         <li role="none">
                             <Link role="menuitem" to="https://jobs.tko-aly.fi/en/list/open">
-                            Työpaikat <img src={externalLinkIcon} alt="External link" width="12" height="12" /></Link>
+                            Työpaikat <img src={externalLinkIcon} alt="External link" /></Link>
                             <Link role="menuitem" to="/yrityksille">Yrityksille</Link>
                         </li>
                     </ul>
@@ -101,7 +101,7 @@ function Navbar() {
                 <li className="nav-item dropdown">
                     <button className="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
                         <Link role="menuitem" to="https://bbat.tko-aly.fi/">
-                        Velat & maksut <img src={externalLinkIcon} alt="External link" width="12" height="12" /></Link>
+                        Velat & maksut <img src={externalLinkIcon} alt="External link" /></Link>
                     </button>
                 </li>
                 <li className="nav-item dropdown">
