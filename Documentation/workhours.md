@@ -9,5 +9,6 @@
 |30.12.2025|5h|Index page content and styling|
 |2.1.2026|3h|Did some studying on different calendar libraries. Ended up choosing Fullcalendar library for react. Also did some initial testing and fitting to app.|
 |6.1.2026|2h|Added new calendar view and colorcoded events according their status|
+|11.1.2026|2h|Continued working on the calendars styling and event coloring|
 
-Yhteensä 22.5h
+Yhteensä 24.5h
