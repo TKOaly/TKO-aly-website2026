@@ -5,9 +5,32 @@ import fiLocale from '@fullcalendar/core/locales/fi'
 import './Kalenteri.css'
 import mockEvents from './testEvents.json'
 
+type Event = {
+  id: string
+  title: string
+  user_id: string
+  created: string
+  start: string
+  end: string
+  registration_starts: string | null
+  registration_ends: string | null
+  cancellation_starts: string | null
+  cancellation_ends: string | null
+  location: string
+  category: string
+  description: string
+  deleted: boolean
+  organizer: string | null
+  url: string
+};
+
+type EventWithColor = Event & {
+  backgroundColor: string
+};
+
 export default function Calendar() {
   
-  const colorcodedEvents = colorcodeEvents(mockEvents);
+  const colorcodedEvents: EventWithColor[] = colorcodeEvents(mockEvents as Event[]);
 
   return (
     <div id="calendar">
@@ -18,11 +41,12 @@ export default function Calendar() {
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
-          right: 'dayGridMonth,listYear'
+          right: 'dayGridMonth,listWeek'
         }}
         initialView="dayGridMonth"
         editable={false}
         selectable={true}
+        eventDisplay="list-item"
         contentHeight={'60%'}
         events={colorcodedEvents}
       />
@@ -30,10 +54,10 @@ export default function Calendar() {
   )
 }
 
-function colorcodeEvents(eventsData: any[]) {
+function colorcodeEvents(eventsData: Event[]) {
 
   const now = new Date();
-  const colorcodedEvents = [] as any[];
+  const colorcodedEvents = [] as EventWithColor[];
 
   eventsData.map((event) => {
     const registrationStarts = event.registration_starts ? new Date(event.registration_starts) : null;
@@ -41,16 +65,16 @@ function colorcodeEvents(eventsData: any[]) {
     const start = new Date(event.start);
     let backgroundColor: string;
 
-    if (registrationStarts == null || registrationEnds == null || 
-      now >= registrationStarts && now <= registrationEnds) {
-      backgroundColor = '#00ff00'; // light green
-    } 
-    else if (now < registrationStarts) {
-      backgroundColor = '#add8e6'; // light blue
+    if (!registrationStarts || !registrationEnds) {
+      backgroundColor = now < start ? '#00ff00' : '#6e6e6eff';
+    } else if (now >= registrationStarts && now <= registrationEnds) {
+      backgroundColor = '#00ff00';
+    } else if (now < registrationStarts) {
+      backgroundColor = '#0066ffff';
     } else if (now > start) {
-      backgroundColor = '#d3d3d3'; // light gray
-    }else {
-      backgroundColor = '#ff0000'; // light coral
+      backgroundColor = '#6e6e6eff';
+    } else {
+      backgroundColor = '#ff0000';
     }
 
     colorcodedEvents.push({ ...event, backgroundColor });

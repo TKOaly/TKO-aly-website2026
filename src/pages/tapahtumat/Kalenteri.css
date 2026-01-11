@@ -2,14 +2,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 95%; /* Increased width to make the calendar wider */
+    width: 95%;
     height: 80rem;
     margin: 0 auto;
-    background-color: white;
+    background-color: #141414;
     padding: 20px;
+    text-decoration: none;
+    color: #ffbb00;
 }
 
 .fc {
     width: 60%;
     height: 60%;
+    background-color: #141414;
+}
+
+a.fc-event {
+    text-decoration: none;
+    color: #ffbb00;
 }
