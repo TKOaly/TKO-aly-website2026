@@ -10,5 +10,6 @@
 |2.1.2026|3h|Did some studying on different calendar libraries. Ended up choosing Fullcalendar library for react. Also did some initial testing and fitting to app.|
 |6.1.2026|2h|Added new calendar view and colorcoded events according their status|
 |11.1.2026|2h|Continued working on the calendars styling and event coloring|
+|13.1.2026|2h|Calendar color explanations and buttons to switch between calendar and list views|
 
-Yhteensä 24.5h
+Total 26.5h
