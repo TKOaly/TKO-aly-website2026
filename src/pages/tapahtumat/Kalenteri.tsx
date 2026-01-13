@@ -31,6 +31,7 @@ type EventWithColor = Event & {
 
 export default function Calendar() {
   const [isLegendVisible, setIsLegendVisible] = useState(false);
+  const [isListView, setIsListView] = useState(false);
 
   const toggleLegendVisibility = () => {
     setIsLegendVisible((prev) => !prev);
@@ -42,6 +43,18 @@ export default function Calendar() {
     <div id="calendar">
       <div id="calendar-title">
         <h1>Tapahtumakalenteri</h1>
+      </div>
+      <div id="calendar-control-bar">
+        <div id="calendar-view-toggle">
+          <button id="show-calendar-button" className={`view-toggle-button ${!isListView ? 'view-toggle-active' : ''}`} title="Kalenterinäkymä" aria-label="Näytä kalenterinäkymä"
+            onClick={() => setIsListView(false)}>
+            Kalenteri
+          </button>
+          <button id="show-list-button" className={`view-toggle-button ${isListView ? 'view-toggle-active' : ''}`} title="Listanäkymä" aria-label="Näytä listanäkymä"
+            onClick={() => setIsListView(true)}>
+            Lista
+          </button>
+        </div>
       </div>
       <FullCalendar
         plugins={[ dayGridPlugin, listPlugin ]}
