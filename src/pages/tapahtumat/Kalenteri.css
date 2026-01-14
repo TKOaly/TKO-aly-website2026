@@ -87,3 +87,23 @@ a.fc-event {
     border-color: #151e27;
     color: #fff;
 }
+
+#events-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 60%;
+    margin-top: 20px;
+}
+
+.event-list-item {
+    width: 100%;
+    background-color: #1a252f;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 5px; 
+}
+
+.event-list-item p {
+    margin: 5px 0;
+}

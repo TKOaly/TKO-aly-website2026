@@ -39,6 +39,71 @@ export default function Calendar() {
 
   const colorcodedEvents: EventWithColor[] = colorcodeEvents(mockEvents as Event[]);
 
+  function colorcodeEvents(eventsData: Event[]) {
+
+    const now = new Date();
+    const colorcodedEvents = [] as EventWithColor[];
+
+    eventsData.map((event) => {
+      const registrationStarts = event.registration_starts ? new Date(event.registration_starts) : null;
+      const registrationEnds = event.registration_ends ? new Date(event.registration_ends) : null;
+      const start = new Date(event.start);
+      let backgroundColor: string;
+
+      if (!registrationStarts || !registrationEnds) {
+        backgroundColor = now < start ? '#0066ff' : '#6e6e6e';
+      } else if (now >= registrationStarts && now <= registrationEnds) {
+        backgroundColor = '#00ff00';
+      } else if (now < registrationStarts) {
+        backgroundColor = '#ffff00';
+      } else if (now > start) {
+        backgroundColor = '#6e6e6e';
+      } else {
+        backgroundColor = '#ff0000';
+      }
+
+      colorcodedEvents.push({ ...event, backgroundColor });
+    });
+    return colorcodedEvents;
+  }
+
+  function eventCalendarView() {
+    return (
+      <FullCalendar
+        plugins={[ dayGridPlugin, listPlugin ]}
+        locale={fiLocale}
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,listWeek'
+        }}
+        initialView="dayGridMonth"
+        editable={false}
+        selectable={true}
+        eventDisplay="list-item"
+        contentHeight={'60%'}
+        events={colorcodedEvents}
+      />      
+    )
+  }
+
+  function eventListView() {
+    return (
+      <div id="events-list">
+        {colorcodedEvents.map((event) => (
+          <div key={event.id} className="event-list-item" style={{borderLeft: `4px solid ${event.backgroundColor}`}}>
+            <h3>{event.title}</h3>
+            <p><strong>Alkaa:</strong> {new Date(event.start).toLocaleDateString('fi-FI')}, 
+              {new Date(event.start).toLocaleTimeString('fi-FI',
+              { hour: '2-digit', minute: '2-digit' })}</p>
+            <p><strong>Sijainti:</strong> {event.location}</p>
+            <p>{event.description}</p>
+          </div>
+        ))}
+      </div>
+    )
+  }
+      
   return (
     <div id="calendar">
       <div id="calendar-title">
@@ -56,21 +121,7 @@ export default function Calendar() {
           </button>
         </div>
       </div>
-      <FullCalendar
-        plugins={[ dayGridPlugin, listPlugin ]}
-        locale={fiLocale}
-        headerToolbar={{
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,listWeek'
-        }}
-        initialView="dayGridMonth"
-        editable={false}
-        selectable={true}
-        eventDisplay="list-item"
-        contentHeight={'60%'}
-        events={colorcodedEvents}
-      />
+        {isListView ? (eventListView()) : (eventCalendarView())}
       <div id="calendar-instructions">
         {isLegendVisible && (
           <div id="legend">
@@ -84,39 +135,10 @@ export default function Calendar() {
         <button
           onClick={toggleLegendVisibility}
           title="Kalenterin selite"
-          aria-label="Näytä selite kalenterin värikoodauksesta"
         >
           {isLegendVisible ? 'Piilota selite' : 'Näytä selite'}
         </button>
       </div>
     </div>
   )
-}
-
-function colorcodeEvents(eventsData: Event[]) {
-
-  const now = new Date();
-  const colorcodedEvents = [] as EventWithColor[];
-
-  eventsData.map((event) => {
-    const registrationStarts = event.registration_starts ? new Date(event.registration_starts) : null;
-    const registrationEnds = event.registration_ends ? new Date(event.registration_ends) : null;
-    const start = new Date(event.start);
-    let backgroundColor: string;
-
-    if (!registrationStarts || !registrationEnds) {
-      backgroundColor = now < start ? '#0066ff' : '#6e6e6e';
-    } else if (now >= registrationStarts && now <= registrationEnds) {
-      backgroundColor = '#00ff00';
-    } else if (now < registrationStarts) {
-      backgroundColor = '#ffff00';
-    } else if (now > start) {
-      backgroundColor = '#6e6e6e';
-    } else {
-      backgroundColor = '#ff0000';
-    }
-
-    colorcodedEvents.push({ ...event, backgroundColor });
-  });
-  return colorcodedEvents;
 }
