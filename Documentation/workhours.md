@@ -11,5 +11,6 @@
 |6.1.2026|2h|Added new calendar view and colorcoded events according their status|
 |11.1.2026|2h|Continued working on the calendars styling and event coloring|
 |13.1.2026|2h|Calendar color explanations and buttons to switch between calendar and list views|
+|14.1.2026|2h|Added list view to view events, also fixed some file namings|
 
-Total 26.5h
+Total 28.5h
