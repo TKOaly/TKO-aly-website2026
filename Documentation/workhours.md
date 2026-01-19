@@ -12,5 +12,6 @@
 |11.1.2026|2h|Continued working on the calendars styling and event coloring|
 |13.1.2026|2h|Calendar color explanations and buttons to switch between calendar and list views|
 |14.1.2026|2h|Added list view to view events, also fixed some file namings|
+|19.1.2026|0.5h|Weekly planning session|
 
-Total 28.5h
+Total 29h
