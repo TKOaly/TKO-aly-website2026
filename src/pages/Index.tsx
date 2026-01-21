@@ -9,7 +9,7 @@ export default function Index() {
       </div>
       <div id="index-logo">
         <div id="index-image">
-          <img src="./src/assets/Logo-yellow-on-black.png" alt="Logo" height={300} width={300} />
+          <img src="./src/assets/logo-yellow-on-black.png" alt="Logo" height={300} width={300} />
         </div>
         <div id="index-text">
           <span>Helsingin yliopiston tietojenkäsittelytieteen <br /> 
