@@ -91,6 +91,7 @@ export default function Calendar() {
     return (
       <div id="events-list">
         {colorcodedEvents.map((event) => (
+          <a href={event.url}>
           <div key={event.id} className="event-list-item" style={{borderLeft: `4px solid ${event.backgroundColor}`}}>
             <h3>{event.title}</h3>
             <p><strong>Alkaa:</strong> {new Date(event.start).toLocaleDateString('fi-FI')}, 
@@ -99,6 +100,7 @@ export default function Calendar() {
             <p><strong>Sijainti:</strong> {event.location}</p>
             <p>{event.description}</p>
           </div>
+          </a>
         ))}
       </div>
     )
