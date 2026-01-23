@@ -96,6 +96,20 @@ a.fc-event {
     margin-top: 20px;
 }
 
+#events-list a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+#events-list a:visited,
+#events-list a:hover,
+#events-list a:focus,
+#events-list a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
 .event-list-item {
     width: 100%;
     background-color: #1a252f;
