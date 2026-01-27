@@ -14,7 +14,7 @@ type Event = {
   user_id: string;
   created: string;
   start: string;
-  end: string;
+  end?: string;
   registration_starts: string | null;
   registration_ends: string | null;
   cancellation_starts: string | null;
@@ -47,7 +47,7 @@ export default function Calendar() {
     const now = new Date();
     const colorcodedEvents = [] as EventWithColor[];
 
-    eventsData.map((event) => {
+    eventsData.forEach((event) => {
       const registrationStarts = event.registration_starts
         ? new Date(event.registration_starts)
         : null;
@@ -98,9 +98,8 @@ export default function Calendar() {
     return (
       <div id={styles["events-list"]}>
         {colorcodedEvents.map((event) => (
-          <a href={event.url}>
+          <a key={event.id} href={event.url}>
             <div
-              key={event.id}
               className={styles["event-list-item"]}
               style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
             >
