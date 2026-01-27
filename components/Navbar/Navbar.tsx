@@ -31,7 +31,7 @@ function Navbar() {
               <Link role="menuitem" href="/tiedotus">
                 Tiedotus
               </Link>
-              <Link role="menuitem" href="/säännöt">
+              <Link role="menuitem" href="/saannot">
                 Säännöt
               </Link>
               <Link role="menuitem" href="/talous">
