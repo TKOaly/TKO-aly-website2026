@@ -1,29 +1,29 @@
 import Link from "next/link";
 import Image from "next/image";
-import "./Navbar.css";
+import styles from "./Navbar.module.css";
 
 import externalLinkIcon from "@/public/external-url-10.png";
 import logoImage from "@/public/logo-yellow-on-black.png";
 
 function Navbar() {
   return (
-    <nav id="navbar" className="navbar">
-      <ul className="nav">
-        <li id="nav-logo">
+    <nav id={styles.navbar} className={styles.navbar}>
+      <ul className={styles.nav}>
+        <li id={styles["nav-logo"]}>
           <Link href="/">
             <Image src={logoImage} width={50} height={50} alt="Logo" />
           </Link>
         </li>
 
-        <li className="nav-item dropdown">
+        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
           <button
-            className="dropdown-toggle"
+            className={styles["dropdown-toggle"]}
             aria-haspopup="true"
             aria-expanded="true"
           >
             Yhdistys ▼
           </button>
-          <ul className="dropdown-menu" role="menu">
+          <ul className={styles["dropdown-menu"]} role="menu">
             <li role="none">
               <Link role="menuitem" href="/hallitus">
                 Hallitus{" "}
@@ -65,15 +65,15 @@ function Navbar() {
           </ul>
         </li>
 
-        <li className="nav-item dropdown">
+        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
           <button
-            className="dropdown-toggle"
+            className={styles["dropdown-toggle"]}
             aria-haspopup="true"
             aria-expanded="false"
           >
             Toiminta ▼
           </button>
-          <ul className="dropdown-menu" role="menu">
+          <ul className={styles["dropdown-menu"]} role="menu">
             <li role="none">
               <Link role="menuitem" href="/edunvalvonta">
                 Edunvalvonta
@@ -105,15 +105,15 @@ function Navbar() {
             </li>
           </ul>
         </li>
-        <li className="nav-item dropdown">
+        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
           <button
-            className="dropdown-toggle"
+            className={styles["dropdown-toggle"]}
             aria-haspopup="true"
             aria-expanded="false"
           >
             Tapahtumat ▼
           </button>
-          <ul className="dropdown-menu" role="menu">
+          <ul className={styles["dropdown-menu"]} role="menu">
             <li role="none">
               <Link role="menuitem" href="/kalenteri">
                 Kalenteri
@@ -124,15 +124,15 @@ function Navbar() {
             </li>
           </ul>
         </li>
-        <li className="nav-item dropdown">
+        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
           <button
-            className="dropdown-toggle"
+            className={styles["dropdown-toggle"]}
             aria-haspopup="true"
             aria-expanded="false"
           >
             Turvallisuus ▼
           </button>
-          <ul className="dropdown-menu" role="menu">
+          <ul className={styles["dropdown-menu"]} role="menu">
             <li role="none">
               <Link role="menuitem" href="/hairinta">
                 Häirintä
@@ -155,15 +155,15 @@ function Navbar() {
             </li>
           </ul>
         </li>
-        <li className="nav-item dropdown">
+        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
           <button
-            className="dropdown-toggle"
+            className={styles["dropdown-toggle"]}
             aria-haspopup="true"
             aria-expanded="false"
           >
             Fukseille ▼
           </button>
-          <ul className="dropdown-menu" role="menu">
+          <ul className={styles["dropdown-menu"]} role="menu">
             <li role="none">
               <Link
                 role="menuitem"
@@ -192,15 +192,15 @@ function Navbar() {
             </li>
           </ul>
         </li>
-        <li className="nav-item dropdown">
+        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
           <button
-            className="dropdown-toggle"
+            className={styles["dropdown-toggle"]}
             aria-haspopup="true"
             aria-expanded="false"
           >
             Yritykset ▼
           </button>
-          <ul className="dropdown-menu" role="menu">
+          <ul className={styles["dropdown-menu"]} role="menu">
             <li role="none">
               <Link role="menuitem" href="https://jobs.tko-aly.fi/en/list/open">
                 Työpaikat{" "}
@@ -217,9 +217,9 @@ function Navbar() {
             </li>
           </ul>
         </li>
-        <li className="nav-item dropdown">
+        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
           <button
-            className="dropdown-toggle"
+            className={styles["dropdown-toggle"]}
             aria-haspopup="true"
             aria-expanded="false"
           >
@@ -234,9 +234,9 @@ function Navbar() {
             </Link>
           </button>
         </li>
-        <li className="nav-item dropdown">
+        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
           <button
-            className="dropdown-toggle"
+            className={styles["dropdown-toggle"]}
             aria-haspopup="true"
             aria-expanded="false"
           >

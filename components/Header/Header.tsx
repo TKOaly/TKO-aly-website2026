@@ -1,8 +1,8 @@
-import "./Header.css";
+import styles from "./Header.module.css";
 
 function Header() {
   return (
-    <div id="header">
+    <div id={styles.header} className={styles.header}>
       <h1>
         <a href="/">
           <img
@@ -13,7 +13,7 @@ function Header() {
           />
           <span>
             Helsingin yliopiston tietojenkäsittelytieteen <br />{" "}
-            <span className="header_bottomline">
+            <span className={styles.header_bottomline}>
               opiskelijoiden ainejärjestö
             </span>
           </span>
