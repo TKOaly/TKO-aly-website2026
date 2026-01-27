@@ -132,7 +132,7 @@ export default function Calendar() {
         <div id={styles["calendar-view-toggle"]}>
           <button
             id={styles["show-calendar-button"]}
-            className={`view-toggle-button ${!isListView ? "view-toggle-active" : ""}`}
+            className={`${styles["view-toggle-button"]} ${!isListView ? styles["view-toggle-active"] : ""}`}
             title="Kalenterinäkymä"
             aria-label="Näytä kalenterinäkymä"
             onClick={() => setIsListView(false)}
@@ -141,7 +141,7 @@ export default function Calendar() {
           </button>
           <button
             id={styles["show-list-button"]}
-            className={`view-toggle-button ${isListView ? "view-toggle-active" : ""}`}
+            className={`${styles["view-toggle-button"]} ${isListView ? styles["view-toggle-active"] : ""}`}
             title="Listanäkymä"
             aria-label="Näytä listanäkymä"
             onClick={() => setIsListView(true)}

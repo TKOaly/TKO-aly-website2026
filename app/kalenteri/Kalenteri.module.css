@@ -10,17 +10,6 @@
     color: #ffbb00;
 }
 
-.fc {
-    width: 60%;
-    height: 60%;
-    background-color: #141414;
-}
-
-a.fc-event {
-    text-decoration: none;
-    color: #ffbb00;
-}
-
 #calendar-instructions {
     width: 60%;
     margin-top: 20px;
