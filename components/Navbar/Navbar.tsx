@@ -1,9 +1,6 @@
-import Link from "next/link";
-import Image from "next/image";
-import styles from "./Navbar.module.css";
-
-import externalLinkIcon from "@/public/external-url-10.png";
-import logoImage from "@/public/logo-yellow-on-black.png";
+import Link from "next/link"
+import Image from "next/image"
+import styles from "./Navbar.module.css"
 
 function Navbar() {
   return (
@@ -11,7 +8,12 @@ function Navbar() {
       <ul className={styles.nav}>
         <li id={styles["nav-logo"]}>
           <Link href="/">
-            <Image src={logoImage} width={50} height={50} alt="Logo" />
+            <Image
+              src="/logo-yellow-on-black.png"
+              width={50}
+              height={50}
+              alt="Logo"
+            />
           </Link>
         </li>
 
@@ -55,7 +57,7 @@ function Navbar() {
               <Link role="menuitem" href="https://arkisto.tko-aly.fi/">
                 Arkisto{" "}
                 <Image
-                  src={externalLinkIcon}
+                  src="/external-url-10.png"
                   alt="External link"
                   width={10}
                   height={10}
@@ -96,7 +98,7 @@ function Navbar() {
               <Link role="menuitem" href="https://blog.tko-aly.fi/">
                 Blogi{" "}
                 <Image
-                  src={externalLinkIcon}
+                  src="/external-url-10.png"
                   alt="External link"
                   width={10}
                   height={10}
@@ -143,7 +145,7 @@ function Navbar() {
               >
                 Yhdenvertaisuus{" "}
                 <Image
-                  src={externalLinkIcon}
+                  src="/external-url-10.png"
                   alt="External link"
                   width={10}
                   height={10}
@@ -171,7 +173,7 @@ function Navbar() {
               >
                 Fuksiwiki{" "}
                 <Image
-                  src={externalLinkIcon}
+                  src="/external-url-10.png"
                   alt="External link"
                   width={10}
                   height={10}
@@ -183,7 +185,7 @@ function Navbar() {
               <Link role="menuitem" href="https://passi.tko-aly.fi/">
                 Fuksipassi{" "}
                 <Image
-                  src={externalLinkIcon}
+                  src="/external-url-10.png"
                   alt="External link"
                   width={10}
                   height={10}
@@ -205,7 +207,7 @@ function Navbar() {
               <Link role="menuitem" href="https://jobs.tko-aly.fi/en/list/open">
                 Työpaikat{" "}
                 <Image
-                  src={externalLinkIcon}
+                  src="/external-url-10.png"
                   alt="External link"
                   width={10}
                   height={10}
@@ -226,7 +228,7 @@ function Navbar() {
             <Link role="menuitem" href="https://bbat.tko-aly.fi/">
               Velat & maksut{" "}
               <Image
-                src={externalLinkIcon}
+                src="/external-url-10.png"
                 alt="External link"
                 width={10}
                 height={10}
@@ -247,7 +249,7 @@ function Navbar() {
         </li>
       </ul>
     </nav>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

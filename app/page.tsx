@@ -1,6 +1,5 @@
-import "./index.css";
-import externalLinkIcon from "@/public/external-url-10.png";
-import Image from "next/image";
+import "./index.css"
+import Image from "next/image"
 
 export default function Index() {
   return (
@@ -35,7 +34,7 @@ export default function Index() {
               {" "}
               tietojenkäsittelytieteen ja datatieteen{" "}
               <Image
-                src={externalLinkIcon}
+                src="/external-url-10.png"
                 alt="External link"
                 width={10}
                 height={10}
@@ -54,7 +53,7 @@ export default function Index() {
               {" "}
               Gurula{" "}
               <Image
-                src={externalLinkIcon}
+                src="/external-url-10.png"
                 alt="External link"
                 width={10}
                 height={10}
@@ -71,7 +70,7 @@ export default function Index() {
             >
               tiedotustamme{" "}
               <Image
-                src={externalLinkIcon}
+                src="/external-url-10.png"
                 alt="External link"
                 width={10}
                 height={10}
@@ -82,5 +81,5 @@ export default function Index() {
         </div>
       </div>
     </div>
-  );
+  )
 }

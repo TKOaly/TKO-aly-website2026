@@ -1,87 +1,87 @@
 /* Top bar */
 #navbar {
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	width: 100%;
-	background: #FFCC33;
-	color: black;
-	box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: #ffcc33;
+  color: black;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .nav {
-	list-style: none;
-	margin: 0;
-	padding: 0 24px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 5px;
-	min-height: 56px;
+  list-style: none;
+  margin: 0;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 56px;
 }
 
 .nav-item a,
 .dropdown-toggle {
-	color: black;
-	text-decoration: none;
-	font-weight: 600;
-    padding: 19px 10px;
-	border-radius: 6px;
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 19px 10px;
+  border-radius: 6px;
 }
 
 .dropdown-toggle {
-	background: transparent;
-	border: none;
-	cursor: pointer;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .nav-item a:hover,
 .dropdown-toggle:hover,
 .nav-item a:focus,
 .dropdown-toggle:focus {
-	background: rgb(255, 140, 0);
-	outline: none;
+  background: rgb(255, 140, 0);
+  outline: none;
 }
 
 /* Dropdowns */
 .nav-item.dropdown {
-	position: relative;
+  position: relative;
 }
 
 .dropdown-menu {
-	position: absolute;
-	left: 0;
-	top: 100%;
-	min-width: 220px;
-	list-style: none;
-	margin: 0;
-	padding: 8px;
-	background: #FFCC33;
-	border: 1px solid rgba(255,255,255,0.12);
-	border-radius: 8px;
-	box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-	display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  min-width: 220px;
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  background: #ffcc33;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  display: none;
 }
 
 .nav-item.dropdown:focus .dropdown-menu,
 .nav-item.dropdown:focus-within .dropdown-menu {
-	display: block;
+  display: block;
 }
 
 .dropdown-menu a {
-	display: block;
-	color: black;
-	text-decoration: none;
-	padding: 8px 10px;
-	border-radius: 6px;
+  display: block;
+  color: black;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 6px;
 }
 
 .dropdown-menu a:hover,
 .dropdown-menu a:focus {
-	background: rgb(255, 140, 0);
+  background: rgb(255, 140, 0);
 }
 
 .dropdown-menu img {
-    margin-left: 5px;
-    vertical-align: middle;
+  margin-left: 5px;
+  vertical-align: middle;
 }
