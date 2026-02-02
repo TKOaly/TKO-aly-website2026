@@ -1,77 +1,77 @@
-"use client";
+"use client"
 
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
-import listPlugin from "@fullcalendar/list";
-import fiLocale from "@fullcalendar/core/locales/fi";
-import styles from "./Kalenteri.module.css";
-import mockEvents from "./testEvents.json";
-import { useState } from "react";
+import FullCalendar from "@fullcalendar/react"
+import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
+import listPlugin from "@fullcalendar/list"
+import fiLocale from "@fullcalendar/core/locales/fi"
+import styles from "./Kalenteri.module.css"
+import mockEvents from "./testEvents.json"
+import { useState } from "react"
 
 type Event = {
-  id: string;
-  title: string;
-  user_id: string;
-  created: string;
-  start: string;
-  end?: string;
-  registration_starts: string | null;
-  registration_ends: string | null;
-  cancellation_starts: string | null;
-  cancellation_ends: string | null;
-  location: string;
-  category: string;
-  description: string;
-  deleted: boolean;
-  organizer: string | null;
-  url: string;
-};
+  id: string
+  title: string
+  user_id: string
+  created: string
+  start: string
+  end?: string
+  registration_starts: string | null
+  registration_ends: string | null
+  cancellation_starts: string | null
+  cancellation_ends: string | null
+  location: string
+  category: string
+  description: string
+  deleted: boolean
+  organizer: string | null
+  url: string
+}
 
 type EventWithColor = Event & {
-  backgroundColor: string;
-};
+  backgroundColor: string
+}
 
 export default function Calendar() {
-  const [isLegendVisible, setIsLegendVisible] = useState(false);
-  const [isListView, setIsListView] = useState(false);
+  const [isLegendVisible, setIsLegendVisible] = useState(false)
+  const [isListView, setIsListView] = useState(false)
 
   const toggleLegendVisibility = () => {
-    setIsLegendVisible((prev) => !prev);
-  };
+    setIsLegendVisible(prev => !prev)
+  }
 
   const colorcodedEvents: EventWithColor[] = colorcodeEvents(
     mockEvents as Event[],
-  );
+  )
 
   function colorcodeEvents(eventsData: Event[]) {
-    const now = new Date();
-    const colorcodedEvents = [] as EventWithColor[];
+    const now = new Date()
+    const colorcodedEvents = [] as EventWithColor[]
 
-    eventsData.forEach((event) => {
+    eventsData.forEach(event => {
       const registrationStarts = event.registration_starts
         ? new Date(event.registration_starts)
-        : null;
+        : null
       const registrationEnds = event.registration_ends
         ? new Date(event.registration_ends)
-        : null;
-      const start = new Date(event.start);
-      let backgroundColor: string;
+        : null
+      const start = new Date(event.start)
+      let backgroundColor: string
 
       if (!registrationStarts || !registrationEnds) {
-        backgroundColor = now < start ? "#0066ff" : "#6e6e6e";
+        backgroundColor = now < start ? "#0066ff" : "#6e6e6e"
       } else if (now >= registrationStarts && now <= registrationEnds) {
-        backgroundColor = "#00ff00";
+        backgroundColor = "#00ff00"
       } else if (now < registrationStarts) {
-        backgroundColor = "#ffff00";
+        backgroundColor = "#ffff00"
       } else if (now > start) {
-        backgroundColor = "#6e6e6e";
+        backgroundColor = "#6e6e6e"
       } else {
-        backgroundColor = "#ff0000";
+        backgroundColor = "#ff0000"
       }
 
-      colorcodedEvents.push({ ...event, backgroundColor });
-    });
-    return colorcodedEvents;
+      colorcodedEvents.push({ ...event, backgroundColor })
+    })
+    return colorcodedEvents
   }
 
   function eventCalendarView() {
@@ -91,13 +91,13 @@ export default function Calendar() {
         contentHeight={"60%"}
         events={colorcodedEvents}
       />
-    );
+    )
   }
 
   function eventListView() {
     return (
       <div id={styles["events-list"]}>
-        {colorcodedEvents.map((event) => (
+        {colorcodedEvents.map(event => (
           <a key={event.id} href={event.url}>
             <div
               className={styles["event-list-item"]}
@@ -120,7 +120,7 @@ export default function Calendar() {
           </a>
         ))}
       </div>
-    );
+    )
   }
 
   return (
@@ -196,5 +196,5 @@ export default function Calendar() {
         </button>
       </div>
     </div>
-  );
+  )
 }

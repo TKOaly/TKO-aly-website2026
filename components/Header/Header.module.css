@@ -1,20 +1,20 @@
 #header a {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin: -30px -30px 30px -30px;
-    padding: 0 30px 0 30px;
-    gap: 20px;
-    text-decoration: none;
-    color: white;
-    background: linear-gradient(to top, white 50%, #141414 50%);
-    font-size: 24px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: -30px -30px 30px -30px;
+  padding: 0 30px 0 30px;
+  gap: 20px;
+  text-decoration: none;
+  color: white;
+  background: linear-gradient(to top, white 50%, #141414 50%);
+  font-size: 24px;
 }
 
 #header img {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .header_bottomline {
-    color: black;
+  color: black;
 }

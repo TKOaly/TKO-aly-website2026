@@ -1,28 +1,28 @@
 div#footer {
-    clear: both;
-    border-top: 1px solid #DDD;
-    border-top-width: 1px;
-    border-top-style: solid;
-    border-top-color: rgb(221, 221, 221);
+  clear: both;
+  border-top: 1px solid #ddd;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: rgb(221, 221, 221);
 }
 .footer-content {
-    float: left;
-    margin: 10px 0 30px 0;
-    width: 33%;
-    font-family: "Helvetica Neue", Helvetica, Calibri, Arial, sans-serif;
-    font-size: 12px;
-    background-color: white;
-    color: black;
+  float: left;
+  margin: 10px 0 30px 0;
+  width: 33%;
+  font-family: "Helvetica Neue", Helvetica, Calibri, Arial, sans-serif;
+  font-size: 12px;
+  background-color: white;
+  color: black;
 }
 .overlap {
-    clear: both;
-    margin-left: -30px;
-    padding-bottom: 40px;
-    background-color: #141414;
-    clear: both;
-    width: 760px;
-    height: 0;
-    border-top: 20px solid #FFCC33;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
+  clear: both;
+  margin-left: -30px;
+  padding-bottom: 40px;
+  background-color: #141414;
+  clear: both;
+  width: 760px;
+  height: 0;
+  border-top: 20px solid #ffcc33;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
 }

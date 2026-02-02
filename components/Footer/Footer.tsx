@@ -1,4 +1,4 @@
-import styles from "./Footer.module.css";
+import styles from "./Footer.module.css"
 
 function Footer() {
   return (
@@ -72,7 +72,7 @@ function Footer() {
       </div>
       <div className={styles.overlap}></div>
     </div>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

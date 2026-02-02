@@ -1,31 +1,31 @@
 #calendar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 95%;
-    height: 80rem;
-    margin: 0 auto;
-    background-color: #141414;
-    padding: 20px;
-    color: #ffbb00;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 95%;
+  height: 80rem;
+  margin: 0 auto;
+  background-color: #141414;
+  padding: 20px;
+  color: #ffbb00;
 }
 
 #calendar-instructions {
-    width: 60%;
-    margin-top: 20px;
-    color: #ffbb00;
-    font-size: 1.2rem;
-    display: flex;
-    justify-content: end;
-    align-items: flex-start;
-    font-size: 32px;
+  width: 60%;
+  margin-top: 20px;
+  color: #ffbb00;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: end;
+  align-items: flex-start;
+  font-size: 32px;
 }
 
 #legend {
-    display: flex;
-    flex-direction: column;
-    border: dotted 2px #ffbb00;
-    font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  border: dotted 2px #ffbb00;
+  font-size: 12px;
 }
 
 #legend p {
@@ -43,70 +43,70 @@
 }
 
 #calendar-control-bar {
-    width: 60%;
-    display: flex;
-    margin-bottom: 10px;
+  width: 60%;
+  display: flex;
+  margin-bottom: 10px;
 }
 
 .view-toggle-button {
-    background-color: #2c3e50;
-    border-color: #2c3e50;
-    color: #fff;
-    border: 1px solid transparent;
-    border-radius: 0.25em;
-    display: inline-block;
-    font-size: 1em;
-    font-weight: 400;
-    line-height: 1.5;
-    padding: 0.4em 0.65em;
-    text-align: center;
-    user-select: none;
-    vertical-align: middle;
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 0.25em;
+  display: inline-block;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 0.4em 0.65em;
+  text-align: center;
+  user-select: none;
+  vertical-align: middle;
 }
 
 .view-toggle-button:hover {
-    background-color: #1a252f;
-    border-color: #151e27;
-    color: #fff;
-    cursor: pointer;
+  background-color: #1a252f;
+  border-color: #151e27;
+  color: #fff;
+  cursor: pointer;
 }
 
 .view-toggle-active {
-    background-color: #1a252f;
-    border-color: #151e27;
-    color: #fff;
+  background-color: #1a252f;
+  border-color: #151e27;
+  color: #fff;
 }
 
 #events-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    width: 60%;
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  width: 60%;
+  margin-top: 20px;
 }
 
 #events-list a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 #events-list a:visited,
 #events-list a:hover,
 #events-list a:focus,
 #events-list a:active {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 .event-list-item {
-    width: 100%;
-    background-color: #1a252f;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 5px; 
+  width: 100%;
+  background-color: #1a252f;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
 }
 
 .event-list-item p {
-    margin: 5px 0;
+  margin: 5px 0;
 }
