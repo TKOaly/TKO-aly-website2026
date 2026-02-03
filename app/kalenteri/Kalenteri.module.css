@@ -60,6 +60,7 @@
   line-height: 1.5;
   padding: 0.4em 0.65em;
   text-align: center;
+  /* eslint-disable-next-line css/use-baseline */
   user-select: none;
   vertical-align: middle;
 }
