@@ -20,4 +20,4 @@ EXPOSE 3385
 ENV NODE_ENV=development
 
 # Start development server
-CMD ["npm", "run", "dev", "--", "-p", "3385"]
+CMD ["npm", "run", "dev"]
