@@ -14,5 +14,8 @@
 |14.1.2026|2h|Added list view to view events, also fixed some file namings|
 |19.1.2026|0.5h|Weekly planning session|
 |23.1.2026|0.5h|Added links to events from eventlisting|
+|2.2.2026|1h|Weekly meeting|
+|6.2.2026|4h|Tried to get TKO-äly localhost services enviroment to work|
+|9.2.2026|2h|Weekly meeting and fixing localhost enviroment|
 
 Total 29.5h
