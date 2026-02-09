@@ -1,5 +1,5 @@
 # Development Dockerfile for TKO-aly Website
-FROM node:20-alpine
+FROM node:20-alpine AS base
 
 # Set working directory
 WORKDIR /app
@@ -14,10 +14,10 @@ RUN npm ci
 COPY . .
 
 # Expose Next.js development port
-EXPOSE 3000
+EXPOSE 3385
 
 # Set environment to development
 ENV NODE_ENV=development
 
 # Start development server
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "-p", "3385"]
