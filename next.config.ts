@@ -1,7 +1,7 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  allowedDevOrigins: ["beta.tko-aly.localhost"],
 }
 
 export default nextConfig
