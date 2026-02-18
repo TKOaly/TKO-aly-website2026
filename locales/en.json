@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "sections": {
+      "association": "Association",
+      "activities": "Activities",
+      "events": "Events",
+      "safety": "Safety",
+      "forFreshmen": "For freshmen",
+      "companies": "Companies"
+    },
+    "links": {
+      "board": "Board",
+      "communications": "Communications",
+      "rules": "Rules",
+      "finances": "Finances",
+      "credentials": "Credentials",
+      "electionOrder": "Election order",
+      "accountNumbers": "Account numbers",
+      "contact": "Contact",
+      "brandGuide": "Brand guide",
+      "archive": "Archive",
+      "debtsPayments": "Debts & payments",
+      "advocacy": "Advocacy",
+      "sitsit": "Sitsit",
+      "annualParty": "Annual party",
+      "sports": "Sports",
+      "foodDelivery": "Food delivery",
+      "readme": "README",
+      "blog": "Blog",
+      "calendar": "Calendar",
+      "addEvent": "Add event",
+      "harassment": "Harassment",
+      "equality": "Equality",
+      "privacyPolicy": "Privacy policy",
+      "fuksiwiki": "Fuksiwiki",
+      "fuksiInfo": "Freshmen info",
+      "fuksiPassi": "Freshmen pass",
+      "jobs": "Jobs",
+      "forCompanies": "For companies"
+    }
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signOut": "Sign out"
+  },
+  "common": {
+    "readMore": "Read more",
+    "backToTop": "Back to top",
+    "switchToFinnish": "Suomeksi"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "sections": {
+      "association": "Yhdistys",
+      "activities": "Toiminta",
+      "events": "Tapahtumat",
+      "safety": "Turvallisuus",
+      "forFreshmen": "Fukseille",
+      "companies": "Yritykset"
+    },
+    "links": {
+      "board": "Hallitus",
+      "communications": "Tiedotus",
+      "rules": "Säännöt",
+      "finances": "Talous",
+      "credentials": "Tunnukset",
+      "electionOrder": "Vaalijärjestys",
+      "accountNumbers": "Tilinumerot",
+      "contact": "Yhteystiedot",
+      "brandGuide": "Brandiohje",
+      "archive": "Arkisto",
+      "debtsPayments": "Velat & maksut",
+      "advocacy": "Edunvalvonta",
+      "sitsit": "Sitsit",
+      "annualParty": "Vuosijuhlat",
+      "sports": "Liikunta",
+      "foodDelivery": "Ruokavälitys",
+      "readme": "README",
+      "blog": "Blogi",
+      "calendar": "Kalenteri",
+      "addEvent": "Lisää tapahtuma",
+      "harassment": "Häirintä",
+      "equality": "Yhdenvertaisuus",
+      "privacyPolicy": "Tietosuoja",
+      "fuksiwiki": "Fuksiwiki",
+      "fuksiInfo": "Fuksi-info",
+      "fuksiPassi": "Fuksipassi",
+      "jobs": "Työpaikat",
+      "forCompanies": "Yrityksille"
+    }
+  },
+  "auth": {
+    "signIn": "Kirjaudu sisään",
+    "signOut": "Kirjaudu ulos"
+  },
+  "common": {
+    "readMore": "Lue lisää",
+    "backToTop": "Takaisin ylös",
+    "switchToEnglish": "In English"
+  }
+}
