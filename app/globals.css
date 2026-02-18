@@ -1,3 +1,86 @@
+:root {
+  /* Yellow palette */
+  --yellow-50: hsl(45, 100%, 95%);
+  --yellow-100: hsl(45, 100%, 88%);
+  --yellow-200: hsl(45, 100%, 78%);
+  --yellow-300: hsl(45, 100%, 68%);
+  --yellow-400: hsl(45, 100%, 60%);
+  --yellow-500: hsl(45, 100%, 52%);
+  --yellow-600: hsl(45, 100%, 44%);
+  --yellow-700: hsl(45, 95%, 36%);
+  --yellow-800: hsl(45, 90%, 28%);
+  --yellow-900: hsl(45, 85%, 20%);
+
+  /* Blue palette */
+  --blue-50: hsl(215, 100%, 95%);
+  --blue-100: hsl(215, 95%, 85%);
+  --blue-200: hsl(215, 90%, 74%);
+  --blue-300: hsl(215, 85%, 63%);
+  --blue-400: hsl(215, 80%, 52%);
+  --blue-500: hsl(215, 80%, 44%);
+  --blue-600: hsl(215, 80%, 36%);
+  --blue-700: hsl(215, 75%, 28%);
+  --blue-800: hsl(215, 70%, 20%);
+  --blue-900: hsl(215, 65%, 14%);
+
+  /* Black/Gray palette */
+  --neutral-50: hsl(0, 0%, 92%);
+  --neutral-100: hsl(0, 0%, 80%);
+  --neutral-200: hsl(0, 0%, 68%);
+  --neutral-300: hsl(0, 0%, 56%);
+  --neutral-400: hsl(0, 0%, 44%);
+  --neutral-500: hsl(0, 0%, 32%);
+  --neutral-600: hsl(0, 0%, 22%);
+  --neutral-700: hsl(0, 0%, 14%);
+  --neutral-800: hsl(0, 0%, 8%);
+  --neutral-900: hsl(0, 0%, 4%);
+
+  /* Spacing */
+  --space-0: 0px;
+  --space-px: 1px;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-11: 44px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-28: 112px;
+  --space-32: 128px;
+  --space-36: 144px;
+  --space-40: 160px;
+  --space-44: 176px;
+  --space-48: 192px;
+  --space-52: 208px;
+  --space-56: 224px;
+  --space-60: 240px;
+  --space-64: 256px;
+  --space-72: 288px;
+  --space-80: 320px;
+  --space-96: 384px;
+
+  /* Breakpoints */
+  --screen-xs: 480px;
+  --screen-sm: 640px;
+  --screen-md: 768px;
+  --screen-lg: 1024px;
+  --screen-xl: 1280px;
+  --screen-2xl: 1536px;
+}
+
 a:visited {
   color: inherit;
 }
