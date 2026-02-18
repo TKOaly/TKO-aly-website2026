@@ -1,22 +1,26 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
+import { useSession, signIn, signOut } from "next-auth/react"
 import styles from "./Navbar.module.css"
 
 function Navbar() {
-  return (
-    <nav id={styles.navbar} className={styles.navbar}>
-      <ul className={styles.nav}>
-        <li id={styles["nav-logo"]}>
-          <Link href="/">
-            <Image
-              src="/logo-yellow-on-black.png"
-              width={50}
-              height={50}
-              alt="Logo"
-            />
-          </Link>
-        </li>
+  const { data: session } = useSession()
 
+  return (
+    <nav className={styles.navbar}>
+      <span id={styles["nav-logo"]}>
+        <Link href="/">
+          <Image
+            src="/logo-yellow-on-black.png"
+            width={50}
+            height={50}
+            alt="Logo"
+          />
+        </Link>
+      </span>
+      <ul className={styles.nav}>
         <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
           <button
             className={styles["dropdown-toggle"]}
@@ -236,18 +240,33 @@ function Navbar() {
             </Link>
           </button>
         </li>
-        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
+      </ul>
+      <div>
+        <button
+          className={styles["dropdown-toggle"]}
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <Link role="menuitem" href="/english">
+            In English
+          </Link>
+        </button>
+        {session ? (
           <button
             className={styles["dropdown-toggle"]}
-            aria-haspopup="true"
-            aria-expanded="false"
+            onClick={() => signOut()}
           >
-            <Link role="menuitem" href="/english">
-              In English
-            </Link>
+            Kirjaudu ulos
           </button>
-        </li>
-      </ul>
+        ) : (
+          <button
+            className={styles["dropdown-toggle"]}
+            onClick={() => signIn("tkoaly")}
+          >
+            Kirjaudu sisään
+          </button>
+        )}
+      </div>
     </nav>
   )
 }
