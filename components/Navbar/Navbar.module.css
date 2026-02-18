@@ -1,5 +1,5 @@
 /* Top bar */
-#navbar {
+.navbar {
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -7,6 +7,13 @@
   background: #ffcc33;
   color: black;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  box-sizing: border-box;
+  border-left: 24px solid transparent;
+  border-right: 24px solid transparent;
 }
 
 .nav {
