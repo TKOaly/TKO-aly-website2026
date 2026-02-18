@@ -1,87 +1,96 @@
 "use client"
 
-import Link from "next/link"
 import Image from "next/image"
 import { useSession, signIn, signOut } from "next-auth/react"
+import { usePathname, useRouter } from "next/navigation"
+import { Link, useTranslation } from "@/app/i18n/client"
 import styles from "./Navbar.module.css"
 
 const navItems = [
   {
-    label: "Yhdistys",
+    labelKey: "nav.sections.association",
     links: [
-      { href: "/hallitus", label: "Hallitus" },
-      { href: "/tiedotus", label: "Tiedotus" },
-      { href: "/saannot", label: "Säännöt" },
-      { href: "/talous", label: "Talous" },
-      { href: "/tunnukset", label: "Tunnukset" },
-      { href: "/vaalijarjestys", label: "Vaalijärjestys" },
-      { href: "/tilinumerot", label: "Tilinumerot" },
-      { href: "/yhteystiedot", label: "Yhteystiedot" },
-      { href: "/brandiohje", label: "Brandiohje" },
-      { href: "https://arkisto.tko-aly.fi/", label: "Arkisto", external: true },
+      { href: "/hallitus", labelKey: "nav.links.board" },
+      { href: "/tiedotus", labelKey: "nav.links.communications" },
+      { href: "/saannot", labelKey: "nav.links.rules" },
+      { href: "/talous", labelKey: "nav.links.finances" },
+      { href: "/tunnukset", labelKey: "nav.links.credentials" },
+      { href: "/vaalijarjestys", labelKey: "nav.links.electionOrder" },
+      { href: "/tilinumerot", labelKey: "nav.links.accountNumbers" },
+      { href: "/yhteystiedot", labelKey: "nav.links.contact" },
+      { href: "/brandiohje", labelKey: "nav.links.brandGuide" },
+      {
+        href: "https://arkisto.tko-aly.fi/",
+        labelKey: "nav.links.archive",
+        external: true,
+      },
       {
         href: "https://bbat.tko-aly.fi/",
-        label: "Velat & maksut",
+        labelKey: "nav.links.debtsPayments",
         external: true,
       },
     ],
   },
   {
-    label: "Toiminta",
+    labelKey: "nav.sections.activities",
     links: [
-      { href: "/edunvalvonta", label: "Edunvalvonta" },
-      { href: "/sitsit", label: "Sitsit" },
-      { href: "/vuosijuhlat", label: "Vuosijuhlat" },
-      { href: "/liikunta", label: "Liikunta" },
-      { href: "/ruokavalitys", label: "Ruokavälitys" },
-      { href: "/README", label: "README" },
-      { href: "https://blog.tko-aly.fi/", label: "Blogi", external: true },
+      { href: "/edunvalvonta", labelKey: "nav.links.advocacy" },
+      { href: "/sitsit", labelKey: "nav.links.sitsit" },
+      { href: "/vuosijuhlat", labelKey: "nav.links.annualParty" },
+      { href: "/liikunta", labelKey: "nav.links.sports" },
+      { href: "/ruokavalitys", labelKey: "nav.links.foodDelivery" },
+      { href: "/README", labelKey: "nav.links.readme" },
+      {
+        href: "https://blog.tko-aly.fi/",
+        labelKey: "nav.links.blog",
+        external: true,
+      },
     ],
   },
   {
-    label: "Tapahtumat",
+    labelKey: "nav.sections.events",
     links: [
-      { href: "/kalenteri", label: "Kalenteri" },
-      { href: "/lisaa-tapahtuma", label: "Lisää tapahtuma" },
+      { href: "/kalenteri", labelKey: "nav.links.calendar" },
+      { href: "/lisaa-tapahtuma", labelKey: "nav.links.addEvent" },
     ],
   },
   {
-    label: "Turvallisuus",
+    labelKey: "nav.sections.safety",
     links: [
-      { href: "/hairinta", label: "Häirintä" },
+      { href: "/hairinta", labelKey: "nav.links.harassment" },
       {
         href: "https://www.tko-aly.fi/attachments/files/399/Yhdenvertaisuussuunnitelma_2024.pdf?1715249780",
-        label: "Yhdenvertaisuus",
+        labelKey: "nav.links.equality",
         external: true,
       },
-      { href: "/tietosuoja", label: "Tietosuoja" },
+      { href: "/tietosuoja", labelKey: "nav.links.privacyPolicy" },
     ],
   },
   {
-    label: "Fukseille",
+    labelKey: "nav.sections.forFreshmen",
     links: [
       {
         href: "https://fuksiwiki.tko-aly.fi/Fuksiwiki",
-        label: "Fuksiwiki",
+        labelKey: "nav.links.fuksiwiki",
         external: true,
       },
-      { href: "/fuksi-info", label: "Fuksi-info" },
+      { href: "/fuksi-info", labelKey: "nav.links.fuksiInfo" },
       {
         href: "https://passi.tko-aly.fi/",
-        label: "Fuksipassi",
+        labelKey: "nav.links.fuksiPassi",
         external: true,
       },
     ],
   },
   {
-    label: "Yritykset",
+    labelKey: "nav.sections.companies",
     links: [
       {
         href: "https://jobs.tko-aly.fi/en/list/open",
-        label: "Työpaikat",
+        labelKey: "nav.links.jobs",
         external: true,
       },
-      { href: "/yrityksille", label: "Yrityksille" },
+      { href: "/yrityksille", labelKey: "nav.links.forCompanies" },
     ],
   },
 ]
@@ -92,6 +101,19 @@ const ExternalIcon = () => (
 
 function Navbar() {
   const { data: session } = useSession()
+  const { t, lang } = useTranslation()
+  const pathname = usePathname()
+  const router = useRouter()
+
+  const toggleLanguage = () => {
+    const newLang = lang === "fi" ? "en" : "fi"
+    const newPath = pathname.replace(`/${lang}`, `/${newLang}`)
+    document.cookie = `tekis-lang=${newLang}; path=/`
+    router.push(newPath)
+  }
+
+  const otherLangLabel =
+    lang === "fi" ? t("common.switchToEnglish") : t("common.switchToFinnish")
 
   return (
     <nav className={styles.navbar}>
@@ -108,7 +130,7 @@ function Navbar() {
       <ul className={styles.nav}>
         {navItems.map(section => (
           <li
-            key={section.label}
+            key={section.labelKey}
             className={`${styles["nav-item"]} ${styles.dropdown}`}
           >
             <button
@@ -116,7 +138,7 @@ function Navbar() {
               aria-haspopup="true"
               aria-expanded="true"
             >
-              {section.label} ▼
+              {t(section.labelKey)} ▼
             </button>
             <ul className={styles["dropdown-menu"]} role="menu">
               {section.links.map(link => (
@@ -127,7 +149,7 @@ function Navbar() {
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
                   >
-                    {link.label} {link.external && <ExternalIcon />}
+                    {t(link.labelKey)} {link.external && <ExternalIcon />}
                   </Link>
                 </li>
               ))}
@@ -137,22 +159,22 @@ function Navbar() {
       </ul>
 
       <div>
-        <Link role="menuitem" href="/english">
-          In English
-        </Link>
+        <button className={styles["dropdown-toggle"]} onClick={toggleLanguage}>
+          {otherLangLabel}
+        </button>
         {session ? (
           <button
             className={styles["dropdown-toggle"]}
             onClick={() => signOut()}
           >
-            Kirjaudu ulos
+            {t("auth.signOut")}
           </button>
         ) : (
           <button
             className={styles["dropdown-toggle"]}
             onClick={() => signIn("tkoaly")}
           >
-            Kirjaudu sisään
+            {t("auth.signIn")}
           </button>
         )}
       </div>
