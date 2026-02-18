@@ -5,6 +5,91 @@ import Image from "next/image"
 import { useSession, signIn, signOut } from "next-auth/react"
 import styles from "./Navbar.module.css"
 
+const navItems = [
+  {
+    label: "Yhdistys",
+    links: [
+      { href: "/hallitus", label: "Hallitus" },
+      { href: "/tiedotus", label: "Tiedotus" },
+      { href: "/saannot", label: "Säännöt" },
+      { href: "/talous", label: "Talous" },
+      { href: "/tunnukset", label: "Tunnukset" },
+      { href: "/vaalijarjestys", label: "Vaalijärjestys" },
+      { href: "/tilinumerot", label: "Tilinumerot" },
+      { href: "/yhteystiedot", label: "Yhteystiedot" },
+      { href: "/brandiohje", label: "Brandiohje" },
+      { href: "https://arkisto.tko-aly.fi/", label: "Arkisto", external: true },
+      {
+        href: "https://bbat.tko-aly.fi/",
+        label: "Velat & maksut",
+        external: true,
+      },
+    ],
+  },
+  {
+    label: "Toiminta",
+    links: [
+      { href: "/edunvalvonta", label: "Edunvalvonta" },
+      { href: "/sitsit", label: "Sitsit" },
+      { href: "/vuosijuhlat", label: "Vuosijuhlat" },
+      { href: "/liikunta", label: "Liikunta" },
+      { href: "/ruokavalitys", label: "Ruokavälitys" },
+      { href: "/README", label: "README" },
+      { href: "https://blog.tko-aly.fi/", label: "Blogi", external: true },
+    ],
+  },
+  {
+    label: "Tapahtumat",
+    links: [
+      { href: "/kalenteri", label: "Kalenteri" },
+      { href: "/lisaa-tapahtuma", label: "Lisää tapahtuma" },
+    ],
+  },
+  {
+    label: "Turvallisuus",
+    links: [
+      { href: "/hairinta", label: "Häirintä" },
+      {
+        href: "https://www.tko-aly.fi/attachments/files/399/Yhdenvertaisuussuunnitelma_2024.pdf?1715249780",
+        label: "Yhdenvertaisuus",
+        external: true,
+      },
+      { href: "/tietosuoja", label: "Tietosuoja" },
+    ],
+  },
+  {
+    label: "Fukseille",
+    links: [
+      {
+        href: "https://fuksiwiki.tko-aly.fi/Fuksiwiki",
+        label: "Fuksiwiki",
+        external: true,
+      },
+      { href: "/fuksi-info", label: "Fuksi-info" },
+      {
+        href: "https://passi.tko-aly.fi/",
+        label: "Fuksipassi",
+        external: true,
+      },
+    ],
+  },
+  {
+    label: "Yritykset",
+    links: [
+      {
+        href: "https://jobs.tko-aly.fi/en/list/open",
+        label: "Työpaikat",
+        external: true,
+      },
+      { href: "/yrityksille", label: "Yrityksille" },
+    ],
+  },
+]
+
+const ExternalIcon = () => (
+  <Image src="/external-url-10.png" alt="↗" width={10} height={10} />
+)
+
 function Navbar() {
   const { data: session } = useSession()
 
@@ -14,243 +99,47 @@ function Navbar() {
         <Link href="/">
           <Image
             src="/logo-yellow-on-black.png"
-            width={50}
-            height={50}
-            alt="Logo"
+            width={48}
+            height={48}
+            alt="TKO-aly logo"
           />
         </Link>
       </span>
       <ul className={styles.nav}>
-        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
-          <button
-            className={styles["dropdown-toggle"]}
-            aria-haspopup="true"
-            aria-expanded="true"
+        {navItems.map(section => (
+          <li
+            key={section.label}
+            className={`${styles["nav-item"]} ${styles.dropdown}`}
           >
-            Yhdistys ▼
-          </button>
-          <ul className={styles["dropdown-menu"]} role="menu">
-            <li role="none">
-              <Link role="menuitem" href="/hallitus">
-                Hallitus{" "}
-              </Link>
-              <Link role="menuitem" href="/tiedotus">
-                Tiedotus
-              </Link>
-              <Link role="menuitem" href="/saannot">
-                Säännöt
-              </Link>
-              <Link role="menuitem" href="/talous">
-                Talous
-              </Link>
-              <Link role="menuitem" href="/tunnukset">
-                Tunnukset
-              </Link>
-              <Link role="menuitem" href="/vaalijarjestys">
-                Vaalijärjestys
-              </Link>
-              <Link role="menuitem" href="/tilinumerot">
-                Tilinumerot
-              </Link>
-              <Link role="menuitem" href="/yhteystiedot">
-                Yhteystiedot
-              </Link>
-              <Link role="menuitem" href="/brandiohje">
-                Brandiohje
-              </Link>
-              <Link role="menuitem" href="https://arkisto.tko-aly.fi/">
-                Arkisto{" "}
-                <Image
-                  src="/external-url-10.png"
-                  alt="External link"
-                  width={10}
-                  height={10}
-                />
-              </Link>
-            </li>
-          </ul>
-        </li>
-
-        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
-          <button
-            className={styles["dropdown-toggle"]}
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Toiminta ▼
-          </button>
-          <ul className={styles["dropdown-menu"]} role="menu">
-            <li role="none">
-              <Link role="menuitem" href="/edunvalvonta">
-                Edunvalvonta
-              </Link>
-              <Link role="menuitem" href="/sitsit">
-                Sitsit
-              </Link>
-              <Link role="menuitem" href="/vuosijuhlat">
-                Vuosijuhlat
-              </Link>
-              <Link role="menuitem" href="/liikunta">
-                Liikunta
-              </Link>
-              <Link role="menuitem" href="/ruokavalitys">
-                Ruokavälitys
-              </Link>
-              <Link role="menuitem" href="/README">
-                README
-              </Link>
-              <Link role="menuitem" href="https://blog.tko-aly.fi/">
-                Blogi{" "}
-                <Image
-                  src="/external-url-10.png"
-                  alt="External link"
-                  width={10}
-                  height={10}
-                />
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
-          <button
-            className={styles["dropdown-toggle"]}
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Tapahtumat ▼
-          </button>
-          <ul className={styles["dropdown-menu"]} role="menu">
-            <li role="none">
-              <Link role="menuitem" href="/kalenteri">
-                Kalenteri
-              </Link>
-              <Link role="menuitem" href="/lisaa-tapahtuma">
-                Lisää tapahtuma
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
-          <button
-            className={styles["dropdown-toggle"]}
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Turvallisuus ▼
-          </button>
-          <ul className={styles["dropdown-menu"]} role="menu">
-            <li role="none">
-              <Link role="menuitem" href="/hairinta">
-                Häirintä
-              </Link>
-              <Link
-                role="menuitem"
-                href="https://www.tko-aly.fi/attachments/files/399/Yhdenvertaisuussuunnitelma_2024.pdf?1715249780"
-              >
-                Yhdenvertaisuus{" "}
-                <Image
-                  src="/external-url-10.png"
-                  alt="External link"
-                  width={10}
-                  height={10}
-                />
-              </Link>
-              <Link role="menuitem" href="/tietosuoja">
-                Tietosuoja
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
-          <button
-            className={styles["dropdown-toggle"]}
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Fukseille ▼
-          </button>
-          <ul className={styles["dropdown-menu"]} role="menu">
-            <li role="none">
-              <Link
-                role="menuitem"
-                href="https://fuksiwiki.tko-aly.fi/Fuksiwiki"
-              >
-                Fuksiwiki{" "}
-                <Image
-                  src="/external-url-10.png"
-                  alt="External link"
-                  width={10}
-                  height={10}
-                />
-              </Link>
-              <Link role="menuitem" href="/fuksi-info">
-                Fuksi-info
-              </Link>
-              <Link role="menuitem" href="https://passi.tko-aly.fi/">
-                Fuksipassi{" "}
-                <Image
-                  src="/external-url-10.png"
-                  alt="External link"
-                  width={10}
-                  height={10}
-                />
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
-          <button
-            className={styles["dropdown-toggle"]}
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Yritykset ▼
-          </button>
-          <ul className={styles["dropdown-menu"]} role="menu">
-            <li role="none">
-              <Link role="menuitem" href="https://jobs.tko-aly.fi/en/list/open">
-                Työpaikat{" "}
-                <Image
-                  src="/external-url-10.png"
-                  alt="External link"
-                  width={10}
-                  height={10}
-                />
-              </Link>
-              <Link role="menuitem" href="/yrityksille">
-                Yrityksille
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li className={`${styles["nav-item"]} ${styles.dropdown}`}>
-          <button
-            className={styles["dropdown-toggle"]}
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <Link role="menuitem" href="https://bbat.tko-aly.fi/">
-              Velat & maksut{" "}
-              <Image
-                src="/external-url-10.png"
-                alt="External link"
-                width={10}
-                height={10}
-              />
-            </Link>
-          </button>
-        </li>
+            <button
+              className={styles["dropdown-toggle"]}
+              aria-haspopup="true"
+              aria-expanded="true"
+            >
+              {section.label} ▼
+            </button>
+            <ul className={styles["dropdown-menu"]} role="menu">
+              {section.links.map(link => (
+                <li key={link.href} role="none">
+                  <Link
+                    role="menuitem"
+                    href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                  >
+                    {link.label} {link.external && <ExternalIcon />}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
       </ul>
+
       <div>
-        <button
-          className={styles["dropdown-toggle"]}
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <Link role="menuitem" href="/english">
-            In English
-          </Link>
-        </button>
+        <Link role="menuitem" href="/english">
+          In English
+        </Link>
         {session ? (
           <button
             className={styles["dropdown-toggle"]}
