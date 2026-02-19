@@ -5,16 +5,15 @@ import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
 import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
 import styles from "./Kalenteri.module.css"
-import mockEvents from "./testEvents.json"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { fetchAllEvents } from "@/lib/api/events"
 
 type Event = {
-  id: string
-  title: string
-  user_id: string
+  id: number
+  name: string
+  user_id: number | null
   created: string
-  start: string
-  end?: string
+  starts: string
   registration_starts: string | null
   registration_ends: string | null
   cancellation_starts: string | null
@@ -22,9 +21,8 @@ type Event = {
   location: string
   category: string
   description: string
-  deleted: boolean
+  deleted: number
   organizer: string | null
-  url: string
 }
 
 type EventWithColor = Event & {
@@ -32,6 +30,8 @@ type EventWithColor = Event & {
 }
 
 export default function Calendar() {
+  const [events, setEvents] = useState<Event[]>([])
+  const [loadError, setLoadError] = useState<string | null>(null)
   const [isLegendVisible, setIsLegendVisible] = useState(false)
   const [isListView, setIsListView] = useState(false)
 
@@ -39,9 +39,33 @@ export default function Calendar() {
     setIsLegendVisible(prev => !prev)
   }
 
-  const colorcodedEvents: EventWithColor[] = colorcodeEvents(
-    mockEvents as Event[],
-  )
+  useEffect(() => {
+    let isActive = true
+
+    fetchAllEvents()
+      .then(data => {
+        if (!isActive) {
+          return
+        }
+
+        setEvents(data as Event[])
+      })
+      .catch(error => {
+        if (!isActive) {
+          return
+        }
+
+        setLoadError(
+          error instanceof Error ? error.message : "Failed to load events",
+        )
+      })
+
+    return () => {
+      isActive = false
+    }
+  }, [])
+
+  const colorcodedEvents: EventWithColor[] = colorcodeEvents(events)
 
   function colorcodeEvents(eventsData: Event[]) {
     const now = new Date()
@@ -54,7 +78,7 @@ export default function Calendar() {
       const registrationEnds = event.registration_ends
         ? new Date(event.registration_ends)
         : null
-      const start = new Date(event.start)
+      const start = new Date(event.starts)
       let backgroundColor: string
 
       if (!registrationStarts || !registrationEnds) {
@@ -75,6 +99,13 @@ export default function Calendar() {
   }
 
   function eventCalendarView() {
+    const calendarEvents = colorcodedEvents.map(event => ({
+      ...event,
+      title: event.name,
+      start: event.starts,
+      url: `/calendar_events/view/${event.id}`,
+    }))
+
     return (
       <FullCalendar
         plugins={[dayGridPlugin, listPlugin]}
@@ -89,7 +120,7 @@ export default function Calendar() {
         selectable={true}
         eventDisplay="list-item"
         contentHeight={"60%"}
-        events={colorcodedEvents}
+        events={calendarEvents}
       />
     )
   }
@@ -98,16 +129,16 @@ export default function Calendar() {
     return (
       <div id={styles["events-list"]}>
         {colorcodedEvents.map(event => (
-          <a key={event.id} href={event.url}>
+          <a key={event.id} href={`/calendar_events/view/${event.id}`}>
             <div
               className={styles["event-list-item"]}
               style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
             >
-              <h3>{event.title}</h3>
+              <h3>{event.name}</h3>
               <p>
                 <strong>Alkaa:</strong>{" "}
-                {new Date(event.start).toLocaleDateString("fi-FI")},
-                {new Date(event.start).toLocaleTimeString("fi-FI", {
+                {new Date(event.starts).toLocaleDateString("fi-FI")},
+                {new Date(event.starts).toLocaleTimeString("fi-FI", {
                   hour: "2-digit",
                   minute: "2-digit",
                 })}
@@ -150,7 +181,13 @@ export default function Calendar() {
           </button>
         </div>
       </div>
-      {isListView ? eventListView() : eventCalendarView()}
+      {loadError ? (
+        <p>{loadError}</p>
+      ) : isListView ? (
+        eventListView()
+      ) : (
+        eventCalendarView()
+      )}
       <div id={styles["calendar-instructions"]}>
         {isLegendVisible && (
           <div id={styles.legend}>
