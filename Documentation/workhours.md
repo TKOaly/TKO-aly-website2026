@@ -17,5 +17,8 @@
 |2.2.2026|1h|Weekly meeting|
 |6.2.2026|4h|Tried to get TKO-äly localhost services enviroment to work|
 |9.2.2026|2h|Weekly meeting and fixing localhost enviroment|
+|11.2.2026|4h|Trying to get local enviromet to work|
+|13.2.2026|2h|Finally got the local enviroment to work!|
+|19.2.2026|4h|Figuring out the the local enviroment routing, fixing api and changing the event data to be fetched from the calendar_events database rather than local JSON.|
 
-Total 29.5h
+Total 46.5h
