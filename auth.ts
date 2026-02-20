@@ -1,5 +1,5 @@
 import NextAuth, { type AuthOptions, type DefaultUser } from "next-auth"
-import Credentials from "next-auth/providers/credentials"
+import { OAuthConfig } from "next-auth/providers/oauth"
 
 declare module "next-auth" {
   interface Session {
@@ -19,14 +19,20 @@ declare module "next-auth/jwt" {
   }
 }
 
+interface AuthProfile {
+  sub: string
+  nickname: string
+  role: string
+}
+
 const config: AuthOptions = {
-  debug: !!process.env.AUTH_DEBUG,
   session: {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) token.admin = user.admin
+      if (account?.access_token) token.accessToken = account.access_token
       return token
     },
 
@@ -34,7 +40,7 @@ const config: AuthOptions = {
       if (session.user) {
         session.user.admin = token.admin
       }
-
+      session.accessToken = token.accessToken
       return session
     },
   },
@@ -43,7 +49,7 @@ const config: AuthOptions = {
       id: "tkoaly",
       name: "TKO-äly Member Account",
       type: "oauth",
-      profile: async profile => {
+      profile: async (profile: AuthProfile) => {
         return {
           id: profile.sub,
           name: profile.nickname,
@@ -56,40 +62,7 @@ const config: AuthOptions = {
       authorization: {
         params: { scope: "openid role profile" },
       },
-    },
-    Credentials({
-      name: "Credentials",
-      credentials: {
-        username: { label: "Username", type: "text", placeholder: "admin" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        // Hardcoded credentials for easy testing
-        if (
-          credentials?.username === "admin" &&
-          credentials?.password === "admin"
-        ) {
-          return {
-            id: "1",
-            name: "Admin User",
-            email: "admin@tko-aly.fi",
-            admin: true,
-          }
-        }
-        if (
-          credentials?.username === "user" &&
-          credentials?.password === "user"
-        ) {
-          return {
-            id: "2",
-            name: "Regular User",
-            email: "user@tko-aly.fi",
-            admin: false,
-          }
-        }
-        return null
-      },
-    }),
+    } satisfies OAuthConfig<AuthProfile>,
   ],
 }
 
