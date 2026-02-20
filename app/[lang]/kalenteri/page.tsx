@@ -10,22 +10,33 @@ import { fetchAllEvents } from "@/lib/api/events"
 
 type Event = {
   id: number
-  name: string
   user_id: number | null
-  created: string
-  starts: string
+  name: string | null
+  created: string | null
+  starts: string | null
   registration_starts: string | null
   registration_ends: string | null
   cancellation_starts: string | null
   cancellation_ends: string | null
-  location: string
-  category: string
-  description: string
-  deleted: number
-  organizer: string | null
+  location: string | null
+  category: string | null
+  description: string | null
+  alcohol_meter: number | null
+  price: string | null
+  map: string | null
+  max_participants: number | null
+  realised_participants: number | null
+  membership_required: boolean | null
+  outsiders_allowed: boolean | null
+  template: boolean | null
+  responsible: string | null
+  show_responsible: boolean | null
+  avec: boolean | null
+  deleted: boolean | null
 }
 
-type EventWithColor = Event & {
+type ProcessedEvent = Event & {
+  starts: string
   backgroundColor: string
 }
 
@@ -65,13 +76,18 @@ export default function Calendar() {
     }
   }, [])
 
-  const colorcodedEvents: EventWithColor[] = colorcodeEvents(events)
+  const colorcodedEvents: ProcessedEvent[] = colorcodeEvents(events)
 
-  function colorcodeEvents(eventsData: Event[]) {
+  function hasValidStartTime(
+    event: Event,
+  ): event is Event & { starts: string } {
+    return event.starts !== null
+  }
+
+  function colorcodeEvents(eventsData: Event[]): ProcessedEvent[] {
     const now = new Date()
-    const colorcodedEvents = [] as EventWithColor[]
 
-    eventsData.forEach(event => {
+    return eventsData.filter(hasValidStartTime).map(event => {
       const registrationStarts = event.registration_starts
         ? new Date(event.registration_starts)
         : null
@@ -93,17 +109,17 @@ export default function Calendar() {
         backgroundColor = "#ff0000"
       }
 
-      colorcodedEvents.push({ ...event, backgroundColor })
+      return { ...event, backgroundColor }
     })
-    return colorcodedEvents
   }
 
   function eventCalendarView() {
     const calendarEvents = colorcodedEvents.map(event => ({
-      ...event,
-      title: event.name,
+      id: String(event.id),
+      title: event.name || "Untitled Event",
       start: event.starts,
       url: `/calendar_events/view/${event.id}`,
+      backgroundColor: event.backgroundColor,
     }))
 
     return (
