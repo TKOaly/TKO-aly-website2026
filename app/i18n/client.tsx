@@ -71,7 +71,7 @@ export const Link: React.FC<
   const isSameOrigin = new URL(baseURI).origin === resolvedHref.origin
 
   if (isSameOrigin && lang) {
-    if (!languages.some(lang => resolvedHref.pathname.startsWith(`/${lang}`))) {
+    if (!languages.some(availableLang => resolvedHref.pathname.startsWith(`/${availableLang}`))) {
       resolvedHref.pathname = `/${lang}${resolvedHref.pathname}`
     }
   }
