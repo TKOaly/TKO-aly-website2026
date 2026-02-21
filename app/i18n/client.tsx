@@ -4,10 +4,10 @@ import i18next from "i18next"
 import { useParams, usePathname } from "next/navigation"
 import { initReactI18next } from "react-i18next"
 import { fallbackLang, getOptions, languages } from "./settings"
-import { useRouter as useRouterOrig } from "next/navigation"
-import LinkOrig from "next/link"
+import { useRouter as useNextRouter } from "next/navigation"
+import NextLink from "next/link"
 import { forwardRef, ComponentProps } from "react"
-import { Url } from "next/dist/shared/lib/router/router"
+import type { Url } from "next/dist/shared/lib/router/router"
 
 i18next.use(initReactI18next).init(getOptions())
 
@@ -22,9 +22,9 @@ export const useTranslation = () => {
   }
 }
 
-export const useRouter = (): ReturnType<typeof useRouterOrig> => {
+export const useRouter = (): ReturnType<typeof useNextRouter> => {
   const params = useParams()
-  const router = useRouterOrig()
+  const router = useNextRouter()
 
   let prefix = ""
 
@@ -39,9 +39,9 @@ export const useRouter = (): ReturnType<typeof useRouterOrig> => {
   }
 }
 
-export const Link: React.FC<
-  Omit<ComponentProps<typeof LinkOrig>, "href"> & {
-    href?: ComponentProps<typeof LinkOrig>["href"]
+export const ClientLink: React.FC<
+  Omit<ComponentProps<typeof NextLink>, "href"> & {
+    href?: ComponentProps<typeof NextLink>["href"]
     lang?: string
   }
 > = forwardRef(function Link(props, ref) {
@@ -71,7 +71,11 @@ export const Link: React.FC<
   const isSameOrigin = new URL(baseURI).origin === resolvedHref.origin
 
   if (isSameOrigin && lang) {
-    if (!languages.some(availableLang => resolvedHref.pathname.startsWith(`/${availableLang}`))) {
+    if (
+      !languages.some(availableLang =>
+        resolvedHref.pathname.startsWith(`/${availableLang}`),
+      )
+    ) {
       resolvedHref.pathname = `/${lang}${resolvedHref.pathname}`
     }
   }
@@ -80,5 +84,5 @@ export const Link: React.FC<
     ? `${resolvedHref.pathname}${resolvedHref.search}${resolvedHref.hash}`
     : resolvedHref.toString()
 
-  return <LinkOrig {...props} href={finalHref} ref={ref} />
+  return <NextLink {...props} href={finalHref} ref={ref} />
 })

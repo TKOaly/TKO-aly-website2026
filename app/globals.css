@@ -1,4 +1,6 @@
 :root {
+  color-scheme: dark light;
+
   /* Yellow palette */
   --yellow-50: hsl(45, 100%, 95%);
   --yellow-100: hsl(45, 100%, 88%);
@@ -24,6 +26,7 @@
   --blue-900: hsl(215, 65%, 14%);
 
   /* Black/Gray palette */
+  --white: hsl(0, 0%, 98%);
   --neutral-50: hsl(0, 0%, 92%);
   --neutral-100: hsl(0, 0%, 80%);
   --neutral-200: hsl(0, 0%, 68%);
@@ -79,6 +82,25 @@
   --screen-lg: 1024px;
   --screen-xl: 1280px;
   --screen-2xl: 1536px;
+
+  /* Dark theme (default) */
+  --color-bg: var(--neutral-800);
+  --color-surface: var(--neutral-700);
+  --color-text: var(--neutral-50);
+  --color-text-muted: var(--neutral-300);
+  --color-accent: var(--yellow-500);
+  --color-link: var(--yellow-400);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg: var(--neutral-50);
+    --color-surface: var(--white);
+    --color-text: var(--neutral-800);
+    --color-text-muted: var(--neutral-500);
+    --color-accent: var(--yellow-600);
+    --color-link: var(--blue-500);
+  }
 }
 
 a:visited {
@@ -86,7 +108,8 @@ a:visited {
 }
 
 body {
-  background-color: #141414;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
 }
@@ -100,7 +123,7 @@ body {
 }
 
 #content {
-  width: 740px;
+  width: var(--screen-md);
   padding: 0 30px 0 30px;
 }
 

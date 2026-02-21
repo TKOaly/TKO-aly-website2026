@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { usePathname, useRouter } from "next/navigation"
-import { Link, useTranslation } from "@/app/i18n/client"
+import { ClientLink, useTranslation } from "@/app/i18n/client"
 import styles from "./Navbar.module.css"
 
 const navItems = [
@@ -106,9 +106,9 @@ function Navbar() {
   const router = useRouter()
 
   const toggleLanguage = () => {
-    const newLang = lang === "fi" ? "en" : "fi"
-    const newPath = pathname.replace(`/${lang}`, `/${newLang}`)
-    document.cookie = `tekis-lang=${newLang}; path=/`
+    const newLanguage = lang === "fi" ? "en" : "fi"
+    const newPath = pathname.replace(`/${lang}`, `/${newLanguage}`)
+    document.cookie = `tekis-language=${newLanguage}; path=/`
     router.push(newPath)
   }
 
@@ -117,40 +117,38 @@ function Navbar() {
 
   return (
     <nav className={styles.navbar}>
-      <span id={styles["nav-logo"]}>
-        <Link href="/">
-          <Image
-            src="/logo-yellow-on-black.png"
-            width={48}
-            height={48}
-            alt="TKO-aly logo"
-          />
-        </Link>
-      </span>
+      <ClientLink href="/">
+        <Image
+          src="/logo-yellow-on-black.png"
+          width={48}
+          height={48}
+          alt="TKO-aly logo"
+        />
+      </ClientLink>
       <ul className={styles.nav}>
         {navItems.map(section => (
           <li
             key={section.labelKey}
-            className={`${styles["nav-item"]} ${styles.dropdown}`}
+            className={`${styles.navItem} ${styles.dropdown}`}
           >
             <button
-              className={styles["dropdown-toggle"]}
+              className={styles.dropdownToggle}
               aria-haspopup="true"
               aria-expanded="true"
             >
               {t(section.labelKey)} ▼
             </button>
-            <ul className={styles["dropdown-menu"]} role="menu">
+            <ul className={styles.dropdownMenu} role="menu">
               {section.links.map(link => (
                 <li key={link.href} role="none">
-                  <Link
+                  <ClientLink
                     role="menuitem"
                     href={link.href}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
                   >
                     {t(link.labelKey)} {link.external && <ExternalIcon />}
-                  </Link>
+                  </ClientLink>
                 </li>
               ))}
             </ul>
@@ -159,19 +157,16 @@ function Navbar() {
       </ul>
 
       <div>
-        <button className={styles["dropdown-toggle"]} onClick={toggleLanguage}>
+        <button className={styles.dropdownToggle} onClick={toggleLanguage}>
           {otherLangLabel}
         </button>
         {session ? (
-          <button
-            className={styles["dropdown-toggle"]}
-            onClick={() => signOut()}
-          >
+          <button className={styles.dropdownToggle} onClick={() => signOut()}>
             {t("auth.signOut")}
           </button>
         ) : (
           <button
-            className={styles["dropdown-toggle"]}
+            className={styles.dropdownToggle}
             onClick={() => signIn("tkoaly")}
           >
             {t("auth.signIn")}
