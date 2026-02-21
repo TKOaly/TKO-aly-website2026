@@ -3,7 +3,7 @@ import { createInstance } from "i18next"
 import { initReactI18next } from "react-i18next/initReactI18next"
 import { getOptions } from "@/app/i18n/settings"
 import { useRouter as useRouterOrig } from "next/navigation"
-import LinkOrig from "next/link"
+import NextLink from "next/link"
 
 const initI18next = async () => {
   const i18nInstance = createInstance()
@@ -32,8 +32,8 @@ export const useRouter = (lng: string): ReturnType<typeof useRouterOrig> => {
   }
 }
 
-export const Link: React.FC<
-  ComponentProps<typeof LinkOrig> & { lang: string }
+export const ServerLink: React.FC<
+  ComponentProps<typeof NextLink> & { lang: string }
 > = forwardRef(function Link(props, ref) {
-  return <LinkOrig {...props} href={`/${props.lang}${props.href}`} ref={ref} />
+  return <NextLink {...props} href={`/${props.lang}${props.href}`} ref={ref} />
 })
