@@ -1,14 +1,19 @@
 import acceptLanguage from "accept-language"
 import { NextRequest, NextResponse } from "next/server"
 import { cookieName, fallbackLang, languages } from "./app/i18n/settings"
+import withAuth from "next-auth/middleware"
 
 acceptLanguage.languages([...languages])
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
+  matcher: [
+    "/a/:rest*",
+    "/u/:rest*",
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
+  ],
 }
 
-export function proxy(req: NextRequest) {
+async function proxy(req: NextRequest) {
   let lang: string | undefined
 
   // Check cookie first
@@ -52,3 +57,29 @@ export function proxy(req: NextRequest) {
 
   return response
 }
+
+function stripLangPrefix(pathname: string): string {
+  for (const loc of languages) {
+    if (pathname.startsWith(`/${loc}/`)) return pathname.slice(loc.length + 1)
+    if (pathname === `/${loc}`) return "/"
+  }
+  return pathname
+}
+
+export default withAuth(proxy, {
+  callbacks: {
+    authorized: ({ token, req }) => {
+      const pathname = stripLangPrefix(req.nextUrl.pathname)
+
+      if (pathname.startsWith("/a/")) {
+        return token?.admin === true
+      }
+
+      if (pathname.startsWith("/u/")) {
+        return !!token
+      }
+
+      return true
+    },
+  },
+})
