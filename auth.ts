@@ -25,7 +25,7 @@ interface AuthProfile {
   role: string
 }
 
-const config: AuthOptions = {
+export const config: AuthOptions = {
   session: {
     strategy: "jwt",
   },
