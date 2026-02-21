@@ -11,6 +11,9 @@ const eslintConfig = defineConfig([
     language: "css/css",
     plugins: { css },
     extends: ["css/recommended"],
+    rules: {
+      "css/no-invalid-properties": ["error", { allowUnknownVariables: true }],
+    },
   },
   // Override default ignores of eslint-config-next.
   globalIgnores([
