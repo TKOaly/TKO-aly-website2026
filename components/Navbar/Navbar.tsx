@@ -1,10 +1,13 @@
 "use client"
 
 import Image from "next/image"
+import { useRef } from "react"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { usePathname, useRouter } from "next/navigation"
 import { ClientLink, useTranslation } from "@/app/i18n/client"
 import styles from "./Navbar.module.css"
+import { useMatchMediaQuery } from "@/lib/useMatchMediaQuery"
+import { HamburgerIcon, X, ExternalLink } from "lucide-react"
 
 const navItems = [
   {
@@ -95,15 +98,13 @@ const navItems = [
   },
 ]
 
-const ExternalIcon = () => (
-  <Image src="/external-url-10.png" alt="↗" width={10} height={10} />
-)
-
 function Navbar() {
   const { data: session } = useSession()
   const { t, lang } = useTranslation()
   const pathname = usePathname()
   const router = useRouter()
+  const isMobileView = useMatchMediaQuery()
+  const mobileMenuRef = useRef<HTMLDialogElement>(null)
 
   const toggleLanguage = () => {
     const newLanguage = lang === "fi" ? "en" : "fi"
@@ -125,54 +126,153 @@ function Navbar() {
           alt="TKO-aly logo"
         />
       </ClientLink>
-      <ul className={styles.nav}>
-        {navItems.map(section => (
-          <li
-            key={section.labelKey}
-            className={`${styles.navItem} ${styles.dropdown}`}
-          >
-            <button
-              className={styles.dropdownToggle}
-              aria-haspopup="true"
-              aria-expanded="true"
-            >
-              {t(section.labelKey)} ▼
-            </button>
-            <ul className={styles.dropdownMenu} role="menu">
-              {section.links.map(link => (
-                <li key={link.href} role="none">
-                  <ClientLink
-                    role="menuitem"
-                    href={link.href}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                  >
-                    {t(link.labelKey)} {link.external && <ExternalIcon />}
-                  </ClientLink>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
 
-      <div>
-        <button className={styles.dropdownToggle} onClick={toggleLanguage}>
-          {otherLangLabel}
-        </button>
-        {session ? (
-          <button className={styles.dropdownToggle} onClick={() => signOut()}>
-            {t("auth.signOut")}
-          </button>
-        ) : (
+      {!isMobileView && (
+        <>
+          <ul className={styles.nav}>
+            {navItems.map(section => (
+              <li
+                key={section.labelKey}
+                className={`${styles.navItem} ${styles.dropdown}`}
+              >
+                <button
+                  className={styles.dropdownToggle}
+                  aria-haspopup="true"
+                  aria-expanded="true"
+                >
+                  {t(section.labelKey)} ▼
+                </button>
+                <ul className={styles.dropdownMenu} role="menu">
+                  {section.links.map(link => (
+                    <li key={link.href} role="none">
+                      <ClientLink
+                        role="menuitem"
+                        href={link.href}
+                        target={link.external ? "_blank" : undefined}
+                        rel={link.external ? "noopener noreferrer" : undefined}
+                      >
+                        {t(link.labelKey)}{" "}
+                        {link.external && (
+                          <ExternalLink height={16} width={16} />
+                        )}
+                      </ClientLink>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+
+          <div>
+            <button className={styles.dropdownToggle} onClick={toggleLanguage}>
+              {otherLangLabel}
+            </button>
+            {session ? (
+              <button
+                className={styles.dropdownToggle}
+                onClick={() => signOut()}
+              >
+                {t("auth.signOut")}
+              </button>
+            ) : (
+              <button
+                className={styles.dropdownToggle}
+                onClick={() => signIn("tkoaly")}
+              >
+                {t("auth.signIn")}
+              </button>
+            )}
+          </div>
+        </>
+      )}
+
+      {isMobileView && (
+        <>
           <button
-            className={styles.dropdownToggle}
-            onClick={() => signIn("tkoaly")}
+            type="button"
+            onClick={() => mobileMenuRef.current?.showModal()}
+            className={styles.hamburger}
+            aria-label={t("nav.openMenu")}
           >
-            {t("auth.signIn")}
+            <HamburgerIcon height={28} width={28} />
           </button>
-        )}
-      </div>
+
+          <dialog ref={mobileMenuRef} className={styles.mobileDialog}>
+            <button
+              type="button"
+              className={styles.mobileCloseButton}
+              onClick={() => mobileMenuRef.current?.close()}
+              aria-label={t("nav.closeMenu")}
+            >
+              <X height={28} width={28} />
+            </button>
+            <nav className={styles.mobileNav}>
+              {navItems.map((section, i) => (
+                <section key={section.labelKey}>
+                  <details open={i === 0}>
+                    <summary className={styles.mobileSectionHeading}>
+                      {t(section.labelKey)}
+                    </summary>
+                    <ul className={styles.mobileLinkList}>
+                      {section.links.map(link => (
+                        <li key={link.href}>
+                          <ClientLink
+                            href={link.href}
+                            target={link.external ? "_blank" : undefined}
+                            rel={
+                              link.external ? "noopener noreferrer" : undefined
+                            }
+                            onClick={() => mobileMenuRef.current?.close()}
+                            className={styles.mobileLink}
+                          >
+                            {t(link.labelKey)}
+                            {link.external && (
+                              <>
+                                {" "}
+                                <ExternalLink height={16} width={16} />
+                              </>
+                            )}
+                          </ClientLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </section>
+              ))}
+            </nav>
+
+            <div className={styles.mobileDialogFooter}>
+              <button
+                className={styles.mobileActionButton}
+                onClick={toggleLanguage}
+              >
+                {otherLangLabel}
+              </button>
+              {session ? (
+                <button
+                  className={styles.mobileActionButton}
+                  onClick={() => {
+                    mobileMenuRef.current?.close()
+                    signOut()
+                  }}
+                >
+                  {t("auth.signOut")}
+                </button>
+              ) : (
+                <button
+                  className={styles.mobileActionButton}
+                  onClick={() => {
+                    mobileMenuRef.current?.close()
+                    signIn("tkoaly")
+                  }}
+                >
+                  {t("auth.signIn")}
+                </button>
+              )}
+            </div>
+          </dialog>
+        </>
+      )}
     </nav>
   )
 }
