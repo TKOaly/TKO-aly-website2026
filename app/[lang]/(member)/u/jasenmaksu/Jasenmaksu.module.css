@@ -12,25 +12,6 @@
   gap: var(--space-8);
 }
 
-/* Hero */
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-6);
-  text-align: start;
-}
-
-.heroTitle {
-  font-size: var(--space-10);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  font-style: italic;
-  margin: 0;
-}
-
 /* Card */
 .card {
   max-width: var(--screen-md);
@@ -196,5 +177,9 @@
 
   .ref {
     text-decoration: none;
+  }
+
+  .dashedTop {
+    border-top: 3px dashed var(--neutral-900);
   }
 }

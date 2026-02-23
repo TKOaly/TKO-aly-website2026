@@ -1,20 +1,13 @@
+import PageHeader from "@/components/PageHeader/PageHeader"
 import styles from "./Jasenmaksu.module.css"
+import Accordion from "@/components/Accordion/Accordion"
 
 const MembershipInvoicePage = () => {
   return (
     <main className={styles.main}>
-      {/* Hero */}
-      <div className={styles.hero}>
-        <h1 className={styles.heroTitle}>Payment Confirmation</h1>
-      </div>
+      <PageHeader title="Payment Confirmation" />
 
-      {/* Receipt card */}
-      <details open className={styles.card}>
-        <summary className={styles.cardHeader}>
-          <span>Membership Invoice</span>
-          <span className={styles.shieldIcon}>&#9673;</span>
-        </summary>
-
+      <Accordion summary="Membership Invoice">
         <div className={styles.rows}>
           <div className={styles.row}>
             <span className={styles.label}>Maksaja</span>
@@ -81,7 +74,7 @@ const MembershipInvoicePage = () => {
             </div>
           </div>
         </div>
-      </details>
+      </Accordion>
     </main>
   )
 }

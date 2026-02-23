@@ -4,7 +4,7 @@
   top: 0;
   z-index: 1000;
   width: 100%;
-  background: #ffcc33;
+  background: var(--yellow);
   color: black;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -14,6 +14,16 @@
   box-sizing: border-box;
   border-left: 24px solid transparent;
   border-right: 24px solid transparent;
+}
+
+.dropdownToggle,
+.dropdownMenu {
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dropdownMenu a {
+  text-transform: none;
 }
 
 .nav {
@@ -42,11 +52,16 @@
   cursor: pointer;
 }
 
+.dropdownMenu a:hover,
 .navItem a:hover,
-.dropdownToggle:hover,
+.dropdownToggle:hover {
+  background: var(--yellow-600);
+}
+
+.dropdownMenu a:focus,
 .navItem a:focus,
 .dropdownToggle:focus {
-  background: rgb(255, 140, 0);
+  background: var(--yellow-700);
 }
 
 /* Dropdowns */
@@ -62,7 +77,7 @@
   list-style: none;
   margin: 0;
   padding: 8px;
-  background: #ffcc33;
+  background: var(--yellow);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
@@ -80,11 +95,6 @@
   text-decoration: none;
   padding: 8px 10px;
   border-radius: 6px;
-}
-
-.dropdownMenu a:hover,
-.dropdownMenu a:focus {
-  background: rgb(255, 140, 0);
 }
 
 /* Mobile */
@@ -141,8 +151,8 @@
 .mobileCloseButton:hover,
 .mobileCloseButton:focus {
   background: var(--neutral-600);
-  outline: none;
 }
+
 .mobileDialog::backdrop {
   background: transparent;
 }
