@@ -90,6 +90,13 @@
   --color-text-muted: var(--neutral-300);
   --color-accent: var(--yellow-500);
   --color-link: var(--yellow-400);
+
+  --border: 2px solid hsl(50, 15%, 60%);
+  --border-thick: 4px solid hsl(50, 15%, 60%);
+
+  --shadow-light: 2px 2px 0 var(--yellow-700);
+  --shadow: 4px 4px 0 var(--yellow-700);
+  --shadow-thick: 6px 6px 0 var(--yellow-700);
 }
 
 @media (prefers-color-scheme: light) {
@@ -100,6 +107,13 @@
     --color-text-muted: var(--neutral-500);
     --color-accent: var(--yellow-600);
     --color-link: var(--blue-500);
+
+    --border: 2px solid var(--neutral-900);
+    --border-thick: 4px solid var(--neutral-900);
+
+    --shadow-light: 2px 2px 0 var(--neutral-900);
+    --shadow: 4px 4px 0 var(--neutral-900);
+    --shadow-thick: 6px 6px 0 var(--neutral-900);
   }
 }
 

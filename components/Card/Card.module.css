@@ -1,0 +1,11 @@
+.card {
+  padding: var(--space-6) var(--space-4);
+  max-width: var(--screen-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-thick);
+  border: var(--border);
+}
+
+.card > * {
+  max-width: var(--screen-xs);
+}
