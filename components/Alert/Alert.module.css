@@ -1,0 +1,26 @@
+.infoBox {
+  background-color: rgba(43, 140, 238, 0.1);
+  border-left: 4px solid #2b8cee;
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.infoBoxTitle {
+  font-size: small;
+  font-weight: 700;
+  color: #2b8cee;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.infoBoxText {
+  font-size: 0.875rem;
+  margin: 0;
+  color: var(--color-text);
+}
+
+@media (prefers-color-scheme: light) {
+  .infoBoxText {
+    color: #0f172a;
+  }
+}

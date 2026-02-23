@@ -1,0 +1,33 @@
+.fieldset {
+  max-width: var(--screen-xs);
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.fieldsetLast {
+  padding-bottom: 3rem;
+}
+
+.legend {
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  background-color: var(--neutral-200);
+  border: 2px solid var(--neutral-100);
+  padding: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-6);
+  display: inline-block;
+  color: var(--neutral-900);
+}
+
+@media (prefers-color-scheme: light) {
+  .legend {
+    background-color: var(--neutral-800);
+    border-color: var(--neutral-900);
+    color: var(--white);
+  }
+}
