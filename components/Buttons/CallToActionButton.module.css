@@ -1,9 +1,9 @@
-.submitButton {
+.submitButton,
+.resetButton {
   border-bottom: 4px solid var(--neutral-900);
   border-right: 4px solid var(--neutral-900);
   border-top: 2px solid var(--neutral-200);
   border-left: 2px solid var(--neutral-200);
-  background-color: var(--yellow);
   box-shadow: var(--shadow);
   padding: var(--space-4) var(--space-8);
   font-weight: 900;
@@ -14,6 +14,15 @@
   transition:
     box-shadow 0.1s ease,
     transform 0.1s ease;
+}
+
+.submitButton {
+  background-color: var(--yellow);
+}
+
+.resetButton {
+  background-color: transparent;
+  margin-right: var(--space-4);
 }
 
 .submitButton:hover {
@@ -32,6 +41,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .resetButton {
+    display: none;
+  }
+
   .bottomBar {
     position: fixed;
     bottom: 0;
@@ -69,8 +82,9 @@
     border-top-color: #000000;
   }
 
-  .submitButton {
+  .submitButton,
+  .resetButton {
     border-color: #000000;
-    box-shadow: 4px 4px 0px 0px #000000;
+    box-shadow: var(--shadow);
   }
 }
