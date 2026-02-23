@@ -1,17 +1,18 @@
 :root {
   color-scheme: dark light;
 
-  /* Yellow palette */
-  --yellow-50: hsl(45, 100%, 95%);
-  --yellow-100: hsl(45, 100%, 88%);
-  --yellow-200: hsl(45, 100%, 78%);
-  --yellow-300: hsl(45, 100%, 68%);
-  --yellow-400: hsl(45, 100%, 60%);
-  --yellow-500: hsl(45, 100%, 52%);
-  --yellow-600: hsl(45, 100%, 44%);
-  --yellow-700: hsl(45, 95%, 36%);
-  --yellow-800: hsl(45, 90%, 28%);
-  --yellow-900: hsl(45, 85%, 20%);
+  /* Yellow dark palette */
+  --yellow-50: hsl(62, 100%, 95%);
+  --yellow-100: hsl(62, 100%, 88%);
+  --yellow-200: hsl(62, 100%, 78%);
+  --yellow-300: hsl(62, 100%, 68%);
+  --yellow-400: hsl(62, 100%, 60%);
+  --yellow-500: hsl(62, 100%, 52%);
+  --yellow-600: hsl(62, 100%, 44%);
+  --yellow-700: hsl(62, 95%, 36%);
+  --yellow-800: hsl(62, 90%, 28%);
+  --yellow-900: hsl(62, 85%, 20%);
+  --yellow: var(--yellow-400); /* Primary color */
 
   /* Blue palette */
   --blue-50: hsl(215, 100%, 95%);
@@ -101,6 +102,19 @@
 
 @media (prefers-color-scheme: light) {
   :root {
+    /* Yellow palette */
+    --yellow-50: hsl(45, 100%, 95%);
+    --yellow-100: hsl(45, 100%, 88%);
+    --yellow-200: hsl(45, 100%, 78%);
+    --yellow-300: hsl(45, 100%, 68%);
+    --yellow-400: hsl(45, 100%, 60%);
+    --yellow-500: hsl(45, 100%, 52%);
+    --yellow-600: hsl(45, 100%, 44%);
+    --yellow-700: hsl(45, 95%, 36%);
+    --yellow-800: hsl(45, 90%, 28%);
+    --yellow-900: hsl(45, 85%, 20%);
+    --yellow: var(--yellow-400); /* Primary color */
+
     --color-bg: var(--neutral-50);
     --color-surface: var(--white);
     --color-text: var(--neutral-800);

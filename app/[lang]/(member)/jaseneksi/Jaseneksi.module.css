@@ -1,0 +1,86 @@
+/*  Main content  */
+.main {
+  max-width: var(--screen-md);
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 8rem;
+}
+
+.cardTitle {
+  font-style: italic;
+  text-transform: uppercase;
+  font-size: medium;
+  line-height: 1;
+  margin: 0;
+}
+
+.cardText {
+  line-height: 1.6;
+  margin: var(--space-4) 0;
+}
+
+/*  Form  */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/*  Password grid */
+.passwordGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* Checkbox list */
+.checkboxList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+/*  Link  */
+.link {
+  color: var(--yellow-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  outline-color: var(--yellow-700);
+  outline-offset: var(--space-1);
+  outline-width: var(--space-2);
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 0.75rem;
+    padding-bottom: 7rem;
+  }
+
+  .header {
+    padding: 0.75rem 1rem;
+  }
+
+  .welcomeCard,
+  .noticeBox {
+    box-shadow: none;
+  }
+
+  .noticeBox {
+    margin-left: 1.5rem;
+  }
+
+  .submitButton {
+    box-shadow: none;
+    font-size: 1rem;
+  }
+}

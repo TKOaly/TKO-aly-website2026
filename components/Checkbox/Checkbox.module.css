@@ -23,7 +23,7 @@
 }
 
 .checkboxInput:checked {
-  background-color: #facc15;
+  background-color: var(--yellow-600);
 }
 
 .checkboxInput:checked::after {
