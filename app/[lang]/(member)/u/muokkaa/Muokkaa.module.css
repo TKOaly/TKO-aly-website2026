@@ -1,0 +1,67 @@
+.main {
+  max-width: var(--screen-md);
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 8rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.passwordGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .passwordGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.checkboxList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.select {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--background);
+  font-size: 1rem;
+}
+
+.link {
+  color: var(--yellow-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  outline-color: var(--yellow-700);
+  outline-offset: var(--space-1);
+  outline-width: var(--space-2);
+}
+
+.privacyNote {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
