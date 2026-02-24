@@ -13,7 +13,7 @@
   color: var(--color-text);
 }
 
-.input {
+.textarea {
   width: 100%;
   border: 3px solid var(--neutral-100);
   padding: 0.75rem;
@@ -22,17 +22,9 @@
   color: var(--color-text);
   border-radius: 0;
   box-sizing: border-box;
-  transition: box-shadow 0.15s ease;
   outline-color: var(--yellow-700);
   outline-offset: var(--space-1);
   outline-width: var(--space-2);
-}
-
-.input::placeholder {
-  color: var(--neutral-300);
-  font-weight: 400;
-  font-family: monospace;
-  text-transform: lowercase;
 }
 
 .hint {
@@ -44,13 +36,8 @@
 }
 
 @media (prefers-color-scheme: light) {
-  .label {
-    color: #000000;
-  }
-
+  .textarea,
   .input {
-    border-color: #000000;
-    background-color: #ffffff;
-    color: #0f172a;
+    border-color: var(--neutral-900);
   }
 }

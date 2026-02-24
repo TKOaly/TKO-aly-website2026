@@ -13,7 +13,7 @@
   color: var(--color-text);
 }
 
-.input {
+.select {
   width: 100%;
   border: 3px solid var(--neutral-100);
   padding: 0.75rem;
@@ -22,25 +22,9 @@
   color: var(--color-text);
   border-radius: 0;
   box-sizing: border-box;
-  transition: box-shadow 0.15s ease;
   outline-color: var(--yellow-700);
   outline-offset: var(--space-1);
   outline-width: var(--space-2);
-}
-
-.input::placeholder {
-  color: var(--neutral-300);
-  font-weight: 400;
-  font-family: monospace;
-  text-transform: lowercase;
-}
-
-.hint {
-  font-size: small;
-  font-weight: 700;
-  color: var(--color-text-muted);
-  font-style: italic;
-  margin: 0;
 }
 
 @media (prefers-color-scheme: light) {
@@ -48,7 +32,7 @@
     color: #000000;
   }
 
-  .input {
+  .select {
     border-color: #000000;
     background-color: #ffffff;
     color: #0f172a;
