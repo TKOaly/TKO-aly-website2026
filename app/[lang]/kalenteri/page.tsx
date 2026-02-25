@@ -6,7 +6,6 @@ import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
 import styles from "./Kalenteri.module.css"
 import { useEffect, useState } from "react"
-import { fetchAllEvents } from "@/lib/api/events"
 
 type Event = {
   id: number
@@ -53,7 +52,19 @@ export default function Calendar() {
   useEffect(() => {
     let isActive = true
 
-    fetchAllEvents()
+    fetch("/api/events", {
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch events: ${response.status} ${response.statusText}`,
+          )
+        }
+        return response.json()
+      })
       .then(data => {
         if (!isActive) {
           return

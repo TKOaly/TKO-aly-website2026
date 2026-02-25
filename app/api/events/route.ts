@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
 
+export type EventRecord = Record<string, unknown>
+
 export async function GET(): Promise<NextResponse> {
   try {
     const baseUrl = process.env.EVENTS_API_BASE_URL || ""
@@ -12,15 +14,9 @@ export async function GET(): Promise<NextResponse> {
       cache: "no-store",
     })
 
-    const body = await response.text()
+    const data = (await response.json()) as EventRecord[]
 
-    return new NextResponse(body, {
-      status: response.status,
-      headers: {
-        "Content-Type":
-          response.headers.get("Content-Type") || "application/json",
-      },
-    })
+    return NextResponse.json(data)
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Failed to reach events API"
