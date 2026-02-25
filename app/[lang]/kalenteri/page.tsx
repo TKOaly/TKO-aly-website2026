@@ -39,6 +39,63 @@ type ProcessedEvent = Event & {
   backgroundColor: string
 }
 
+function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
+  const calendarEvents = events.map(event => ({
+    id: String(event.id),
+    title: event.name || "Untitled Event",
+    start: event.starts,
+    url: `/calendar_events/view/${event.id}`,
+    backgroundColor: event.backgroundColor,
+  }))
+
+  return (
+    <FullCalendar
+      plugins={[dayGridPlugin, listPlugin]}
+      locale={fiLocale}
+      headerToolbar={{
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,listWeek",
+      }}
+      initialView="dayGridMonth"
+      editable={false}
+      selectable={true}
+      eventDisplay="list-item"
+      contentHeight={"60%"}
+      events={calendarEvents}
+    />
+  )
+}
+
+function EventListView({ events }: { events: ProcessedEvent[] }) {
+  return (
+    <div id={styles["events-list"]}>
+      {events.map(event => (
+        <a key={event.id} href={`/calendar_events/view/${event.id}`}>
+          <div
+            className={styles["event-list-item"]}
+            style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
+          >
+            <h3>{event.name}</h3>
+            <p>
+              <strong>Alkaa:</strong>{" "}
+              {new Date(event.starts).toLocaleDateString("fi-FI")},
+              {new Date(event.starts).toLocaleTimeString("fi-FI", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
+            <p>
+              <strong>Sijainti:</strong> {event.location}
+            </p>
+            <p>{event.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  )
+}
+
 export default function Calendar() {
   const [events, setEvents] = useState<Event[]>([])
   const [loadError, setLoadError] = useState<string | null>(null)
@@ -87,7 +144,7 @@ export default function Calendar() {
     }
   }, [])
 
-  const colorcodedEvents: ProcessedEvent[] = colorcodeEvents(events)
+  const processedEvents: ProcessedEvent[] = processEvents(events)
 
   function hasValidStartTime(
     event: Event,
@@ -95,7 +152,7 @@ export default function Calendar() {
     return event.starts !== null
   }
 
-  function colorcodeEvents(eventsData: Event[]): ProcessedEvent[] {
+  function processEvents(eventsData: Event[]): ProcessedEvent[] {
     const now = new Date()
 
     return eventsData.filter(hasValidStartTime).map(event => {
@@ -122,63 +179,6 @@ export default function Calendar() {
 
       return { ...event, backgroundColor }
     })
-  }
-
-  function eventCalendarView() {
-    const calendarEvents = colorcodedEvents.map(event => ({
-      id: String(event.id),
-      title: event.name || "Untitled Event",
-      start: event.starts,
-      url: `/calendar_events/view/${event.id}`,
-      backgroundColor: event.backgroundColor,
-    }))
-
-    return (
-      <FullCalendar
-        plugins={[dayGridPlugin, listPlugin]}
-        locale={fiLocale}
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,listWeek",
-        }}
-        initialView="dayGridMonth"
-        editable={false}
-        selectable={true}
-        eventDisplay="list-item"
-        contentHeight={"60%"}
-        events={calendarEvents}
-      />
-    )
-  }
-
-  function eventListView() {
-    return (
-      <div id={styles["events-list"]}>
-        {colorcodedEvents.map(event => (
-          <a key={event.id} href={`/calendar_events/view/${event.id}`}>
-            <div
-              className={styles["event-list-item"]}
-              style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
-            >
-              <h3>{event.name}</h3>
-              <p>
-                <strong>Alkaa:</strong>{" "}
-                {new Date(event.starts).toLocaleDateString("fi-FI")},
-                {new Date(event.starts).toLocaleTimeString("fi-FI", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </p>
-              <p>
-                <strong>Sijainti:</strong> {event.location}
-              </p>
-              <p>{event.description}</p>
-            </div>
-          </a>
-        ))}
-      </div>
-    )
   }
 
   return (
@@ -211,9 +211,9 @@ export default function Calendar() {
       {loadError ? (
         <p>{loadError}</p>
       ) : isListView ? (
-        eventListView()
+        <EventListView events={processedEvents} />
       ) : (
-        eventCalendarView()
+        <EventCalendarView events={processedEvents} />
       )}
       <div id={styles["calendar-instructions"]}>
         {isLegendVisible && (
