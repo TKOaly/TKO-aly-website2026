@@ -36,7 +36,9 @@
       "fuksiInfo": "Freshmen info",
       "fuksiPassi": "Freshmen pass",
       "jobs": "Jobs",
-      "forCompanies": "For companies"
+      "forCompanies": "For companies",
+      "editProfile": "Edit profile",
+      "memberInvoice": "Membership invoice"
     }
   },
   "auth": {

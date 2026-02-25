@@ -1,52 +1,39 @@
-/* Top bar */
+/* Navigation container */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 1000;
-  width: 100%;
   background: var(--yellow);
-  color: black;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 64px;
-  box-sizing: border-box;
-  border-left: 24px solid transparent;
-  border-right: 24px solid transparent;
+  height: var(--space-16);
+  padding: 0 var(--space-6);
 }
 
-.dropdownToggle,
-.dropdownMenu {
-  text-transform: uppercase;
-  font-family: monospace;
-}
-
-.dropdownMenu a {
-  text-transform: none;
-}
-
-.nav {
+.navbar li {
   list-style: none;
-  margin: 0;
-  padding: 0 24px;
+}
+
+/* Primary navigation links */
+.primaryList {
+  padding: 0 var(--space-6);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  min-height: 56px;
+  gap: var(--space-2);
 }
 
-.navItem a,
-.dropdownToggle {
-  color: black;
-  text-decoration: none;
-  font-weight: 600;
-  padding: 19px 10px;
-  border-radius: 6px;
+.secondaryActionList {
+  display: flex;
+  gap: var(--space-2);
 }
 
 .dropdownToggle {
+  color: var(--neutral-900);
+  padding: var(--space-4) var(--space-2);
+  font-weight: bold;
+  font-family: monospace;
+  font-size: large;
+  text-transform: uppercase;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -65,40 +52,43 @@
 }
 
 /* Dropdowns */
-.navItem.dropdown {
+.navItem {
   position: relative;
 }
 
 .dropdownMenu {
   position: absolute;
   left: 0;
-  top: 100%;
-  min-width: 220px;
-  list-style: none;
-  margin: 0;
-  padding: 8px;
+  min-width: var(--space-60);
+  padding: var(--space-2);
   background: var(--yellow);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  font-family: monospace;
+  font-size: large;
   display: none;
 }
 
-.navItem.dropdown:focus .dropdownMenu,
-.navItem.dropdown:focus-within .dropdownMenu {
+/* Show dropdown on focus or when a child element is focused */
+.navItem:focus .dropdownMenu,
+.navItem:focus-within .dropdownMenu {
   display: block;
 }
 
-.dropdownMenu a {
+.dropdownMenu li a {
   display: block;
-  color: black;
   text-decoration: none;
-  padding: 8px 10px;
-  border-radius: 6px;
+  font-weight: bold;
+  color: black;
+  padding: var(--space-2);
 }
 
-/* Mobile */
-.hamburger {
+/* User dropdown */
+.userDropdownMenu {
+  left: auto;
+  right: 0;
+}
+
+/* White profile button */
+.whiteButton {
   height: var(--space-12);
   width: var(--space-12);
   background: var(--neutral-50);
@@ -108,124 +98,11 @@
   transition: all 0.1s ease-in-out;
 }
 
-/* Mobile dialog */
-@keyframes dialogSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(640px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.mobileDialog {
-  position: fixed;
-  inset: 0;
-  margin: 0;
-  width: 100%;
-  max-width: 100%;
-  height: 100%;
-  max-height: 100%;
-  background: var(--color-surface);
-  padding: 0;
-  border: none;
-  overflow-y: auto;
-  animation: dialogSlideIn 0.2s ease-out both;
-}
-.mobileCloseButton {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
-
-.mobileCloseButton:hover,
-.mobileCloseButton:focus {
-  background: var(--neutral-600);
-}
-
-.mobileDialog::backdrop {
-  background: transparent;
-}
-
-.mobileDialogHeader {
-  top: 0;
-  right: 0;
-  height: var(--space-16);
-  z-index: 1;
-}
-
-.mobileCloseButton:hover,
-.mobileCloseButton:focus {
-  background: rgb(0, 0, 0, 0.5);
-}
-
-.mobileSectionHeading {
-  padding: var(--space-4);
-  font-size: small;
-  font-weight: 700;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  margin: 0 0 8px 0;
-  cursor: pointer;
-}
-
-.mobileLinkList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.mobileLink {
-  display: block;
-  text-decoration: none;
-  font-weight: 700;
-  padding: var(--space-3) var(--space-6);
-  color: var(--color-text);
-}
-
-.mobileLink:hover,
-.mobileLink:focus {
-  background: var(--neutral-600);
-}
-
-.mobileDialogFooter {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.mobileActionButton {
-  background: transparent;
-  cursor: pointer;
-  font-weight: 700;
-  padding: 10px 16px;
-  text-align: left;
-}
-
-.mobileActionButton:hover,
-.mobileActionButton:focus {
-  background: var(--neutral-600);
-}
-
-.hamburger:hover {
+.whiteButton:hover {
   background: var(--white);
 }
 
-.hamburger:active {
+.whiteButton:active {
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0 var(--neutral-900);
   background: var(--neutral-200);
