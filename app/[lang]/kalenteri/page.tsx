@@ -5,7 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
 import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
 import styles from "./Kalenteri.module.css"
-import { useEffect, useState } from "react"
+import { useEffect, useState, ReactNode } from "react"
 
 type Event = {
   id: number
@@ -181,6 +181,16 @@ export default function Calendar() {
     })
   }
 
+  let viewContent: ReactNode
+
+  if (loadError) {
+    viewContent = <p>{loadError}</p>
+  } else if (isListView) {
+    viewContent = <EventListView events={processedEvents} />
+  } else {
+    viewContent = <EventCalendarView events={processedEvents} />
+  }
+
   return (
     <div id={styles.calendar}>
       <div id={styles["calendar-title"]}>
@@ -208,13 +218,7 @@ export default function Calendar() {
           </button>
         </div>
       </div>
-      {loadError ? (
-        <p>{loadError}</p>
-      ) : isListView ? (
-        <EventListView events={processedEvents} />
-      ) : (
-        <EventCalendarView events={processedEvents} />
-      )}
+      {viewContent}
       <div id={styles["calendar-instructions"]}>
         {isLegendVisible && (
           <div id={styles.legend}>
