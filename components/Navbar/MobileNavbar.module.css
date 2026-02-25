@@ -1,0 +1,134 @@
+/* White menu button */
+.hamburger {
+  height: var(--space-12);
+  width: var(--space-12);
+  background: var(--neutral-50);
+  color: var(--neutral-900);
+  box-shadow: 3px 3px 0 var(--neutral-900);
+  border: 3px solid var(--neutral-900);
+  transition: all 0.1s ease-in-out;
+}
+
+.hamburger:hover {
+  background: var(--white);
+}
+
+.hamburger:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--neutral-900);
+  background: var(--neutral-200);
+}
+
+/* Mobile dialog */
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(640px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobileDialog {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  background: var(--color-surface);
+  padding: 0;
+  border: none;
+  overflow-y: auto;
+  animation: dialogSlideIn 0.2s ease-out both;
+}
+
+.mobileCloseButton {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.mobileCloseButton:hover,
+.mobileCloseButton:focus {
+  background: var(--neutral-600);
+}
+
+.mobileDialog::backdrop {
+  background: transparent;
+}
+
+.mobileDialogHeader {
+  top: 0;
+  right: 0;
+  height: var(--space-16);
+  z-index: 1;
+}
+
+.mobileCloseButton:hover,
+.mobileCloseButton:focus {
+  background: rgb(0, 0, 0, 0.5);
+}
+
+.mobileSectionHeading {
+  padding: var(--space-4);
+  font-size: small;
+  font-weight: bold;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-2) 0;
+  cursor: pointer;
+}
+
+.mobileLinkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+}
+
+.mobileLink {
+  display: block;
+  text-decoration: none;
+  font-weight: bold;
+  padding: var(--space-3) var(--space-6);
+  color: var(--color-text);
+}
+
+.mobileLink:hover,
+.mobileLink:focus {
+  background: var(--neutral-600);
+}
+
+.mobileDialogFooter {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.mobileActionButton {
+  background: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  padding: var(--space-2) var(--space-4);
+  text-align: left;
+}
+
+.mobileActionButton:hover,
+.mobileActionButton:focus {
+  background: var(--neutral-600);
+}

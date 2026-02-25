@@ -131,28 +131,11 @@
   }
 }
 
-a:visited {
-  color: inherit;
-}
-
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-}
-
-#main-app {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding-top: 0px;
-}
-
-#content {
-  width: var(--screen-md);
-  padding: 0 30px 0 30px;
 }
 
 /* @fullcalendar styles */

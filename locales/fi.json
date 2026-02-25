@@ -36,7 +36,9 @@
       "fuksiInfo": "Fuksi-info",
       "fuksiPassi": "Fuksipassi",
       "jobs": "Työpaikat",
-      "forCompanies": "Yrityksille"
+      "forCompanies": "Yrityksille",
+      "editProfile": "Muokkaa profiilia",
+      "memberInvoice": "Jäsenmaksu"
     }
   },
   "auth": {
