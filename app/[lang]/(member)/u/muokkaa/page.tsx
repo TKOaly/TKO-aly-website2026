@@ -1,8 +1,9 @@
-import PageHeader from "@/components/PageHeader/PageHeader"
-import Fieldset from "@/components/Fieldset/Fieldset"
-import Field from "@/components/Field/Field"
-import Checkbox from "@/components/Checkbox/Checkbox"
 import CallToActionButton from "@/components/Buttons/CallToActionButton"
+import Checkbox from "@/components/Checkbox/Checkbox"
+import Field from "@/components/Field/Field"
+import FieldSelect from "@/components/FieldSelect/FieldSelect"
+import Fieldset from "@/components/Fieldset/Fieldset"
+import PageHeader from "@/components/PageHeader/PageHeader"
 
 import styles from "./Muokkaa.module.css"
 
@@ -67,30 +68,34 @@ const EditUserPage = () => {
             autoComplete="tel"
           />
 
-          <Field
+          <FieldSelect
             label="Käyttäjärooli"
             id="role"
             name="role"
-            type="select"
             defaultValue="user"
             disabled
-          />
+          >
+            <option value="user">Käyttäjä</option>
+          </FieldSelect>
 
-          <Field
+          <FieldSelect
             label="Jäsentyyppi"
             id="member_type"
             name="member_type"
-            type="select"
             defaultValue="jasen"
             disabled
-          />
+          >
+            <option value="jasen">Jäsen</option>
+            <option value="ulkoinen-jasen">Ulkoinen jäsen</option>
+            <option value="ei-jasen">Ei jäsen</option>
+          </FieldSelect>
 
           <Field
             label="Liittymispäivä"
             id="membership_start"
             name="membership_start"
-            type="text"
-            defaultValue="26.08.2025"
+            type="date"
+            defaultValue="2025-08-26"
             readOnly
           />
 

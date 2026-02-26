@@ -14,7 +14,7 @@ const MobileCallToActionButton = ({
   return (
     <div className={styles.bottomBar}>
       <div className={styles.bottomBarInner}>
-        <button type="reset" className={styles.resetButton}>
+        <button type="reset" form={form} className={styles.resetButton}>
           Eiku
         </button>
         <button

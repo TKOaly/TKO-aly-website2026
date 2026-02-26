@@ -1,10 +1,9 @@
 import enTranslations from "@/locales/en.json"
 import fiTranslations from "@/locales/fi.json"
 import { InitOptions } from "i18next"
+import { cookieName, fallbackLang, languages } from "./config"
 
-export const cookieName = "tekis-lang"
-export const languages = ["en", "fi"]
-export const fallbackLang = "fi"
+export { cookieName, fallbackLang, languages }
 
 const runsOnServerSide = typeof window === "undefined"
 

@@ -39,7 +39,8 @@
       "forCompanies": "For companies",
       "editProfile": "Edit profile",
       "memberInvoice": "Membership invoice"
-    }
+    },
+    "openMenu": "Open menu"
   },
   "auth": {
     "signIn": "Sign in",

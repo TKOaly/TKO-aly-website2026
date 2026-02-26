@@ -15,8 +15,8 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
 
 const FieldRadioGroup = ({ legend, name, options, ...inputProps }: Props) => {
   return (
-    <div className={styles.fieldGroup}>
-      <span className={styles.legend}>{legend}</span>
+    <fieldset className={styles.fieldGroup}>
+      <legend className={styles.legend}>{legend}</legend>
       <div className={styles.radioGroup}>
         {options.map(option => (
           <label key={option.value} className={styles.radioLabel}>
@@ -32,7 +32,7 @@ const FieldRadioGroup = ({ legend, name, options, ...inputProps }: Props) => {
           </label>
         ))}
       </div>
-    </div>
+    </fieldset>
   )
 }
 
