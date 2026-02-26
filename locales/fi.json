@@ -37,6 +37,7 @@
       "fuksiPassi": "Fuksipassi",
       "jobs": "Työpaikat",
       "forCompanies": "Yrityksille",
+      "applyMembership": "Liity jäseneksi",
       "editProfile": "Muokkaa profiilia",
       "memberInvoice": "Jäsenmaksu"
     },
@@ -50,5 +51,159 @@
     "readMore": "Lue lisää",
     "backToTop": "Takaisin ylös",
     "switchToEnglish": "In English"
+  },
+  "jaseneksi": {
+    "title": "Liity Jäseneksi",
+    "description": "Voit rekisteröityä jäseneksi tällä lomakkeella. Voit maksaa joko tilisiirrolla tai sopia käteismaksusta hallituslaisen kanssa.",
+    "card": {
+      "title": "Jäsenmaksun suuruus",
+      "1year": "1 vuosi",
+      "3years": "3 vuotta",
+      "5years": "5 vuotta",
+      "alert": "Jäsenkausi päättyy 31.7. Mikäli ostat jäsenkauden ennen tätä päiväystä, jäsenyydestäsi katsotaan kuluneen ensimmäinen vuosi 31.7. alkaen."
+    },
+    "personal": {
+      "legend": "Henkilötiedot",
+      "username": {
+        "label": "Käyttäjätunnus",
+        "placeholder": "esim. teekkari123"
+      },
+      "fullname": {
+        "label": "Koko nimi",
+        "placeholder": "Matti Meikäläinen",
+        "hint": "Yhdistyslaki edellyttää kaikki etunimet sekä sukunimen."
+      },
+      "nickname": {
+        "label": "Kutsumanimi",
+        "placeholder": "Masa",
+        "hint": "Kutsumanimi näkyy muille käyttäjille."
+      },
+      "email": { "label": "Sähköposti", "placeholder": "matti@example.com" },
+      "hometown": { "label": "Kotikunta", "placeholder": "Helsinki" },
+      "phone": { "label": "Puhelinnumero", "placeholder": "+358 40 123 4567" },
+      "password": { "label": "Salasana" },
+      "passwordConfirm": { "label": "Salasana uudelleen" }
+    },
+    "other": {
+      "legend": "Muut tiedot",
+      "studiesHelsinki": "Opiskelen Helsingin yliopistossa.",
+      "studiesCs": "Opiskelen/opiskelin tietojenkäsittelytiedettä tai datatiedettä.",
+      "studiesCsAlert": "Voit liittyä varsinaiseksi jäseneksi vain jos opiskelet tai olet opiskellut tietojenkäsittelytieteitä tai datatiedettä Helsingin yliopistossa. Muutoin voit liittyä ulkojäseneksi.",
+      "staff": "Olen Helsingin yliopiston henkilökunnan jäsen.",
+      "hyyMember": "Olen HYY:n jäsen.",
+      "interestedCs": "Olen kiinnostunut tietojenkäsittelytieteestä."
+    },
+    "privacy": {
+      "legend": "Tietosuoja",
+      "acceptTermsPrefix": "Olen lukenut ja hyväksyn",
+      "termsLink": "käyttöehdot",
+      "acceptPrivacyPrefix": "Hyväksyn",
+      "privacyLink": "jäsenrekisterin tietosuojaselosteen"
+    },
+    "submit": "Liity jäseneksi"
+  },
+  "muokkaa": {
+    "title": "Muokkaa omia tietoja",
+    "personal": {
+      "legend": "Henkilötiedot",
+      "username": "Käyttäjätunnus",
+      "fullname": {
+        "label": "Koko nimi",
+        "hint": "Yhdistyslaki edellyttää kaikki etunimet sekä sukunimen."
+      },
+      "nickname": {
+        "label": "Kutsumanimi",
+        "hint": "Kutsumanimi näkyy muille käyttäjille."
+      },
+      "email": "Email",
+      "hometown": "Kotikunta",
+      "phone": "Puhelinnumero",
+      "role": "Käyttäjärooli",
+      "roleUser": "Käyttäjä",
+      "memberType": "Jäsentyyppi",
+      "memberTypeMember": "Jäsen",
+      "memberTypeExternal": "Ulkoinen jäsen",
+      "memberTypeNone": "Ei jäsen",
+      "membershipStart": "Liittymispäivä",
+      "newPassword": "Uusi salasana",
+      "newPasswordConfirm": "Uusi salasana uudelleen"
+    },
+    "other": {
+      "legend": "Muut tiedot",
+      "studiesHelsinki": "Opiskelen Helsingin yliopistossa",
+      "studiesCs": "Opiskelen/opiskelin tietojenkäsittelytiedettä tai datatiedettä",
+      "staff": "Olen Helsingin yliopiston henkilökunnan jäsen",
+      "hyyMember": "Olen HYY:n jäsen",
+      "interestedCs": "Olen kiinnostunut tietojenkäsittelytieteestä"
+    },
+    "privacyLink": "Jäsenrekisterin tietosuojaseloste",
+    "submit": "Tallenna muutokset"
+  },
+  "jasenmaksu": {
+    "title": "Maksuvahvistus",
+    "accordionSummary": "Jäsenmaksulasku",
+    "payer": "Maksaja",
+    "membershipType": "Haettava jäsenyys",
+    "recipient": "Saaja",
+    "bank": "Pankki",
+    "bic": "BIC",
+    "iban": "IBAN",
+    "reference": "Viitenumero",
+    "createdDate": "Luontipäivä",
+    "dueDate": "Eräpäivä",
+    "membershipEnds": "Jäsenyys päättyy",
+    "vat": "Alv.",
+    "amount": "Summa"
+  },
+  "luoTapahtuma": {
+    "title": "Uusi tapahtuma",
+    "descriptionPre": "Haluatko",
+    "descriptionEm": "sinä",
+    "descriptionSuf": "järjestää tapahtuman?",
+    "descriptionLink": "Katso ohjeet täältä!",
+    "templateLabel": "Hae tapahtumapohja",
+    "templatePlaceholder": "-- Valitse tapahtumapohja listasta --",
+    "required": {
+      "legend": "Pakolliset tiedot",
+      "name": "Tapahtuman nimi",
+      "date": "Päivämäärä",
+      "time": "Aika",
+      "venue": "Tapahtuman paikka",
+      "venuePlaceholder": "-- Valitse listasta tai kirjoita uusi --",
+      "eventType": "Tapahtuman tyyppi",
+      "eventTypePlaceholder": "-- Valitse listasta tai kirjoita uusi --",
+      "description": "Tapahtuman kuvaus"
+    },
+    "optional": {
+      "legend": "Valinnaiset tiedot",
+      "organizer": "Järjestävä taho",
+      "organizerUrl": "Järjestävä taho (URL)",
+      "contactName": "Vastuuhenkilön nimi",
+      "showContact": "Vastuuhenkilön tiedot näytetään",
+      "paymentLegend": "Maksullisuus",
+      "paid": "Maksullinen",
+      "free": "Maksuton",
+      "price": "Hinta",
+      "mapLink": "Karttalinkki",
+      "alcoholScale": "Alkoholiasteikko",
+      "alcoholSelectDefault": "-- Valitse --",
+      "alcoholNone": "0 - Ei alkoholia",
+      "alcoholLevel1": "1",
+      "alcoholLevel2": "2",
+      "alcoholModerate": "3 - Kohtuullisesti",
+      "alcoholLevel4": "4",
+      "alcoholHeavy": "5 - Runsaasti alkoholia",
+      "canParticipate": "Tapahtumaan voi ilmoittautua",
+      "membershipRequired": "Ilmoittautujien oltava jäseniä",
+      "avec": "Tapahtumaan voi ilmoittaa seuralaisen",
+      "maxParticipants": "Suurin osallistujamäärä",
+      "registrationStarts": "Ilmoittautumisen alku",
+      "registrationEnds": "Ilmoittautumisen loppu",
+      "cancellationAlert": "Näillä voit asettaa tyypillisimmät perumistavat:",
+      "cancellationStarts": "Ilmoittautumisen perumisen alku",
+      "cancellationEnds": "Ilmoittautumisen perumisen loppu",
+      "saveAsTemplate": "Tallenna tapahtumapohjaksi"
+    },
+    "submit": "Luo tapahtuma"
   }
 }

@@ -37,6 +37,7 @@
       "fuksiPassi": "Freshmen pass",
       "jobs": "Jobs",
       "forCompanies": "For companies",
+      "applyMembership": "Become a member",
       "editProfile": "Edit profile",
       "memberInvoice": "Membership invoice"
     },
@@ -50,5 +51,156 @@
     "readMore": "Read more",
     "backToTop": "Back to top",
     "switchToFinnish": "Suomeksi"
+  },
+  "jaseneksi": {
+    "title": "Become a Member",
+    "description": "You can register as a member using this form. You can pay either by bank transfer or arrange a cash payment with a board member.",
+    "card": {
+      "title": "Membership fee",
+      "1year": "1 year",
+      "3years": "3 years",
+      "5years": "5 years",
+      "alert": "The membership period ends on 31.7. If you purchase a membership before that date, the first year is considered to have started from 31.7."
+    },
+    "personal": {
+      "legend": "Personal details",
+      "username": { "label": "Username", "placeholder": "e.g. teekkari123" },
+      "fullname": {
+        "label": "Full name",
+        "placeholder": "John Doe",
+        "hint": "Association law requires all first names and the surname."
+      },
+      "nickname": {
+        "label": "Nickname",
+        "placeholder": "Johnny",
+        "hint": "The nickname is visible to other users."
+      },
+      "email": { "label": "Email", "placeholder": "john@example.com" },
+      "hometown": { "label": "Hometown", "placeholder": "Helsinki" },
+      "phone": { "label": "Phone number", "placeholder": "+358 40 123 4567" },
+      "password": { "label": "Password" },
+      "passwordConfirm": { "label": "Confirm password" }
+    },
+    "other": {
+      "legend": "Other details",
+      "studiesHelsinki": "I study at the University of Helsinki.",
+      "studiesCs": "I study / have studied computer science or data science.",
+      "studiesCsAlert": "You can only become a full member if you study or have studied computer science or data science at the University of Helsinki. Otherwise you can join as an associate member.",
+      "staff": "I am a member of the University of Helsinki staff.",
+      "hyyMember": "I am a member of HYY.",
+      "interestedCs": "I am interested in computer science."
+    },
+    "privacy": {
+      "legend": "Privacy",
+      "acceptTermsPrefix": "I have read and accept the",
+      "termsLink": "terms and conditions",
+      "acceptPrivacyPrefix": "I accept the",
+      "privacyLink": "member register privacy statement"
+    },
+    "submit": "Become a member"
+  },
+  "muokkaa": {
+    "title": "Edit your information",
+    "personal": {
+      "legend": "Personal details",
+      "username": "Username",
+      "fullname": {
+        "label": "Full name",
+        "hint": "Association law requires all first names and the surname."
+      },
+      "nickname": {
+        "label": "Nickname",
+        "hint": "The nickname is visible to other users."
+      },
+      "email": "Email",
+      "hometown": "Hometown",
+      "phone": "Phone number",
+      "role": "User role",
+      "roleUser": "User",
+      "memberType": "Member type",
+      "memberTypeMember": "Member",
+      "memberTypeExternal": "Associate member",
+      "memberTypeNone": "Non-member",
+      "membershipStart": "Membership start date",
+      "newPassword": "New password",
+      "newPasswordConfirm": "Confirm new password"
+    },
+    "other": {
+      "legend": "Other details",
+      "studiesHelsinki": "I study at the University of Helsinki",
+      "studiesCs": "I study / have studied computer science or data science",
+      "staff": "I am a member of the University of Helsinki staff",
+      "hyyMember": "I am a member of HYY",
+      "interestedCs": "I am interested in computer science"
+    },
+    "privacyLink": "Member register privacy statement",
+    "submit": "Save changes"
+  },
+  "jasenmaksu": {
+    "title": "Payment Confirmation",
+    "accordionSummary": "Membership Invoice",
+    "payer": "Payer",
+    "membershipType": "Membership type",
+    "recipient": "Recipient",
+    "bank": "Bank",
+    "bic": "BIC",
+    "iban": "IBAN",
+    "reference": "Reference number",
+    "createdDate": "Created date",
+    "dueDate": "Due date",
+    "membershipEnds": "Membership ends",
+    "vat": "VAT",
+    "amount": "Amount"
+  },
+  "luoTapahtuma": {
+    "title": "New event",
+    "descriptionPre": "Do",
+    "descriptionEm": "you",
+    "descriptionSuf": "want to organize an event?",
+    "descriptionLink": "See the instructions here!",
+    "templateLabel": "Search event template",
+    "templatePlaceholder": "-- Select an event template from the list --",
+    "required": {
+      "legend": "Required details",
+      "name": "Event name",
+      "date": "Date",
+      "time": "Time",
+      "venue": "Event venue",
+      "venuePlaceholder": "-- Select from list or enter new --",
+      "eventType": "Event type",
+      "eventTypePlaceholder": "-- Select from list or enter new --",
+      "description": "Event description"
+    },
+    "optional": {
+      "legend": "Optional details",
+      "organizer": "Organizer",
+      "organizerUrl": "Organizer (URL)",
+      "contactName": "Contact person",
+      "showContact": "Contact person's details are shown",
+      "paymentLegend": "Pricing",
+      "paid": "Paid",
+      "free": "Free",
+      "price": "Price",
+      "mapLink": "Map link",
+      "alcoholScale": "Alcohol scale",
+      "alcoholSelectDefault": "-- Select --",
+      "alcoholNone": "0 - No alcohol",
+      "alcoholLevel1": "1",
+      "alcoholLevel2": "2",
+      "alcoholModerate": "3 - Moderate",
+      "alcoholLevel4": "4",
+      "alcoholHeavy": "5 - Heavy alcohol use",
+      "canParticipate": "Event registration is available",
+      "membershipRequired": "Participants must be members",
+      "avec": "Event participants can register an accompaniment",
+      "maxParticipants": "Maximum number of participants",
+      "registrationStarts": "Registration starts",
+      "registrationEnds": "Registration ends",
+      "cancellationAlert": "You can use these to set the most common cancellation options:",
+      "cancellationStarts": "Cancellation starts",
+      "cancellationEnds": "Cancellation ends",
+      "saveAsTemplate": "Save as event template"
+    },
+    "submit": "Create event"
   }
 }

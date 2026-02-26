@@ -61,6 +61,7 @@ export const navItems = [
   {
     labelKey: "nav.sections.forFreshmen",
     links: [
+      { href: "/jaseneksi", labelKey: "nav.links.applyMembership" },
       {
         href: "https://fuksiwiki.tko-aly.fi/Fuksiwiki",
         labelKey: "nav.links.fuksiwiki",
