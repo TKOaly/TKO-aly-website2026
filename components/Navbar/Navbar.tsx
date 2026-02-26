@@ -78,11 +78,11 @@ function Navbar() {
               <li className={styles.navItem}>
                 <button
                   type="button"
+                  title={t("nav.openMenu")}
                   className={styles.whiteButton}
                   aria-haspopup="true"
-                  aria-label={t("nav.openMenu")}
                 >
-                  <User height={20} width={20} />
+                  <User height={24} width={24} />
                 </button>
                 <ul
                   className={`${styles.dropdownMenu} ${styles.userDropdownMenu}`}
@@ -98,7 +98,7 @@ function Navbar() {
                   <li role="none">
                     <ClientLink
                       role="menuitem"
-                      href="/api/auth/signout"
+                      href="#"
                       onClick={() => signOut()}
                     >
                       {t("auth.signOut")}
@@ -107,12 +107,14 @@ function Navbar() {
                 </ul>
               </li>
             ) : (
-              <button
-                className={styles.dropdownToggle}
-                onClick={() => signIn("tkoaly")}
-              >
-                {t("auth.signIn")}
-              </button>
+              <li>
+                <button
+                  className={styles.dropdownToggle}
+                  onClick={() => signIn("tkoaly")}
+                >
+                  {t("auth.signIn")}
+                </button>
+              </li>
             )}
           </ul>
         </>

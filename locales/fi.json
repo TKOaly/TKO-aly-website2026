@@ -39,7 +39,8 @@
       "forCompanies": "Yrityksille",
       "editProfile": "Muokkaa profiilia",
       "memberInvoice": "Jäsenmaksu"
-    }
+    },
+    "openMenu": "Avaa valikko"
   },
   "auth": {
     "signIn": "Kirjaudu sisään",

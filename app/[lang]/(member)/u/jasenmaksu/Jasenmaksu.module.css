@@ -11,14 +11,6 @@
 }
 
 /* Rows */
-.rows {
-  display: flex;
-  flex-direction: column;
-  background: var(--color-surface);
-  border-left: 2px solid hsl(50, 15%, 60%);
-  border-right: 2px solid hsl(50, 15%, 60%);
-}
-
 .row {
   display: flex;
   flex-direction: column;
@@ -110,28 +102,7 @@
 }
 
 @media (prefers-color-scheme: light) {
-  /* Card */
-  .card {
-    border: 3px solid var(--neutral-900);
-    box-shadow: 6px 6px 0 var(--neutral-900);
-  }
-
-  .cardHeader {
-    background: var(--neutral-900);
-    color: var(--white);
-  }
-
-  .shieldIcon {
-    color: var(--yellow-200);
-  }
-
   /* Rows */
-  .rows {
-    background: var(--color-surface);
-    border-left: none;
-    border-right: none;
-  }
-
   .row {
     border-bottom: 2px solid var(--neutral-900);
   }

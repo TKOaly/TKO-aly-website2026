@@ -1,7 +1,8 @@
 import acceptLanguage from "accept-language"
 import { NextRequest, NextResponse } from "next/server"
-import { cookieName, fallbackLang, languages } from "./app/i18n/settings"
 import withAuth from "next-auth/middleware"
+
+import { cookieName, fallbackLang, languages } from "./app/i18n/config"
 
 acceptLanguage.languages([...languages])
 

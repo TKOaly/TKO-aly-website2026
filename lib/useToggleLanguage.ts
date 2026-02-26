@@ -7,7 +7,7 @@ export const useToggleLanguage = (lang: string | string[]) => {
   return () => {
     const newLanguage = lang === "fi" ? "en" : "fi"
     const newPath = pathname.replace(`/${lang}`, `/${newLanguage}`)
-    document.cookie = `tekis-language=${newLanguage}; path=/`
+    document.cookie = `tekis-lang=${newLanguage}; path=/`
     router.push(newPath)
   }
 }
