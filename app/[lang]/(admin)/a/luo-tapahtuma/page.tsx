@@ -7,54 +7,70 @@ import FieldSelect from "@/components/FieldSelect/FieldSelect"
 import FieldRadioGroup from "@/components/FieldRadioGroup/FieldRadioGroup"
 import PageHeader from "@/components/PageHeader/PageHeader"
 import Textarea from "@/components/Textarea/Textarea"
+import { getAsyncTranslation } from "@/app/i18n"
 
 import styles from "./LuoTapahtuma.module.css"
 
-const AddEventPage = () => {
+type Props = {
+  params: Promise<{ lang: string }>
+}
+
+const AddEventPage = async ({ params }: Props) => {
+  const { lang } = await params
+  const { t } = await getAsyncTranslation(lang)
+
   return (
     <main className={styles.main}>
-      <PageHeader title="Uusi tapahtuma">
-        Haluatko <i>sinä</i> järjestää tapahtuman?{" "}
+      <PageHeader title={t("luoTapahtuma.title")}>
+        {t("luoTapahtuma.descriptionPre")}{" "}
+        <i>{t("luoTapahtuma.descriptionEm")}</i>{" "}
+        {t("luoTapahtuma.descriptionSuf")}{" "}
         <a href="#" className={styles.link}>
-          Katso ohjeet täältä!
+          {t("luoTapahtuma.descriptionLink")}
         </a>
       </PageHeader>
 
       <section className={styles.section}>
         {/* Template picker */}
         <div className={styles.templateSection}>
-          <FieldSelect id="template" label="Hae tapahtumapohja">
-            <option value="">-- Valitse tapahtumapohja listasta --</option>
+          <FieldSelect id="template" label={t("luoTapahtuma.templateLabel")}>
+            <option value="">{t("luoTapahtuma.templatePlaceholder")}</option>
           </FieldSelect>
         </div>
 
         <form id="new-event-form" className={styles.form}>
-          {/* Pakolliset tiedot */}
-          <Fieldset legend="Pakolliset tiedot">
+          {/* Required details */}
+          <Fieldset legend={t("luoTapahtuma.required.legend")}>
             <Field
               required
-              label="Tapahtuman nimi"
+              label={t("luoTapahtuma.required.name")}
               id="name"
               name="name"
               type="text"
             />
             <Field
               required
-              label="Päivämäärä"
+              label={t("luoTapahtuma.required.date")}
               id="date"
               name="date"
               type="date"
             />
-            <Field required label="Aika" id="time" name="time" type="time" />
+            <Field
+              required
+              label={t("luoTapahtuma.required.time")}
+              id="time"
+              name="time"
+              type="time"
+            />
 
             <Field
               required
-              label="Tapahtuman paikka"
+              label={t("luoTapahtuma.required.venue")}
               id="venue"
               name="venue"
               type="text"
               list="venue-datalist"
-              placeholder="-- Valitse listasta tai kirjoita uusi --"
+              placeholder={t("luoTapahtuma.required.venuePlaceholder")}
             />
             <datalist id="venue-datalist">
               <option value="Paikka 1" />
@@ -64,11 +80,11 @@ const AddEventPage = () => {
 
             <Field
               required
-              label="Tapahtuman tyyppi"
+              label={t("luoTapahtuma.required.eventType")}
               id="event_type"
               name="event_type"
               type="text"
-              placeholder="-- Valitse listasta tai kirjoita uusi --"
+              placeholder={t("luoTapahtuma.required.eventTypePlaceholder")}
               list="event-type-datalist"
             />
             <datalist id="event-type-datalist">
@@ -80,28 +96,28 @@ const AddEventPage = () => {
             <Textarea
               required
               id="description"
-              label="Tapahtuman kuvaus"
+              label={t("luoTapahtuma.required.description")}
               name="description"
               rows={5}
             />
           </Fieldset>
 
-          {/* Valinnaiset tiedot */}
-          <Fieldset legend="Valinnaiset tiedot">
+          {/* Optional details */}
+          <Fieldset legend={t("luoTapahtuma.optional.legend")}>
             <Field
-              label="Järjestävä taho"
+              label={t("luoTapahtuma.optional.organizer")}
               id="organizer"
               name="organizer"
               type="text"
             />
             <Field
-              label="Järjestävä taho (URL)"
+              label={t("luoTapahtuma.optional.organizerUrl")}
               id="organizer_url"
               name="organizer_url"
               type="url"
             />
             <Field
-              label="Vastuuhenkilön nimi"
+              label={t("luoTapahtuma.optional.contactName")}
               id="contact_name"
               name="contact_name"
               type="text"
@@ -109,84 +125,110 @@ const AddEventPage = () => {
             <Checkbox
               id="show_contact"
               name="show_contact"
-              label="Vastuuhenkilön tiedot näytetään"
+              label={t("luoTapahtuma.optional.showContact")}
             />
 
             <FieldRadioGroup
-              legend="Maksullisuus"
+              legend={t("luoTapahtuma.optional.paymentLegend")}
               name="payment"
               options={[
-                { value: "paid", label: "Maksullinen" },
-                { value: "free", label: "Maksuton", defaultChecked: true },
+                { value: "paid", label: t("luoTapahtuma.optional.paid") },
+                {
+                  value: "free",
+                  label: t("luoTapahtuma.optional.free"),
+                  defaultChecked: true,
+                },
               ]}
             />
 
-            <Field label="Hinta" id="price" name="price" type="text" />
             <Field
-              label="Karttalinkki"
+              label={t("luoTapahtuma.optional.price")}
+              id="price"
+              name="price"
+              type="text"
+            />
+            <Field
+              label={t("luoTapahtuma.optional.mapLink")}
               id="map_link"
               name="map_link"
               type="url"
             />
 
-            <FieldSelect id="alcohol_scale" label="Alkoholiasteikko">
-              <option value="">-- Valitse --</option>
-              <option value="0">0 - Ei alkoholia</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3 - Kohtuullisesti</option>
-              <option value="4">4</option>
-              <option value="5">5 - Runsaasti alkoholia</option>
+            <FieldSelect
+              id="alcohol_scale"
+              label={t("luoTapahtuma.optional.alcoholScale")}
+            >
+              <option value="">
+                {t("luoTapahtuma.optional.alcoholSelectDefault")}
+              </option>
+              <option value="0">
+                {t("luoTapahtuma.optional.alcoholNone")}
+              </option>
+              <option value="1">
+                {t("luoTapahtuma.optional.alcoholLevel1")}
+              </option>
+              <option value="2">
+                {t("luoTapahtuma.optional.alcoholLevel2")}
+              </option>
+              <option value="3">
+                {t("luoTapahtuma.optional.alcoholModerate")}
+              </option>
+              <option value="4">
+                {t("luoTapahtuma.optional.alcoholLevel4")}
+              </option>
+              <option value="5">
+                {t("luoTapahtuma.optional.alcoholHeavy")}
+              </option>
             </FieldSelect>
 
             <div className={styles.checkboxList}>
               <Checkbox
                 id="can_participate"
                 name="can_participate"
-                label="Tapahtumaan voi ilmoittautua"
+                label={t("luoTapahtuma.optional.canParticipate")}
               />
               <Checkbox
                 id="membership_required"
                 name="membership_required"
-                label="Ilmoittautujien oltava jäseniä"
+                label={t("luoTapahtuma.optional.membershipRequired")}
               />
               <Checkbox
                 id="avec"
                 name="avec"
-                label="Tapahtumaan voi ilmoittaa seuralaisen"
+                label={t("luoTapahtuma.optional.avec")}
               />
             </div>
 
             <Field
-              label="Suurin osallistujamäärä"
+              label={t("luoTapahtuma.optional.maxParticipants")}
               id="max_participants"
               name="max_participants"
               type="number"
               min="0"
             />
             <Field
-              label="Ilmoittautumisen alku"
+              label={t("luoTapahtuma.optional.registrationStarts")}
               id="registration_starts"
               name="registration_starts"
               type="datetime-local"
             />
             <Field
-              label="Ilmoittautumisen loppu"
+              label={t("luoTapahtuma.optional.registrationEnds")}
               id="registration_ends"
               name="registration_ends"
               type="datetime-local"
             />
 
-            <Alert>Näillä voit asettaa tyypillisimmät perumistavat:</Alert>
+            <Alert>{t("luoTapahtuma.optional.cancellationAlert")}</Alert>
 
             <Field
-              label="Ilmoittautumisen perumisen alku"
+              label={t("luoTapahtuma.optional.cancellationStarts")}
               id="cancellation_starts"
               name="cancellation_starts"
               type="datetime-local"
             />
             <Field
-              label="Ilmoittautumisen perumisen loppu"
+              label={t("luoTapahtuma.optional.cancellationEnds")}
               id="cancellation_ends"
               name="cancellation_ends"
               type="datetime-local"
@@ -195,14 +237,14 @@ const AddEventPage = () => {
             <Checkbox
               id="save_as_template"
               name="save_as_template"
-              label="Tallenna tapahtumapohjaksi"
+              label={t("luoTapahtuma.optional.saveAsTemplate")}
             />
           </Fieldset>
         </form>
       </section>
 
       <CallToActionButton form="new-event-form">
-        Luo tapahtuma
+        {t("luoTapahtuma.submit")}
       </CallToActionButton>
     </main>
   )

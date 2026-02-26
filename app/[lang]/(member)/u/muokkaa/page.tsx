@@ -4,18 +4,26 @@ import Field from "@/components/Field/Field"
 import FieldSelect from "@/components/FieldSelect/FieldSelect"
 import Fieldset from "@/components/Fieldset/Fieldset"
 import PageHeader from "@/components/PageHeader/PageHeader"
+import { getAsyncTranslation } from "@/app/i18n"
 
 import styles from "./Muokkaa.module.css"
 
-const EditUserPage = () => {
+type Props = {
+  params: Promise<{ lang: string }>
+}
+
+const EditUserPage = async ({ params }: Props) => {
+  const { lang } = await params
+  const { t } = await getAsyncTranslation(lang)
+
   return (
     <main className={styles.main}>
-      <PageHeader title="Muokkaa omia tietoja" />
+      <PageHeader title={t("muokkaa.title")} />
 
       <form id="edit-user-form" className={styles.form}>
-        <Fieldset legend="Henkilötiedot">
+        <Fieldset legend={t("muokkaa.personal.legend")}>
           <Field
-            label="Käyttäjätunnus"
+            label={t("muokkaa.personal.username")}
             id="username"
             name="username"
             type="text"
@@ -24,27 +32,27 @@ const EditUserPage = () => {
           />
 
           <Field
-            label="Koko nimi"
+            label={t("muokkaa.personal.fullname.label")}
             id="fullname"
             name="fullname"
             type="text"
             defaultValue="boriss jerjomkin"
             autoComplete="name"
-            hint="Yhdistyslaki edellyttää kaikki etunimet sekä sukunimen."
+            hint={t("muokkaa.personal.fullname.hint")}
           />
 
           <Field
-            label="Kutsumanimi"
+            label={t("muokkaa.personal.nickname.label")}
             id="nickname"
             name="nickname"
             type="text"
             defaultValue="borre"
             autoComplete="given-name"
-            hint="Kutsumanimi näkyy muille käyttäjille."
+            hint={t("muokkaa.personal.nickname.hint")}
           />
 
           <Field
-            label="Email"
+            label={t("muokkaa.personal.email")}
             id="email"
             name="email"
             type="email"
@@ -53,7 +61,7 @@ const EditUserPage = () => {
           />
 
           <Field
-            label="Kotikunta"
+            label={t("muokkaa.personal.hometown")}
             id="hometown"
             name="hometown"
             type="text"
@@ -61,7 +69,7 @@ const EditUserPage = () => {
           />
 
           <Field
-            label="Puhelinnumero"
+            label={t("muokkaa.personal.phone")}
             id="phone"
             name="phone"
             type="tel"
@@ -69,29 +77,35 @@ const EditUserPage = () => {
           />
 
           <FieldSelect
-            label="Käyttäjärooli"
+            label={t("muokkaa.personal.role")}
             id="role"
             name="role"
             defaultValue="user"
             disabled
           >
-            <option value="user">Käyttäjä</option>
+            <option value="user">{t("muokkaa.personal.roleUser")}</option>
           </FieldSelect>
 
           <FieldSelect
-            label="Jäsentyyppi"
+            label={t("muokkaa.personal.memberType")}
             id="member_type"
             name="member_type"
             defaultValue="jasen"
             disabled
           >
-            <option value="jasen">Jäsen</option>
-            <option value="ulkoinen-jasen">Ulkoinen jäsen</option>
-            <option value="ei-jasen">Ei jäsen</option>
+            <option value="jasen">
+              {t("muokkaa.personal.memberTypeMember")}
+            </option>
+            <option value="ulkoinen-jasen">
+              {t("muokkaa.personal.memberTypeExternal")}
+            </option>
+            <option value="ei-jasen">
+              {t("muokkaa.personal.memberTypeNone")}
+            </option>
           </FieldSelect>
 
           <Field
-            label="Liittymispäivä"
+            label={t("muokkaa.personal.membershipStart")}
             id="membership_start"
             name="membership_start"
             type="date"
@@ -101,7 +115,7 @@ const EditUserPage = () => {
 
           <div className={styles.passwordGrid}>
             <Field
-              label="Uusi salasana"
+              label={t("muokkaa.personal.newPassword")}
               id="new_password"
               name="new_password"
               type="password"
@@ -109,7 +123,7 @@ const EditUserPage = () => {
               autoComplete="new-password"
             />
             <Field
-              label="Uusi salasana uudelleen"
+              label={t("muokkaa.personal.newPasswordConfirm")}
               id="new_password_confirm"
               name="new_password_confirm"
               type="password"
@@ -119,45 +133,45 @@ const EditUserPage = () => {
           </div>
         </Fieldset>
 
-        <Fieldset legend="Muut tiedot">
+        <Fieldset legend={t("muokkaa.other.legend")}>
           <div className={styles.checkboxList}>
             <Checkbox
               id="studies_helsinki"
               name="studies_helsinki"
-              label="Opiskelen Helsingin yliopistossa"
+              label={t("muokkaa.other.studiesHelsinki")}
             />
             <Checkbox
               id="studies_cs"
               name="studies_cs"
-              label="Opiskelen/opiskelin tietojenkäsittelytiedettä tai datatiedettä"
+              label={t("muokkaa.other.studiesCs")}
             />
             <Checkbox
               id="staff"
               name="staff"
-              label="Olen Helsingin yliopiston henkilökunnan jäsen"
+              label={t("muokkaa.other.staff")}
             />
             <Checkbox
               id="hyy_member"
               name="hyy_member"
-              label="Olen HYY:n jäsen"
+              label={t("muokkaa.other.hyyMember")}
             />
             <Checkbox
               id="interested_cs"
               name="interested_cs"
-              label="Olen kiinnostunut tietojenkäsittelytieteestä"
+              label={t("muokkaa.other.interestedCs")}
             />
           </div>
         </Fieldset>
 
         <p className={styles.privacyNote}>
           <a className={styles.link} href="#">
-            Jäsenrekisterin tietosuojaseloste
+            {t("muokkaa.privacyLink")}
           </a>
         </p>
       </form>
 
       <CallToActionButton form="edit-user-form">
-        Tallenna muutokset
+        {t("muokkaa.submit")}
       </CallToActionButton>
     </main>
   )
