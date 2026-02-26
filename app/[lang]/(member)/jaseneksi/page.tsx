@@ -31,7 +31,12 @@ const MembershipPage = () => {
       </Card>
 
       {/* Form */}
-      <form className={styles.form} action="#" method="post">
+      <form
+        id="membership-form"
+        action="#"
+        method="post"
+        className={styles.form}
+      >
         {/* Henkilötiedot */}
         <Fieldset legend="Henkilötiedot">
           <Field

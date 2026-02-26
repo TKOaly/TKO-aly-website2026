@@ -60,20 +60,8 @@
   z-index: 10;
 }
 
-.mobileCloseButton:hover,
-.mobileCloseButton:focus {
-  background: var(--neutral-600);
-}
-
 .mobileDialog::backdrop {
   background: transparent;
-}
-
-.mobileDialogHeader {
-  top: 0;
-  right: 0;
-  height: var(--space-16);
-  z-index: 1;
 }
 
 .mobileCloseButton:hover,
