@@ -6,11 +6,7 @@ import withAuth from "next-auth/middleware"
 acceptLanguage.languages([...languages])
 
 export const config = {
-  matcher: [
-    "/a/:rest*",
-    "/u/:rest*",
-    "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
 }
 
 async function proxy(req: NextRequest) {
@@ -71,11 +67,11 @@ export default withAuth(proxy, {
     authorized: ({ token, req }) => {
       const pathname = stripLangPrefix(req.nextUrl.pathname)
 
-      if (pathname.startsWith("/a/")) {
+      if (pathname.startsWith("/a/") || pathname === "/a") {
         return token?.admin === true
       }
 
-      if (pathname.startsWith("/u/")) {
+      if (pathname.startsWith("/u/") || pathname === "/u") {
         return !!token
       }
 

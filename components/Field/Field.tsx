@@ -7,17 +7,17 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   hint?: string
 }
 
-const Field = ({ id, label, hint, ...inputProps }: Props) => {
+const Field = ({ id, label, hint, name, ...inputProps }: Props) => {
   return (
     <div className={styles.fieldGroup}>
       <label className={styles.label} htmlFor={id}>
         {label} {inputProps.required ? "*" : ""}
       </label>
       <input
-        id={id}
-        name={inputProps.name ?? id} // Fallback to id
-        className={styles.input}
         {...inputProps}
+        id={id}
+        name={name ?? id} // Fallback to id
+        className={styles.input}
       />
       {hint && <p className={styles.hint}>{hint}</p>}
     </div>
