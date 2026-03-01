@@ -1,34 +1,133 @@
 "use client"
 
+import { useQuery } from "@tanstack/react-query"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
 import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
 import styles from "./Kalenteri.module.css"
-import mockEvents from "./testEvents.json"
-import { useState } from "react"
+import { useState, ReactNode, useMemo } from "react"
 
 type Event = {
-  id: string
-  title: string
-  user_id: string
-  created: string
-  start: string
-  end?: string
+  id: number
+  user_id: number | null
+  name: string | null
+  created: string | null
+  starts: string | null
   registration_starts: string | null
   registration_ends: string | null
   cancellation_starts: string | null
   cancellation_ends: string | null
-  location: string
-  category: string
-  description: string
-  deleted: boolean
-  organizer: string | null
-  url: string
+  location: string | null
+  category: string | null
+  description: string | null
+  alcohol_meter: number | null
+  price: string | null
+  map: string | null
+  max_participants: number | null
+  realised_participants: number | null
+  membership_required: boolean | null
+  outsiders_allowed: boolean | null
+  template: boolean | null
+  responsible: string | null
+  show_responsible: boolean | null
+  avec: boolean | null
+  deleted: boolean | null
 }
 
-type EventWithColor = Event & {
+type ProcessedEvent = Event & {
+  starts: string
   backgroundColor: string
+}
+
+function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
+  const calendarEvents = events.map(event => ({
+    id: String(event.id),
+    title: event.name || "Untitled Event",
+    start: event.starts,
+    url: `/calendar_events/view/${event.id}`,
+    backgroundColor: event.backgroundColor,
+  }))
+
+  return (
+    <FullCalendar
+      plugins={[dayGridPlugin, listPlugin]}
+      locale={fiLocale}
+      headerToolbar={{
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,listWeek",
+      }}
+      initialView="dayGridMonth"
+      editable={false}
+      selectable={true}
+      eventDisplay="list-item"
+      contentHeight={"60%"}
+      events={calendarEvents}
+    />
+  )
+}
+
+function EventListView({ events }: { events: ProcessedEvent[] }) {
+  return (
+    <div id={styles["events-list"]}>
+      {events.map(event => (
+        <a key={event.id} href={`/calendar_events/view/${event.id}`}>
+          <div
+            className={styles["event-list-item"]}
+            style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
+          >
+            <h3>{event.name}</h3>
+            <p>
+              <strong>Alkaa:</strong>{" "}
+              {new Date(event.starts).toLocaleDateString("fi-FI")},
+              {new Date(event.starts).toLocaleTimeString("fi-FI", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
+            <p>
+              <strong>Sijainti:</strong> {event.location}
+            </p>
+            <p>{event.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  )
+}
+
+function hasValidStartTime(event: Event): event is Event & { starts: string } {
+  return event.starts !== null
+}
+
+function processEvents(eventsData: Event[]): ProcessedEvent[] {
+  const now = new Date()
+
+  return eventsData.filter(hasValidStartTime).map(event => {
+    const registrationStarts = event.registration_starts
+      ? new Date(event.registration_starts)
+      : null
+    const registrationEnds = event.registration_ends
+      ? new Date(event.registration_ends)
+      : null
+    const start = new Date(event.starts)
+    let backgroundColor: string
+
+    if (!registrationStarts || !registrationEnds) {
+      backgroundColor = now < start ? "#0066ff" : "#6e6e6e"
+    } else if (now >= registrationStarts && now <= registrationEnds) {
+      backgroundColor = "#00ff00"
+    } else if (now < registrationStarts) {
+      backgroundColor = "#ffff00"
+    } else if (now > start) {
+      backgroundColor = "#6e6e6e"
+    } else {
+      backgroundColor = "#ff0000"
+    }
+
+    return { ...event, backgroundColor }
+  })
 }
 
 export default function Calendar() {
@@ -39,88 +138,29 @@ export default function Calendar() {
     setIsLegendVisible(prev => !prev)
   }
 
-  const colorcodedEvents: EventWithColor[] = colorcodeEvents(
-    mockEvents as Event[],
-  )
+  const {
+    data: eventsList = [],
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["events"],
+    queryFn: (): Promise<Event[]> => fetch("/api/events").then(r => r.json()),
+  })
 
-  function colorcodeEvents(eventsData: Event[]) {
-    const now = new Date()
-    const colorcodedEvents = [] as EventWithColor[]
+  const processedEvents: ProcessedEvent[] = useMemo(() => {
+    return processEvents(eventsList as Event[])
+  }, [eventsList])
 
-    eventsData.forEach(event => {
-      const registrationStarts = event.registration_starts
-        ? new Date(event.registration_starts)
-        : null
-      const registrationEnds = event.registration_ends
-        ? new Date(event.registration_ends)
-        : null
-      const start = new Date(event.start)
-      let backgroundColor: string
+  let viewContent: ReactNode
 
-      if (!registrationStarts || !registrationEnds) {
-        backgroundColor = now < start ? "#0066ff" : "#6e6e6e"
-      } else if (now >= registrationStarts && now <= registrationEnds) {
-        backgroundColor = "#00ff00"
-      } else if (now < registrationStarts) {
-        backgroundColor = "#ffff00"
-      } else if (now > start) {
-        backgroundColor = "#6e6e6e"
-      } else {
-        backgroundColor = "#ff0000"
-      }
-
-      colorcodedEvents.push({ ...event, backgroundColor })
-    })
-    return colorcodedEvents
-  }
-
-  function eventCalendarView() {
-    return (
-      <FullCalendar
-        plugins={[dayGridPlugin, listPlugin]}
-        locale={fiLocale}
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,listWeek",
-        }}
-        initialView="dayGridMonth"
-        editable={false}
-        selectable={true}
-        eventDisplay="list-item"
-        contentHeight={"60%"}
-        events={colorcodedEvents}
-      />
-    )
-  }
-
-  function eventListView() {
-    return (
-      <div id={styles["events-list"]}>
-        {colorcodedEvents.map(event => (
-          <a key={event.id} href={event.url}>
-            <div
-              className={styles["event-list-item"]}
-              style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
-            >
-              <h3>{event.title}</h3>
-              <p>
-                <strong>Alkaa:</strong>{" "}
-                {new Date(event.start).toLocaleDateString("fi-FI")},
-                {new Date(event.start).toLocaleTimeString("fi-FI", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </p>
-              <p>
-                <strong>Sijainti:</strong> {event.location}
-              </p>
-              <p>{event.description}</p>
-            </div>
-          </a>
-        ))}
-      </div>
-    )
+  if (isLoading) {
+    viewContent = <p>Ladataan tapahtumia...</p>
+  } else if (error) {
+    viewContent = <p>Virhe: {error.message}</p>
+  } else if (isListView) {
+    viewContent = <EventListView events={processedEvents} />
+  } else {
+    viewContent = <EventCalendarView events={processedEvents} />
   }
 
   return (
@@ -150,7 +190,7 @@ export default function Calendar() {
           </button>
         </div>
       </div>
-      {isListView ? eventListView() : eventCalendarView()}
+      {viewContent}
       <div id={styles["calendar-instructions"]}>
         {isLegendVisible && (
           <div id={styles.legend}>
