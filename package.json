@@ -20,6 +20,7 @@
     "i18next": "^25.8.11",
     "i18next-resources-to-backend": "^1.2.1",
     "lucide-react": "^0.575.0",
+    "@tanstack/react-query": "^5.90.21",
     "next": "16.1.5",
     "next-auth": "^4.24.13",
     "react": "19.2.3",

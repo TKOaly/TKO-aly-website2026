@@ -1,11 +1,12 @@
 "use client"
 
+import { useQuery } from "@tanstack/react-query"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
 import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
 import styles from "./Kalenteri.module.css"
-import { useEffect, useState, ReactNode } from "react"
+import { useState, ReactNode, useMemo } from "react"
 
 type Event = {
   id: number
@@ -96,9 +97,40 @@ function EventListView({ events }: { events: ProcessedEvent[] }) {
   )
 }
 
+function hasValidStartTime(event: Event): event is Event & { starts: string } {
+  return event.starts !== null
+}
+
+function processEvents(eventsData: Event[]): ProcessedEvent[] {
+  const now = new Date()
+
+  return eventsData.filter(hasValidStartTime).map(event => {
+    const registrationStarts = event.registration_starts
+      ? new Date(event.registration_starts)
+      : null
+    const registrationEnds = event.registration_ends
+      ? new Date(event.registration_ends)
+      : null
+    const start = new Date(event.starts)
+    let backgroundColor: string
+
+    if (!registrationStarts || !registrationEnds) {
+      backgroundColor = now < start ? "#0066ff" : "#6e6e6e"
+    } else if (now >= registrationStarts && now <= registrationEnds) {
+      backgroundColor = "#00ff00"
+    } else if (now < registrationStarts) {
+      backgroundColor = "#ffff00"
+    } else if (now > start) {
+      backgroundColor = "#6e6e6e"
+    } else {
+      backgroundColor = "#ff0000"
+    }
+
+    return { ...event, backgroundColor }
+  })
+}
+
 export default function Calendar() {
-  const [events, setEvents] = useState<Event[]>([])
-  const [loadError, setLoadError] = useState<string | null>(null)
   const [isLegendVisible, setIsLegendVisible] = useState(false)
   const [isListView, setIsListView] = useState(false)
 
@@ -106,85 +138,25 @@ export default function Calendar() {
     setIsLegendVisible(prev => !prev)
   }
 
-  useEffect(() => {
-    let isActive = true
+  const {
+    data: eventsList = [],
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["events"],
+    queryFn: (): Promise<Event[]> => fetch("/api/events").then(r => r.json()),
+  })
 
-    fetch("/api/events", {
-      headers: {
-        Accept: "application/json",
-      },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(
-            `Failed to fetch events: ${response.status} ${response.statusText}`,
-          )
-        }
-        return response.json()
-      })
-      .then(data => {
-        if (!isActive) {
-          return
-        }
-
-        setEvents(data as Event[])
-      })
-      .catch(error => {
-        if (!isActive) {
-          return
-        }
-
-        setLoadError(
-          error instanceof Error ? error.message : "Failed to load events",
-        )
-      })
-
-    return () => {
-      isActive = false
-    }
-  }, [])
-
-  const processedEvents: ProcessedEvent[] = processEvents(events)
-
-  function hasValidStartTime(
-    event: Event,
-  ): event is Event & { starts: string } {
-    return event.starts !== null
-  }
-
-  function processEvents(eventsData: Event[]): ProcessedEvent[] {
-    const now = new Date()
-
-    return eventsData.filter(hasValidStartTime).map(event => {
-      const registrationStarts = event.registration_starts
-        ? new Date(event.registration_starts)
-        : null
-      const registrationEnds = event.registration_ends
-        ? new Date(event.registration_ends)
-        : null
-      const start = new Date(event.starts)
-      let backgroundColor: string
-
-      if (!registrationStarts || !registrationEnds) {
-        backgroundColor = now < start ? "#0066ff" : "#6e6e6e"
-      } else if (now >= registrationStarts && now <= registrationEnds) {
-        backgroundColor = "#00ff00"
-      } else if (now < registrationStarts) {
-        backgroundColor = "#ffff00"
-      } else if (now > start) {
-        backgroundColor = "#6e6e6e"
-      } else {
-        backgroundColor = "#ff0000"
-      }
-
-      return { ...event, backgroundColor }
-    })
-  }
+  const processedEvents: ProcessedEvent[] = useMemo(() => {
+    return processEvents(eventsList as Event[])
+  }, [eventsList])
 
   let viewContent: ReactNode
 
-  if (loadError) {
-    viewContent = <p>{loadError}</p>
+  if (isLoading) {
+    viewContent = <p>Ladataan tapahtumia...</p>
+  } else if (error) {
+    viewContent = <p>Virhe: {error.message}</p>
   } else if (isListView) {
     viewContent = <EventListView events={processedEvents} />
   } else {
