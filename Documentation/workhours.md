@@ -27,5 +27,6 @@
 |20.2.2026|2h|Class typing to match database and refactoring other code to match this.|
 |23.2.2026|1.5h|Discussed about project progress and future design planning for the site|
 |25.2.2026|3h|Fixed the noted issues in the previous PR. Checked and approve PR for language settings.|
+|1.3.2026|3h|Repalced useEffect with Tanstacks react-query. Also merged the main branch to events-api to resolve the merge conflicts with main.
 
-Total 51h
+Total 54h
