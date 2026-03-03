@@ -15,9 +15,125 @@ type Props = {
   params: Promise<{ lang: string }>
 }
 
+type PostEventPayload = {
+  user_id?: number
+  name: string
+  created?: Date
+  starts?: Date
+  registration_starts?: Date
+  registration_ends?: Date
+  cancellation_starts?: Date
+  cancellation_ends?: Date
+  location?: string
+  category?: string
+  description?: string
+  alcohol_meter?: number
+  price?: string
+  map?: string
+  max_participants?: number
+  realised_participants?: number
+  membership_required?: boolean
+  outsiders_allowed?: boolean
+  template?: boolean
+  responsible?: string
+  show_responsible?: boolean
+  avec?: boolean
+  deleted?: boolean
+}
+
+const parseOptionalNumber = (value: FormDataEntryValue | null) => {
+  if (typeof value !== "string" || value.trim() === "") {
+    return undefined
+  }
+
+  const parsed = Number(value)
+  return Number.isNaN(parsed) ? undefined : parsed
+}
+
+const parseOptionalDate = (value: FormDataEntryValue | null) => {
+  if (typeof value !== "string" || value.trim() === "") {
+    return undefined
+  }
+
+  const parsed = new Date(value)
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed
+}
+
+const parseCheckbox = (value: FormDataEntryValue | null) => value === "on"
+
+const parseOptionalText = (value: FormDataEntryValue | null) => {
+  if (typeof value !== "string") {
+    return undefined
+  }
+
+  const trimmed = value.trim()
+  return trimmed === "" ? undefined : trimmed
+}
+
 const AddEventPage = async ({ params }: Props) => {
   const { lang } = await params
   const { t } = await getAsyncTranslation(lang)
+
+  const createEvent = async (formData: FormData) => {
+    "use server"
+    const baseUrl =
+      process.env.EVENTS_API_BASE_URL ?? "http://events-microservice:3040"
+    const token =
+      process.env.EVENT_SERVICE_TOKEN ?? process.env.SERVICE_AUTH_TOKEN
+
+    const date = formData.get("date")
+    const time = formData.get("time")
+    const startsValue =
+      typeof date === "string" &&
+      typeof time === "string" &&
+      date !== "" &&
+      time !== ""
+        ? `${date}T${time}`
+        : null
+
+    const payload: PostEventPayload = {
+      name: String(formData.get("name") ?? "").trim(),
+      starts: parseOptionalDate(startsValue),
+      registration_starts: parseOptionalDate(
+        formData.get("registration_starts"),
+      ),
+      registration_ends: parseOptionalDate(formData.get("registration_ends")),
+      cancellation_starts: parseOptionalDate(
+        formData.get("cancellation_starts"),
+      ),
+      cancellation_ends: parseOptionalDate(formData.get("cancellation_ends")),
+      location: parseOptionalText(formData.get("venue")),
+      category: parseOptionalText(formData.get("event_type")),
+      description: parseOptionalText(formData.get("description")),
+      alcohol_meter: parseOptionalNumber(formData.get("alcohol_scale")),
+      price: parseOptionalText(formData.get("price")),
+      map: parseOptionalText(formData.get("map_link")),
+      max_participants: parseOptionalNumber(formData.get("max_participants")),
+      membership_required: parseCheckbox(formData.get("membership_required")),
+      outsiders_allowed: parseCheckbox(formData.get("can_participate")),
+      template: parseCheckbox(formData.get("save_as_template")),
+      responsible: parseOptionalText(formData.get("organizer")),
+      show_responsible: parseCheckbox(formData.get("show_contact")),
+      avec: parseCheckbox(formData.get("avec")),
+      deleted: false,
+    }
+
+    const response = await fetch(`${baseUrl}/api/events`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { "X-Token": token } : {}),
+      },
+      body: JSON.stringify(payload),
+      cache: "no-store",
+    })
+
+    console.log("Response, ", response)
+
+    if (!response.ok) {
+      throw new Error(`Event creation failed with status ${response.status}`)
+    }
+  }
 
   return (
     <main className={styles.main}>
@@ -38,7 +154,7 @@ const AddEventPage = async ({ params }: Props) => {
           </FieldSelect>
         </div>
 
-        <form id="new-event-form" className={styles.form}>
+        <form id="new-event-form" action={createEvent} className={styles.form}>
           {/* Required details */}
           <Fieldset legend={t("luoTapahtuma.required.legend")}>
             <Field
@@ -156,6 +272,7 @@ const AddEventPage = async ({ params }: Props) => {
 
             <FieldSelect
               id="alcohol_scale"
+              name="alcohol_scale"
               label={t("luoTapahtuma.optional.alcoholScale")}
             >
               <option value="">
