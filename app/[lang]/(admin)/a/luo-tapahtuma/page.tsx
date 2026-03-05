@@ -128,8 +128,6 @@ const AddEventPage = async ({ params }: Props) => {
       cache: "no-store",
     })
 
-    console.log("Response, ", response)
-
     if (!response.ok) {
       throw new Error(`Event creation failed with status ${response.status}`)
     }
