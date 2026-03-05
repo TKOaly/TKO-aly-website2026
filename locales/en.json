@@ -202,5 +202,9 @@
       "saveAsTemplate": "Save as event template"
     },
     "submit": "Create event"
+  },
+  "muokkaaTapahtuma": {
+    "title": "Edit event",
+    "submit": "Save changes"
   }
 }
