@@ -205,5 +205,9 @@
       "saveAsTemplate": "Tallenna tapahtumapohjaksi"
     },
     "submit": "Luo tapahtuma"
+  },
+  "muokkaaTapahtuma": {
+    "title": "Muokkaa tapahtumaa",
+    "submit": "Tallenna muutokset"
   }
 }
