@@ -206,5 +206,12 @@
   "muokkaaTapahtuma": {
     "title": "Edit event",
     "submit": "Save changes"
+  },
+  "tapahtumaLista": {
+    "title": "Events",
+    "createNew": "Create new event",
+    "edit": "Edit",
+    "noEvents": "No events.",
+    "unnamed": "(unnamed)"
   }
 }

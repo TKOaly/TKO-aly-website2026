@@ -209,5 +209,12 @@
   "muokkaaTapahtuma": {
     "title": "Muokkaa tapahtumaa",
     "submit": "Tallenna muutokset"
+  },
+  "tapahtumaLista": {
+    "title": "Tapahtumat",
+    "createNew": "Luo uusi tapahtuma",
+    "edit": "Muokkaa",
+    "noEvents": "Ei tapahtumia.",
+    "unnamed": "(nimetön)"
   }
 }

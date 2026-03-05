@@ -1,0 +1,72 @@
+.main {
+  max-width: var(--screen-md);
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 8rem;
+}
+
+.newLink {
+  color: var(--yellow-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  outline-color: var(--yellow-700);
+  outline-offset: var(--space-1);
+  outline-width: var(--space-2);
+  font-size: 0.9rem;
+}
+
+.empty {
+  opacity: 0.6;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.75rem 0;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.itemName {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemMeta {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.editLink {
+  flex-shrink: 0;
+  color: var(--yellow-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  outline-color: var(--yellow-700);
+  outline-offset: var(--space-1);
+  outline-width: var(--space-2);
+  font-size: 0.9rem;
+}
