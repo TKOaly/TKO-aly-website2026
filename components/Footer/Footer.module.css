@@ -1,28 +1,216 @@
-div#footer {
-  clear: both;
-  border-top: 1px solid #ddd;
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-color: rgb(221, 221, 221);
+/* Sponsors */
+
+.sponsors {
+  padding: var(--space-32) var(--space-6);
 }
-.footer-content {
-  float: left;
-  margin: 10px 0 30px 0;
-  width: 33%;
-  font-family: "Helvetica Neue", Helvetica, Calibri, Arial, sans-serif;
-  font-size: 12px;
+
+.sponsorsInner {
+  max-width: var(--screen-xl);
+  margin: 0 auto;
+}
+
+.sponsorsTitleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.sponsorsTitle {
+  flex-shrink: 0;
+  background-color: var(--yellow);
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: var(--space-1) var(--space-3);
+  margin: 0;
+}
+
+.sponsorsDivider {
+  flex: 1;
+  height: 0px;
+  border-top: var(--color-text-muted) dashed 2px;
+  background-color: inherit;
+}
+
+.sponsorGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.sponsorLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  padding: var(--space-4);
   background-color: white;
-  color: black;
+  transition: opacity 0.15s ease;
 }
-.overlap {
-  clear: both;
-  margin-left: -30px;
-  padding-bottom: 40px;
-  background-color: #141414;
-  clear: both;
-  width: 760px;
-  height: 0;
-  border-top: 20px solid #ffcc33;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
+
+.sponsorLink:hover {
+  opacity: 0.75;
+}
+
+.sponsorLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(1);
+  transition: filter 0.2s ease;
+}
+
+.sponsorLink:hover .sponsorLogo {
+  filter: grayscale(0);
+}
+
+/* Info cards */
+.cards {
+  max-width: var(--screen-4xl);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.card:not(:last-child) {
+  border-right: var(--border);
+}
+
+.cardAccent {
+  background-color: var(--yellow);
+  color: #000;
+}
+
+/* Card typography */
+
+.cardHeading {
+  font-size: small;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--yellow);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.cardAccent .cardHeading {
+  color: #000;
+}
+
+.cardSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardText {
+  margin: 0;
+  line-height: 1.7;
+  font-size: 0.875rem;
+}
+
+.cardAccent .cardText {
+  font-weight: 600;
+}
+
+/* Form links */
+
+.formLinks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.formLink {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.formLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Navigation links */
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  columns: 2;
+  column-gap: var(--space-3);
+}
+
+.linkItem {
+  margin-bottom: var(--space-2);
+  break-inside: avoid;
+}
+
+.navLink {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: small;
+  display: block;
+}
+
+.navLink:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Bottom bar */
+
+.bottomBar {
+  padding: var(--space-3) var(--space-6);
+  text-align: center;
+  font-size: small;
+  color: var(--color-text-muted);
+}
+
+@media (prefers-color-scheme: light) {
+  .cardHeading,
+  .formLink {
+    color: var(--color-text);
+  }
+}
+
+@media (min-width: 640px) {
+  .sponsorGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .sponsorGrid {
+    grid-template-columns: repeat(8, 1fr);
+  }
 }

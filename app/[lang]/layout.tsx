@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer/Footer"
 import Navbar from "@/components/Navbar"
 import Providers from "@/components/Providers"
 import type { Metadata } from "next"
@@ -19,6 +20,7 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>
