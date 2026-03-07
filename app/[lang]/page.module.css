@@ -1,10 +1,8 @@
-html,
-body {
-  height: 100vh;
-  overflow-x: hidden;
+.index {
+  overflow: hidden;
 }
 
-#splash-img {
+.splashImage {
   height: 500px;
   width: auto;
   background-position: center top;
@@ -14,7 +12,7 @@ body {
   z-index: -1;
 }
 
-#index-logo {
+.logo {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -36,28 +34,27 @@ body {
   }
 }
 
-#index-image {
+.image {
   display: flex;
   justify-content: center;
   width: 100%;
   height: auto;
   opacity: 0;
-  animation: fadeIn 2s ease-in-out forwards;
-  animation-delay: 1s;
+  animation: fadeIn 0.3s ease-in-out forwards;
+  animation-delay: 0.15s;
 }
 
-#index-text {
+.heading {
   text-align: center;
-  color: #fff500;
-  font-family: "Arial", sans-serif;
-  font-size: 40px;
-  margin-top: 40px;
+  color: var(--yellow);
+  font-size: 2.5rem;
+  margin-top: var(--space-10);
   opacity: 0;
-  animation: fadeIn 2s ease-in-out forwards;
-  animation-delay: 2s;
+  animation: fadeIn 0.3s ease-in-out forwards;
+  animation-delay: 0.45s;
 }
 
-#index-body {
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,15 +63,7 @@ body {
   background: var(--yellow);
 }
 
-#index-content {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-  color: white;
-  margin-top: 50px;
-}
-
-.diagonal-div {
+.diagonalDiv {
   font-family: monospace;
   padding: 15rem 0;
   width: 100%;
@@ -86,7 +75,7 @@ body {
   font-size: 20px;
 }
 
-.diagonal-div div {
+.diagonalDiv div {
   margin: auto;
   max-width: 70ch;
 }

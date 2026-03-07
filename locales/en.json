@@ -213,5 +213,18 @@
     "edit": "Edit",
     "noEvents": "No events.",
     "unnamed": "(unnamed)"
+  },
+  "footer": {
+    "partners": "Partners",
+    "post": "Post",
+    "businessId": "Business ID",
+    "email": "Email",
+    "chair": "Chair",
+    "phone": "Phone (Gurula)",
+    "accountNumbers": "Account numbers",
+    "eInvoicing": "E-invoicing",
+    "links": "Links",
+    "feedbackForm": "General feedback form",
+    "harassmentContacts": "Harassment contacts"
   }
 }

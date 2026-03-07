@@ -216,5 +216,18 @@
     "edit": "Muokkaa",
     "noEvents": "Ei tapahtumia.",
     "unnamed": "(nimetön)"
+  },
+  "footer": {
+    "partners": "Yhteistyökumppanit",
+    "post": "Posti",
+    "businessId": "Y-tunnus",
+    "email": "Sähköposti",
+    "chair": "Puheenjohtaja",
+    "phone": "Puhelin Gurulaan",
+    "accountNumbers": "Tilinumerot",
+    "eInvoicing": "Verkkolaskutus",
+    "links": "Linkit",
+    "feedbackForm": "Yleinen palautelomake",
+    "harassmentContacts": "Häirintäyhdyshenkilöt"
   }
 }
