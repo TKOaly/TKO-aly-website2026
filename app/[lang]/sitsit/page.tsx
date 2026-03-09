@@ -1,4 +1,4 @@
-import Terminal from "@/components/Cards/Terminal/Terminal"
+import Terminal from "@/components/Cards/Terminal"
 
 export default function About() {
   return (
