@@ -113,7 +113,7 @@
   border-bottom: 2px solid var(--color-text);
   color: var(--color-text);
   text-decoration: none;
-  height: 2.5rem; /* h-10 */
+  height: 2.5rem;
   padding: var(--space-2) var(--space-4);
 }
 
