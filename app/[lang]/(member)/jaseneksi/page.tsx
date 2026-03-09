@@ -1,5 +1,5 @@
 import Alert from "@/components/Alert/Alert"
-import Card from "@/components/Card/Card"
+import Card from "@/components/Cards/Card/Card"
 import Checkbox from "@/components/Checkbox/Checkbox"
 import Field from "@/components/Field/Field"
 import Fieldset from "@/components/Fieldset/Fieldset"

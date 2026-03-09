@@ -89,6 +89,7 @@
   --color-surface: var(--neutral-700);
   --color-text: var(--neutral-50);
   --color-text-muted: var(--neutral-300);
+  --color-text-inverted: var(--neutral-900);
   --color-accent: var(--yellow-500);
   --color-link: var(--yellow-400);
 
@@ -119,6 +120,7 @@
     --color-surface: var(--white);
     --color-text: var(--neutral-800);
     --color-text-muted: var(--neutral-500);
+    --color-text-inverted: var(--neutral-50);
     --color-accent: var(--yellow-600);
     --color-link: var(--blue-500);
 
