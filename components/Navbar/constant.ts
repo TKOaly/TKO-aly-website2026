@@ -1,6 +1,7 @@
 export const navItems = [
   {
     labelKey: "nav.sections.association",
+    descriptionKey: "nav.sections.associationDesc",
     links: [
       { href: "/hallitus", labelKey: "nav.links.board" },
       { href: "/tiedotus", labelKey: "nav.links.communications" },
@@ -25,6 +26,7 @@ export const navItems = [
   },
   {
     labelKey: "nav.sections.activities",
+    descriptionKey: "nav.sections.activitiesDesc",
     links: [
       { href: "/edunvalvonta", labelKey: "nav.links.advocacy" },
       { href: "/sitsit", labelKey: "nav.links.sitsit" },
@@ -41,6 +43,7 @@ export const navItems = [
   },
   {
     labelKey: "nav.sections.events",
+    descriptionKey: "nav.sections.eventsDesc",
     links: [
       { href: "/kalenteri", labelKey: "nav.links.calendar" },
       { href: "/lisaa-tapahtuma", labelKey: "nav.links.addEvent" },
@@ -48,6 +51,7 @@ export const navItems = [
   },
   {
     labelKey: "nav.sections.safety",
+    descriptionKey: "nav.sections.safetyDesc",
     links: [
       { href: "/hairinta", labelKey: "nav.links.harassment" },
       {
@@ -60,6 +64,7 @@ export const navItems = [
   },
   {
     labelKey: "nav.sections.forFreshmen",
+    descriptionKey: "nav.sections.forFreshmenDesc",
     links: [
       { href: "/jaseneksi", labelKey: "nav.links.applyMembership" },
       {
@@ -77,6 +82,7 @@ export const navItems = [
   },
   {
     labelKey: "nav.sections.companies",
+    descriptionKey: "nav.sections.companiesDesc",
     links: [
       {
         href: "https://jobs.tko-aly.fi/en/list/open",

@@ -34,6 +34,7 @@ function Navbar() {
 
       {!isMobileView && (
         <>
+          <div className={styles.megaMenuBackdrop} aria-hidden="true" />
           <ul className={styles.primaryList}>
             {navItems.map(section => (
               <li key={section.labelKey} className={styles.navItem}>
@@ -44,23 +45,37 @@ function Navbar() {
                 >
                   {t(section.labelKey)} ▼
                 </button>
-                <ul className={styles.dropdownMenu} role="menu">
-                  {section.links.map(link => (
-                    <li key={link.href} role="none">
-                      <ClientLink
-                        role="menuitem"
-                        href={link.href}
-                        target={link.external ? "_blank" : undefined}
-                        rel={link.external ? "noopener noreferrer" : undefined}
-                      >
-                        {t(link.labelKey)}{" "}
-                        {link.external && (
-                          <ExternalLink height={16} width={16} />
-                        )}
-                      </ClientLink>
-                    </li>
-                  ))}
-                </ul>
+                <div className={styles.megaMenu} role="menu">
+                  <div className={styles.megaMenuInner}>
+                    <div className={styles.megaMenuHeader}>
+                      <h3 className={styles.megaMenuTitle}>
+                        {t(section.labelKey)}
+                      </h3>
+                      <p className={styles.megaMenuDescription}>
+                        {t(section.descriptionKey)}
+                      </p>
+                    </div>
+                    <ul className={styles.megaMenuLinks}>
+                      {section.links.map(link => (
+                        <li key={link.href} role="none">
+                          <ClientLink
+                            role="menuitem"
+                            href={link.href}
+                            target={link.external ? "_blank" : undefined}
+                            rel={
+                              link.external ? "noopener noreferrer" : undefined
+                            }
+                          >
+                            {t(link.labelKey)}{" "}
+                            {link.external && (
+                              <ExternalLink height={16} width={16} />
+                            )}
+                          </ClientLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
@@ -84,10 +99,7 @@ function Navbar() {
                 >
                   <User height={24} width={24} />
                 </button>
-                <ul
-                  className={`${styles.dropdownMenu} ${styles.userDropdownMenu}`}
-                  role="menu"
-                >
+                <ul className={styles.dropdownMenu} role="menu">
                   {userNavItems.map(item => (
                     <li key={item.href} role="none">
                       <ClientLink role="menuitem" href={item.href}>
