@@ -2,11 +2,17 @@
   "nav": {
     "sections": {
       "association": "Association",
+      "associationDesc": "Learn about TKO-äly's governance, official documents, and how the association works.",
       "activities": "Activities",
+      "activitiesDesc": "Discover member activities, clubs, events, and ways to get involved.",
       "events": "Events",
+      "eventsDesc": "Browse upcoming events and add your own to the community calendar.",
       "safety": "Safety",
+      "safetyDesc": "Resources for building a safe, equal, and respectful community.",
       "forFreshmen": "For freshmen",
-      "companies": "Companies"
+      "forFreshmenDesc": "Everything you need as a new computer science student at UH.",
+      "companies": "Companies",
+      "companiesDesc": "Opportunities for companies to connect with our talented members."
     },
     "links": {
       "board": "Board",

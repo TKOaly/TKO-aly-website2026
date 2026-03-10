@@ -19,17 +19,22 @@
 .primaryList {
   padding: 0 var(--space-6);
   display: flex;
-  gap: var(--space-2);
 }
 
 .secondaryActionList {
   display: flex;
+  align-items: center;
   gap: var(--space-2);
+}
+
+.secondaryActionList > .dropdownMenu > li:hover {
+  background: #00000010;
+  mix-blend-mode: multiply;
 }
 
 .dropdownToggle {
   color: var(--neutral-900);
-  padding: var(--space-4) var(--space-2);
+  padding: var(--space-5) var(--space-4);
   font-weight: bold;
   font-family: monospace;
   font-size: large;
@@ -39,37 +44,150 @@
   cursor: pointer;
 }
 
-.dropdownMenu a:hover,
-.navItem a:hover,
 .dropdownToggle:hover {
   background: var(--yellow-600);
 }
 
-.dropdownMenu a:focus,
-.navItem a:focus,
 .dropdownToggle:focus {
   background: var(--yellow-700);
 }
 
-/* Dropdowns */
+/* ── Mega menu (full-width section dropdowns) ── */
 .navItem {
   position: relative;
 }
 
+.megaMenu {
+  position: fixed;
+  top: var(--space-16); /* sits flush below the navbar */
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: var(--space-44);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+  padding: var(--space-8) 0;
+  display: none;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  z-index: 999;
+}
+
+.megaMenuInner {
+  max-width: var(--screen-xl);
+  width: 100%;
+  padding: 0 var(--space-6);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+/* Show mega menu on hover or keyboard focus-within */
+.navItem:hover .megaMenu,
+.navItem:focus .megaMenu,
+.navItem:focus-within .megaMenu {
+  display: flex;
+}
+
+/* Blur backdrop shown behind mega menus */
+.megaMenuBackdrop {
+  display: none;
+  position: fixed;
+  top: var(--space-16);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 998;
+  background: rgba(var(--color-surface-rgb), 0.8);
+  pointer-events: none;
+}
+
+/* eslint-disable css/use-baseline */
+.navbar:has(.primaryList .navItem:hover) .megaMenuBackdrop,
+.navbar:has(.primaryList .navItem:focus-within) .megaMenuBackdrop {
+  display: block;
+}
+/* eslint-enable css/use-baseline */
+
+/* Left descriptive header panel */
+.megaMenuHeader {
+  flex: 0 0 220px;
+  padding-right: var(--space-8);
+  border-right: 2px solid var(--neutral-100);
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.megaMenuTitle {
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.megaMenuDescription {
+  font-family: sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Links grid */
+.megaMenuLinks {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-1);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.megaMenuLinks li a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  font-weight: 600;
+  font-family: monospace;
+  color: var(--color-text);
+  padding: var(--space-2) var(--space-3);
+}
+
+.megaMenuLinks li a:hover {
+  background: var(--yellow-200);
+  color: var(--neutral-900);
+}
+
+.megaMenuLinks li a:focus {
+  background: var(--yellow-300);
+  color: var(--neutral-900);
+}
+
+/* ── User dropdown (compact, right-aligned) ── */
 .dropdownMenu {
   position: absolute;
-  left: 0;
+  left: auto;
+  right: 0;
   min-width: var(--space-60);
   padding: var(--space-2);
   background: var(--yellow);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   font-family: monospace;
   font-size: large;
   display: none;
 }
 
-/* Show dropdown on focus or when a child element is focused */
 .navItem:focus .dropdownMenu,
-.navItem:focus-within .dropdownMenu {
+.navItem:focus-within .dropdownMenu,
+.navItem:hover .dropdownMenu {
   display: block;
 }
 
@@ -77,14 +195,20 @@
   display: block;
   text-decoration: none;
   font-weight: bold;
-  color: black;
+  color: var(--neutral-900);
   padding: var(--space-2);
 }
 
-/* User dropdown */
-.userDropdownMenu {
-  left: auto;
-  right: 0;
+.primaryList .dropdownMenu li a:hover {
+  background: var(--yellow-200);
+}
+
+.secondaryActionList .dropdownMenu li a:hover {
+  background: var(--yellow-600);
+}
+
+.dropdownMenu li a:focus {
+  background: var(--yellow-300);
 }
 
 /* White profile button */

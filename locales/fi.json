@@ -2,11 +2,17 @@
   "nav": {
     "sections": {
       "association": "Yhdistys",
+      "associationDesc": "Tutustu TKO-älyn hallintoon, virallisiin asiakirjoihin ja yhdistyksen toimintaan.",
       "activities": "Toiminta",
+      "activitiesDesc": "Löydä jäsentoimintaa, kerhoja, tapahtumia ja tapoja osallistua.",
       "events": "Tapahtumat",
+      "eventsDesc": "Selaa tulevia tapahtumia ja lisää omasi yhteisökalenteriin.",
       "safety": "Turvallisuus",
+      "safetyDesc": "Resursseja turvallisen, tasa-arvoisen ja kunnioittavan yhteisön rakentamiseen.",
       "forFreshmen": "Fukseille",
-      "companies": "Yritykset"
+      "forFreshmenDesc": "Kaikki mitä uutena tietojenkäsittelytieteen opiskelijana Helsingin yliopistossa tarvitset.",
+      "companies": "Yritykset",
+      "companiesDesc": "Mahdollisuuksia yrityksille tavoittaa lahjakkaita jäseniämme."
     },
     "links": {
       "board": "Hallitus",
