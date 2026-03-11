@@ -1,0 +1,32 @@
+.imageCard {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-thick);
+  border: var(--border);
+  max-width: var(--screen-xs);
+}
+
+.imageWrapper {
+  position: relative;
+  margin: var(--space-6);
+  aspect-ratio: 1 / 1;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.body {
+  padding: 0 var(--space-6) var(--space-6) var(--space-6);
+}
+
+.title {
+  display: inline-block;
+  background: var(--yellow);
+  font-family: monospace;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--neutral-900);
+  padding: var(--space-2) var(--space-4);
+  margin-top: 0;
+  margin-bottom: var(--space-2);
+}
