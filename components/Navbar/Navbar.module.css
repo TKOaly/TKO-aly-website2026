@@ -35,6 +35,7 @@
 .dropdownToggle {
   color: var(--neutral-900);
   padding: var(--space-5) var(--space-4);
+  height: var(--space-16);
   font-weight: bold;
   font-family: monospace;
   font-size: large;
