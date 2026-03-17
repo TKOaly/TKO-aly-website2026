@@ -91,7 +91,11 @@
 }
 
 .cardAccent {
-  background-color: var(--yellow);
+  background-image:
+    url("../../app/assets/dot-pattern.svg"),
+    linear-gradient(to bottom right, var(--yellow), var(--yellow-600));
+  background-position: 100% 100%;
+  background-repeat: repeat;
   color: #000;
 }
 
