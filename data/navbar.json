@@ -1,0 +1,284 @@
+[
+  {
+    "labels": {
+      "fi": "Yhisty",
+      "en": "Lollelislol"
+    },
+    "descriptions": {
+      "fi": "Tutustu TKO-älyn hallintoon, virallisiin asiakirjoihin ja yhdistyksen toimintaan.",
+      "en": "Learn about TKO-äly's governance, official documents, and how the association works."
+    },
+    "links": [
+      {
+        "href": "/hallitus",
+        "labels": {
+          "fi": "Hallitus",
+          "en": "Board"
+        }
+      },
+      {
+        "href": "/tiedotus",
+        "labels": {
+          "fi": "Tiedotus",
+          "en": "Communications"
+        }
+      },
+      {
+        "href": "/saannot",
+        "labels": {
+          "fi": "Säännöt",
+          "en": "Rules"
+        }
+      },
+      {
+        "href": "/talous",
+        "labels": {
+          "fi": "Talous",
+          "en": "Finances"
+        }
+      },
+      {
+        "href": "/tunnukset",
+        "labels": {
+          "fi": "Tunnukset",
+          "en": "Credentials"
+        }
+      },
+      {
+        "href": "/vaalijarjestys",
+        "labels": {
+          "fi": "Vaalijärjestys",
+          "en": "Election order"
+        }
+      },
+      {
+        "href": "/tilinumerot",
+        "labels": {
+          "fi": "Tilinumerot",
+          "en": "Account numbers"
+        }
+      },
+      {
+        "href": "/yhteystiedot",
+        "labels": {
+          "fi": "Yhteystiedot",
+          "en": "Contact"
+        }
+      },
+      {
+        "href": "/brandiohje",
+        "labels": {
+          "fi": "Brandiohje",
+          "en": "Brand guide"
+        }
+      },
+      {
+        "href": "https://arkisto.tko-aly.fi/",
+        "labels": {
+          "fi": "Arkisto",
+          "en": "Archive"
+        },
+        "external": true
+      },
+      {
+        "href": "https://bbat.tko-aly.fi/",
+        "labels": {
+          "fi": "Velat & maksut",
+          "en": "Debts & payments"
+        },
+        "external": true
+      }
+    ]
+  },
+  {
+    "labels": {
+      "fi": "Toiminta",
+      "en": "Activities"
+    },
+    "descriptions": {
+      "fi": "Löydä jäsentoimintaa, kerhoja, tapahtumia ja tapoja osallistua.",
+      "en": "Discover member activities, clubs, events, and ways to get involved."
+    },
+    "links": [
+      {
+        "href": "/edunvalvonta",
+        "labels": {
+          "fi": "Edunvalvonta",
+          "en": "Advocacy"
+        }
+      },
+      {
+        "href": "/sitsit",
+        "labels": {
+          "fi": "Sitsit",
+          "en": "Sitsit"
+        }
+      },
+      {
+        "href": "/vuosijuhlat",
+        "labels": {
+          "fi": "Vuosijuhlat",
+          "en": "Annual party"
+        }
+      },
+      {
+        "href": "/liikunta",
+        "labels": {
+          "fi": "Liikunta",
+          "en": "Sports"
+        }
+      },
+      {
+        "href": "/ruokavalitys",
+        "labels": {
+          "fi": "Ruokavälitys",
+          "en": "Food delivery"
+        }
+      },
+      {
+        "href": "/README",
+        "labels": {
+          "fi": "README",
+          "en": "README"
+        }
+      },
+      {
+        "href": "https://blog.tko-aly.fi/",
+        "labels": {
+          "fi": "Blogi",
+          "en": "Blog"
+        },
+        "external": true
+      }
+    ]
+  },
+  {
+    "labels": {
+      "fi": "Tapahtumat",
+      "en": "Events"
+    },
+    "descriptions": {
+      "fi": "Selaa tulevia tapahtumia ja lisää omasi yhteisökalenteriin.",
+      "en": "Browse upcoming events and add your own to the community calendar."
+    },
+    "links": [
+      {
+        "href": "/kalenteri",
+        "labels": {
+          "fi": "Kalenteri",
+          "en": "Calendar"
+        }
+      },
+      {
+        "href": "/lisaa-tapahtuma",
+        "labels": {
+          "fi": "Lisää tapahtuma",
+          "en": "Add event"
+        }
+      }
+    ]
+  },
+  {
+    "labels": {
+      "fi": "Turvallisuus",
+      "en": "Safety"
+    },
+    "descriptions": {
+      "fi": "Resursseja turvallisen, tasa-arvoisen ja kunnioittavan yhteisön rakentamiseen.",
+      "en": "Resources for building a safe, equal, and respectful community."
+    },
+    "links": [
+      {
+        "href": "/hairinta",
+        "labels": {
+          "fi": "Häirintä",
+          "en": "Harassment"
+        }
+      },
+      {
+        "href": "https://www.tko-aly.fi/attachments/files/399/Yhdenvertaisuussuunnitelma_2024.pdf?1715249780",
+        "labels": {
+          "fi": "Yhdenvertaisuus",
+          "en": "Equality"
+        },
+        "external": true
+      },
+      {
+        "href": "/tietosuoja",
+        "labels": {
+          "fi": "Tietosuoja",
+          "en": "Privacy policy"
+        }
+      }
+    ]
+  },
+  {
+    "labels": {
+      "fi": "Fukseille",
+      "en": "For freshmen"
+    },
+    "descriptions": {
+      "fi": "Kaikki mitä uutena tietojenkäsittelytieteen opiskelijana Helsingin yliopistossa tarvitset.",
+      "en": "Everything you need as a new computer science student at UH."
+    },
+    "links": [
+      {
+        "href": "/jaseneksi",
+        "labels": {
+          "fi": "Liity jäseneksi",
+          "en": "Become a member"
+        }
+      },
+      {
+        "href": "https://fuksiwiki.tko-aly.fi/Fuksiwiki",
+        "labels": {
+          "fi": "Fuksiwiki",
+          "en": "Fuksiwiki"
+        },
+        "external": true
+      },
+      {
+        "href": "/fuksi-info",
+        "labels": {
+          "fi": "Fuksi-info",
+          "en": "Freshmen info"
+        }
+      },
+      {
+        "href": "https://passi.tko-aly.fi/",
+        "labels": {
+          "fi": "Fuksipassi",
+          "en": "Freshmen pass"
+        },
+        "external": true
+      }
+    ]
+  },
+  {
+    "labels": {
+      "fi": "Yritykset",
+      "en": "Companies"
+    },
+    "descriptions": {
+      "fi": "Mahdollisuuksia yrityksille tavoittaa lahjakkaita jäseniämme.",
+      "en": "Opportunities for companies to connect with our talented members."
+    },
+    "links": [
+      {
+        "href": "https://jobs.tko-aly.fi/en/list/open",
+        "labels": {
+          "fi": "Työpaikat",
+          "en": "Jobs"
+        },
+        "external": true
+      },
+      {
+        "href": "/yrityksille",
+        "labels": {
+          "fi": "Yrityksille",
+          "en": "For companies"
+        }
+      }
+    ]
+  }
+]
