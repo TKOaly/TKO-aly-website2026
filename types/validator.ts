@@ -60,7 +60,7 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
 // Validate ../../app/[lang]/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/[lang]">> = Specific;
-  const handler = {} as typeof import("../app/[lang]/page.js");
+  const handler = {} as typeof import("../app/[lang]/(public)/page.js");
   type __Check = __IsExpected<typeof handler>;
   // @ts-ignore
   type __Unused = __Check;
@@ -69,7 +69,7 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
 // Validate ../../app/[lang]/layout.tsx
 {
   type __IsExpected<Specific extends LayoutConfig<"/[lang]">> = Specific;
-  const handler = {} as typeof import("../app/[lang]/layout.js");
+  const handler = {} as typeof import("../app/[lang]/(public)/layout.js");
   type __Check = __IsExpected<typeof handler>;
   // @ts-ignore
   type __Unused = __Check;
