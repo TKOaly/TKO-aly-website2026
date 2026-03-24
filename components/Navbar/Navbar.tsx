@@ -4,22 +4,64 @@ import Image from "next/image"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { ExternalLink, User } from "lucide-react"
 
-import { ClientLink, useTranslation } from "@/app/i18n/client"
+import { ClientLink } from "@/app/i18n/client"
 import { useMatchMediaQuery } from "@/lib/useMatchMediaQuery"
 import { useToggleLanguage } from "@/lib/useToggleLanguage"
+import { useParams } from "next/navigation"
 
 import MobileNavbar from "./MobileNavbar"
-import { navItems, userNavItems } from "./constant"
 import styles from "./Navbar.module.css"
 
-function Navbar() {
+type Lang = "fi" | "en"
+
+interface NavLink {
+  href: string
+  labels: Record<string, string>
+  external?: boolean
+}
+
+interface NavSection {
+  labels: Record<string, string>
+  descriptions: Record<string, string>
+  links: NavLink[]
+}
+
+const translations: Record<Lang, Record<string, string>> = {
+  fi: {
+    switchToEnglish: "In English",
+    switchToFinnish: "Suomeksi",
+    signOut: "Kirjaudu ulos",
+    signIn: "Kirjaudu sisään",
+    openMenu: "Avaa valikko",
+  },
+  en: {
+    switchToEnglish: "In English",
+    switchToFinnish: "Suomeksi",
+    signOut: "Sign out",
+    signIn: "Sign in",
+    openMenu: "Open menu",
+  },
+}
+
+const userNavItems = [
+  {
+    href: "/u/muokkaa",
+    labels: { fi: "Muokkaa profiilia", en: "Edit profile" },
+  },
+  { href: "/u/jasenmaksu", labels: { fi: "Jäsenlasku", en: "Member invoice" } },
+]
+
+function Navbar({ items }: { items: NavSection[] }) {
   const { data: session } = useSession()
-  const { t, lang } = useTranslation()
+  const params = useParams()
+  const lang = (params?.lang as Lang) || "fi"
   const isMobileView = useMatchMediaQuery("lg")
   const toggleLanguage = useToggleLanguage(lang)
 
+  const t = (key: string) => translations[lang][key] || key
+
   const otherLangLabel =
-    lang === "fi" ? t("common.switchToEnglish") : t("common.switchToFinnish")
+    lang === "fi" ? t("switchToEnglish") : t("switchToFinnish")
 
   return (
     <nav className={styles.navbar}>
@@ -36,23 +78,23 @@ function Navbar() {
         <>
           <div className={styles.megaMenuBackdrop} aria-hidden="true" />
           <ul className={styles.primaryList}>
-            {navItems.map(section => (
-              <li key={section.labelKey} className={styles.navItem}>
+            {items.map((section, idx) => (
+              <li key={idx} className={styles.navItem}>
                 <button
                   className={styles.dropdownToggle}
                   aria-haspopup="true"
                   aria-expanded="true"
                 >
-                  {t(section.labelKey)} ▼
+                  {section.labels[lang]} ▼
                 </button>
                 <div className={styles.megaMenu} role="menu">
                   <div className={styles.megaMenuInner}>
                     <div className={styles.megaMenuHeader}>
                       <h3 className={styles.megaMenuTitle}>
-                        {t(section.labelKey)}
+                        {section.labels[lang]}
                       </h3>
                       <p className={styles.megaMenuDescription}>
-                        {t(section.descriptionKey)}
+                        {section.descriptions[lang]}
                       </p>
                     </div>
                     <ul className={styles.megaMenuLinks}>
@@ -66,7 +108,7 @@ function Navbar() {
                               link.external ? "noopener noreferrer" : undefined
                             }
                           >
-                            {t(link.labelKey)}{" "}
+                            {link.labels[lang]}{" "}
                             {link.external && (
                               <ExternalLink height={16} width={16} />
                             )}
@@ -93,7 +135,7 @@ function Navbar() {
               <li className={styles.navItem}>
                 <button
                   type="button"
-                  title={t("nav.openMenu")}
+                  title={t("openMenu")}
                   className={styles.whiteButton}
                   aria-haspopup="true"
                 >
@@ -103,7 +145,7 @@ function Navbar() {
                   {userNavItems.map(item => (
                     <li key={item.href} role="none">
                       <ClientLink role="menuitem" href={item.href}>
-                        {t(item.labelKey)}
+                        {item.labels[lang]}
                       </ClientLink>
                     </li>
                   ))}
@@ -113,7 +155,7 @@ function Navbar() {
                       href="#"
                       onClick={() => signOut()}
                     >
-                      {t("auth.signOut")}
+                      {t("signOut")}
                     </ClientLink>
                   </li>
                 </ul>
@@ -124,7 +166,7 @@ function Navbar() {
                   className={styles.dropdownToggle}
                   onClick={() => signIn("tkoaly")}
                 >
-                  {t("auth.signIn")}
+                  {t("signIn")}
                 </button>
               </li>
             )}
