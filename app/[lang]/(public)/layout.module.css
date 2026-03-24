@@ -1,0 +1,7 @@
+.main {
+  max-width: var(--screen-xl);
+  margin: var(--space-8) auto;
+  background: var(--color-surface);
+  padding: var(--space-8) var(--space-16);
+  border: var(--border);
+}
