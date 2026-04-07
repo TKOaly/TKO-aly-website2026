@@ -14,7 +14,16 @@ const NavigationManagementPage = async ({
   const navbarData = await getNavbar()
 
   return (
-    <main style={{ padding: "2rem" }}>
+    <main
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        maxWidth: "800px",
+        margin: "0 auto",
+        padding: "2rem",
+      }}
+    >
       <PageHeader
         title={t("admin.navigation.title", {
           defaultValue: "Navigation Management",
