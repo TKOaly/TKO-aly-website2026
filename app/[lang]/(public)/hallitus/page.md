@@ -1,367 +1,362 @@
 # Hallitus
 
-#virkailijat
+## Virkailijat 2026
 
-:textile
+### Alumniyhdyshenkilö
 
-    ## Virkailijat 2026
+- Matti Averio (alumni(at)tko-aly.fi)
 
+### ATK-YTP-vastaava
 
-    ### Alumniyhdyshenkilö
+- Aleksanteri Perkkiö (atk-ytp(at)tko-aly.fi)
 
-    |Matti Averio|alumni(at)tko-aly.fi|
+### Bilevastaavat
 
-    ### ATK-YTP-vastaava
+- Juulia "Juju" Erjanti (bilevastaava(at)tko-aly.fi)
 
-    |Aleksanteri Perkkiö|atk-ytp(at)tko-aly.fi|
+### Biletiimi
 
-    ### Bilevastaavat
+- Buddhima Senaratha
+- Soumyadipta "Sammy" Kar
+- Tassu
+- Mittu Alho
+- Kauri-Viljar Vahter
+- Leevi Halme
+- Bryn Sloan
+- Aapo Simola
+- Joona Kääriäinen
+- Milla Tapaninen
+- Noora Oljakka
+- Anto Keinänen
+- Ville-Petteri "VP" Juselius
+- Sakari "Kussi" Marttinen
 
-    |Juulia "Juju" Erjanti|bilevastaava(at)tko-aly.fi|
+### Casual-vastaava
 
-    ### Biletiimi
+- Mariia "Martsu" Leventsova (casualvastaava(at)tko-aly.fi)
+- Mittu Alho
 
-    |Buddhima Senaratha|
-    |Soumyadipta "Sammy" Kar|
-    |Tassu|
-    |Mittu Alho|
-    |Kauri-Viljar Vahter|
-    |Leevi Halme|
-    |Bryn Sloan|
-    |Aapo Simola|
-    |Joona Kääriäinen|
-    |Milla Tapaninen|
-    |Noora Oljakka|
-    |Anto Keinänen|
-    |Ville-Petteri "VP" Juselius|
-    |Sakari "Kussi" Marttinen|
+### Casual-tiimi
 
-    ### Casual-vastaava
+- Khio Zahorsky
+- Saga Kantola
+- Miina
+- Ville-Petteri "VP" Juselius
+- Sakari "Kussi" Marttinen
+- Tassu
+- Joonatan Paalanen
+- Juuso Kosonen
+- Viljami Ilola
 
-    |Mariia "Martsu" Leventsova|casualvastaava(at)tko-aly.fi|
-    |Mittu Alho|
+### Datatiedevastaavat
 
-    ### Casual-tiimi
+- Soumyadipta "Sammy" Kar (datatiedevastaava(at)tko-aly.fi)
+- Dominik Répàs
 
-    |Khio Zahorsky|
-    |Saga Kantola|
-    |Miina|
-    |Ville-Petteri "VP" Juselius|
-    |Sakari "Kussi" Marttinen|
-    |Tassu|
-    |Joonatan Paalanen|
-    |Juuso Kosonen|
-    |Viljami Ilola|
+### Fuksi- ja tuutorivastaavat
 
-    ### Datatiedevastaavat
+- Matias Jerkkola (fuksivastaava(at)tko-aly.fi)
+- Eva Långbacka
+- Viljami Ilola
 
-    |Soumyadipta "Sammy" Kar|datatiedevastaava(at)tko-aly.fi|
-    |Dominik Répàs|
+### Graafikot
 
-    ### Fuksi- ja tuutorivastaavat
+- Mariia "Martsu" Leventsova (graafikko(at)tko-aly.fi)
+- Milla Tapaninen
+- Eva Långbacka
+- Eden Arponen
 
-    |Matias Jerkkola|fuksivastaava(at)tko-aly.fi|
-    |Eva Långbacka|
-    |Viljami Ilola|
+### Gurulavastaavat
 
-    ### Graafikot
+- Eemeli "Tuupe" Nurmi (gurulavastaava(at)tko-aly.fi)
+- Juuso Kosonen
 
-    |Mariia "Martsu" Leventsova|graafikko(at)tko-aly.fi|
-    |Milla Tapaninen|
-    |Eva Långbacka|
-    |Eden Arponen|
+### Häirintäyhdyshenkilöt
 
-    ### Gurulavastaavat
+- Kauri-Viljar Vahter (hairintayhdyshenkilo(at)tko-aly.fi)
+- Eero Verho
+- Iikka Hauhio
+- Eva Långbacka
 
-    |Eemeli "Tuupe" Nurmi|gurulavastaava(at)tko-aly.fi|
-    |Juuso Kosonen|
+### HYY- ja Matlu-vastaava
 
-    ### Häirintäyhdyshenkilöt
+- Eetu Raunio (hyy-vastaava(at)tko-aly.fi, matlu-vastaava(at)tko-aly.fi)
 
-    |Kauri-Viljar Vahter|hairintayhdyshenkilo(at)tko-aly.fi|
-    |Eero Verho|
-    |Iikka Hauhio|
-    |Eva Långbacka|
+### Jäsenvastaava
 
-    ### HYY- ja Matlu-vastaava
+- Viljami Ilola (jasenvastaava(at)tko-aly.fi)
 
-    |Eetu Raunio|hyy-vastaava(at)tko-aly.fi, matlu-vastaava(at)tko-aly.fi|
+### Keittiömestarit
 
-    ### Jäsenvastaava
+- Isla London (keittiomestari(at)tko-aly.fi)
+- Maija Laine
 
-    |Viljami Ilola|jasenvastaava(at)tko-aly.fi|
+### Klusterivastaava
 
-    ### Keittiömestarit
+- Aapo Simola (klusterivastaava(at)tko-aly.fi)
 
-    |Isla London|keittiomestari(at)tko-aly.fi|
-    |Maija Laine|
+### Avustavat klusterivastaavat
 
-    ### Klusterivastaava
+- Bryn Sloan
+- Eetu Raunio
+- Petrus Peltola
 
-    |Aapo Simola|klusterivastaava(at)tko-aly.fi|
+### Kulttuurivastaava
 
-    ### Avustavat klusterivastaavat
+- Kauri-Viljar Vahter (kulttuurivastaava(at)tko-aly.fi)
+- Eero Verho
 
-    |Bryn Sloan|
-    |Eetu Raunio|
-    |Petrus Peltola|
+### Kulttuuritiimi
 
-    ### Kulttuurivastaava
+- Mette Munne
+- Tassu
+- Mittu Alho
+- Juuso Kosonen
+- Ville-Petteri "VP" Juselius
+- Matias Jerkkola
 
-    |Kauri-Viljar Vahter|kulttuurivastaava(at)tko-aly.fi|
-    |Eero Verho|
+### KV-vastaavat
 
-    ### Kulttuuritiimi
+- Soumyadipta "Sammy" Kar (international(at)tko-aly.fi)
+- Buddhima Senarathna
 
-    |Mette Munne|
-    |Tassu|
-    |Mittu Alho|
-    |Juuso Kosonen|
-    |Ville-Petteri "VP" Juselius|
-    |Matias Jerkkola|
+### LAN-vastaava
 
-    ### KV-vastaavat
+- Daniel "Dasuki" Kristiansson (lanivastaava(at)tko-aly.fi)
 
-    |Soumyadipta "Sammy" Kar|international(at)tko-aly.fi|
-    |Buddhima Senarathna|
+### LAN-tiimi
 
-    ### LAN-vastaava
+- Mio Argillander
+- Mittu Alho
+- Eemeli "Tuupe" Nurmi
+- Hermanni Sallinen
+- Mariia "Martsu" Leventsova
+- Matias Jerkkola
 
-    |Daniel "Dasuki" Kristiansson|lanivastaava(at)tko-aly.fi|
+### Liikuntavastaava
 
-    ### LAN-tiimi
+- Noora Oljakka (liikuntavastaava(at)tko-aly.fi)
 
-    |Mio Argillander|
-    |Mittu Alho|
-    |Eemeli "Tuupe" Nurmi|
-    |Hermanni Sallinen|
-    |Mariia "Martsu" Leventsova|
-    |Matias Jerkkola|
+### Liikuntatiimi
 
-    ### Liikuntavastaava
+- _ Ei Jäseniä _
 
-    |Noora Oljakka|liikuntavastaava(at)tko-aly.fi|
+### Opintovastaavat
 
-    ### Liikuntatiimi
+- Matti Averio (opintovastaava(at)tko-aly.fi)
+- Matias Tamminen
+- Okko Oikkonen
+- Alexander Algrund
 
-    |* Ei Jäseniä *|
+### Pöhinävastaava
 
-    ### Opintovastaavat
+- Anto Keinänen (pohinavastaava(at)tko-aly.fi)
 
-    |Matti Averio|opintovastaava(at)tko-aly.fi|
-    |Matias Tamminen|
-    |Okko Oikkonen|
-    |Alexander Algrund|
+### Pöhinätiimi
 
-    ### Pöhinävastaava
+- Saga Kantola
+- Mio Argillander
+- Matias Jerkkola
+- Kauri-Viljar Vahter
 
-    |Anto Keinänen|pohinavastaava(at)tko-aly.fi|
+### Pöytäjuhlavastaava
 
-    ### Pöhinätiimi
+- Daniel "Dasuki" Kristianson (sitsivastaava(at)tko-aly.fi)
 
-    |Saga Kantola|
-    |Mio Argillander|
-    |Matias Jerkkola|
-    |Kauri-Viljar Vahter|
+### Avustavat pöytäjuhlavastaavat
 
-    ### Pöytäjuhlavastaava
+- Juhani Kataja
+- Kauri-Viljar Vahter
+- Tassu
+- Aleksanteri Perkkiö
+- Sakari "Kussi" Marttinen
+- Mette Munne
+- Matias Jerkkola
+- Eva Långbacka
+- Ville-Petteri "VP" Juselius
+- Juuso Kosonen
+- Khio Zahorsky
+- Oskar Blyt
+- Mittu Alho
+- Mariia "Martsu" Leventsova
+- Aapo Asikainen
 
-    |Daniel "Dasuki" Kristianson|sitsivastaava(at)tko-aly.fi|
+### Laulumestarit
 
-    ### Avustavat pöytäjuhlavastaavat
+- Bryn Sloan (laulumestari(at)tko-aly.fi)
+- Elina Toivonen
+- Noora Oljakka
 
-    |Juhani Kataja|
-    |Kauri-Viljar Vahter|
-    |Tassu|
-    |Aleksanteri Perkkiö|
-    |Sakari "Kussi" Marttinen|
-    |Mette Munne|
-    |Matias Jerkkola|
-    |Eva Långbacka|
-    |Ville-Petteri "VP" Juselius|
-    |Juuso Kosonen|
-    |Khio Zahorsky|
-    |Oskar Blyt|
-    |Mittu Alho|
-    |Mariia "Martsu" Leventsova|
-    |Aapo Asikainen|
+### Avustavat rahastonhoitajat
 
-    ### Laulumestarit
+- Aapo Asikainen
+- Sakari "Kussi" Marttinen
 
-    |Bryn Sloan|laulumestari(at)tko-aly.fi|
-    |Elina Toivonen|
-    |Noora Oljakka|
+### Risteilyvastaava
 
-    ### Avustavat rahastonhoitajat
+- Mikko "dogo" Rantanen (risteilyvastaava(at)tko-aly.fi)
 
-    |Aapo Asikainen|
-    |Sakari "Kussi" Marttinen|
+### Risteilytiimi
 
-    ### Risteilyvastaava
+- Iikka Hauhio
+- Eva Långbacka
+- Kauri-Viljar Vahter
 
-    |Mikko "dogo" Rantanen|risteilyvastaava(at)tko-aly.fi|
+### RV-vastaavat
 
-    ### Risteilytiimi
+- Aapo Asikainen (rv(at)tko-aly.fi)
+- Saga Kantola
+- Viljami Ilola
+- Juuso Kosonen
 
-    |Iikka Hauhio|
-    |Eva Långbacka|
-    |Kauri-Viljar Vahter|
+### Saunavastaava
 
-    ### RV-vastaavat
+- Mariia "Martsu" Leventsova (saunavastaava(at)tko-aly.fi)
 
-    |Aapo Asikainen|rv(at)tko-aly.fi|
-    |Saga Kantola|
-    |Viljami Ilola|
-    |Juuso Kosonen|
+### Saunatiimi
 
-    ### Saunavastaava
+- Ville-Petteri "VP" Juselius
+- Tassu
+- Miina
+- Khio Zahorsky
+- Aleksanteri Perkkiö
+- Aapo Simola
+- Mittu Alho
+- Bryn Sloan
+- Leevi Halme
+- Sakari "Kussi" Marttinen
 
-    |Mariia "Martsu" Leventsova|saunavastaava(at)tko-aly.fi|
+### Somevastaava
 
-    ### Saunatiimi
+- Aleksanteri Perkkiö (somevastaava(at)tko-aly.fi)
 
-    |Ville-Petteri "VP" Juselius|
-    |Tassu|
-    |Miina|
-    |Khio Zahorsky|
-    |Aleksanteri Perkkiö|
-    |Aapo Simola|
-    |Mittu Alho|
-    |Bryn Sloan|
-    |Leevi Halme|
-    |Sakari "Kussi" Marttinen|
+### Sometiimi
 
-    ### Somevastaava
+- Tony Lam
+- Yuxuan "Pasi" Zhang
+- Joona Kääriäinen
+- Kauri-Viljar Vahter
+- Elina Toivonen
+- Eva Långbacka
 
-    |Aleksanteri Perkkiö|somevastaava(at)tko-aly.fi|
+### Vanhempi järjestelmävastaava
 
-    ### Sometiimi
+- Mitja Karhusaari (tietojarjestelmavastaava(at)tko-aly.fi)
 
-    |Tony Lam|
-    |Yuxuan "Pasi" Zhang|
-    |Joona Kääriäinen|
-    |Kauri-Viljar Vahter|
-    |Elina Toivonen|
-    |Eva Långbacka|
+### Järjestelmävastaavatiimi
 
-    ### Vanhempi järjestelmävastaava
+- Daniel Smalin
+- Lauri Kaijansinkko
+- Boriss Jerjomkin
+- Karpalo Toivonen
+- Heljä Lehtinen
+- Mikko "dogo" Rantanen
+- Joona Kauppila
+- Alexandra Holvi
+- Mio Argillander
+- Eemeli "Tuupe" Nurmi
+- Sakari "Kussi" Marttinen
+- Eetu Raunio
+- Okko Oikkonen
+- Ville-Petteri "VP" Juselius
+- Juuso Kosonen
+- Saga Kantola
+- Daniel "Dasuki" Kristiansson
+- Viljami Ilola
 
-    |Mitja Karhusaari|tietojarjestelmavastaava(at)tko-aly.fi|
+### Taittaja
 
-    ### Järjestelmävastaavatiimi
+- Mariia "Martsu" Leventsova (lehti(at)tko-aly.fi)
 
-    |Daniel Smalin|
-    |Lauri Kaijansinkko|
-    |Boriss Jerjomkin|
-    |Karpalo Toivonen|
-    |Heljä Lehtinen|
-    |Mikko "dogo" Rantanen|
-    |Joona Kauppila|
-    |Alexandra Holvi|
-    |Mio Argillander|
-    |Eemeli "Tuupe" Nurmi|
-    |Sakari "Kussi" Marttinen|
-    |Eetu Raunio|
-    |Okko Oikkonen|
-    |Ville-Petteri "VP" Juselius|
-    |Juuso Kosonen|
-    |Saga Kantola|
-    |Daniel "Dasuki" Kristiansson|
-    |Viljami Ilola|
+### Tärpistövastaava
 
-    ### Taittaja
+- Joonatan Paalanen (tarpisto(at)tko-aly.fi)
 
-    |Mariia "Martsu" Leventsova|lehti(at)tko-aly.fi|
+### TEK-yhdyshenkilö
 
-    ### Tärpistövastaava
+- Mio Argillander (ayvastaava(at)tko-aly.fi)
 
-    |Joonatan Paalanen|tarpisto(at)tko-aly.fi|
+### Tiedottajat
 
-    ### TEK-yhdyshenkilö
+- Eero Verho (tiedottaja(at)tko-aly.fi)
+- Alexandra Holvi
 
-    |Mio Argillander|ayvastaava(at)tko-aly.fi|
+### Päätoimittaja
 
-    ### Tiedottajat
+- Elina Toivonen (paatoimittaja(at)tko-aly.fi)
 
-    |Eero Verho|tiedottaja(at)tko-aly.fi|
-    |Alexandra Holvi|
+### Toimittajat
 
-    ### Päätoimittaja
+- Mette Munne (lehti(at)tko-aly.fi)
+- Tony Lam
+- Eva-Maria Asplund
+- Heljä Lehtinen
+- Onerva Tuppurainen
+- Saga Kantola
+- Kauri-Viljar Vahter
+- Joonatan Paalanen
+- Alexandra Holvi
+- Noora Oljakka
+- Mikael Merentie
 
-    |Elina Toivonen|paatoimittaja(at)tko-aly.fi|
+### Tuotevastaavat
 
-    ### Toimittajat
+- Aapo Asikainen (tuotevastaava(at)tko-aly.fi)
+- Joona Kääriäinen
+- Juuso Kosonen
 
-    |Mette Munne|lehti(at)tko-aly.fi|
-    |Tony Lam|
-    |Eva-Maria Asplund|
-    |Heljä Lehtinen|
-    |Onerva Tuppurainen|
-    |Saga Kantola|
-    |Kauri-Viljar Vahter|
-    |Joonatan Paalanen|
-    |Alexandra Holvi|
-    |Noora Oljakka|
-    |Mikael Merentie|
+### Ulkoasiainvastaavat
 
-    ### Tuotevastaavat
+- Noora Oljakka (ulkoasiainvastaava(at)tko-aly.fi)
+- Aleksanteri Perkkiö
 
-    |Aapo Asikainen|tuotevastaava(at)tko-aly.fi|
-    |Joona Kääriäinen|
-    |Juuso Kosonen|
+### Valokuvaaja
 
-    ### Ulkoasiainvastaavat
+- Aleksanteri Perkkiö (valokuvaaja(at)tko-aly.fi)
 
-    |Noora Oljakka|ulkoasiainvastaava(at)tko-aly.fi|
-    |Aleksanteri Perkkiö|
+### Vappuvastaava
 
-    ### Valokuvaaja
+- Matias Jerkkola (wappuvastaava(at)tko-aly.fi)
 
-    |Aleksanteri Perkkiö|valokuvaaja(at)tko-aly.fi|
+### Vuosijuhlamestari
 
-    ### Vappuvastaava
+- _ Virka Vapaana _ (vuosijuhlavastaava(at)tko-aly.fi)
 
-    |Matias Jerkkola|wappuvastaava(at)tko-aly.fi|
+### Vuosijuhlatiimi
 
-    ### Vuosijuhlamestari
+- Isla London
+- Leevi Halme
+- Aapo Simola
+- Sakari "Kussi" Marttinen
 
-    |* Virka Vapaana *|vuosijuhlavastaava(at)tko-aly.fi|
+### Yhdenvertaisuusvastaavat
 
-    ### Vuosijuhlatiimi
+- Emma Laasonen (yhdenvertaisuusvastaava(at)tko-aly.fi)
+- Eero Verho
 
-    |Isla London|
-    |Leevi Halme|
-    |Aapo Simola|
-    |Sakari "Kussi" Marttinen|
+### Ympäristövastaavat
 
-    ### Yhdenvertaisuusvastaavat
+- Eemeli "Tuupe" Nurmi (ymparisto(at)tko-aly.fi)
+- Juuso Kosonen
 
-    |Emma Laasonen|yhdenvertaisuusvastaava(at)tko-aly.fi|
-    |Eero Verho|
+### Pääyritysvastaava
 
-    ### Ympäristövastaavat
+- Mio Argillander (yritysvastaava(at)tko-aly.fi)
 
-    |Eemeli "Tuupe" Nurmi|ymparisto(at)tko-aly.fi|
-    |Juuso Kosonen|
+### Yritysvastaavat
 
-    ### Pääyritysvastaava
+- Otso Tilus
+- Juho Räsänen
+- Daniel "Dasuki" Kristiansson
+- Mette Munne
+- Ilia Sotkajärvi
 
-    |Mio Argillander|yritysvastaava(at)tko-aly.fi|
+### Toiminnantarkastajat
 
-    ### Yritysvastaavat
+- Emma Laasonen
+- Miika Laurikainen
 
-    |Otso Tilus|
-    |Juho Räsänen|
-    |Daniel "Dasuki" Kristiansson|
-    |Mette Munne|
-    |Ilia Sotkajärvi|
+### Varatoiminnantarkastajat
 
-    ### Toiminnantarkastajat
-
-    |Emma Laasonen|
-    |Miika Laurikainen|
-
-    ### Varatoiminnantarkastajat
-
-    |Sanna Hanén (varsinainen Emma Laasonen)|
-    |Ville-Veikko Saari (varsinainen Miika Laurikainen)|
+- Sanna Hanén (varsinainen Emma Laasonen)
+- Ville-Veikko Saari (varsinainen Miika Laurikainen)
