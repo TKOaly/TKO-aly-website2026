@@ -51,6 +51,13 @@ const userNavItems = [
   { href: "/u/jasenmaksu", labels: { fi: "Jäsenlasku", en: "Member invoice" } },
 ]
 
+const adminNavItems = [
+  {
+    href: "/a/navigaatio",
+    labels: { fi: "Sivun hallinta", en: "Administration" },
+  },
+]
+
 function Navbar({ items }: { items: NavSection[] }) {
   const { data: session } = useSession()
   const params = useParams()
@@ -143,6 +150,13 @@ function Navbar({ items }: { items: NavSection[] }) {
                 </button>
                 <ul className={styles.dropdownMenu} role="menu">
                   {userNavItems.map(item => (
+                    <li key={item.href} role="none">
+                      <ClientLink role="menuitem" href={item.href}>
+                        {item.labels[lang]}
+                      </ClientLink>
+                    </li>
+                  ))}
+                  {adminNavItems.map(item => (
                     <li key={item.href} role="none">
                       <ClientLink role="menuitem" href={item.href}>
                         {item.labels[lang]}
