@@ -4,85 +4,11 @@ import Link from "next/link"
 import styles from "./Footer.module.css"
 import Image from "next/image"
 import { ClientLink, useTranslation } from "@/app/i18n/client"
-
-const sponsors = [
-  {
-    href: "https://futurice.com",
-    alt: "Futurice",
-    src: "https://minio.tko-aly.fi/jobboard-logos/3",
-  },
-  {
-    href: "http://www.tuxera.com/",
-    alt: "Tuxera",
-    src: "https://minio.tko-aly.fi/jobboard-logos/16",
-  },
-  {
-    href: "https://www.accenture.com/",
-    alt: "Accenture Oy",
-    src: "https://minio.tko-aly.fi/jobboard-logos/9",
-  },
-  {
-    href: "https://www.visma.fi",
-    alt: "Visma",
-    src: "https://minio.tko-aly.fi/jobboard-logos/309",
-  },
-  {
-    href: "https://www.vuonogroup.com",
-    alt: "Vuono Group",
-    src: "https://minio.tko-aly.fi/jobboard-logos/308",
-  },
-  {
-    href: "https://www.ericsson.com/",
-    alt: "Ericsson",
-    src: "https://minio.tko-aly.fi/jobboard-logos/297",
-  },
-  {
-    href: "https://netlight.com",
-    alt: "Netlight",
-    src: "https://minio.tko-aly.fi/jobboard-logos/320",
-  },
-  {
-    href: "https://www.nitor.fi/fi",
-    alt: "Nitor",
-    src: "https://minio.tko-aly.fi/jobboard-logos/19",
-  },
-]
-
-const links = [
-  { href: "/hallitus", labelKey: "nav.links.board" },
-  { href: "/tiedotus", labelKey: "nav.links.communications" },
-  { href: "/saannot", labelKey: "nav.links.rules" },
-  { href: "/talous", labelKey: "nav.links.finances" },
-  { href: "/tunnukset", labelKey: "nav.links.credentials" },
-  { href: "/vaalijarjestys", labelKey: "nav.links.electionOrder" },
-  { href: "/tilinumerot", labelKey: "nav.links.accountNumbers" },
-  { href: "/yhteystiedot", labelKey: "nav.links.contact" },
-  { href: "/brandiohje", labelKey: "nav.links.brandGuide" },
-  {
-    href: "https://arkisto.tko-aly.fi/",
-    labelKey: "nav.links.archive",
-    external: true,
-  },
-  {
-    href: "https://bbat.tko-aly.fi/",
-    labelKey: "nav.links.debtsPayments",
-    external: true,
-  },
-  { href: "/edunvalvonta", labelKey: "nav.links.advocacy" },
-  { href: "/sitsit", labelKey: "nav.links.sitsit" },
-  { href: "/vuosijuhlat", labelKey: "nav.links.annualParty" },
-  { href: "/liikunta", labelKey: "nav.links.sports" },
-  { href: "/ruokavalitys", labelKey: "nav.links.foodDelivery" },
-  { href: "/README", labelKey: "nav.links.readme" },
-  {
-    href: "https://blog.tko-aly.fi/",
-    labelKey: "nav.links.blog",
-    external: true,
-  },
-]
+import footerData from "../../data/footer.json"
+import sponsorsData from "../../data/sponsors.json"
 
 export default function Footer() {
-  const { t } = useTranslation()
+  const { t, lang } = useTranslation()
   return (
     <>
       <section className={styles.sponsors}>
@@ -92,7 +18,7 @@ export default function Footer() {
             <div className={styles.sponsorsDivider} />
           </div>
           <div className={styles.sponsorGrid}>
-            {sponsors.map(s => (
+            {sponsorsData.map(s => (
               <a
                 key={s.href}
                 href={s.href}
@@ -198,8 +124,9 @@ export default function Footer() {
           <div className={styles.cardSection}>
             <h2 className={styles.cardHeading}>{t("footer.links")}</h2>
             <ul className={styles.linkList}>
-              {links.map(link => {
+              {footerData.map(link => {
                 const isExternal = link.href.startsWith("http")
+                const label = link.labels[lang as keyof typeof link.labels]
                 return (
                   <li key={link.href} className={styles.linkItem}>
                     {isExternal ? (
@@ -209,11 +136,11 @@ export default function Footer() {
                         rel="noopener noreferrer"
                         className={styles.navLink}
                       >
-                        {t(link.labelKey)}
+                        {label}
                       </a>
                     ) : (
                       <Link href={link.href} className={styles.navLink}>
-                        {t(link.labelKey)}
+                        {label}
                       </Link>
                     )}
                   </li>

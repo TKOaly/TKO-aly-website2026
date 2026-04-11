@@ -1,0 +1,131 @@
+[
+  {
+    "href": "/hallitus",
+    "labels": {
+      "fi": "Hallitus",
+      "en": "Board"
+    }
+  },
+  {
+    "href": "/tiedotus",
+    "labels": {
+      "fi": "Tiedotus",
+      "en": "Communications"
+    }
+  },
+  {
+    "href": "/saannot",
+    "labels": {
+      "fi": "Säännöt",
+      "en": "Rules"
+    }
+  },
+  {
+    "href": "/talous",
+    "labels": {
+      "fi": "Talous",
+      "en": "Finances"
+    }
+  },
+  {
+    "href": "/tunnukset",
+    "labels": {
+      "fi": "Tunnukset",
+      "en": "Credentials"
+    }
+  },
+  {
+    "href": "/vaalijarjestys",
+    "labels": {
+      "fi": "Vaalijärjestys",
+      "en": "Election order"
+    }
+  },
+  {
+    "href": "/tilinumerot",
+    "labels": {
+      "fi": "Tilinumerot",
+      "en": "Account numbers"
+    }
+  },
+  {
+    "href": "/yhteystiedot",
+    "labels": {
+      "fi": "Yhteystiedot",
+      "en": "Contact"
+    }
+  },
+  {
+    "href": "/brandiohje",
+    "labels": {
+      "fi": "Brändiohje",
+      "en": "Brand guide"
+    }
+  },
+  {
+    "href": "https://arkisto.tko-aly.fi/",
+    "external": true,
+    "labels": {
+      "fi": "Arkisto",
+      "en": "Archive"
+    }
+  },
+  {
+    "href": "https://bbat.tko-aly.fi/",
+    "external": true,
+    "labels": {
+      "fi": "Velat & maksut",
+      "en": "Debts & payments"
+    }
+  },
+  {
+    "href": "/edunvalvonta",
+    "labels": {
+      "fi": "Edunvalvonta",
+      "en": "Advocacy"
+    }
+  },
+  {
+    "href": "/sitsit",
+    "labels": {
+      "fi": "Sitsit",
+      "en": "Sitsit"
+    }
+  },
+  {
+    "href": "/vuosijuhlat",
+    "labels": {
+      "fi": "Vuosijuhlat",
+      "en": "Annual party"
+    }
+  },
+  {
+    "href": "/liikunta",
+    "labels": {
+      "fi": "Liikunta",
+      "en": "Sports"
+    }
+  },
+  {
+    "href": "/ruokavalitys",
+    "labels": {
+      "fi": "Ruokavälitys",
+      "en": "Food delivery"
+    }
+  },
+  {
+    "href": "/README",
+    "labels": {
+      "fi": "README",
+      "en": "README"
+    }
+  },
+  {
+    "href": "https://blog.tko-aly.fi/",
+    "external": true,
+    "labels": {
+      "fi": "Blogi",
+      "en": "Blog"
+    }
+  }
+]
