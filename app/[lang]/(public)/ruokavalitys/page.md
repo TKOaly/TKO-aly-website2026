@@ -1,4 +1,4 @@
-# Ruokavälitus
+# Ruokavälitys
 
 Ruokavälityksen tarkoitus on tarjota pientä purtavaa ja juotavaa opiskelun näännyttämille poloisille iltamyöhällä sekä muuta kivaa natusteltavaa koko päiväksi.
 

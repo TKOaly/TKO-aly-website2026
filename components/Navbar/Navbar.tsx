@@ -14,13 +14,13 @@ import styles from "./Navbar.module.css"
 
 type Lang = "fi" | "en"
 
-interface NavLink {
+export interface NavLink {
   href: string
   labels: Record<string, string>
   external?: boolean
 }
 
-interface NavSection {
+export interface NavSection {
   labels: Record<string, string>
   descriptions: Record<string, string>
   links: NavLink[]
@@ -43,7 +43,7 @@ const translations: Record<Lang, Record<string, string>> = {
   },
 }
 
-const userNavItems = [
+export const userNavItems: NavLink[] = [
   {
     href: "/u/muokkaa",
     labels: { fi: "Muokkaa profiilia", en: "Edit profile" },
@@ -51,7 +51,7 @@ const userNavItems = [
   { href: "/u/jasenmaksu", labels: { fi: "Jäsenlasku", en: "Member invoice" } },
 ]
 
-const adminNavItems = [
+export const adminNavItems: NavLink[] = [
   {
     href: "/a/navigaatio",
     labels: { fi: "Sivun hallinta", en: "Administration" },
@@ -85,8 +85,11 @@ function Navbar({ items }: { items: NavSection[] }) {
         <>
           <div className={styles.megaMenuBackdrop} aria-hidden="true" />
           <ul className={styles.primaryList}>
-            {items.map((section, idx) => (
-              <li key={idx} className={styles.navItem}>
+            {items.map(section => (
+              <li
+                key={section.labels.fi || section.labels.en}
+                className={styles.navItem}
+              >
                 <button
                   className={styles.dropdownToggle}
                   aria-haspopup="true"
@@ -156,13 +159,15 @@ function Navbar({ items }: { items: NavSection[] }) {
                       </ClientLink>
                     </li>
                   ))}
-                  {adminNavItems.map(item => (
-                    <li key={item.href} role="none">
-                      <ClientLink role="menuitem" href={item.href}>
-                        {item.labels[lang]}
-                      </ClientLink>
-                    </li>
-                  ))}
+                  {session?.user &&
+                    (session.user as { admin?: boolean })?.admin &&
+                    adminNavItems.map(item => (
+                      <li key={item.href} role="none">
+                        <ClientLink role="menuitem" href={item.href}>
+                          {item.labels[lang]}
+                        </ClientLink>
+                      </li>
+                    ))}
                   <li role="none">
                     <ClientLink
                       role="menuitem"
@@ -188,7 +193,7 @@ function Navbar({ items }: { items: NavSection[] }) {
         </>
       )}
 
-      {isMobileView && <MobileNavbar />}
+      {isMobileView && <MobileNavbar items={items} />}
     </nav>
   )
 }

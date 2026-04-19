@@ -6,12 +6,17 @@ import { ClientLink, useTranslation } from "@/app/i18n/client"
 import { useToggleLanguage } from "@/lib/useToggleLanguage"
 
 import styles from "./MobileNavbar.module.css"
-import { navItems, userNavItems } from "./constant"
+import { NavSection, userNavItems, adminNavItems } from "./Navbar"
 
-const MobileNavbar = () => {
+interface MobileNavbarProps {
+  items: NavSection[]
+}
+
+const MobileNavbar = ({ items }: MobileNavbarProps) => {
   const mobileMenuRef = useRef<HTMLDialogElement>(null)
   const { data: session } = useSession()
-  const { t, lang } = useTranslation()
+  const { t, lang: language } = useTranslation()
+  const lang = (language as string) || "fi"
   const toggleLanguage = useToggleLanguage(lang)
   const otherLangLabel = lang === "fi" ? "In English" : "Suomeksi"
 
@@ -36,11 +41,11 @@ const MobileNavbar = () => {
           <X height={28} width={28} />
         </button>
         <nav className={styles.mobileNav}>
-          {navItems.map(section => (
-            <section key={section.labelKey}>
+          {items.map(section => (
+            <section key={section.labels.fi || section.labels.en}>
               <details>
                 <summary className={styles.mobileSectionHeading}>
-                  {t(section.labelKey)}
+                  {section.labels[lang]}
                 </summary>
                 <ul className={styles.mobileLinkList}>
                   {section.links.map(link => (
@@ -52,7 +57,7 @@ const MobileNavbar = () => {
                         onClick={() => mobileMenuRef.current?.close()}
                         className={styles.mobileLink}
                       >
-                        {t(link.labelKey)}
+                        {link.labels[lang]}
                         {link.external && (
                           <>
                             {" "}
@@ -76,9 +81,21 @@ const MobileNavbar = () => {
                   className={styles.mobileLink}
                   onClick={() => mobileMenuRef.current?.close()}
                 >
-                  {t(item.labelKey)}
+                  {item.labels[lang]}
                 </ClientLink>
               ))}
+              {session?.user &&
+                (session.user as { admin?: boolean })?.admin &&
+                adminNavItems.map(item => (
+                  <ClientLink
+                    key={item.href}
+                    href={item.href}
+                    className={styles.mobileLink}
+                    onClick={() => mobileMenuRef.current?.close()}
+                  >
+                    {item.labels[lang]}
+                  </ClientLink>
+                ))}
             </section>
           )}
         </nav>
