@@ -1,13 +1,28 @@
 "use client"
 
-import Link from "next/link"
 import styles from "./Footer.module.css"
 import Image from "next/image"
 import { ClientLink, useTranslation } from "@/app/i18n/client"
-import footerData from "../../data/footer.json"
-import sponsorsData from "../../data/sponsors.json"
+export type FooterLinkType = {
+  href: string
+  labels: { fi: string; en: string }
+}
 
-export default function Footer() {
+export type SponsorType = {
+  href: string
+  src: string
+  alt: string
+}
+
+type FooterProps = {
+  footerData: FooterLinkType[]
+  sponsorsData: SponsorType[]
+}
+
+export default function FooterClient({
+  footerData,
+  sponsorsData,
+}: FooterProps) {
   const { t, lang } = useTranslation()
   return (
     <>
@@ -139,9 +154,9 @@ export default function Footer() {
                         {label}
                       </a>
                     ) : (
-                      <Link href={link.href} className={styles.navLink}>
+                      <ClientLink href={link.href} className={styles.navLink}>
                         {label}
-                      </Link>
+                      </ClientLink>
                     )}
                   </li>
                 )
