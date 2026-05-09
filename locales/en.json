@@ -49,6 +49,15 @@
     },
     "openMenu": "Open menu"
   },
+  "home": {
+    "heroTitle": "The organization for computer science students at the University of Helsinki",
+    "heroDesc": "Welcome! TKO-äly ry is the organization for computer science and data science students at the University of Helsinki. We organize events, advocate for your interests, and maintain our common living room, Gurula.",
+    "joinButton": "BECOME A MEMBER",
+    "eventsTitle": "Upcoming events",
+    "allEvents": "All events",
+    "noEvents": "No upcoming events.",
+    "register": "register"
+  },
   "auth": {
     "signIn": "Sign in",
     "signOut": "Sign out"
