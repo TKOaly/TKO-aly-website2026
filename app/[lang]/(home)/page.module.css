@@ -1,7 +1,8 @@
 /* Header section */
 .hero {
+  min-height: calc(100dvh - 16rem);
   max-width: var(--screen-2xl);
-  margin: var(--space-28) auto;
+  margin: var(--space-16) auto;
   padding: var(--space-8);
   display: grid;
   grid-template-columns: 1fr;

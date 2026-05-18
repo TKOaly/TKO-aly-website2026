@@ -9,6 +9,11 @@
   align-items: center;
   height: var(--space-16);
   padding: 0 var(--space-6);
+  transition: transform 0.3s ease;
+}
+
+.navbar.hidden {
+  transform: translateY(-100%);
 }
 
 .navbar li {
