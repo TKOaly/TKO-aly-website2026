@@ -3,7 +3,8 @@ import Link from "next/link"
 import { MapPin } from "lucide-react"
 
 import { getAsyncTranslation } from "@/app/i18n"
-import ExperienceSection from "@/components/ExperienceSection"
+import ExperienceSection from "@/components/Home/ExperienceSection"
+import TikTokSection from "@/components/Home/TikTokSection"
 
 import styles from "./page.module.css"
 
@@ -131,6 +132,9 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
           )}
         </div>
       </section>
+
+      {/* TikTok Social Media Section */}
+      <TikTokSection />
 
       {/* Try TKO-äly Experience Section */}
       <ExperienceSection
