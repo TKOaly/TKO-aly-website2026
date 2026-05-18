@@ -1,0 +1,43 @@
+/* Tiktok Section */
+.tiktokSection {
+  padding-top: var(--space-10);
+  padding-bottom: var(--space-20);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+@media (min-width: 768px) {
+  .tiktokSection {
+    margin-top: var(--space-20);
+    margin-bottom: var(--space-40);
+  }
+}
+
+.tiktokHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  max-width: var(--screen-xl);
+  width: 100%;
+  margin: 0 auto var(--space-6) auto;
+  padding: 0 var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .tiktokHeader {
+    margin: 0 auto var(--space-8) auto;
+    padding: 0 var(--space-8);
+  }
+}
+
+.tiktokHeader h2 {
+  color: black;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0;
+}

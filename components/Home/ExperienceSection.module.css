@@ -1,5 +1,6 @@
 /* Experience Section */
 .experienceSection {
+  display: none;
   max-width: 100%;
   margin: var(--space-40) auto;
   padding: var(--space-8);
@@ -11,6 +12,10 @@
 }
 
 @media (min-width: 1024px) {
+  .experienceSection {
+    display: block;
+  }
+
   .experienceHeader {
     display: grid;
     grid-template-columns: 1fr 2fr 5fr;
@@ -126,6 +131,10 @@
   background-color: var(--color-surface);
   position: relative;
   overflow: hidden;
+  transition:
+    transform 0.2s ease-out,
+    opacity 0.2s ease-out;
+  will-change: transform, opacity;
 }
 
 .experienceImage {

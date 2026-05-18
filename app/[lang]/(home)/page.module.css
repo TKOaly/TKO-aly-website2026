@@ -43,11 +43,23 @@
 }
 
 .heroTitle {
-  font-size: 2.5rem;
+  font-size: 1.1rem;
   font-weight: 700;
   text-transform: uppercase;
   line-height: 1.1;
   margin: 0;
+}
+
+@media (min-width: 400px) {
+  .heroTitle {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 550px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
 }
 
 @media (min-width: 768px) {
