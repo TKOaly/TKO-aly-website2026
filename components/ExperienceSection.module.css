@@ -7,13 +7,24 @@
 }
 
 .experienceHeader {
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-20);
+}
+
+@media (min-width: 1024px) {
+  .experienceHeader {
+    display: grid;
+    grid-template-columns: 1fr 2fr 5fr;
+    gap: var(--space-8);
+  }
+  .experienceHeader h2,
+  .experienceHeader p {
+    grid-column: 2;
+  }
 }
 
 .experienceHeader h2 {
-  font-size: 2rem;
+  font-size: 4rem;
   font-weight: 700;
-  text-transform: uppercase;
   margin: 0;
   margin-bottom: var(--space-4);
 }
@@ -105,6 +116,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-8) 0;
+  scroll-snap-align: center; /* Snaps the image to center */
 }
 .experienceImageWrapper {
   aspect-ratio: 4/3;
