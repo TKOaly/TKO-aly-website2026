@@ -41,8 +41,48 @@ const ExperienceSection = ({ t }: { t: ExperienceTranslations }) => {
       if (ref) observer.observe(ref)
     })
 
+    const handleScroll = () => {
+      const centerY = window.innerHeight / 2
+      const maxDist = window.innerHeight / 2
+
+      imageRefs.current.forEach(ref => {
+        if (!ref) return
+
+        // Calculate based on the static outer container
+        const rect = ref.getBoundingClientRect()
+        const elementCenterY = rect.top + rect.height / 2
+        const dist = Math.abs(centerY - elementCenterY)
+        const ratio = Math.max(0, 1 - dist / maxDist)
+        const opacity = 0.4 + 0.6 * ratio
+
+        // Apply visual changes to the inner wrapper so we don't mess up bounding rects
+        const wrapper = ref.firstElementChild as HTMLElement
+        if (!wrapper) return
+
+        wrapper.style.opacity = opacity.toString()
+
+        let translateX = 0
+        // Finish horizontal translation when the element reaches the bottom third of the screen
+        const targetY = window.innerHeight * 0.66
+        if (elementCenterY > targetY) {
+          const bottomRatio = Math.min(
+            1,
+            (elementCenterY - targetY) / (window.innerHeight - targetY),
+          )
+          translateX = bottomRatio * 96
+        }
+        wrapper.style.transform = `translateX(${translateX}px)`
+      })
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    window.addEventListener("resize", handleScroll, { passive: true })
+    handleScroll()
+
     return () => {
       observer.disconnect()
+      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleScroll)
     }
   }, [])
 
@@ -55,15 +95,15 @@ const ExperienceSection = ({ t }: { t: ExperienceTranslations }) => {
 
   return (
     <section className={styles.experienceSection} id="experience">
+      <div className={styles.experienceHeader}>
+        <h2>{t.title}</h2>
+        <p>{t.desc}</p>
+      </div>
       <div className={styles.experienceLayout}>
         {/* First col - 25% empty via CSS grid */}
 
         {/* Second col - 25% sticky text */}
         <div className={styles.experienceSidebarWrapper}>
-          <div className={styles.experienceHeader}>
-            <h2>{t.title}</h2>
-            <p>{t.desc}</p>
-          </div>
           <div className={styles.experienceSidebar}>
             {t.items.map(item => (
               <div
