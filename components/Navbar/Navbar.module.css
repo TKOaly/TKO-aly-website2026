@@ -68,7 +68,7 @@
   top: var(--space-16); /* sits flush below the navbar */
   left: 0;
   right: 0;
-  width: 100vw;
+  width: 100%;
   height: var(--space-44);
   color: var(--color-text);
   background: var(--color-surface);

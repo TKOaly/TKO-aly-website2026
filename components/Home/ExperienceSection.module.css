@@ -2,6 +2,7 @@
 .experienceSection {
   display: none;
   max-width: 100%;
+  overflow: hidden;
   margin: var(--space-40) auto;
   padding: var(--space-8);
   position: relative;
@@ -28,10 +29,16 @@
 }
 
 .experienceHeader h2 {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 700;
   margin: 0;
   margin-bottom: var(--space-4);
+}
+
+@media (min-width: 1500px) {
+  .experienceHeader h2 {
+    font-size: 4rem;
+  }
 }
 
 .experienceLayout {
