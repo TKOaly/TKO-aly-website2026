@@ -1,3 +1,10 @@
+.footerContainer {
+  min-height: 100dvh;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Sponsors */
 
 .sponsors {
@@ -70,7 +77,6 @@
 /* Info cards */
 .cards {
   max-width: var(--screen-4xl);
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
   border-top: var(--border);

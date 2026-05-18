@@ -8,6 +8,7 @@ import { ClientLink } from "@/app/i18n/client"
 import { useMatchMediaQuery } from "@/lib/useMatchMediaQuery"
 import { useToggleLanguage } from "@/lib/useToggleLanguage"
 import { useParams } from "next/navigation"
+import { useState, useEffect, useRef } from "react"
 
 import MobileNavbar from "./MobileNavbar"
 import styles from "./Navbar.module.css"
@@ -65,13 +66,36 @@ function Navbar({ items }: { items: NavSection[] }) {
   const isMobileView = useMatchMediaQuery("lg")
   const toggleLanguage = useToggleLanguage(lang)
 
+  const [hidden, setHidden] = useState(false)
+  const lastScrollY = useRef(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      const isAtBottom =
+        window.innerHeight + currentScrollY >= document.body.scrollHeight - 10
+
+      if (isAtBottom) {
+        setHidden(false)
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+        setHidden(true)
+      } else {
+        setHidden(false)
+      }
+      lastScrollY.current = currentScrollY
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   const t = (key: string) => translations[lang][key] || key
 
   const otherLangLabel =
     lang === "fi" ? t("switchToEnglish") : t("switchToFinnish")
 
   return (
-    <nav className={styles.navbar}>
+    <nav className={`${styles.navbar} ${hidden ? styles.hidden : ""}`}>
       <ClientLink href="/">
         <Image
           src="/logo-yellow-on-black.png"

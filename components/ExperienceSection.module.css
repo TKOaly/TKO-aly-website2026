@@ -111,7 +111,7 @@
 }
 
 .experienceImageBlock {
-  min-height: 80vh; /* gives enough scrolling room */
+  min-height: 100dvh; /* gives enough scrolling room */
   display: flex;
   align-items: center;
   justify-content: center;

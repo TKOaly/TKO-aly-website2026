@@ -25,7 +25,7 @@ export default function FooterClient({
 }: FooterProps) {
   const { t, lang } = useTranslation()
   return (
-    <>
+    <div className={styles.footerContainer}>
       <section className={styles.sponsors}>
         <div className={styles.sponsorsInner}>
           <div className={styles.sponsorsTitleRow}>
@@ -170,6 +170,6 @@ export default function FooterClient({
       <div className={styles.bottomBar}>
         © {new Date().getFullYear()} TKO-äly ry
       </div>
-    </>
+    </div>
   )
 }
