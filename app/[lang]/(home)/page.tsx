@@ -3,6 +3,7 @@ import Link from "next/link"
 import { MapPin } from "lucide-react"
 
 import { getAsyncTranslation } from "@/app/i18n"
+import ExperienceSection from "@/components/ExperienceSection"
 
 import styles from "./page.module.css"
 
@@ -115,7 +116,7 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
                       </p>
                     </div>
                     <div className={isWide ? "" : styles.eventActions}>
-                      <Link href={`/calendar_events/view/${event.id}`}>
+                      <Link href={`/kalenteri/${event.id}`}>
                         <button className={styles.eventButton}>
                           {t("home.register")}
                         </button>
@@ -130,6 +131,34 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
           )}
         </div>
       </section>
+
+      {/* Try TKO-äly Experience Section */}
+      <ExperienceSection
+        t={{
+          title: t("home.experience"),
+          desc: t("home.experienceDesc"),
+          items: [
+            {
+              id: "association",
+              title: t("home.expAssociation"),
+              desc: t("home.expAssociationDesc"),
+              image: "/Tekis_2017.jpg",
+            },
+            {
+              id: "gurula",
+              title: t("home.expGurula"),
+              desc: t("home.expGurulaDesc"),
+              image: "/Gurula_2024.jpg",
+            },
+            {
+              id: "navetta",
+              title: t("home.expNavetta"),
+              desc: t("home.expNavettaDesc"),
+              image: "/Navetta_2024.jpg",
+            },
+          ],
+        }}
+      />
     </main>
   )
 }

@@ -56,7 +56,15 @@
     "eventsTitle": "Upcoming events",
     "allEvents": "All events",
     "noEvents": "No upcoming events.",
-    "register": "register"
+    "register": "register",
+    "experience": "Try TKO-äly experience",
+    "experienceDesc": "Discover what it means to be a part of our community.",
+    "expAssociation": "Student Activities",
+    "expAssociationDesc": "Our student activities offer something for everyone: from movie and board game nights to cultural events and company visits. We are also a key support channel for your studies, helping with course selections, advocating for student interests, and maintaining the exam archive.",
+    "expGurula": "Gurula",
+    "expGurulaDesc": "The formal nerve center of our organization in the basement of Exactum. On the red sofas, you can collaborate on assignments, read magazines, and chat with friends. Gurula also hosts our student kiosk offering affordable coffee, snacks, and quick meals.",
+    "expNavetta": "Navetta",
+    "expNavettaDesc": "Located next to Gurula, this computer room is popular for programming, studying, and gaming. Navetta's specialties include an authentic arcade cabinet for retro gaming and a projector screen for watching movies or playing console games together."
   },
   "auth": {
     "signIn": "Sign in",

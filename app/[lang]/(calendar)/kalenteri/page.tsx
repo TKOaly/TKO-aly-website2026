@@ -5,6 +5,7 @@ import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
 import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
+import Link from "next/link"
 import styles from "./Kalenteri.module.css"
 import { useState, ReactNode, useMemo } from "react"
 
@@ -45,7 +46,7 @@ function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
     id: String(event.id),
     title: event.name || "Untitled Event",
     start: event.starts,
-    url: `/calendar_events/view/${event.id}`,
+    url: `/kalenteri/${event.id}`,
     backgroundColor: event.backgroundColor,
   }))
 
@@ -72,7 +73,7 @@ function EventListView({ events }: { events: ProcessedEvent[] }) {
   return (
     <div id={styles["events-list"]}>
       {events.map(event => (
-        <a key={event.id} href={`/calendar_events/view/${event.id}`}>
+        <Link key={event.id} href={`/kalenteri/${event.id}`}>
           <div
             className={styles["event-list-item"]}
             style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
@@ -91,7 +92,7 @@ function EventListView({ events }: { events: ProcessedEvent[] }) {
             </p>
             <p>{event.description}</p>
           </div>
-        </a>
+        </Link>
       ))}
     </div>
   )
