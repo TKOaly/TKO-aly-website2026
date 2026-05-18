@@ -56,7 +56,15 @@
     "eventsTitle": "Tulevat tapahtumat",
     "allEvents": "Kaikki tapahtumat",
     "noEvents": "Ei tulevia tapahtumia.",
-    "register": "ilmoittaudu"
+    "register": "ilmoittaudu",
+    "experience": "Koe TKO-äly",
+    "experienceDesc": "Katso mitä yhteisöömme kuuluminen tarkoittaa.",
+    "expAssociation": "Opiskelijatoiminta",
+    "expAssociationDesc": "Opiskelijatoimintamme on erittäin monipuolista leffailloista ja lautapelailuista kulttuuritapahtumiin ja yritysvierailuihin. Olemme tärkeä tukipilari opintoihisi liittyvissä kysymyksissä – autamme kurssivalinnoissa, valvomme etujasi ja ylläpidämme tenttiarkisto Tärpistöä.",
+    "expGurula": "Gurula",
+    "expGurulaDesc": "Ainejärjestömme hermokeskus Exactumin kellarissa. Punaisilla sohvilla voit tehdä laskareita, viettää aikaa ja lukea lehtiä. Gurulassa toimivasta opiskelijoiden ruokavälityksestä haet kätevästi kahvia, karkkia ja pikanuudeleita nälän yllättäessä.",
+    "expNavetta": "Navetta",
+    "expNavettaDesc": "Gurulan vieressä sijaitseva suosittu ATK-luokka ohjelmointiin, laskarien tekemiseen ja pelaamiseen. Navetan erikoisuutena on aito arcade-kaappi menneiden vuosikymmenten pelien pelaamiseen ja valkokangas leffojen sekä konsolipelien yhteiskatseluun."
   },
   "auth": {
     "signIn": "Kirjaudu sisään",
