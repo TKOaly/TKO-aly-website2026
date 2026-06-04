@@ -1,0 +1,55 @@
+.toc {
+  display: none;
+  position: sticky;
+  top: 6rem;
+  align-self: start;
+  font-size: 0.9rem;
+  max-width: 250px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .toc {
+    display: block;
+  }
+}
+
+.tocList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tocListNested {
+  list-style: none;
+  padding-left: var(
+    --space-16,
+    1rem
+  ); /* Assuming --space-16 exists, fallback to 1rem */
+  margin: 0.5rem 0 0 0;
+}
+
+.tocItemParent {
+  margin-bottom: 0.75rem;
+}
+
+.tocItemChild {
+  margin-bottom: 0.5rem;
+}
+
+.tocLink {
+  color: var(--color-text-secondary, #666);
+  text-decoration: none;
+  display: block;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.tocLink:hover {
+  color: var(--color-primary, #aaa);
+}
+
+.active {
+  color: var(--color-primary, #fff);
+  font-weight: bold;
+}
