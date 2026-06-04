@@ -1,7 +1,23 @@
-.main {
+.layoutWrapper {
+  display: flex;
+  flex-direction: column-reverse; /* default for mobile: aside below or hidden? The user didn't specify exactly, but TOC on mobile might be better below or top. If left, it usually turns into top or hidden. Let's just use grid for desktop and stack on mobile */
   max-width: var(--screen-xl);
   margin: var(--space-8) auto;
+  gap: var(--space-16);
+  padding: 0 var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .layoutWrapper {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.main {
+  flex: 1;
   background: var(--color-surface);
   padding: var(--space-8) var(--space-16);
   border: var(--border);
+  min-width: 0;
 }

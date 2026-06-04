@@ -122,18 +122,6 @@
   object-fit: cover;
 }
 
-.imageOverlay {
-  position: absolute;
-  bottom: var(--space-4);
-  right: var(--space-4);
-  background-color: var(--color-bg);
-  border: var(--border);
-  padding: var(--space-1) var(--space-3);
-  font-family: monospace;
-  font-size: 0.875rem;
-  box-shadow: var(--shadow);
-}
-
 /* Events Section */
 .eventsSection {
   margin-bottom: var(--space-20);

@@ -1,8 +1,7 @@
 import Image from "next/image"
-import Link from "next/link"
 import { MapPin } from "lucide-react"
 
-import { getAsyncTranslation } from "@/app/i18n"
+import { getAsyncTranslation, ServerLink } from "@/app/i18n"
 import ExperienceSection from "@/components/Home/ExperienceSection"
 import TikTokSection from "@/components/Home/TikTokSection"
 
@@ -18,7 +17,12 @@ type CalendarEvent = {
 
 async function getUpcomingEvents() {
   try {
-    const baseUrl = process.env.EVENTS_API_BASE_URL || ""
+    if (!process.env.EVENTS_API_BASE_URL) {
+      console.warn("EVENTS_API_BASE_URL is not set, skipping events fetch")
+      return []
+    }
+
+    const baseUrl = process.env.EVENTS_API_BASE_URL
     const targetUrl = `${baseUrl.replace(/\/$/, "")}/api/events`
 
     const response = await fetch(targetUrl, {
@@ -65,9 +69,13 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <Link href="/gurula" className={styles.locationBadge}>
+          <ServerLink
+            lang={lang}
+            href="/yhteystiedot"
+            className={styles.locationBadge}
+          >
             <MapPin size={12} strokeWidth={3} /> Gurula DK115
-          </Link>
+          </ServerLink>
           <h1 className={styles.heroTitle}>{t("home.heroTitle")}</h1>
           <p className={styles.heroDesc}>{t("home.heroDesc")}</p>
           <div>
@@ -85,7 +93,6 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
             height={500}
             loading="eager"
           />
-          <div className={styles.imageOverlay}>&gt;_ TKO-äly.webp</div>
         </div>
       </section>
 
@@ -93,9 +100,9 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
       <section className={styles.eventsSection}>
         <div className={styles.eventsHeader}>
           <h2>{t("home.eventsTitle")}</h2>
-          <Link className={styles.viewAll} href="/kalenteri">
+          <ServerLink lang={lang} className={styles.viewAll} href="/kalenteri">
             {t("home.allEvents")}
-          </Link>
+          </ServerLink>
         </div>
         <div className={styles.eventsGrid}>
           {events.length > 0 ? (
@@ -117,11 +124,11 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
                       </p>
                     </div>
                     <div className={isWide ? "" : styles.eventActions}>
-                      <Link href={`/kalenteri/${event.id}`}>
+                      <ServerLink lang={lang} href={`/kalenteri/${event.id}`}>
                         <button className={styles.eventButton}>
                           {t("home.register")}
                         </button>
-                      </Link>
+                      </ServerLink>
                     </div>
                   </div>
                 </div>
