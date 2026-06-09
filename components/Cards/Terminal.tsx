@@ -31,11 +31,11 @@ const Terminal = ({
           <h2 className={styles.heading}>{heading}</h2>
           <p>{children}</p>
         </div>
-        {callToAction ?? (
+        {callToAction ? (
           <a className={`${styles.link} ${styles.desktopLink}`} href="#">
             Lue lisää
           </a>
-        )}
+        ) : null}
       </div>
       <div className={styles.mobileContent}>
         <details className={styles.details}>
@@ -44,11 +44,11 @@ const Terminal = ({
           </summary>
           <p className={styles.text}>{children}</p>
         </details>
-        {callToAction ?? (
+        {callToAction ? (
           <a className={`${styles.link} ${styles.desktopLink}`} href="#">
             Lue lisää
           </a>
-        )}
+        ) : null}
       </div>
     </section>
   )

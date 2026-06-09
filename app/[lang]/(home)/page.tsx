@@ -1,70 +1,177 @@
 import Image from "next/image"
+import { MapPin } from "lucide-react"
+
+import { getAsyncTranslation, ServerLink } from "@/app/i18n"
+import ExperienceSection from "@/components/Home/ExperienceSection"
+import TikTokSection from "@/components/Home/TikTokSection"
 
 import styles from "./page.module.css"
-import { ExternalLink } from "lucide-react"
 
-export default function Index() {
+type CalendarEvent = {
+  id: number
+  name: string
+  starts: string
+  location: string
+  deleted: boolean
+}
+
+async function getUpcomingEvents() {
+  try {
+    if (!process.env.EVENTS_API_BASE_URL) {
+      console.warn("EVENTS_API_BASE_URL is not set, skipping events fetch")
+      return []
+    }
+
+    const baseUrl = process.env.EVENTS_API_BASE_URL
+    const targetUrl = `${baseUrl.replace(/\/$/, "")}/api/events`
+
+    const response = await fetch(targetUrl, {
+      next: { revalidate: 60 },
+    })
+
+    if (!response.ok) return []
+
+    const events: CalendarEvent[] = await response.json()
+    const now = new Date()
+
+    return events
+      .filter(e => !e.deleted && e.starts && new Date(e.starts) >= now)
+      .sort(
+        (a, b) => new Date(a.starts).getTime() - new Date(b.starts).getTime(),
+      )
+      .slice(0, 3)
+  } catch (error) {
+    console.error("Failed to fetch events", error)
+    return []
+  }
+}
+
+function formatEventDate(dateString: string) {
+  const d = new Date(dateString)
+  const weekdays = ["su", "ma", "ti", "ke", "to", "pe", "la"]
+  const dayName = weekdays[d.getDay()]
+  const day = d.getDate().toString().padStart(2, "0")
+  const month = (d.getMonth() + 1).toString().padStart(2, "0")
+  const hours = d.getHours().toString().padStart(2, "0")
+  const minutes = d.getMinutes().toString().padStart(2, "0")
+
+  return `${dayName} ${day}.${month}. // klo ${hours}.${minutes}`
+}
+
+const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
+  const { lang } = await params
+  const { t } = await getAsyncTranslation(lang)
+
+  const events = await getUpcomingEvents()
+
   return (
-    <>
-      <header className={styles.index}>
-        <div className={styles.splashImage}>
-          <Image src="/splash.jpg" alt="Splash" height={900} width={3367} />
-        </div>
-        <div className={styles.logo}>
-          <div className={styles.image}>
-            <Image
-              src="/logo-yellow-on-black.png"
-              alt="Logo"
-              height={300}
-              width={300}
-            />
-          </div>
-          <h1 className={styles.heading}>
-            Helsingin yliopiston tietojenkäsittelytieteen <br />
-            opiskelijoiden ainejärjestö
-          </h1>
-        </div>
-      </header>
-      <main className={styles.main}>
-        <div className={styles.diagonalDiv}>
+    <main>
+      {/* Hero Section */}
+      <section className={styles.hero}>
+        <div className={styles.heroContent}>
+          <ServerLink
+            lang={lang}
+            href="/yhteystiedot"
+            className={styles.locationBadge}
+          >
+            <MapPin size={12} strokeWidth={3} /> Gurula DK115
+          </ServerLink>
+          <h1 className={styles.heroTitle}>{t("home.heroTitle")}</h1>
+          <p className={styles.heroDesc}>{t("home.heroDesc")}</p>
           <div>
-            <h2>Tervetuloa!</h2>
-            <p>
-              TKO-äly ry on Helsingin yliopiston{" "}
-              <a href="http://www.cs.helsinki.fi/" rel="noopener noreferrer">
-                tietojenkäsittelytieteen ja datatieteen
-                <ExternalLink height={16} width={16} />
-              </a>{" "}
-              opiskelijoiden ainejärjestö, joka ajaa opiskelijoiden etua
-              opintoasioissa ja järjestää moninaista vapaa-ajan toimintaa.
-            </p>
-            <p>
-              Meidät tavoittaa Kumpulan kampuksen Exactum-rakennuksen
-              opiskelijahuoneesta DK115{" "}
-              <a
-                href="http://www.cs.helsinki.fi/contact/exactum-kartat.html#pohja"
-                rel="noopener noreferrer"
-              >
-                Gurula
-                <ExternalLink height={16} width={16} />
-              </a>
-              , jossa myös tarjoamme jäsenistöllemme omakustannehintaan kahvia,
-              limpparia ja naposteltavaa.
-            </p>
-            <p>
-              Toiminnastamme saat lisää tietoa näiden sivujen lisäksi{" "}
-              seuraamalla{" "}
-              <a
-                href="https://www.tko-aly.fi/yhdistys/tiedotus"
-                rel="noopener noreferrer"
-              >
-                tiedotustamme
-              </a>
-              .
-            </p>
+            <button className={styles.joinButton}>
+              {t("home.joinButton")}
+            </button>
           </div>
         </div>
-      </main>
-    </>
+        <div className={styles.heroImageContainer}>
+          <Image
+            className={styles.heroImage}
+            alt="Students collaborating"
+            src="/splash.jpg"
+            width={500}
+            height={500}
+            loading="eager"
+          />
+        </div>
+      </section>
+
+      {/* Events Section */}
+      <section className={styles.eventsSection}>
+        <div className={styles.eventsHeader}>
+          <h2>{t("home.eventsTitle")}</h2>
+          <ServerLink lang={lang} className={styles.viewAll} href="/kalenteri">
+            {t("home.allEvents")}
+          </ServerLink>
+        </div>
+        <div className={styles.eventsGrid}>
+          {events.length > 0 ? (
+            events.map((event, index) => {
+              const isWide = index === 2
+              return (
+                <div
+                  key={event.id}
+                  className={`${styles.eventCard} ${isWide ? styles.eventCardWide : ""}`}
+                >
+                  <div className={isWide ? styles.eventInfo : ""}>
+                    <div>
+                      <div className={styles.eventDate}>
+                        {formatEventDate(event.starts)}
+                      </div>
+                      <h3 className={styles.eventTitle}>{event.name}</h3>
+                      <p className={styles.eventLocation}>
+                        {event.location ? `@ ${event.location}` : ""}
+                      </p>
+                    </div>
+                    <div className={isWide ? "" : styles.eventActions}>
+                      <ServerLink lang={lang} href={`/kalenteri/${event.id}`}>
+                        <button className={styles.eventButton}>
+                          {t("home.register")}
+                        </button>
+                      </ServerLink>
+                    </div>
+                  </div>
+                </div>
+              )
+            })
+          ) : (
+            <p>{t("home.noEvents")}</p>
+          )}
+        </div>
+      </section>
+
+      {/* TikTok Social Media Section */}
+      <TikTokSection />
+
+      {/* Try TKO-äly Experience Section */}
+      <ExperienceSection
+        t={{
+          title: t("home.experience"),
+          desc: t("home.experienceDesc"),
+          items: [
+            {
+              id: "association",
+              title: t("home.expAssociation"),
+              desc: t("home.expAssociationDesc"),
+              image: "/Tekis_2017.jpg",
+            },
+            {
+              id: "gurula",
+              title: t("home.expGurula"),
+              desc: t("home.expGurulaDesc"),
+              image: "/Gurula_2024.jpg",
+            },
+            {
+              id: "navetta",
+              title: t("home.expNavetta"),
+              desc: t("home.expNavettaDesc"),
+              image: "/Navetta_2024.jpg",
+            },
+          ],
+        }}
+      />
+    </main>
   )
 }
+
+export default HomePage

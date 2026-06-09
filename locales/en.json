@@ -49,6 +49,23 @@
     },
     "openMenu": "Open menu"
   },
+  "home": {
+    "heroTitle": "The organization for computer science students at the University of Helsinki",
+    "heroDesc": "Welcome! TKO-äly ry is the organization for computer science and data science students at the University of Helsinki. We organize events, advocate for your interests, and maintain our common living room, Gurula.",
+    "joinButton": "BECOME A MEMBER",
+    "eventsTitle": "Upcoming events",
+    "allEvents": "All events",
+    "noEvents": "No upcoming events.",
+    "register": "register",
+    "experience": "TRY TKO-äly EXPERIENCE",
+    "experienceDesc": "Discover what it means to be a part of our community.",
+    "expAssociation": "Student Activities",
+    "expAssociationDesc": "Our student activities offer something for everyone: from movie and board game nights to cultural events and company visits. We are also a key support channel for your studies, helping with course selections, advocating for student interests, and maintaining the exam archive.",
+    "expGurula": "Gurula",
+    "expGurulaDesc": "The formal nerve center of our organization in the basement of Exactum. On the red sofas, you can collaborate on assignments, read magazines, and chat with friends. Gurula also hosts our student kiosk offering affordable coffee, snacks, and quick meals.",
+    "expNavetta": "Navetta",
+    "expNavettaDesc": "Located next to Gurula, this computer room is popular for programming, studying, and gaming. Navetta's specialties include an authentic arcade cabinet for retro gaming and a projector screen for watching movies or playing console games together."
+  },
   "auth": {
     "signIn": "Sign in",
     "signOut": "Sign out"

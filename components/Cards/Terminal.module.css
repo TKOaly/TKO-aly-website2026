@@ -2,7 +2,7 @@
 .terminal {
   position: relative;
   z-index: 20;
-  max-width: fit-content;
+  max-width: 100%;
   margin: auto;
   gap: 1rem;
   overflow: hidden;
@@ -84,7 +84,8 @@
 
 .contentInner {
   display: flex;
-  width: 70ch;
+  max-width: 70ch;
+  width: 100%;
   flex-direction: column;
 }
 
