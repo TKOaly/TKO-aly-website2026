@@ -8,33 +8,7 @@ import fiLocale from "@fullcalendar/core/locales/fi"
 import Link from "next/link"
 import styles from "./Kalenteri.module.css"
 import { useState, ReactNode, useMemo } from "react"
-
-type Event = {
-  id: number
-  user_id: number | null
-  name: string | null
-  created: string | null
-  starts: string | null
-  registration_starts: string | null
-  registration_ends: string | null
-  cancellation_starts: string | null
-  cancellation_ends: string | null
-  location: string | null
-  category: string | null
-  description: string | null
-  alcohol_meter: number | null
-  price: string | null
-  map: string | null
-  max_participants: number | null
-  realised_participants: number | null
-  membership_required: boolean | null
-  outsiders_allowed: boolean | null
-  template: boolean | null
-  responsible: string | null
-  show_responsible: boolean | null
-  avec: boolean | null
-  deleted: boolean | null
-}
+import type { Event } from "./types"
 
 type ProcessedEvent = Event & {
   starts: string

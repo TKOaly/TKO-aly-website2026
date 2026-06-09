@@ -1,3 +1,5 @@
+import type { Event } from "../types"
+
 async function getEventById(id: string): Promise<Event | null> {
   try {
     const baseUrl = process.env.EVENTS_API_BASE_URL || ""
