@@ -32,3 +32,5 @@ Documentation
 Dockerfile*
 docker-compose*.yml
 .dockerignore
+
+.direnv/
