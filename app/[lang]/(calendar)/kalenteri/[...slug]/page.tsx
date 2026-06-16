@@ -1,22 +1,63 @@
 import type { Event } from "../types"
+import { getAsyncTranslation } from "@/app/i18n"
 
 async function getEventById(id: string): Promise<Event | null> {
   try {
     const baseUrl = process.env.EVENTS_API_BASE_URL || ""
     const targetUrl = `${baseUrl.replace(/\/$/, "")}/api/events/${id}`
+    const secret = process.env.EVENT_SERVICE_TOKEN || ""
 
     const response = await fetch(targetUrl, {
       next: { revalidate: 60 },
+      headers: {
+        Accept: "application/json",
+        "X-Token": secret,
+      },
     })
 
     if (!response.ok) return null
 
     const event: Event = await response.json()
+
     return event
   } catch (error) {
     console.error("Failed to fetch event by id", error, id)
     return null
   }
+}
+
+const AlcoholMeter = async ({
+  value,
+  lang,
+}: {
+  value: number
+  lang: string
+}) => {
+  const { t } = await getAsyncTranslation(lang)
+  const levels = [0, 1, 2, 3, 4]
+
+  return (
+    <div className="alcohol-meter">
+      <div className="meter">
+        {levels.map(level => (
+          <div
+            key={level}
+            className={value === level ? "selected" : "unselected"}
+          >
+            {level}
+          </div>
+        ))}
+      </div>
+      <details>
+        <summary>
+          <span>{t("alcoholMeter.info.title")}</span>
+        </summary>
+        <div className="alcohol-meter-info">
+          {t(`alcoholMeter.info.${value}`)}
+        </div>
+      </details>
+    </div>
+  )
 }
 
 const EventPage = async ({
@@ -37,13 +78,16 @@ const EventPage = async ({
       <p>Tyyppi: {event.category}</p>
       {event.show_responsible ? (
         <p>Vastuu henkilö: {event.responsible}</p>
-      ) : (
-        <></>
-      )}
+      ) : null}
+      {event.alcohol_meter ? (
+        <AlcoholMeter value={event.alcohol_meter} lang={lang} />
+      ) : null}
       <p>{event.description}</p>
     </div>
   ) : (
-    <div />
+    <div>
+      <p>Tapahtumaa ei ole olemassa</p>
+    </div>
   )
 }
 

@@ -249,5 +249,16 @@
     "links": "Links",
     "feedbackForm": "General feedback form",
     "harassmentContacts": "Harassment contacts"
+  },
+  "alcoholMeter": {
+    "title": "Alcohol meter",
+    "info": {
+      "title": "More info",
+      "0": "The event is completely alcohol free.",
+      "1": "Some drinks may be had, but getting noticeably drunk is not for this event.",
+      "2": "Alcohol may be consumed, but it makes no difference for the event if people drink or don't.",
+      "3": "Alcohol consumption is associated with the event, but you can just as well participate alcohol free and you will not be pressured to drink.",
+      "4": "Alcohol plays a central role in this event, for example through gamified drinking. You can still participate alcohol free and you will not be pressured to drink."
+    }
   }
 }
