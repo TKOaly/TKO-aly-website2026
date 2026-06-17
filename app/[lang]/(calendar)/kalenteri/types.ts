@@ -21,6 +21,8 @@ export type Event = {
   template?: boolean
   responsible?: string
   show_responsible?: boolean
+  organizer?: string
+  organizer_url?: string
   avec?: boolean
   deleted?: boolean
 }

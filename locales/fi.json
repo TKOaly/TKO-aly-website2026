@@ -253,15 +253,25 @@
     "feedbackForm": "Yleinen palautelomake",
     "harassmentContacts": "Häirintäyhdyshenkilöt"
   },
-  "alcoholMeter": {
-    "title": "Alkoholiasteikko",
-    "info": {
-      "title": "Lisätietoja",
-      "0": "Tapahtumassa ei käytetä lainkaan alkoholia.",
-      "1": "Tapahtumassa voidaan käyttää vähän alkoholia, huomattava humaltuminen ei ole suotavaa.",
-      "2": "Tapahtumassa alkoholia voidaan käyttää, mutta tapahtuman kannalta on yhdentekevää käyttääkö alkoholia vai ei.",
-      "3": "Tapahtumassa alkoholin käyttö on näkyvässä asemassa, mutta tapahtumaan voi osallistua alkoholittomana, eikä juomaan painosteta.",
-      "4": "Tapahtumassa alkoholin käyttö on keskeisessä asemassa, esimerkiksi pelillistetyn juomisen kautta. Voit kuitenkin osallistua alkoholittomana, eikä juomaan painosteta."
-    }
+  "alcoholMeterInfo": {
+    "title": "Lisätietoja",
+    "0": "Tapahtumassa ei käytetä lainkaan alkoholia.",
+    "1": "Tapahtumassa voidaan käyttää vähän alkoholia, huomattava humaltuminen ei ole suotavaa.",
+    "2": "Tapahtumassa alkoholia voidaan käyttää, mutta tapahtuman kannalta on yhdentekevää käyttääkö alkoholia vai ei.",
+    "3": "Tapahtumassa alkoholin käyttö on näkyvässä asemassa, mutta tapahtumaan voi osallistua alkoholittomana, eikä juomaan painosteta.",
+    "4": "Tapahtumassa alkoholin käyttö on keskeisessä asemassa, esimerkiksi pelillistetyn juomisen kautta. Voit kuitenkin osallistua alkoholittomana, eikä juomaan painosteta."
+  },
+  "event": {
+    "time": "Aika",
+    "location": "Paikka",
+    "map": "Kartta",
+    "category": "Tyyppi",
+    "alcoholMeter": "Alkoholiasteikko",
+    "organizer": "Järjestävä taho",
+    "registration": "Ilmoittautumisaika",
+    "canCancel": "Ilmoittautumisen voi perua",
+    "canNotCancel": "Ilmoittautuminen on sitova",
+    "responsible": "Vastuuhenkilö",
+    "notExits": "Tapahtumaa ei ole olemassa"
   }
 }
