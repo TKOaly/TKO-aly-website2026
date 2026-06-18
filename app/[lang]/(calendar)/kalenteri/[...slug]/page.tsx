@@ -28,6 +28,17 @@ async function getEventById(id: string): Promise<Event | null> {
   }
 }
 
+function formatTime(time?: string): string | null {
+  if (!time) {
+    return null
+  }
+  const d = new Date(time)
+  return `${d.toLocaleTimeString("fi-FI", {
+    hour: "2-digit",
+    minute: "2-digit",
+  })} ${d.toLocaleDateString("fi-FI")}`
+}
+
 const AlcoholMeter = async ({
   value,
   lang,
@@ -86,7 +97,7 @@ const EventPage = async ({
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">{event.name}</h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Row col_1={t("event.time")} col_2={event.starts} />
+        <Row col_1={t("event.time")} col_2={formatTime(event.starts)} />
 
         <Row
           col_1={t("event.location")}
@@ -128,7 +139,8 @@ const EventPage = async ({
               col_1={t("event.registration")}
               col_2={
                 <>
-                  {event.registration_starts} - {event.registration_ends}
+                  {formatTime(event.registration_starts)} -{" "}
+                  {formatTime(event.registration_ends)}
                 </>
               }
             />
@@ -138,7 +150,8 @@ const EventPage = async ({
                 col_1={t("event.canCancel")}
                 col_2={
                   <>
-                    {event.cancellation_starts} - {event.cancellation_ends}
+                    {formatTime(event.cancellation_starts)} -{" "}
+                    {formatTime(event.cancellation_ends)}
                   </>
                 }
               />
@@ -152,8 +165,28 @@ const EventPage = async ({
           <Row col_1={t("event.responsible")} col_2={event.responsible} />
         )}
       </div>
+      <div className="event-text">
+        <p>{event.description}</p>
+      </div>
 
-      <p>{event.description}</p>
+      <div className="safety-disclaimer">
+        <p>
+          {t("event.safety.text.safetySpace")}{" "}
+          <Link href="https://www.tko-aly.fi/turva">
+            {t("event.safety.link.text")}
+          </Link>
+          . {t("event.safety.text.harrasmentContact1")}{" "}
+          <Link href="https://www.tko-aly.fi/häirintälomake">
+            {t("event.safety.link.form")}
+          </Link>
+          {t("event.safety.text.harrasmentContact2")}.{" "}
+          {t("event.safety.text.feedback")}{" "}
+          <Link href="https://www.tko-aly.fi/palaute">
+            {t("event.safety.link.text")}
+          </Link>
+          .
+        </p>
+      </div>
     </div>
   ) : (
     <div>

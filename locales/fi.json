@@ -272,6 +272,19 @@
     "canCancel": "Ilmoittautumisen voi perua",
     "canNotCancel": "Ilmoittautuminen on sitova",
     "responsible": "Vastuuhenkilö",
-    "notExits": "Tapahtumaa ei ole olemassa"
+    "notExits": "Tapahtumaa ei ole olemassa",
+    "price": "Hinta",
+    "safety": {
+      "text": {
+        "safetySpace": "TKO-älyn järjestämissä tapahtumissa noudatetaan turvallisemman tilan periaatteita. Periaatteet löydät",
+        "harrasmentContact1": "TKO-älyn häirintäyhdyshenkilöihin voit ottaa yhteyttä",
+        "harrasmentContact2": " kautta",
+        "feedback": "Yleistä palautetta TKO-älyn tapahtumista ja toiminnasta voit lähettää"
+      },
+      "link": {
+        "text": "täältä",
+        "link": "tämän lomakkeen"
+      }
+    }
   }
 }

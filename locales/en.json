@@ -269,6 +269,19 @@
     "canCancel": "Registration can be cancelled",
     "canNotCancel": "Registration is biding",
     "responsible": "Responsible person",
-    "notExits": "Event does not work"
+    "notExits": "Event does not work",
+    "price": "Price",
+    "safety": {
+      "text": {
+        "safetySpace": "Events held by TKO-äly follow the principles for a safer space. The principles can be found",
+        "harrasmentContact1": "You can also contact TKO-äly's harrasment contact persons via",
+        "harrasmentContact2": "",
+        "feedback": "General feedback on TKO-äly and its events can be sent"
+      },
+      "link": {
+        "text": "here",
+        "form": "this form"
+      }
+    }
   }
 }
