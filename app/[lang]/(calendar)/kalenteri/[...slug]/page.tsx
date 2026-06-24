@@ -171,10 +171,15 @@ const EventPage = async ({
           />
         )}
       </div>
-      <div className={styles["event-text"]}>
-        <p>{event.description}</p>
-      </div>
-
+      <p className={styles["event-text"]}>{event.description}</p>
+      {event.registration_starts && (
+        <Link
+          href={`https://tko-aly.fi/event/${event.id}`}
+          className={styles["event-registration"]}
+        >
+          Ilmoittautuminen
+        </Link>
+      )}
       <div className={styles["event-safety-disclaimer"]}>
         <p>
           {t("event.safety.text.safetySpace")}{" "}
@@ -195,7 +200,7 @@ const EventPage = async ({
       </div>
     </div>
   ) : (
-    <div>
+    <div className={styles["event-container"]}>
       <p>{t("event.notExits")}</p>
     </div>
   )
