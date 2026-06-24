@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ReactNode } from "react"
 import type { Event } from "../types"
 import { getAsyncTranslation } from "@/app/i18n"
+import styles from "../Kalenteri.module.css"
 
 async function getEventById(id: string): Promise<Event | null> {
   try {
@@ -50,12 +51,12 @@ const AlcoholMeter = async ({
   const levels = [0, 1, 2, 3, 4]
 
   return (
-    <div className="alcohol-meter">
-      <div className="meter">
+    <div className={styles["alcohol-meter-container"]}>
+      <div className={styles["alcohol-meter"]}>
         {levels.map(level => (
           <div
             key={level}
-            className={value === level ? "selected" : "unselected"}
+            className={value === level ? styles["alcohol-meter-selected"] : ""}
           >
             {level}
           </div>
@@ -65,7 +66,7 @@ const AlcoholMeter = async ({
         <summary>
           <span>{t("alcoholMeterInfo.title")}</span>
         </summary>
-        <div className="alcohol-meter-info">
+        <div className={styles["alcohol-meter-info"]}>
           {t(`alcoholMeterInfo.${value}`)}
         </div>
       </details>
@@ -75,10 +76,10 @@ const AlcoholMeter = async ({
 
 const Row = ({ col_1, col_2 }: { col_1: ReactNode; col_2: ReactNode }) => {
   return (
-    <div>
+    <dl className={styles["event-info-row"]}>
       <dt>{col_1}</dt>
       <dd>{col_2}</dd>
-    </div>
+    </dl>
   )
 }
 
@@ -94,13 +95,13 @@ const EventPage = async ({
   const event = await getEventById(id)
 
   return event ? (
-    <div className="container mx-auto p-4">
+    <div className={styles["event-container"]}>
       <h1 className="text-2xl font-bold mb-4">{event.name}</h1>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Row col_1={t("event.time")} col_2={formatTime(event.starts)} />
+      <div className={styles["event-info"]}>
+        <Row col_1={<>{t("event.time")}:</>} col_2={formatTime(event.starts)} />
 
         <Row
-          col_1={t("event.location")}
+          col_1={<>{t("event.location")}:</>}
           col_2={
             <>
               {event.location}{" "}
@@ -109,18 +110,18 @@ const EventPage = async ({
           }
         />
 
-        <Row col_1={t("event.category")} col_2={event.category} />
+        <Row col_1={<>{t("event.category")}:</>} col_2={event.category} />
 
         {event.alcohol_meter && (
           <Row
-            col_1={t("event.alcoholMeter")}
+            col_1={<>{t("event.alcoholMeter")}:</>}
             col_2={<AlcoholMeter value={event.alcohol_meter} lang={lang} />}
           />
         )}
 
         {event.organizer && (
           <Row
-            col_1={t("event.organizer")}
+            col_1={<>{t("event.organizer")}:</>}
             col_2={
               event.organizer_url ? (
                 <Link href={event.organizer_url}>{event.organizer}</Link>
@@ -131,12 +132,14 @@ const EventPage = async ({
           />
         )}
 
-        {event.price && <Row col_1={t("event.price")} col_2={event.price} />}
+        {event.price && (
+          <Row col_1={<>{t("event.price")}:</>} col_2={<>{event.price} €</>} />
+        )}
 
         {event.registration_starts && event.registration_ends && (
           <>
             <Row
-              col_1={t("event.registration")}
+              col_1={<>{t("event.registration")}:</>}
               col_2={
                 <>
                   {formatTime(event.registration_starts)} -{" "}
@@ -147,7 +150,7 @@ const EventPage = async ({
 
             {event.cancellation_starts && event.cancellation_ends ? (
               <Row
-                col_1={t("event.canCancel")}
+                col_1={<>{t("event.canCancel")}:</>}
                 col_2={
                   <>
                     {formatTime(event.cancellation_starts)} -{" "}
@@ -156,20 +159,23 @@ const EventPage = async ({
                 }
               />
             ) : (
-              <Row col_1={t("event.canNotCancel")} col_2="" />
+              <Row col_1={<>{t("event.canNotCancel")}:</>} col_2="" />
             )}
           </>
         )}
 
         {event.show_responsible && event.responsible && (
-          <Row col_1={t("event.responsible")} col_2={event.responsible} />
+          <Row
+            col_1={<>{t("event.responsible")}:</>}
+            col_2={event.responsible}
+          />
         )}
       </div>
-      <div className="event-text">
+      <div className={styles["event-text"]}>
         <p>{event.description}</p>
       </div>
 
-      <div className="safety-disclaimer">
+      <div className={styles["event-safety-disclaimer"]}>
         <p>
           {t("event.safety.text.safetySpace")}{" "}
           <Link href="https://www.tko-aly.fi/turva">

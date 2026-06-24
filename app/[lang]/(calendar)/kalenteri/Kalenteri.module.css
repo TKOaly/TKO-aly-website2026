@@ -111,3 +111,111 @@
 .event-list-item p {
   margin: 5px 0;
 }
+
+.event-container {
+  margin-left: var(--space-20);
+}
+
+.event-info {
+  background-color: var(--color-surface);
+  border: var(--border);
+  box-shadow: var(--shadow-light);
+  color: var(--text-color);
+  width: fit-content;
+  padding: 10px 10px 10px 10px;
+}
+
+.event-info-row {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+}
+
+.event-info-row dt {
+  margin: 0;
+  font-weight: 1000;
+  font-size: medium;
+}
+
+.event-info-row dd {
+  margin: 0;
+  flex: 1;
+}
+
+.alcohol-meter-container {
+  position: relative;
+}
+
+.alcohol-meter {
+  display: flex;
+}
+
+.alcohol-meter div {
+  border: 1px solid white;
+  margin-right: 3px;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 2px;
+  padding-left: 1px;
+  padding-right: 1px;
+  pointer-events: none;
+  touch-action: none;
+}
+
+.alcohol-meter-selected {
+  color: #141414;
+  background-color: var(--color-accent);
+  border: 0;
+}
+
+.alcohol-meter-container details {
+  margin-top: -1rem;
+}
+
+.alcohol-meter-container details summary {
+  width: 30ch;
+  height: 1.2rem;
+  text-align: right;
+  cursor: pointer;
+  user-select: none;
+}
+
+.alcohol-meter-container details summary span {
+  padding: 0;
+  height: 1.2rem;
+}
+
+.alcohol-meter-container details[open] summary span,
+.alcohol-meter-container details summary:hover span {
+  color: white;
+}
+
+.alcohol-meter-container details summary::marker {
+  content: none;
+}
+
+.alcohol-meter-info {
+  width: 30ch;
+  min-width: 100%;
+  border: 1px solid #fff;
+  padding: 6px 4px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.event-text {
+  width: 80ch;
+}
+
+.event-safety-disclaimer {
+  width: 80ch;
+  color: var(--color-text-muted);
+}
+
+.event-safety-disclaimer a {
+  color: var(--color-text-muted);
+}

@@ -283,7 +283,7 @@
       },
       "link": {
         "text": "täältä",
-        "link": "tämän lomakkeen"
+        "form": "tämän lomakkeen"
       }
     }
   }
