@@ -116,6 +116,12 @@
   margin-left: var(--space-32);
 }
 
+@media (max-width: 768px) {
+  .event-container {
+    margin-left: var(--space-2-5);
+  }
+}
+
 .event-info {
   background-color: var(--color-surface);
   border: var(--border);
@@ -140,6 +146,13 @@
 .event-info-row dd {
   margin: 0;
   flex: 1;
+}
+
+@media (max-width: 768px) {
+  .event-info-row {
+    display: inline;
+    gap: 13px
+  }
 }
 
 .alcohol-meter-container {
@@ -208,7 +221,7 @@
 }
 
 .event-text {
-  width: 80ch;
+  max-width: 80ch;
 }
 
 .event-registration {
@@ -240,7 +253,7 @@
 }
 
 .event-safety-disclaimer {
-  width: 80ch;
+  max-width: 80ch;
   color: var(--color-text-muted);
 }
 
