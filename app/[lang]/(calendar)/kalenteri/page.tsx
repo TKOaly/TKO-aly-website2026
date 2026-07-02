@@ -64,10 +64,69 @@ function EventListView({ events }: { events: ProcessedEvent[] }) {
             <p>
               <strong>Sijainti:</strong> {event.location}
             </p>
-            <p>{event.description}</p>
+            {event.organizer && (
+              <p>
+                <strong>Järjestävä taho:</strong> {event.organizer}
+              </p>
+            )}
           </div>
         </Link>
       ))}
+    </div>
+  )
+}
+
+function Legend() {
+  const [isLegendVisible, setIsLegendVisible] = useState(false)
+
+  const toggleLegendVisibility = () => {
+    setIsLegendVisible(prev => !prev)
+  }
+
+  return (
+    <div id={styles["calendar-instructions"]}>
+      {isLegendVisible && (
+        <div id={styles.legend}>
+          <p>
+            <span
+              className={styles["legend-color-ball"]}
+              style={{ backgroundColor: "#0066ff" }}
+            ></span>{" "}
+            Tapahtumaan ei ilmoittautumista
+          </p>
+          <p>
+            <span
+              className={styles["legend-color-ball"]}
+              style={{ backgroundColor: "#ffff00" }}
+            ></span>{" "}
+            Ilmoittautuminen ei ole alkanut
+          </p>
+          <p>
+            <span
+              className={styles["legend-color-ball"]}
+              style={{ backgroundColor: "#00ff00" }}
+            ></span>{" "}
+            Ilmoittautuminen on auki
+          </p>
+          <p>
+            <span
+              className={styles["legend-color-ball"]}
+              style={{ backgroundColor: "#ff0000" }}
+            ></span>{" "}
+            Ilmoittautuminen on päättynyt
+          </p>
+          <p>
+            <span
+              className={styles["legend-color-ball"]}
+              style={{ backgroundColor: "#6e6e6eff" }}
+            ></span>{" "}
+            Tapahtuma on mennyt
+          </p>
+        </div>
+      )}
+      <button onClick={toggleLegendVisibility} title="Kalenterin selite">
+        {isLegendVisible ? "Piilota selite" : "Näytä selite"}
+      </button>
     </div>
   )
 }
@@ -106,13 +165,6 @@ function processEvents(eventsData: Event[]): ProcessedEvent[] {
 }
 
 export default function Calendar() {
-  const [isLegendVisible, setIsLegendVisible] = useState(false)
-  const [isListView, setIsListView] = useState(false)
-
-  const toggleLegendVisibility = () => {
-    setIsLegendVisible(prev => !prev)
-  }
-
   const {
     data: eventsList = [],
     error,
@@ -132,10 +184,16 @@ export default function Calendar() {
     viewContent = <p>Ladataan tapahtumia...</p>
   } else if (error) {
     viewContent = <p>Virhe: {error.message}</p>
-  } else if (isListView) {
-    viewContent = <EventListView events={processedEvents} />
   } else {
-    viewContent = <EventCalendarView events={processedEvents} />
+    viewContent = (
+      <div id={styles["calender-page-container"]}>
+        <EventListView events={processedEvents} />
+        <div style={{marginLeft: "48px", width: "95%"}}>
+          <EventCalendarView events={processedEvents} />
+          <Legend />
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -143,73 +201,7 @@ export default function Calendar() {
       <div id={styles["calendar-title"]}>
         <h1>Tapahtumakalenteri</h1>
       </div>
-      <div id={styles["calendar-control-bar"]}>
-        <div id={styles["calendar-view-toggle"]}>
-          <button
-            id={styles["show-calendar-button"]}
-            className={`${styles["view-toggle-button"]} ${!isListView ? styles["view-toggle-active"] : ""}`}
-            title="Kalenterinäkymä"
-            aria-label="Näytä kalenterinäkymä"
-            onClick={() => setIsListView(false)}
-          >
-            Kalenteri
-          </button>
-          <button
-            id={styles["show-list-button"]}
-            className={`${styles["view-toggle-button"]} ${isListView ? styles["view-toggle-active"] : ""}`}
-            title="Listanäkymä"
-            aria-label="Näytä listanäkymä"
-            onClick={() => setIsListView(true)}
-          >
-            Lista
-          </button>
-        </div>
-      </div>
       {viewContent}
-      <div id={styles["calendar-instructions"]}>
-        {isLegendVisible && (
-          <div id={styles.legend}>
-            <p>
-              <span
-                className={styles["legend-color-ball"]}
-                style={{ backgroundColor: "#0066ff" }}
-              ></span>{" "}
-              Tapahtumaan ei ilmoittautumista
-            </p>
-            <p>
-              <span
-                className={styles["legend-color-ball"]}
-                style={{ backgroundColor: "#ffff00" }}
-              ></span>{" "}
-              Ilmoittautuminen ei ole alkanut
-            </p>
-            <p>
-              <span
-                className={styles["legend-color-ball"]}
-                style={{ backgroundColor: "#00ff00" }}
-              ></span>{" "}
-              Ilmoittautuminen on auki
-            </p>
-            <p>
-              <span
-                className={styles["legend-color-ball"]}
-                style={{ backgroundColor: "#ff0000" }}
-              ></span>{" "}
-              Ilmoittautuminen on päättynyt
-            </p>
-            <p>
-              <span
-                className={styles["legend-color-ball"]}
-                style={{ backgroundColor: "#6e6e6eff" }}
-              ></span>{" "}
-              Tapahtuma on mennyt
-            </p>
-          </div>
-        )}
-        <button onClick={toggleLegendVisibility} title="Kalenterin selite">
-          {isLegendVisible ? "Piilota selite" : "Näytä selite"}
-        </button>
-      </div>
     </div>
   )
 }

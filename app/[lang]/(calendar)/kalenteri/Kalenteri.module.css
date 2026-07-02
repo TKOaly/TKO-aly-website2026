@@ -1,10 +1,16 @@
+#calender-page-container {
+  display: flex;
+  min-height: 80rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
 #calendar {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 95%;
   height: 80rem;
-  margin: 0 auto;
   background-color: #141414;
   padding: 20px;
   color: #ffbb00;
@@ -42,48 +48,11 @@
   margin-right: 8px;
 }
 
-#calendar-control-bar {
-  width: 60%;
-  display: flex;
-  margin-bottom: 10px;
-}
-
-.view-toggle-button {
-  background-color: #2c3e50;
-  border-color: #2c3e50;
-  color: #fff;
-  border: 1px solid transparent;
-  border-radius: 0.25em;
-  display: inline-block;
-  font-size: 1em;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 0.4em 0.65em;
-  text-align: center;
-  /* eslint-disable-next-line css/use-baseline */
-  user-select: none;
-  vertical-align: middle;
-}
-
-.view-toggle-button:hover {
-  background-color: #1a252f;
-  border-color: #151e27;
-  color: #fff;
-  cursor: pointer;
-}
-
-.view-toggle-active {
-  background-color: #1a252f;
-  border-color: #151e27;
-  color: #fff;
-}
-
 #events-list {
   display: flex;
   flex-direction: column;
   justify-content: left;
-  width: 60%;
-  margin-top: 20px;
+  width: 15%;
 }
 
 #events-list a {
