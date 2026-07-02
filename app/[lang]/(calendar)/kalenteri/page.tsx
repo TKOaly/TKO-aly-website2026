@@ -8,12 +8,7 @@ import fiLocale from "@fullcalendar/core/locales/fi"
 import Link from "next/link"
 import styles from "./Kalenteri.module.css"
 import { useState, ReactNode, useMemo } from "react"
-import type { Event } from "./types"
-
-type ProcessedEvent = Event & {
-  starts: string
-  backgroundColor: string
-}
+import type { Event, ProcessedEvent } from "./types"
 
 function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
   const calendarEvents = events.map(event => ({
@@ -43,7 +38,7 @@ function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
   )
 }
 
-function EventListView({ events }: { events: ProcessedEvent[] }) {
+export function EventListView({ events }: { events: ProcessedEvent[] }) {
   return (
     <div id={styles["events-list"]}>
       {events.map(event => (
@@ -76,7 +71,7 @@ function EventListView({ events }: { events: ProcessedEvent[] }) {
   )
 }
 
-function Legend() {
+export function Legend() {
   const [isLegendVisible, setIsLegendVisible] = useState(false)
 
   const toggleLegendVisibility = () => {
@@ -135,7 +130,7 @@ function hasValidStartTime(event: Event): event is Event & { starts: string } {
   return event.starts !== null
 }
 
-function processEvents(eventsData: Event[]): ProcessedEvent[] {
+export function processEvents(eventsData: Event[]): ProcessedEvent[] {
   const now = new Date()
 
   return eventsData.filter(hasValidStartTime).map(event => {

@@ -229,3 +229,9 @@
 .event-safety-disclaimer a {
   color: var(--color-text-muted);
 }
+
+@media (min-width: 1024px) {
+  .no-show-small-screen {
+    display: none;
+  }
+}

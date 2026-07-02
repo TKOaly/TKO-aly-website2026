@@ -1,33 +1,12 @@
+"use client"
+
 import Link from "next/link"
-import { ReactNode } from "react"
-import type { Event } from "../types"
-import { getAsyncTranslation } from "@/app/i18n"
+import { ReactNode, useMemo, use } from "react"
+import type { Event, ProcessedEvent } from "../types"
+import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
-
-async function getEventById(id: string): Promise<Event | null> {
-  try {
-    const baseUrl = process.env.EVENTS_API_BASE_URL || ""
-    const targetUrl = `${baseUrl.replace(/\/$/, "")}/api/events/${id}`
-    const secret = process.env.EVENT_SERVICE_TOKEN || ""
-
-    const response = await fetch(targetUrl, {
-      next: { revalidate: 60 },
-      headers: {
-        Accept: "application/json",
-        "X-Token": secret,
-      },
-    })
-
-    if (!response.ok) return null
-
-    const event: Event = await response.json()
-
-    return event
-  } catch (error) {
-    console.error("Failed to fetch event by id", error, id)
-    return null
-  }
-}
+import { EventListView, Legend, processEvents } from "../page"
+import { useQuery } from "@tanstack/react-query"
 
 function formatTime(time?: string): string | null {
   if (!time) {
@@ -40,14 +19,8 @@ function formatTime(time?: string): string | null {
   })} ${d.toLocaleDateString("fi-FI")}`
 }
 
-const AlcoholMeter = async ({
-  value,
-  lang,
-}: {
-  value: number
-  lang: string
-}) => {
-  const { t } = await getAsyncTranslation(lang)
+const AlcoholMeter = async ({ value }: { value: number }) => {
+  const { t } = useTranslation()
   const levels = [0, 1, 2, 3, 4]
 
   return (
@@ -83,18 +56,10 @@ const Row = ({ col_1, col_2 }: { col_1: ReactNode; col_2: ReactNode }) => {
   )
 }
 
-const EventPage = async ({
-  params,
-}: {
-  params: Promise<{ lang: string; slug: string[] }>
-}) => {
-  const { lang, slug } = await params
-  const { t } = await getAsyncTranslation(lang)
+const EventView = ({ event }: { event: Event }) => {
+  const { t } = useTranslation()
 
-  const id = slug[0]
-  const event = await getEventById(id)
-
-  return event ? (
+  return (
     <div className={styles["event-container"]}>
       <h1 className="text-2xl font-bold mb-4">{event.name}</h1>
       <div className={styles["event-info"]}>
@@ -115,7 +80,7 @@ const EventPage = async ({
         {event.alcohol_meter && (
           <Row
             col_1={<>{t("event.alcoholMeter")}:</>}
-            col_2={<AlcoholMeter value={event.alcohol_meter} lang={lang} />}
+            col_2={<AlcoholMeter value={event.alcohol_meter} />}
           />
         )}
 
@@ -197,6 +162,37 @@ const EventPage = async ({
           </Link>
           .
         </p>
+      </div>
+    </div>
+  )
+}
+
+const EventPage = ({
+  params,
+}: {
+  params: Promise<{ lang: string; slug: string[] }>
+}) => {
+  const { lang, slug } = use(params)
+  const { t } = useTranslation()
+
+  const { data: eventsList = [], error } = useQuery({
+    queryKey: ["events"],
+    queryFn: (): Promise<Event[]> => fetch("/api/events").then(r => r.json()),
+  })
+
+  const id = slug[0]
+  const event = eventsList.find(e => String(e.id) === id)
+
+  const processedEvents: ProcessedEvent[] = useMemo(() => {
+    return processEvents(eventsList as Event[])
+  }, [eventsList])
+
+  return event && !error ? (
+    <div style={{ display: "flex" }}>
+      <EventView event={event} />
+      <div className={styles["no-show-small-screen"]}>
+        <EventListView events={processedEvents} />
+        <Legend />
       </div>
     </div>
   ) : (

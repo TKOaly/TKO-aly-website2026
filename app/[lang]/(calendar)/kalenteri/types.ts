@@ -26,3 +26,8 @@ export type Event = {
   avec?: boolean
   deleted?: boolean
 }
+
+export type ProcessedEvent = Event & {
+  starts: string
+  backgroundColor: string
+}
