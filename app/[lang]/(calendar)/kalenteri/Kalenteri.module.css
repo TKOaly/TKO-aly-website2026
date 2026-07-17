@@ -1,4 +1,4 @@
-#calender-page-container {
+#calenderPageContainer {
   display: flex;
   min-height: 80rem;
   width: 100%;
@@ -16,7 +16,7 @@
   color: #ffbb00;
 }
 
-#calendar-instructions {
+#calendarInstructions {
   width: 60%;
   margin-top: 20px;
   color: #ffbb00;
@@ -40,7 +40,7 @@
   align-items: center;
 }
 
-.legend-color-ball {
+.legendColorBall {
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -48,28 +48,28 @@
   margin-right: 8px;
 }
 
-#events-list {
+#eventsList {
   display: flex;
   flex-direction: column;
   justify-content: left;
   width: 15%;
 }
 
-#events-list a {
+#eventsList a {
   text-decoration: none;
   color: inherit;
   display: block;
 }
 
-#events-list a:visited,
-#events-list a:hover,
-#events-list a:focus,
-#events-list a:active {
+#eventsList a:visited,
+#eventsList a:hover,
+#eventsList a:focus,
+#eventsList a:active {
   text-decoration: none;
   color: inherit;
 }
 
-.event-list-item {
+.eventListItem {
   width: 100%;
   background-color: #1a252f;
   border-radius: 5px;
@@ -77,21 +77,21 @@
   margin-bottom: 5px;
 }
 
-.event-list-item p {
+.eventListItem p {
   margin: 5px 0;
 }
 
-.event-container {
+.eventContainer {
   margin-left: var(--space-32);
 }
 
 @media (max-width: 768px) {
-  .event-container {
+  .eventContainer {
     margin-left: var(--space-2-5);
   }
 }
 
-.event-info {
+.eventInfo {
   background-color: var(--color-surface);
   border: var(--border);
   box-shadow: var(--shadow-light);
@@ -100,39 +100,39 @@
   padding: 10px 10px 10px 10px;
 }
 
-.event-info-row {
+.eventInfoRow {
   display: flex;
   gap: 8px;
   margin: 0;
 }
 
-.event-info-row dt {
+.eventInfoRow dt {
   margin: 0;
   font-weight: 1000;
   font-size: medium;
 }
 
-.event-info-row dd {
+.eventInfoRow dd {
   margin: 0;
   flex: 1;
 }
 
 @media (max-width: 768px) {
-  .event-info-row {
+  .eventInfoRow {
     display: inline;
     gap: 13px
   }
 }
 
-.alcohol-meter-container {
+.alcoholMeterContainer {
   position: relative;
 }
 
-.alcohol-meter {
+.alcoholMeter {
   display: flex;
 }
 
-.alcohol-meter div {
+.alcoholMeter div {
   border: 1px solid white;
   margin-right: 3px;
   width: 1rem;
@@ -148,17 +148,17 @@
   touch-action: none;
 }
 
-.alcohol-meter-selected {
+.alcoholMeterSelected {
   color: #141414;
   background-color: var(--color-accent);
   border: 0;
 }
 
-.alcohol-meter-container details {
+.alcoholMeterContainer details {
   margin-top: -1rem;
 }
 
-.alcohol-meter-container details summary {
+.alcoholMeterContainer details summary {
   width: 30ch;
   height: 1.2rem;
   text-align: right;
@@ -166,21 +166,21 @@
   user-select: none;
 }
 
-.alcohol-meter-container details summary span {
+.alcoholMeterContainer details summary span {
   padding: 0;
   height: 1.2rem;
 }
 
-.alcohol-meter-container details[open] summary span,
-.alcohol-meter-container details summary:hover span {
+.alcoholMeterContainer details[open] summary span,
+.alcoholMeterContainer details summary:hover span {
   color: white;
 }
 
-.alcohol-meter-container details summary::marker {
+.alcoholMeterContainer details summary::marker {
   content: none;
 }
 
-.alcohol-meter-info {
+.alcoholMeterInfo {
   width: 30ch;
   min-width: 100%;
   border: 1px solid #fff;
@@ -189,11 +189,11 @@
   margin-top: 5px;
 }
 
-.event-text {
+.eventText {
   max-width: 80ch;
 }
 
-.event-registration {
+.eventRegistration {
   text-decoration-line: none;
   color: var(--neutral-900);
   background-color: var(--yellow);
@@ -211,27 +211,27 @@
     transform 0.1s ease;
 }
 
-.event-registration:hover {
+.eventRegistration:hover {
   background-color: var(--yellow-300);
 }
 
-.event-registration:active {
+.eventRegistration:active {
   background-color: var(--yellow-700);
   box-shadow: 0px 0px 0px 0px #000000;
   transform: translate(4px, 4px);
 }
 
-.event-safety-disclaimer {
+.eventSafetyDisclaimer {
   max-width: 80ch;
   color: var(--color-text-muted);
 }
 
-.event-safety-disclaimer a {
+.eventSafetyDisclaimer a {
   color: var(--color-text-muted);
 }
 
-@media (min-width: 1024px) {
-  .no-show-small-screen {
+@media (max-width: 1024px) {
+  .noShowSmallScreen {
     display: none;
   }
 }

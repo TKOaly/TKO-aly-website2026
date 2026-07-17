@@ -24,12 +24,12 @@ const AlcoholMeter = async ({ value }: { value: number }) => {
   const levels = [0, 1, 2, 3, 4]
 
   return (
-    <div className={styles["alcohol-meter-container"]}>
-      <div className={styles["alcohol-meter"]}>
+    <div className={styles["alcoholMeterContainer"]}>
+      <div className={styles["alcoholMeter"]}>
         {levels.map(level => (
           <div
             key={level}
-            className={value === level ? styles["alcohol-meter-selected"] : ""}
+            className={value === level ? styles["alcoholMeterSelected"] : ""}
           >
             {level}
           </div>
@@ -39,7 +39,7 @@ const AlcoholMeter = async ({ value }: { value: number }) => {
         <summary>
           <span>{t("alcoholMeterInfo.title")}</span>
         </summary>
-        <div className={styles["alcohol-meter-info"]}>
+        <div className={styles["alcoholMeterInfo"]}>
           {t(`alcoholMeterInfo.${value}`)}
         </div>
       </details>
@@ -49,7 +49,7 @@ const AlcoholMeter = async ({ value }: { value: number }) => {
 
 const Row = ({ col_1, col_2 }: { col_1: ReactNode; col_2: ReactNode }) => {
   return (
-    <dl className={styles["event-info-row"]}>
+    <dl className={styles["eventInfoRow"]}>
       <dt>{col_1}</dt>
       <dd>{col_2}</dd>
     </dl>
@@ -60,9 +60,9 @@ const EventView = ({ event }: { event: Event }) => {
   const { t } = useTranslation()
 
   return (
-    <div className={styles["event-container"]}>
+    <div className={styles["eventContainer"]}>
       <h1 className="text-2xl font-bold mb-4">{event.name}</h1>
-      <div className={styles["event-info"]}>
+      <div className={styles["eventInfo"]}>
         <Row col_1={<>{t("event.time")}:</>} col_2={formatTime(event.starts)} />
 
         <Row
@@ -136,16 +136,16 @@ const EventView = ({ event }: { event: Event }) => {
           />
         )}
       </div>
-      <p className={styles["event-text"]}>{event.description}</p>
+      <p className={styles["eventText"]}>{event.description}</p>
       {event.registration_starts && (
         <Link
           href={`https://tko-aly.fi/event/${event.id}`}
-          className={styles["event-registration"]}
+          className={styles["eventRegistration"]}
         >
           Ilmoittautuminen
         </Link>
       )}
-      <div className={styles["event-safety-disclaimer"]}>
+      <div className={styles["eventSafetyDisclaimer"]}>
         <p>
           {t("event.safety.text.safetySpace")}{" "}
           <Link href="https://www.tko-aly.fi/turva">
@@ -189,14 +189,14 @@ const EventPage = ({
 
   return event && !error ? (
     <div style={{ display: "flex" }}>
-      <EventView event={event} />
-      <div className={styles["no-show-small-screen"]}>
+      <div className={styles["noShowSmallScreen"]}>
         <EventListView events={processedEvents} />
         <Legend />
       </div>
+      <EventView event={event} />
     </div>
   ) : (
-    <div className={styles["event-container"]}>
+    <div className={styles["eventContainer"]}>
       <p>{t("event.notExits")}</p>
     </div>
   )
