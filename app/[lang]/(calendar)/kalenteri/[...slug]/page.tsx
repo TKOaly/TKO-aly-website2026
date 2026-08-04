@@ -60,7 +60,7 @@ const EventView = ({ event }: { event: Event }) => {
   const { t } = useTranslation()
 
   return (
-    <div className={styles.eventContainer}>
+    <div>
       <h1 className="text-2xl font-bold mb-4">{event.name}</h1>
       <div className={styles.eventInfo}>
         <Row col_1={<>{t("event.time")}:</>} col_2={formatTime(event.starts)} />
@@ -188,15 +188,18 @@ const EventPage = ({
   }, [eventsList])
 
   return event && !error ? (
-    <div style={{ display: "flex" }}>
-      <div className={styles.noShowSmallScreen}>
-        <EventListView events={processedEvents} />
-        <Legend />
+    <div id={styles.calendar}>
+      <div id={styles.calenderPageContainer}>
+        <div className={styles.eventsListEventPageContainer}>
+          <EventListView events={processedEvents} />
+        </div>
+        <div style={{ marginLeft: "48px", width: "95%" }}>
+          <EventView event={event} />
+        </div>
       </div>
-      <EventView event={event} />
     </div>
   ) : (
-    <div className={styles.eventContainer}>
+    <div id={styles.calendar}>
       <p>{t("event.notExits")}</p>
     </div>
   )

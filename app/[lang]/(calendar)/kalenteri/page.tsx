@@ -182,8 +182,10 @@ export default function Calendar() {
   } else {
     viewContent = (
       <div id={styles.calenderPageContainer}>
-        <EventListView events={processedEvents} />
-        <div style={{marginLeft: "48px", width: "95%"}}>
+        <div id={styles.eventsListContainer}>
+          <EventListView events={processedEvents} />
+        </div>
+        <div style={{ marginLeft: "48px", width: "95%" }}>
           <EventCalendarView events={processedEvents} />
           <Legend />
         </div>
@@ -192,11 +194,13 @@ export default function Calendar() {
   }
 
   return (
-    <div id={styles.calendar}>
-      <div id={styles.calendarTitle}>
-        <h1>Tapahtumakalenteri</h1>
+    <div id={styles.calendarColor}>
+      <div id={styles.calendar}>
+        <div id={styles.calendarTitle}>
+          <h1>Tapahtumakalenteri</h1>
+        </div>
+        {viewContent}
       </div>
-      {viewContent}
     </div>
   )
 }
