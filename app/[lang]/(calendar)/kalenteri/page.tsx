@@ -40,11 +40,11 @@ function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
 
 export function EventListView({ events }: { events: ProcessedEvent[] }) {
   return (
-    <div id={styles["eventsList"]}>
+    <div id={styles.eventsList}>
       {events.map(event => (
         <Link key={event.id} href={`/kalenteri/${event.id}`}>
           <div
-            className={styles["eventListItem"]}
+            className={styles.eventListItem}
             style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
           >
             <h3>{event.name}</h3>
@@ -79,40 +79,40 @@ export function Legend() {
   }
 
   return (
-    <div id={styles["calendarInstructions"]}>
+    <div id={styles.calendarInstructions}>
       {isLegendVisible && (
         <div id={styles.legend}>
           <p>
             <span
-              className={styles["legendColorBall"]}
+              className={styles.legendColorBall}
               style={{ backgroundColor: "#0066ff" }}
             ></span>{" "}
             Tapahtumaan ei ilmoittautumista
           </p>
           <p>
             <span
-              className={styles["legendColorBall"]}
+              className={styles.legendColorBall}
               style={{ backgroundColor: "#ffff00" }}
             ></span>{" "}
             Ilmoittautuminen ei ole alkanut
           </p>
           <p>
             <span
-              className={styles["legendColorBall"]}
+              className={styles.legendColorBall}
               style={{ backgroundColor: "#00ff00" }}
             ></span>{" "}
             Ilmoittautuminen on auki
           </p>
           <p>
             <span
-              className={styles["legendColorBall"]}
+              className={styles.legendColorBall}
               style={{ backgroundColor: "#ff0000" }}
             ></span>{" "}
             Ilmoittautuminen on päättynyt
           </p>
           <p>
             <span
-              className={styles["legendColorBall"]}
+              className={styles.legendColorBall}
               style={{ backgroundColor: "#6e6e6eff" }}
             ></span>{" "}
             Tapahtuma on mennyt
@@ -181,7 +181,7 @@ export default function Calendar() {
     viewContent = <p>Virhe: {error.message}</p>
   } else {
     viewContent = (
-      <div id={styles["calenderPageContainer"]}>
+      <div id={styles.calenderPageContainer}>
         <EventListView events={processedEvents} />
         <div style={{marginLeft: "48px", width: "95%"}}>
           <EventCalendarView events={processedEvents} />
@@ -193,7 +193,7 @@ export default function Calendar() {
 
   return (
     <div id={styles.calendar}>
-      <div id={styles["calendar-title"]}>
+      <div id={styles.calendarTitle}>
         <h1>Tapahtumakalenteri</h1>
       </div>
       {viewContent}
