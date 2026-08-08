@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ReactNode, useMemo, use } from "react"
+import { ReactNode, useEffect, useState, useMemo, use } from "react"
 import type { Event, ProcessedEvent } from "../types"
 import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
@@ -19,7 +19,7 @@ function formatTime(time?: string): string | null {
   })} ${d.toLocaleDateString("fi-FI")}`
 }
 
-const AlcoholMeter = async ({ value }: { value: number }) => {
+const AlcoholMeter = ({ value }: { value: number }) => {
   const { t } = useTranslation()
   const levels = [0, 1, 2, 3, 4]
 
@@ -56,11 +56,11 @@ const Row = ({ col_1, col_2 }: { col_1: ReactNode; col_2: ReactNode }) => {
   )
 }
 
-const EventView = ({ event }: { event: Event }) => {
+const EventInfoView = ({ event }: { event: Event }) => {
   const { t } = useTranslation()
 
   return (
-    <div>
+    <>
       <h1 className="text-2xl font-bold mb-4">{event.name}</h1>
       <div className={styles.eventInfo}>
         <Row col_1={<>{t("event.time")}:</>} col_2={formatTime(event.starts)} />
@@ -137,32 +137,31 @@ const EventView = ({ event }: { event: Event }) => {
         )}
       </div>
       <p className={styles.eventText}>{event.description}</p>
-      {event.registration_starts && (
-        <Link
-          href={`https://tko-aly.fi/event/${event.id}`}
-          className={styles.eventRegistration}
-        >
-          Ilmoittautuminen
+    </>
+  )
+}
+
+const EventDisclaimer = () => {
+  const { t } = useTranslation()
+
+  return (
+    <div className={styles.eventSafetyDisclaimer}>
+      <p>
+        {t("event.safety.text.safetySpace")}{" "}
+        <Link href="https://www.tko-aly.fi/turva">
+          {t("event.safety.link.text")}
         </Link>
-      )}
-      <div className={styles.eventSafetyDisclaimer}>
-        <p>
-          {t("event.safety.text.safetySpace")}{" "}
-          <Link href="https://www.tko-aly.fi/turva">
-            {t("event.safety.link.text")}
-          </Link>
-          . {t("event.safety.text.harrasmentContact1")}{" "}
-          <Link href="https://www.tko-aly.fi/häirintälomake">
-            {t("event.safety.link.form")}
-          </Link>
-          {t("event.safety.text.harrasmentContact2")}.{" "}
-          {t("event.safety.text.feedback")}{" "}
-          <Link href="https://www.tko-aly.fi/palaute">
-            {t("event.safety.link.text")}
-          </Link>
-          .
-        </p>
-      </div>
+        . {t("event.safety.text.harrasmentContact1")}{" "}
+        <Link href="https://www.tko-aly.fi/häirintälomake">
+          {t("event.safety.link.form")}
+        </Link>
+        {t("event.safety.text.harrasmentContact2")}.{" "}
+        {t("event.safety.text.feedback")}{" "}
+        <Link href="https://www.tko-aly.fi/palaute">
+          {t("event.safety.link.text")}
+        </Link>
+        .
+      </p>
     </div>
   )
 }
@@ -171,7 +170,14 @@ const BackButton = () => {
   const { t } = useTranslation()
 
   return (
-    <div style={{display:"flex", justifyContent:"flex-start", width:"100%", marginBottom: "1rem"}}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "flex-start",
+        width: "100%",
+        marginBottom: "1rem",
+      }}
+    >
       <Link href={"/kalenteri"} className={styles.eventRegistration}>
         {t("event.back")}{" "}
       </Link>
@@ -184,37 +190,75 @@ const EventPage = ({
 }: {
   params: Promise<{ lang: string; slug: string[] }>
 }) => {
-  const { lang, slug } = use(params)
+  const { slug } = use(params)
   const { t } = useTranslation()
+  const [event, setEvent] = useState<Event | null>(null)
 
-  const { data: eventsList = [], error } = useQuery({
-    queryKey: ["events"],
-    queryFn: (): Promise<Event[]> => fetch("/api/events").then(r => r.json()),
+  const {
+    data: eventsList = [],
+    error: eventsListError,
+    isLoading: isEventsListLoading,
+  } = useQuery({
+    queryKey: ["eventList"],
+    queryFn: (): Promise<Event[]> =>
+      fetch("/api/events/list").then(r => r.json()),
   })
-
-  const id = slug[0]
-  const event = eventsList.find(e => String(e.id) === id)
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
     return processEvents(eventsList as Event[])
   }, [eventsList])
 
-  return event && !error ? (
+  const id = slug[0]
+
+  useEffect(() => {
+    if (!id) return
+
+    fetch(`/api/events/${id}`)
+      .then(r => {
+        if (!r.ok) throw new Error()
+        return r.json()
+      })
+      .then(setEvent)
+      .catch(() => setEvent(null))
+  }, [id])
+
+  let eventPageContent: ReactNode
+
+  if (!event) {
+    eventPageContent = <p>{t("event.notExits")}</p>
+  } else {
+    eventPageContent = (
+      <>
+        <EventInfoView event={event} />
+        {event.registration_starts && (
+          <Link
+            href={`https://tko-aly.fi/event/${event.id}`}
+            className={styles.eventRegistration}
+          >
+            Ilmoittautuminen
+          </Link>
+        )}
+        <EventDisclaimer/>
+      </>
+    )
+  }
+
+  return (
     <div id={styles.calendar}>
-      <BackButton/>
+      <BackButton />
       <div id={styles.calenderPageContainer}>
         <div className={styles.eventsListEventPageContainer}>
-          <EventListView events={processedEvents} />
+          {!isEventsListLoading && !eventsListError ? (
+            <EventListView events={processedEvents} />
+          ) : (
+            <></>
+          )}
         </div>
         <div style={{ marginLeft: "48px", width: "95%" }}>
-          <EventView event={event} />
+          {eventPageContent}
         </div>
+        
       </div>
-    </div>
-  ) : (
-    <div id={styles.calendar}>
-      <BackButton/>
-      <p>{t("event.notExits")}</p>
     </div>
   )
 }
