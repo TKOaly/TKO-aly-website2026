@@ -105,7 +105,7 @@ const EventInfoView = ({ event }: { event: Event }) => {
         {event.registration_starts && event.registration_ends && (
           <>
             <Row
-              col_1={<>{t("event.registration")}:</>}
+              col_1={<>{t("event.registrationTime")}:</>}
               col_2={
                 <>
                   {formatTime(event.registration_starts)} -{" "}
@@ -193,6 +193,12 @@ const EventPage = ({
 }) => {
   const { lang, slug } = use(params)
   const { t } = useTranslation()
+  const [isRegistrationFormVisible, setRegistrationFormVisible] =
+    useState(false)
+
+  const toggleRegistrationFormVisible = () => {
+    setRegistrationFormVisible(prev => !prev)
+  }
 
   const {
     data: eventsList = [],
@@ -214,17 +220,21 @@ const EventPage = ({
 
   if (!event) {
     eventPageContent = <p>{t("event.notExits")}</p>
+  } else if (isRegistrationFormVisible) {
+    ;<>
+      <p>{t("event.registration")}</p>
+    </>
   } else {
     eventPageContent = (
       <>
         <EventInfoView event={event} />
         {event.registration_starts && (
-          <Link
-            href={`https://tko-aly.fi/event/${event.id}`}
+          <button
+            onClick={toggleRegistrationFormVisible}
             className={styles.eventRegistration}
           >
-            Ilmoittautuminen
-          </Link>
+            {t("event.registration")}
+          </button>
         )}
         <EventDisclaimer />
       </>
