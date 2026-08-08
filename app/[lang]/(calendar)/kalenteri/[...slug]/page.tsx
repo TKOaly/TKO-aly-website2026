@@ -213,22 +213,32 @@ const EventPage = ({
     return processEvents(eventsList as Event[])
   }, [eventsList])
 
+<<<<<<< HEAD
   const id = Number(slug[0])
   const event = use(getEventById(id, lang))
+=======
+  const now = new Date()
+  const canRegister =
+    event &&
+    event.registration_starts &&
+    event.registration_ends &&
+    (now >= new Date(event.registration_starts) && now <= new Date(event.registration_ends)) &&
+    (event.membership_required ? /* TODO test if is a member of TKO-äly*/ true : true)
+>>>>>>> caa6c97 (Beter way test if can register)
 
   let eventPageContent: ReactNode
 
   if (!event) {
     eventPageContent = <p>{t("event.notExits")}</p>
-  } else if (isRegistrationFormVisible) {
-    ;<>
+  } else if (canRegister && isRegistrationFormVisible) {
+    <>
       <p>{t("event.registration")}</p>
     </>
   } else {
     eventPageContent = (
       <>
         <EventInfoView event={event} />
-        {event.registration_starts && (
+        {canRegister && (
           <button
             onClick={toggleRegistrationFormVisible}
             className={styles.eventRegistration}
