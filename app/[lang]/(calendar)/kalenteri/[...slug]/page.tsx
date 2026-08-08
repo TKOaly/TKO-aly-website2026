@@ -104,7 +104,7 @@ const EventInfoView = ({ event }: { event: Event }) => {
         {event.registration_starts && event.registration_ends && (
           <>
             <Row
-              col_1={<>{t("event.registration")}:</>}
+              col_1={<>{t("event.registrationTime")}:</>}
               col_2={
                 <>
                   {formatTime(event.registration_starts)} -{" "}
@@ -192,7 +192,27 @@ const EventPage = ({
 }) => {
   const { slug } = use(params)
   const { t } = useTranslation()
+  const id = slug[0]
+
   const [event, setEvent] = useState<Event | null>(null)
+  const [isRegistrationFormVisible, setRegistrationFormVisible] =
+    useState(false)
+
+  const toggleRegistrationFormVisible = () => {
+    setRegistrationFormVisible(prev => !prev)
+  }
+
+  useEffect(() => {
+    if (!id) return
+
+    fetch(`/api/events/${id}`)
+      .then(r => {
+        if (!r.ok) throw new Error()
+        return r.json()
+      })
+      .then(setEvent)
+      .catch(() => setEvent(null))
+  }, [id])
 
   const {
     data: eventsList = [],
@@ -208,37 +228,27 @@ const EventPage = ({
     return processEvents(eventsList as Event[])
   }, [eventsList])
 
-  const id = slug[0]
-
-  useEffect(() => {
-    if (!id) return
-
-    fetch(`/api/events/${id}`)
-      .then(r => {
-        if (!r.ok) throw new Error()
-        return r.json()
-      })
-      .then(setEvent)
-      .catch(() => setEvent(null))
-  }, [id])
-
   let eventPageContent: ReactNode
 
   if (!event) {
     eventPageContent = <p>{t("event.notExits")}</p>
+  } else if (isRegistrationFormVisible) {
+    ;<>
+      <p>{t("event.registration")}</p>
+    </>
   } else {
     eventPageContent = (
       <>
         <EventInfoView event={event} />
         {event.registration_starts && (
-          <Link
-            href={`https://tko-aly.fi/event/${event.id}`}
+          <button
+            onClick={toggleRegistrationFormVisible}
             className={styles.eventRegistration}
           >
-            Ilmoittautuminen
-          </Link>
+            {t("event.registration")}
+          </button>
         )}
-        <EventDisclaimer/>
+        <EventDisclaimer />
       </>
     )
   }
@@ -257,7 +267,6 @@ const EventPage = ({
         <div style={{ marginLeft: "48px", width: "95%" }}>
           {eventPageContent}
         </div>
-        
       </div>
     </div>
   )

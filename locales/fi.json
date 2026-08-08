@@ -269,12 +269,13 @@
     "category": "Tyyppi",
     "alcoholMeter": "Alkoholiasteikko",
     "organizer": "Järjestävä taho",
-    "registration": "Ilmoittautumisaika",
+    "registrationTime": "Ilmoittautumisaika",
     "canCancel": "Ilmoittautumisen voi perua",
     "canNotCancel": "Ilmoittautuminen on sitova",
     "responsible": "Vastuuhenkilö",
     "notExits": "Tapahtumaa ei ole olemassa",
     "price": "Hinta",
+    "registration": "Ilmoittautuminen",
     "safety": {
       "text": {
         "safetySpace": "TKO-älyn järjestämissä tapahtumissa noudatetaan turvallisemman tilan periaatteita. Periaatteet löydät",
