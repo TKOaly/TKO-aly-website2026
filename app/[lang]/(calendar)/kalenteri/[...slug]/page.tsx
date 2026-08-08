@@ -167,6 +167,18 @@ const EventView = ({ event }: { event: Event }) => {
   )
 }
 
+const BackButton = () => {
+  const { t } = useTranslation()
+
+  return (
+    <div style={{display:"flex", justifyContent:"flex-start", width:"100%", marginBottom: "1rem"}}>
+      <Link href={"/kalenteri"} className={styles.eventRegistration}>
+        {t("event.back")}{" "}
+      </Link>
+    </div>
+  )
+}
+
 const EventPage = ({
   params,
 }: {
@@ -189,6 +201,7 @@ const EventPage = ({
 
   return event && !error ? (
     <div id={styles.calendar}>
+      <BackButton/>
       <div id={styles.calenderPageContainer}>
         <div className={styles.eventsListEventPageContainer}>
           <EventListView events={processedEvents} />
@@ -200,6 +213,7 @@ const EventPage = ({
     </div>
   ) : (
     <div id={styles.calendar}>
+      <BackButton/>
       <p>{t("event.notExits")}</p>
     </div>
   )

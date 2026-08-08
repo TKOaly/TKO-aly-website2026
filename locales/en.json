@@ -259,6 +259,7 @@
     "4": "Alcohol plays a central role in this event, for example through gamified drinking. You can still participate alcohol free and you will not be pressured to drink."
   },
   "event": {
+    "back": "Back",
     "time": "Time",
     "location": "Location",
     "map": "Map",

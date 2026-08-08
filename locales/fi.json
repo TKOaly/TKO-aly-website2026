@@ -262,6 +262,7 @@
     "4": "Tapahtumassa alkoholin käyttö on keskeisessä asemassa, esimerkiksi pelillistetyn juomisen kautta. Voit kuitenkin osallistua alkoholittomana, eikä juomaan painosteta."
   },
   "event": {
+    "back": "takaisin",
     "time": "Aika",
     "location": "Paikka",
     "map": "Kartta",
