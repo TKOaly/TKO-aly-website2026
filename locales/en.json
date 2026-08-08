@@ -266,12 +266,13 @@
     "category": "Type",
     "alcoholMeter": "Alcohol scale",
     "organizer": "Organizer",
-    "registration": "Registration period",
+    "registrationTime": "Registration period",
     "canCancel": "Registration can be cancelled",
     "canNotCancel": "Registration is biding",
     "responsible": "Responsible person",
     "notExits": "Event does not work",
     "price": "Price",
+    "registration": "Registration",
     "safety": {
       "text": {
         "safetySpace": "Events held by TKO-äly follow the principles for a safer space. The principles can be found",
