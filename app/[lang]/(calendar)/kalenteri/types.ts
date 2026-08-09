@@ -31,3 +31,10 @@ export type ProcessedEvent = Event & {
   starts: string
   backgroundColor: string
 }
+
+export type CustomField = {
+  id: number
+  name: string
+  type: 'textarea' | 'radio' | 'checkbox' | 'text'
+  options: string[]
+}
