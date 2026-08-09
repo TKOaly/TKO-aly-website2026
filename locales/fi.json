@@ -287,6 +287,20 @@
         "text": "täältä",
         "form": "tämän lomakkeen"
       }
+    },
+    "eventRegistrationFrom": {
+      "name": "Nimi",
+      "email": "Sähköposti",
+      "phone": "Puhelinnumero",
+      "namePublic": "Nimeni voi näkyä tapahtuman iloittautumisen yhteydessä",
+      "privacyPolicy": {
+        "text": "Hyväksyn ",
+        "link": "tietosuojakäytännön"
+      },
+      "legend": {
+        "self": "Registration",
+        "avec": "Avec registration"
+      }
     }
   }
 }

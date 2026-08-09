@@ -1,275 +1,153 @@
 "use client"
 
-import Link from "next/link"
-import { ReactNode, useEffect, useState, useMemo, use } from "react"
-import type { Event, ProcessedEvent } from "../types"
+import { useEffect, useState, useMemo, use } from "react"
+import type { Event, ProcessedEvent, CustomField } from "../types"
 import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
-import { EventListView, Legend, processEvents } from "../page"
-import { useQuery } from "@tanstack/react-query"
+import CallToActionButton from "@/components/Buttons/CallToActionButton"
+import Checkbox from "@/components/Checkbox/Checkbox"
+import Field from "@/components/Field/Field"
+import Fieldset from "@/components/Fieldset/Fieldset"
+import RadioOption from "@/components/FieldRadioGroup/FieldRadioGroup"
+import FieldRadioGroup from "@/components/FieldRadioGroup/FieldRadioGroup"
+import Textarea from "@/components/Textarea/Textarea"
 
-function formatTime(time?: string): string | null {
-  if (!time) {
-    return null
-  }
-  const d = new Date(time)
-  return `${d.toLocaleTimeString("fi-FI", {
-    hour: "2-digit",
-    minute: "2-digit",
-  })} ${d.toLocaleDateString("fi-FI")}`
-}
-
-const AlcoholMeter = ({ value }: { value: number }) => {
+const EventRegistrationFromFields = ({
+  subject,
+  customFields,
+}: {
+  subject: "self" | "avec"
+  customFields: CustomField[] | null
+}) => {
   const { t } = useTranslation()
-  const levels = [0, 1, 2, 3, 4]
-
   return (
-    <div className={styles.alcoholMeterContainer}>
-      <div className={styles.alcoholMeter}>
-        {levels.map(level => (
-          <div
-            key={level}
-            className={value === level ? styles.alcoholMeterSelected : ""}
-          >
-            {level}
-          </div>
-        ))}
-      </div>
-      <details>
-        <summary>
-          <span>{t("alcoholMeterInfo.title")}</span>
-        </summary>
-        <div className={styles.alcoholMeterInfo}>
-          {t(`alcoholMeterInfo.${value}`)}
-        </div>
-      </details>
-    </div>
+    <>
+      <Fieldset legend={t(`event.registrationFrom.legend.${subject}`)}>
+        <Field
+          required
+          label={t("event.registrationFrom.name")}
+          id={`${subject}-name`}
+          name={`${subject}-name`}
+          type="text"
+        />
+        <Field
+          required
+          label={t("event.registrationFrom.email")}
+          id={`${subject}-email`}
+          name="email"
+          type="email"
+        />
+        <Field
+          required
+          label={t("event.registrationFrom.phone")}
+          id={`${subject}-phone`}
+          name={`${subject}-phone`}
+          type="tel"
+        />
+        {customFields &&
+          customFields.map(customField => {
+            switch (customField.type) {
+              case "text": {
+                return (
+                  <Field
+                    label={customField.name}
+                    id={`${subject}-${customField.id}`}
+                    name={`${subject}-${customField.id}`}
+                    type="text"
+                  />
+                )
+              }
+              case "textarea": {
+                return (
+                  <Textarea
+                    label={customField.name}
+                    id={`${subject}-${customField.id}`}
+                  />
+                )
+              }
+              case "checkbox": {
+                return (
+                  <Checkbox
+                    label={customField.name}
+                    id={`${subject}-${customField.id}`}
+                  />
+                )
+              }
+              case "radio": {
+                const options: RadioOption[] = customField.options.map((option) => {{ legend: option, value: option}})
+                break (
+                  <FieldRadioGroup
+                    legend={customField.name}
+                    name={`${subject}-${customField.id}`}
+                    options={options}
+                  />
+                )
+              }
+              default: {
+                return <></>
+              }
+            }
+          })}
+        <Checkbox
+          id={`${subject}-name_can_be_public`}
+          name={`${subject}-name_can_be_public`}
+        />
+        <Checkbox
+          required
+          id={`${subject}-accepted_privacy_policy`}
+          name={`${subject}-accepted_privacy_policy`}
+          label={t("event.registrationFrom.privacyPolicy")}
+        />
+      </Fieldset>
+    </>
   )
 }
 
-const Row = ({ col_1, col_2 }: { col_1: ReactNode; col_2: ReactNode }) => {
-  return (
-    <dl className={styles.eventInfoRow}>
-      <dt>{col_1}</dt>
-      <dd>{col_2}</dd>
-    </dl>
-  )
-}
-
-const EventInfoView = ({ event }: { event: Event }) => {
+const EventRegistration = ({
+  event,
+}: {
+  event: Event
+}) => {
+  const [customFields, setCustomFields] = useState<CustomField[] | null>(null)
   const { t } = useTranslation()
+
+  useEffect(() => {
+    if (!event.id) return
+
+    fetch(`/api/events/${event.id}/fields`)
+      .then(r => {
+        if (!r.ok) throw new Error()
+        return r.json()
+      })
+      .then(setCustomFields)
+      .catch(() => setCustomFields(null))
+  }, [event])
+
+  const updateRegistration = ({}: {}) => {}
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">{event.name}</h1>
-      <div className={styles.eventInfo}>
-        <Row col_1={<>{t("event.time")}:</>} col_2={formatTime(event.starts)} />
-
-        <Row
-          col_1={<>{t("event.location")}:</>}
-          col_2={
-            <>
-              {event.location}{" "}
-              {event.map && <Link href={event.map}>{t("event.map")}</Link>}
-            </>
-          }
+      <form
+        id={"registration"}
+        action={updateRegistration}
+        className={styles.form}
+      >
+        <EventRegistrationFromFields
+          subject={"self"}
+          customFields={customFields}
         />
 
-        <Row col_1={<>{t("event.category")}:</>} col_2={event.category} />
-
-        {event.alcohol_meter && (
-          <Row
-            col_1={<>{t("event.alcoholMeter")}:</>}
-            col_2={<AlcoholMeter value={event.alcohol_meter} />}
+        {event.avec && (
+          <EventRegistrationFromFields
+            subject={"avec"}
+            customFields={customFields}
           />
         )}
+      </form>
 
-        {event.organizer && (
-          <Row
-            col_1={<>{t("event.organizer")}:</>}
-            col_2={
-              event.organizer_url ? (
-                <Link href={event.organizer_url}>{event.organizer}</Link>
-              ) : (
-                <p>{event.organizer}</p>
-              )
-            }
-          />
-        )}
-
-        {event.price && (
-          <Row col_1={<>{t("event.price")}:</>} col_2={<>{event.price} €</>} />
-        )}
-
-        {event.registration_starts && event.registration_ends && (
-          <>
-            <Row
-              col_1={<>{t("event.registrationTime")}:</>}
-              col_2={
-                <>
-                  {formatTime(event.registration_starts)} -{" "}
-                  {formatTime(event.registration_ends)}
-                </>
-              }
-            />
-
-            {event.cancellation_starts && event.cancellation_ends ? (
-              <Row
-                col_1={<>{t("event.canCancel")}:</>}
-                col_2={
-                  <>
-                    {formatTime(event.cancellation_starts)} -{" "}
-                    {formatTime(event.cancellation_ends)}
-                  </>
-                }
-              />
-            ) : (
-              <Row col_1={<>{t("event.canNotCancel")}:</>} col_2="" />
-            )}
-          </>
-        )}
-
-        {event.show_responsible && event.responsible && (
-          <Row
-            col_1={<>{t("event.responsible")}:</>}
-            col_2={event.responsible}
-          />
-        )}
-      </div>
-      <p className={styles.eventText}>{event.description}</p>
+      <CallToActionButton form={"registration"}>
+        {t("event.registrationFrom.submit")}
+      </CallToActionButton>
     </>
   )
 }
-
-const EventDisclaimer = () => {
-  const { t } = useTranslation()
-
-  return (
-    <div className={styles.eventSafetyDisclaimer}>
-      <p>
-        {t("event.safety.text.safetySpace")}{" "}
-        <Link href="https://www.tko-aly.fi/turva">
-          {t("event.safety.link.text")}
-        </Link>
-        . {t("event.safety.text.harrasmentContact1")}{" "}
-        <Link href="https://www.tko-aly.fi/häirintälomake">
-          {t("event.safety.link.form")}
-        </Link>
-        {t("event.safety.text.harrasmentContact2")}.{" "}
-        {t("event.safety.text.feedback")}{" "}
-        <Link href="https://www.tko-aly.fi/palaute">
-          {t("event.safety.link.text")}
-        </Link>
-        .
-      </p>
-    </div>
-  )
-}
-
-const BackButton = () => {
-  const { t } = useTranslation()
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "flex-start",
-        width: "100%",
-        marginBottom: "1rem",
-      }}
-    >
-      <Link href={"/kalenteri"} className={styles.eventRegistration}>
-        {t("event.back")}{" "}
-      </Link>
-    </div>
-  )
-}
-
-const EventPage = ({
-  params,
-}: {
-  params: Promise<{ lang: string; slug: string[] }>
-}) => {
-  const { slug } = use(params)
-  const { t } = useTranslation()
-  const [isRegistrationFormVisible, setRegistrationFormVisible] =
-    useState(false)
-
-  const toggleRegistrationFormVisible = () => {
-    setRegistrationFormVisible(prev => !prev)
-  }
-  const [event, setEvent] = useState<Event | null>(null)
-
-  const {
-    data: eventsList = [],
-    error: eventsListError,
-    isLoading: isEventsListLoading,
-  } = useQuery({
-    queryKey: ["eventList"],
-    queryFn: (): Promise<Event[]> =>
-      fetch("/api/events/list").then(r => r.json()),
-  })
-
-  const processedEvents: ProcessedEvent[] = useMemo(() => {
-    return processEvents(eventsList as Event[])
-  }, [eventsList])
-
-<<<<<<< HEAD
-  const id = Number(slug[0])
-  const event = use(getEventById(id, lang))
-=======
-  const now = new Date()
-  const canRegister =
-    event &&
-    event.registration_starts &&
-    event.registration_ends &&
-    (now >= new Date(event.registration_starts) && now <= new Date(event.registration_ends)) &&
-    (event.membership_required ? /* TODO test if is a member of TKO-äly*/ true : true)
->>>>>>> caa6c97 (Beter way test if can register)
-
-  let eventPageContent: ReactNode
-
-  if (!event) {
-    eventPageContent = <p>{t("event.notExits")}</p>
-  } else if (canRegister && isRegistrationFormVisible) {
-    <>
-      <p>{t("event.registration")}</p>
-    </>
-  } else {
-    eventPageContent = (
-      <>
-        <EventInfoView event={event} />
-        {canRegister && (
-          <button
-            onClick={toggleRegistrationFormVisible}
-            className={styles.eventRegistration}
-          >
-            {t("event.registration")}
-          </button>
-        )}
-        <EventDisclaimer/>
-      </>
-    )
-  }
-
-  return (
-    <div id={styles.calendar}>
-      <BackButton />
-      <div id={styles.calenderPageContainer}>
-        <div className={styles.eventsListEventPageContainer}>
-          {!isEventsListLoading && !eventsListError ? (
-            <EventListView events={processedEvents} />
-          ) : (
-            <></>
-          )}
-        </div>
-        <div style={{ marginLeft: "48px", width: "95%" }}>
-          {eventPageContent}
-        </div>
-        
-      </div>
-    </div>
-  )
-}
-
-export default EventPage
