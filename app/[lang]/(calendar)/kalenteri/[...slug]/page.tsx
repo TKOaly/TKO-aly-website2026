@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { ReactNode, useEffect, useState, useMemo, use } from "react"
-import type { Event, ProcessedEvent } from "../types"
+import type { Event, ProcessedEvent, CustomField } from "../types"
 import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
 import { EventListView, Legend, processEvents } from "../page"
@@ -185,6 +185,24 @@ const BackButton = () => {
   )
 }
 
+const EventRegistration = ({ event }: { event: Event }) => {
+  const [customFields, setCustomFields] = useState<CustomField[] | null>(null)
+
+  useEffect(() => {
+    if (!event.id) return
+
+    fetch(`/api/events/${event.id}/fields`)
+      .then(r => {
+        if (!r.ok) throw new Error()
+        return r.json()
+      })
+      .then(setCustomFields)
+      .catch(() => setCustomFields(null))
+  }, [event])
+
+  return <></>
+}
+
 const EventPage = ({
   params,
 }: {
@@ -241,9 +259,7 @@ const EventPage = ({
   if (!event) {
     eventPageContent = <p>{t("event.notExits")}</p>
   } else if (canRegister && isRegistrationFormVisible) {
-    <>
-      <p>{t("event.registration")}</p>
-    </>
+    eventPageContent = <EventRegistration event={event} />
   } else {
     eventPageContent = (
       <>
