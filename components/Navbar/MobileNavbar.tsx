@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { ExternalLink, Globe, HamburgerIcon, X } from "lucide-react"
+import { ExternalLink, Globe, Menu, X } from "lucide-react"
 import { useSession, signIn, signOut } from "next-auth/react"
 
 import { ClientLink, useTranslation } from "@/app/i18n/client"
@@ -28,7 +28,7 @@ const MobileNavbar = ({ items }: MobileNavbarProps) => {
         className={styles.hamburger}
         aria-label={t("nav.openMenu")}
       >
-        <HamburgerIcon height={28} width={28} />
+        <Menu height={28} width={28} />
       </button>
 
       <dialog ref={mobileMenuRef} className={styles.mobileDialog}>
@@ -61,7 +61,10 @@ const MobileNavbar = ({ items }: MobileNavbarProps) => {
                         {link.external && (
                           <>
                             {" "}
-                            <ExternalLink height={16} width={16} />
+                            <ExternalLink height={16} width={16} aria-hidden />
+                            <span className={styles.srOnly}>
+                              ({t("common.opensInNewWindow")})
+                            </span>
                           </>
                         )}
                       </ClientLink>
@@ -111,6 +114,7 @@ const MobileNavbar = ({ items }: MobileNavbarProps) => {
           </button>
           {session ? (
             <button
+              type="button"
               className={styles.mobileActionButton}
               onClick={() => {
                 mobileMenuRef.current?.close()
@@ -121,6 +125,7 @@ const MobileNavbar = ({ items }: MobileNavbarProps) => {
             </button>
           ) : (
             <button
+              type="button"
               className={styles.mobileActionButton}
               onClick={() => {
                 mobileMenuRef.current?.close()

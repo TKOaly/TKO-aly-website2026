@@ -126,11 +126,6 @@
   display: flex;
 }
 
-.navItem:hover .megaMenu,
-.navItem:focus-within .megaMenu {
-  display: flex;
-}
-
 .megaMenu[data-section="yhdistys"] {
   background: color-mix(in srgb, var(--yellow) 10%, var(--color-surface));
   border-top-color: var(--yellow);
@@ -185,11 +180,6 @@
 }
 
 .megaMenuBackdropVisible {
-  display: block;
-}
-
-.navbar:has(.primaryList .navItem:hover) .megaMenuBackdrop,
-.navbar:has(.primaryList .navItem:focus-within) .megaMenuBackdrop {
   display: block;
 }
 
@@ -272,11 +262,6 @@
 }
 
 .dropdownMenuOpen {
-  display: block;
-}
-
-.navItem:hover .dropdownMenu,
-.navItem:focus-within .dropdownMenu {
   display: block;
 }
 
