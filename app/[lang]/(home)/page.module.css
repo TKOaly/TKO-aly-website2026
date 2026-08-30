@@ -233,6 +233,13 @@
   text-transform: uppercase;
 }
 
+.eventFillerDesc {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  text-transform: none;
+}
+
 .eventActions {
   margin-top: var(--space-6);
   display: flex;
@@ -240,6 +247,8 @@
 }
 
 .eventButton {
+  display: inline-flex;
+  align-items: center;
   border: var(--border);
   padding: var(--space-2) var(--space-4);
   font-weight: 700;
@@ -247,6 +256,7 @@
   background: transparent;
   color: inherit;
   cursor: pointer;
+  text-decoration: none;
   transition: background-color 0.2s;
 }
 
