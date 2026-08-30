@@ -50,9 +50,11 @@
     "openMenu": "Avaa valikko"
   },
   "home": {
-    "heroTitle": "Helsingin yliopiston tietojenkäsittelytieteen opiskelijoiden ainejärjestö",
+    "heroTitle": "TKO-äly ry",
+    "heroSubtitle": "Helsingin yliopiston tietojenkäsittely- ja datatieteen opiskelijoiden ainejärjestö",
     "heroDesc": "Tervetuloa! TKO-äly ry on Helsingin yliopiston tietojenkäsittelytieteen ja datatieteen opiskelijoiden ainejärjestö. Järjestämme tapahtumia, valvomme etujasi ja ylläpidämme yhteistä olohuonettamme Gurulaa.",
     "joinButton": "LIITY JÄSENEKSI",
+    "eventsButton": "TAPAHTUMAT",
     "eventsTitle": "Tulevat tapahtumat",
     "allEvents": "Kaikki tapahtumat",
     "noEvents": "Ei tulevia tapahtumia.",
