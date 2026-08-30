@@ -2,6 +2,7 @@
 
 import styles from "./Footer.module.css"
 import Image from "next/image"
+import { ExternalLink } from "lucide-react"
 import { ClientLink, useTranslation } from "@/app/i18n/client"
 export type FooterLinkType = {
   href: string
@@ -93,17 +94,19 @@ export default function FooterClient({
               href="/palaute"
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.formLink}
+              className="btn"
             >
               {t("footer.feedbackForm")}
+              <ExternalLink size={14} aria-hidden />
             </ClientLink>
             <ClientLink
               href="/hairinta"
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.formLink}
+              className="btn"
             >
               {t("footer.harassmentContacts")}
+              <ExternalLink size={14} aria-hidden />
             </ClientLink>
           </div>
         </section>

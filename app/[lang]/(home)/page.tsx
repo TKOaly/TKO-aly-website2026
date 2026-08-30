@@ -73,18 +73,10 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
           <p className={styles.heroSubtitle}>{t("home.heroSubtitle")}</p>
           <p className={styles.heroDesc}>{t("home.heroDesc")}</p>
           <div className={styles.heroActions}>
-            <ServerLink
-              lang={lang}
-              href="/jaseneksi"
-              className={styles.joinButton}
-            >
+            <ServerLink lang={lang} href="/jaseneksi" className="btn btnCta">
               {t("home.joinButton")}
             </ServerLink>
-            <ServerLink
-              lang={lang}
-              href="/kalenteri"
-              className={styles.joinButton}
-            >
+            <ServerLink lang={lang} href="/kalenteri" className="btn">
               {t("home.eventsButton")}
             </ServerLink>
           </div>
@@ -136,10 +128,12 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
                         </p>
                       </div>
                       <div className={isWide ? "" : styles.eventActions}>
-                        <ServerLink lang={lang} href={`/kalenteri/${event.id}`}>
-                          <button className={styles.eventButton}>
-                            {t("home.register")}
-                          </button>
+                        <ServerLink
+                          lang={lang}
+                          href={`/kalenteri/${event.id}`}
+                          className="btn"
+                        >
+                          {t("home.register")}
                         </ServerLink>
                       </div>
                     </div>
@@ -164,11 +158,7 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
                     <p className={styles.eventFillerDesc}>{card.desc}</p>
                   </div>
                   <div className={styles.eventActions}>
-                    <ServerLink
-                      lang={lang}
-                      href={card.href}
-                      className={styles.eventButton}
-                    >
+                    <ServerLink lang={lang} href={card.href} className="btn">
                       {t("common.readMore")}
                     </ServerLink>
                   </div>

@@ -25,7 +25,9 @@
 
 .locationBadge,
 .viewAll {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   background-color: var(--yellow-400);
   color: var(--neutral-900);
   padding: var(--space-2) var(--space-4);
@@ -40,6 +42,12 @@
 .locationBadge:hover,
 .viewAll:hover {
   text-decoration: underline;
+}
+
+.locationBadge:focus-visible,
+.viewAll:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 3px;
 }
 
 .heroTitle {
@@ -92,38 +100,6 @@
   flex-wrap: wrap;
   gap: var(--space-4);
   align-items: center;
-}
-
-.joinButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--neutral-900);
-  background-color: var(--yellow);
-  box-shadow: var(--shadow);
-  border-bottom: 4px solid var(--neutral-900);
-  border-right: 4px solid var(--neutral-900);
-  border-top: 2px solid var(--neutral-200);
-  border-left: 2px solid var(--neutral-200);
-  padding: var(--space-4) var(--space-8);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  cursor: pointer;
-  text-decoration: none;
-  transition:
-    box-shadow 0.1s ease,
-    transform 0.1s ease;
-}
-
-.joinButton:hover {
-  background-color: var(--yellow-300);
-}
-
-.joinButton:active {
-  background-color: var(--yellow-700);
-  box-shadow: 0px 0px 0px 0px #000000;
-  transform: translate(4px, 4px);
 }
 
 .heroImageContainer {
@@ -244,23 +220,4 @@
   margin-top: var(--space-6);
   display: flex;
   justify-content: flex-end;
-}
-
-.eventButton {
-  display: inline-flex;
-  align-items: center;
-  border: var(--border);
-  padding: var(--space-2) var(--space-4);
-  font-weight: 700;
-  text-transform: uppercase;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.eventButton:hover {
-  background-color: var(--yellow-400);
-  color: var(--neutral-900);
 }

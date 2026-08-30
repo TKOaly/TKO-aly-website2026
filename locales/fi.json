@@ -47,7 +47,8 @@
       "editProfile": "Muokkaa profiilia",
       "memberInvoice": "Jäsenmaksu"
     },
-    "openMenu": "Avaa valikko"
+    "openMenu": "Avaa valikko",
+    "closeMenu": "Sulje valikko"
   },
   "home": {
     "heroTitle": "TKO-äly ry",
@@ -79,7 +80,10 @@
   "common": {
     "readMore": "Lue lisää",
     "backToTop": "Takaisin ylös",
-    "switchToEnglish": "In English"
+    "switchToEnglish": "In English",
+    "opensInNewWindow": "avautuu uuteen ikkunaan",
+    "copy": "Kopioi",
+    "copied": "Kopioitu"
   },
   "jaseneksi": {
     "title": "Liity Jäseneksi",

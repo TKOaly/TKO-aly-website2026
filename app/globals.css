@@ -141,6 +141,64 @@ body {
   margin: 0;
 }
 
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  color: var(--neutral-900);
+  background-color: var(--yellow);
+  box-shadow: var(--shadow-light);
+  border-bottom: 3px solid var(--neutral-900);
+  border-right: 3px solid var(--neutral-900);
+  border-top: 2px solid var(--neutral-200);
+  border-left: 2px solid var(--neutral-200);
+  padding: var(--space-2) var(--space-4);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 0.8rem;
+  width: fit-content;
+  transition:
+    box-shadow 0.1s ease,
+    transform 0.1s ease,
+    background-color 0.1s ease;
+}
+
+.btnCta {
+  box-shadow: var(--shadow);
+  border-bottom-width: 4px;
+  border-right-width: 4px;
+  padding: var(--space-4) var(--space-8);
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  font-size: 1rem;
+}
+
+.btn:hover {
+  background-color: var(--yellow-300);
+}
+
+.btn:active {
+  background-color: var(--yellow-700);
+  box-shadow: 0 0 0 0 #000;
+  transform: translate(3px, 4px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+@media (prefers-color-scheme: light) {
+  .btn:focus-visible {
+    outline-color: var(--neutral-900);
+  }
+}
+
 /* @fullcalendar styles */
 .fc {
   width: 60%;

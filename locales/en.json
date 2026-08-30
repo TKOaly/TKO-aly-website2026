@@ -47,7 +47,8 @@
       "editProfile": "Edit profile",
       "memberInvoice": "Membership invoice"
     },
-    "openMenu": "Open menu"
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "home": {
     "heroTitle": "TKO-äly ry",
@@ -79,7 +80,10 @@
   "common": {
     "readMore": "Read more",
     "backToTop": "Back to top",
-    "switchToFinnish": "Suomeksi"
+    "switchToFinnish": "Suomeksi",
+    "opensInNewWindow": "opens in a new window",
+    "copy": "Copy",
+    "copied": "Copied"
   },
   "jaseneksi": {
     "title": "Become a Member",
