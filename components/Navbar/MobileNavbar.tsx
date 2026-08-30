@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { ExternalLink, HamburgerIcon, X } from "lucide-react"
+import { ExternalLink, Globe, HamburgerIcon, X } from "lucide-react"
 import { useSession, signIn, signOut } from "next-auth/react"
 
 import { ClientLink, useTranslation } from "@/app/i18n/client"
@@ -102,9 +102,11 @@ const MobileNavbar = ({ items }: MobileNavbarProps) => {
 
         <section className={styles.mobileDialogFooter}>
           <button
+            type="button"
             className={styles.mobileActionButton}
             onClick={toggleLanguage}
           >
+            <Globe size={18} aria-hidden />
             {otherLangLabel}
           </button>
           {session ? (

@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { useSession, signIn, signOut } from "next-auth/react"
-import { ExternalLink, User } from "lucide-react"
+import { ExternalLink, Globe, User } from "lucide-react"
 
 import { ClientLink } from "@/app/i18n/client"
 import { useMatchMediaQuery } from "@/lib/useMatchMediaQuery"
@@ -59,6 +59,12 @@ export const adminNavItems: NavLink[] = [
   },
 ]
 
+function sectionKey(section: NavSection) {
+  return (section.labels.fi || section.labels.en)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+}
+
 function Navbar({ items }: { items: NavSection[] }) {
   const { data: session } = useSession()
   const params = useParams()
@@ -96,7 +102,7 @@ function Navbar({ items }: { items: NavSection[] }) {
 
   return (
     <nav className={`${styles.navbar} ${hidden ? styles.hidden : ""}`}>
-      <ClientLink href="/">
+      <ClientLink href="/" className={styles.logoLink}>
         <Image
           src="/logo-yellow-on-black.png"
           width={48}
@@ -121,7 +127,11 @@ function Navbar({ items }: { items: NavSection[] }) {
                 >
                   {section.labels[lang]} ▼
                 </button>
-                <div className={styles.megaMenu} role="menu">
+                <div
+                  className={styles.megaMenu}
+                  data-section={sectionKey(section)}
+                  role="menu"
+                >
                   <div className={styles.megaMenuInner}>
                     <div className={styles.megaMenuHeader}>
                       <h3 className={styles.megaMenuTitle}>
@@ -159,9 +169,11 @@ function Navbar({ items }: { items: NavSection[] }) {
           <ul className={styles.secondaryActionList}>
             <li>
               <button
-                className={styles.dropdownToggle}
+                type="button"
+                className={`${styles.dropdownToggle} ${styles.langButton}`}
                 onClick={toggleLanguage}
               >
+                <Globe size={18} aria-hidden />
                 {otherLangLabel}
               </button>
             </li>
@@ -217,7 +229,11 @@ function Navbar({ items }: { items: NavSection[] }) {
         </>
       )}
 
-      {isMobileView && <MobileNavbar items={items} />}
+      {isMobileView && (
+        <div className={styles.mobileSlot}>
+          <MobileNavbar items={items} />
+        </div>
+      )}
     </nav>
   )
 }
