@@ -261,6 +261,9 @@
     "eInvoicing": "Verkkolaskutus",
     "links": "Linkit",
     "feedbackForm": "Yleinen palautelomake",
-    "harassmentContacts": "Häirintäyhdyshenkilöt"
+    "harassmentContacts": "Häirintäyhdyshenkilöt",
+    "contact": "Ota yhteyttä",
+    "collaborate": "Tee yhteistyötä",
+    "partnersThanks": "Kiitos yhteistyökumppaneillemme."
   }
 }

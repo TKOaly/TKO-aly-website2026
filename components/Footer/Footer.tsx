@@ -1,9 +1,11 @@
 "use client"
 
+import { useState } from "react"
+import { Copy, Check, ExternalLink } from "lucide-react"
 import styles from "./Footer.module.css"
 import Image from "next/image"
-import { ExternalLink } from "lucide-react"
 import { ClientLink, useTranslation } from "@/app/i18n/client"
+
 export type FooterLinkType = {
   href: string
   labels: { fi: string; en: string }
@@ -20,11 +22,66 @@ type FooterProps = {
   sponsorsData: SponsorType[]
 }
 
+function Copyable({
+  display,
+  value,
+  copyLabel,
+  copiedLabel,
+  onCopied,
+}: {
+  display: string
+  value: string
+  copyLabel: string
+  copiedLabel: string
+  onCopied: () => void
+}) {
+  const [copied, setCopied] = useState(false)
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(value)
+      setCopied(true)
+      onCopied()
+      window.setTimeout(() => setCopied(false), 1600)
+    } catch {
+      setCopied(false)
+    }
+  }
+
+  return (
+    <span className={styles.copyRow}>
+      <span>{display}</span>
+      <button
+        type="button"
+        className={styles.copyButton}
+        onClick={copy}
+        aria-label={copied ? copiedLabel : `${copyLabel}: ${display}`}
+      >
+        {copied ? (
+          <Check size={14} aria-hidden />
+        ) : (
+          <Copy size={14} aria-hidden />
+        )}
+      </button>
+    </span>
+  )
+}
+
 export default function FooterClient({
   footerData,
   sponsorsData,
 }: FooterProps) {
   const { t, lang } = useTranslation()
+  const copyLabel = t("common.copy")
+  const copiedLabel = t("common.copied")
+  const opensInNew = t("common.opensInNewWindow")
+  const [liveStatus, setLiveStatus] = useState("")
+
+  const onCopied = () => {
+    setLiveStatus(copiedLabel)
+    window.setTimeout(() => setLiveStatus(""), 1600)
+  }
+
   return (
     <div className={styles.footerContainer}>
       <section className={styles.sponsors}>
@@ -32,7 +89,11 @@ export default function FooterClient({
           <div className={styles.sponsorsTitleRow}>
             <h2 className={styles.sponsorsTitle}>{t("footer.partners")}</h2>
             <div className={styles.sponsorsDivider} />
+            <ClientLink href="/yrityksille" className="btn">
+              {t("footer.collaborate")}
+            </ClientLink>
           </div>
+          <p className={styles.partnersThanks}>{t("footer.partnersThanks")}</p>
           <div className={styles.sponsorGrid}>
             {sponsorsData.map(s => (
               <a
@@ -41,17 +102,21 @@ export default function FooterClient({
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.sponsorLink}
+                aria-label={`${s.alt} (${opensInNew})`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img alt={s.alt} src={s.src} className={styles.sponsorLogo} />
+                <img alt="" src={s.src} className={styles.sponsorLogo} />
               </a>
             ))}
           </div>
         </div>
       </section>
 
+      <div className={styles.srOnly} aria-live="polite">
+        {liveStatus}
+      </div>
+
       <footer className={styles.cards}>
-        {/* Keltainen kortti */}
         <section className={`${styles.card} ${styles.cardAccent}`}>
           <Image
             src="/logo-yellow-on-black.png"
@@ -71,23 +136,55 @@ export default function FooterClient({
           </div>
           <div className={styles.cardSection}>
             <h2 className={styles.cardHeading}>{t("footer.businessId")}</h2>
-            <p className={styles.cardText}>1978827-2</p>
+            <p className={styles.cardText}>
+              <Copyable
+                display="1978827-2"
+                value="1978827-2"
+                copyLabel={copyLabel}
+                copiedLabel={copiedLabel}
+                onCopied={onCopied}
+              />
+            </p>
           </div>
         </section>
 
-        {/* Yhteystiedot */}
         <section className={styles.card}>
+          <h2 className={styles.cardHeading}>{t("footer.contact")}</h2>
           <div className={styles.cardSection}>
-            <h2 className={styles.cardHeading}>{t("footer.email")}</h2>
-            <p className={styles.cardText}>hallitus ät tko-aly.fi</p>
+            <h3 className={styles.cardSubheading}>{t("footer.email")}</h3>
+            <p className={styles.cardText}>
+              <Copyable
+                display="hallitus ät tko-aly.fi"
+                value="hallitus@tko-aly.fi"
+                copyLabel={copyLabel}
+                copiedLabel={copiedLabel}
+                onCopied={onCopied}
+              />
+            </p>
           </div>
           <div className={styles.cardSection}>
-            <h2 className={styles.cardHeading}>{t("footer.chair")}</h2>
-            <p className={styles.cardText}>pj ät tko-aly.fi</p>
+            <h3 className={styles.cardSubheading}>{t("footer.chair")}</h3>
+            <p className={styles.cardText}>
+              <Copyable
+                display="pj ät tko-aly.fi"
+                value="pj@tko-aly.fi"
+                copyLabel={copyLabel}
+                copiedLabel={copiedLabel}
+                onCopied={onCopied}
+              />
+            </p>
           </div>
           <div className={styles.cardSection}>
-            <h2 className={styles.cardHeading}>{t("footer.phone")}</h2>
-            <p className={styles.cardText}>+358-50-4480186</p>
+            <h3 className={styles.cardSubheading}>{t("footer.phone")}</h3>
+            <p className={styles.cardText}>
+              <Copyable
+                display="+358-50-4480186"
+                value="+358504480186"
+                copyLabel={copyLabel}
+                copiedLabel={copiedLabel}
+                onCopied={onCopied}
+              />
+            </p>
           </div>
           <div className={styles.formLinks}>
             <ClientLink
@@ -98,6 +195,7 @@ export default function FooterClient({
             >
               {t("footer.feedbackForm")}
               <ExternalLink size={14} aria-hidden />
+              <span className={styles.srOnly}>({opensInNew})</span>
             </ClientLink>
             <ClientLink
               href="/hairinta"
@@ -107,20 +205,41 @@ export default function FooterClient({
             >
               {t("footer.harassmentContacts")}
               <ExternalLink size={14} aria-hidden />
+              <span className={styles.srOnly}>({opensInNew})</span>
             </ClientLink>
           </div>
         </section>
 
-        {/* Talous */}
         <section className={styles.card}>
           <div className={styles.cardSection}>
             <h2 className={styles.cardHeading}>{t("footer.accountNumbers")}</h2>
             <p className={styles.cardText}>
-              Päätili FI89 7997 7995 1312 86
+              Päätili{" "}
+              <Copyable
+                display="FI89 7997 7995 1312 86"
+                value="FI8979977995131286"
+                copyLabel={copyLabel}
+                copiedLabel={copiedLabel}
+                onCopied={onCopied}
+              />
               <br />
-              Ruokavälitys FI05 7997 7991 9503 25
+              Ruokavälitys{" "}
+              <Copyable
+                display="FI05 7997 7991 9503 25"
+                value="FI0579977991950325"
+                copyLabel={copyLabel}
+                copiedLabel={copiedLabel}
+                onCopied={onCopied}
+              />
               <br />
-              BIC HOLVFIHH
+              BIC{" "}
+              <Copyable
+                display="HOLVFIHH"
+                value="HOLVFIHH"
+                copyLabel={copyLabel}
+                copiedLabel={copiedLabel}
+                onCopied={onCopied}
+              />
             </p>
           </div>
           <div className={styles.cardSection}>
@@ -128,16 +247,28 @@ export default function FooterClient({
             <p className={styles.cardText}>
               TKO-äly ry
               <br />
-              003719788272
+              <Copyable
+                display="003719788272"
+                value="003719788272"
+                copyLabel={copyLabel}
+                copiedLabel={copiedLabel}
+                onCopied={onCopied}
+              />
               <br />
-              Op.tunnus: 003723327487
+              Op.tunnus:{" "}
+              <Copyable
+                display="003723327487"
+                value="003723327487"
+                copyLabel={copyLabel}
+                copiedLabel={copiedLabel}
+                onCopied={onCopied}
+              />
               <br />
               Apix Messaging Oy
             </p>
           </div>
         </section>
 
-        {/* Linkit */}
         <section className={styles.card}>
           <div className={styles.cardSection}>
             <h2 className={styles.cardHeading}>{t("footer.links")}</h2>
@@ -155,6 +286,8 @@ export default function FooterClient({
                         className={styles.navLink}
                       >
                         {label}
+                        <ExternalLink size={12} aria-hidden />
+                        <span className={styles.srOnly}>({opensInNew})</span>
                       </a>
                     ) : (
                       <ClientLink href={link.href} className={styles.navLink}>
@@ -169,7 +302,6 @@ export default function FooterClient({
         </section>
       </footer>
 
-      {/* Bottom bar */}
       <div className={styles.bottomBar}>
         © {new Date().getFullYear()} TKO-äly ry
       </div>

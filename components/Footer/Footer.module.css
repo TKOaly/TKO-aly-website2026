@@ -8,7 +8,7 @@
 /* Sponsors */
 
 .sponsors {
-  padding: var(--space-32) var(--space-6);
+  padding: var(--space-16) var(--space-6) var(--space-32);
 }
 
 .sponsorsInner {
@@ -20,7 +20,8 @@
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
 }
 
 .sponsorsTitle {
@@ -72,6 +73,69 @@
 
 .sponsorLink:hover .sponsorLogo {
   filter: grayscale(0);
+}
+
+.partnersThanks {
+  margin: 0 0 var(--space-8);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.copyRow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.copyButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: var(--space-1);
+}
+
+.copyButton:hover {
+  background: rgb(0 0 0 / 0.08);
+}
+
+.copyButton:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+.navLink {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-size: small;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.cardSubheading {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-1) 0;
 }
 
 /* Info cards */
@@ -177,16 +241,17 @@
 }
 
 .navLink {
-  color: var(--color-text-muted);
-  text-decoration: none;
-  font-size: small;
-  display: block;
-}
-
-.navLink:hover {
   color: var(--color-text);
   text-decoration: underline;
   text-underline-offset: 2px;
+  font-size: small;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.navLink:hover {
+  color: var(--color-link);
 }
 
 /* Bottom bar */

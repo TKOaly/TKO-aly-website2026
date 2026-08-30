@@ -2,7 +2,7 @@
 .experienceSection {
   display: none;
   max-width: 100%;
-  margin: var(--space-40) auto;
+  margin: var(--space-40) auto var(--space-16);
   padding: var(--space-8);
   position: relative;
 }
