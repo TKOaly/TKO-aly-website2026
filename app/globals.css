@@ -85,13 +85,13 @@
   --screen-2xl: 1536px;
 
   /* Dark theme (default) */
-  --color-bg: var(--neutral-800);
+  --color-bg: var(--neutral-900);
   --color-surface: var(--neutral-700);
-  --color-text: var(--neutral-50);
-  --color-text-muted: var(--neutral-300);
+  --color-text: var(--white);
+  --color-text-muted: var(--neutral-100);
   --color-text-inverted: var(--neutral-900);
   --color-accent: var(--yellow-500);
-  --color-link: var(--yellow-400);
+  --color-link: var(--yellow-300);
 
   --border: 2px solid hsl(50, 15%, 60%);
   --border-thick: 4px solid hsl(50, 15%, 60%);
@@ -118,11 +118,11 @@
 
     --color-bg: var(--neutral-50);
     --color-surface: var(--white);
-    --color-text: var(--neutral-800);
-    --color-text-muted: var(--neutral-500);
+    --color-text: var(--neutral-900);
+    --color-text-muted: var(--neutral-600);
     --color-text-inverted: var(--neutral-50);
-    --color-accent: var(--yellow-600);
-    --color-link: var(--blue-500);
+    --color-accent: var(--yellow-700);
+    --color-link: var(--blue-700);
 
     --border: 2px solid var(--neutral-900);
     --border-thick: 4px solid var(--neutral-900);
@@ -131,6 +131,10 @@
     --shadow: 4px 4px 0 var(--neutral-900);
     --shadow-thick: 6px 6px 0 var(--neutral-900);
   }
+}
+
+html {
+  scroll-padding-top: calc(var(--space-16) + var(--space-4));
 }
 
 html,
