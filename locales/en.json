@@ -284,6 +284,20 @@
         "text": "here",
         "form": "this form"
       }
+    },
+    "eventRegistrationFrom": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "namePublic": "My name can be published with event",
+      "privacyPolicy": {
+        "text": "I accept ",
+        "link": "privacy policy"
+      },
+      "legend": {
+        "self": "Registration",
+        "avec": "Avec registration"
+      }
     }
   }
 }
