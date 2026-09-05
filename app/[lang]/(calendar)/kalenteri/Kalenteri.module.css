@@ -1,16 +1,25 @@
+#calenderPageContainer {
+  display: flex;
+  min-height: 80rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#calendarColor {
+  color: #ffbb00;
+  background-color: #141414;
+}
+
 #calendar {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 95%;
   height: 80rem;
-  margin: 0 auto;
-  background-color: #141414;
   padding: 20px;
-  color: #ffbb00;
 }
 
-#calendar-instructions {
+#calendarInstructions {
   width: 60%;
   margin-top: 20px;
   color: #ffbb00;
@@ -34,7 +43,7 @@
   align-items: center;
 }
 
-.legend-color-ball {
+.legendColorBall {
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -42,65 +51,53 @@
   margin-right: 8px;
 }
 
-#calendar-control-bar {
-  width: 60%;
-  display: flex;
-  margin-bottom: 10px;
+#eventsListContainer {
+  width: 15%;
 }
 
-.view-toggle-button {
-  background-color: #2c3e50;
-  border-color: #2c3e50;
-  color: #fff;
-  border: 1px solid transparent;
-  border-radius: 0.25em;
-  display: inline-block;
-  font-size: 1em;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 0.4em 0.65em;
-  text-align: center;
-  /* eslint-disable-next-line css/use-baseline */
-  user-select: none;
-  vertical-align: middle;
+#eventsListEventPageContainer {
+  width: 15%;
 }
 
-.view-toggle-button:hover {
-  background-color: #1a252f;
-  border-color: #151e27;
-  color: #fff;
-  cursor: pointer;
+@media (max-width: 1024px) {
+  #eventsListEventPageContainer {
+    display: none;
+  }
+
+  #eventsListContainer {
+    order: 1;
+    width: 70%;
+  }
+
+  #calenderPageContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
-.view-toggle-active {
-  background-color: #1a252f;
-  border-color: #151e27;
-  color: #fff;
-}
-
-#events-list {
+#eventsList {
   display: flex;
   flex-direction: column;
   justify-content: left;
-  width: 60%;
-  margin-top: 20px;
+  width: 100%;
 }
 
-#events-list a {
+#eventsList a {
   text-decoration: none;
   color: inherit;
   display: block;
 }
 
-#events-list a:visited,
-#events-list a:hover,
-#events-list a:focus,
-#events-list a:active {
+#eventsList a:visited,
+#eventsList a:hover,
+#eventsList a:focus,
+#eventsList a:active {
   text-decoration: none;
   color: inherit;
 }
 
-.event-list-item {
+.eventListItem {
   width: 100%;
   background-color: #1a252f;
   border-radius: 5px;
@@ -108,6 +105,156 @@
   margin-bottom: 5px;
 }
 
-.event-list-item p {
+.eventListItem p {
   margin: 5px 0;
+}
+
+.eventContainer {
+  margin-left: 48px;
+  width: 95%;
+}
+
+@media (max-width: 768px) {
+  .eventContainer {
+    margin-left: var(--space-2-5);
+  }
+}
+
+.eventInfo {
+  background-color: var(--color-surface);
+  border: var(--border);
+  box-shadow: var(--shadow-light);
+  color: var(--text-color);
+  width: fit-content;
+  padding: 10px 10px 10px 10px;
+}
+
+.eventInfoRow {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+}
+
+.eventInfoRow dt {
+  margin: 0;
+  font-weight: 1000;
+  font-size: medium;
+}
+
+.eventInfoRow dd {
+  margin: 0;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .eventInfoRow {
+    display: inline;
+    gap: 13px;
+  }
+}
+
+.alcoholMeterContainer {
+  position: relative;
+}
+
+.alcoholMeter {
+  display: flex;
+}
+
+.alcoholMeter div {
+  border: 1px solid white;
+  margin-right: 3px;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 2px;
+  padding-left: 1px;
+  padding-right: 1px;
+  pointer-events: none;
+  touch-action: none;
+}
+
+.alcoholMeterSelected {
+  color: #141414;
+  background-color: var(--color-accent);
+  border: 0;
+}
+
+.alcoholMeterContainer details {
+  margin-top: -1rem;
+}
+
+.alcoholMeterContainer details summary {
+  width: 30ch;
+  height: 1.2rem;
+  text-align: right;
+  cursor: pointer;
+  user-select: none;
+}
+
+.alcoholMeterContainer details summary span {
+  padding: 0;
+  height: 1.2rem;
+}
+
+.alcoholMeterContainer details[open] summary span,
+.alcoholMeterContainer details summary:hover span {
+  color: white;
+}
+
+.alcoholMeterContainer details summary::marker {
+  content: none;
+}
+
+.alcoholMeterInfo {
+  width: 30ch;
+  min-width: 100%;
+  border: 1px solid #fff;
+  padding: 6px 4px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.eventText {
+  max-width: 80ch;
+}
+
+.eventRegistration {
+  text-decoration-line: none;
+  color: var(--neutral-900);
+  background-color: var(--yellow);
+  box-shadow: var(--shadow);
+  border-bottom: 4px solid var(--neutral-900);
+  border-right: 4px solid var(--neutral-900);
+  border-top: 2px solid var(--neutral-200);
+  border-left: 2px solid var(--neutral-200);
+  font-weight: 700;
+  padding: 5px 5px 5px 5px;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition:
+    box-shadow 0.1s ease,
+    transform 0.1s ease;
+}
+
+.eventRegistration:hover {
+  background-color: var(--yellow-300);
+}
+
+.eventRegistration:active {
+  background-color: var(--yellow-700);
+  box-shadow: 0px 0px 0px 0px #000000;
+  transform: translate(4px, 4px);
+}
+
+.eventSafetyDisclaimer {
+  max-width: 80ch;
+  color: var(--color-text-muted);
+}
+
+.eventSafetyDisclaimer a {
+  color: var(--color-text-muted);
 }
