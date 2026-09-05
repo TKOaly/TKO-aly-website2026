@@ -2,11 +2,18 @@
 
 import Link from "next/link"
 import { ReactNode, useEffect, useState, useMemo, use } from "react"
-import type { Event, ProcessedEvent } from "../types"
+import type { Event, ProcessedEvent, CustomField } from "../types"
 import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
 import { EventListView, Legend, processEvents } from "../page"
 import { useQuery } from "@tanstack/react-query"
+import CallToActionButton from "@/components/Buttons/CallToActionButton"
+import Checkbox from "@/components/Checkbox/Checkbox"
+import Field from "@/components/Field/Field"
+import Fieldset from "@/components/Fieldset/Fieldset"
+import FieldSelect from "@/components/FieldSelect/FieldSelect"
+import FieldRadioGroup from "@/components/FieldRadioGroup/FieldRadioGroup"
+import Textarea from "@/components/Textarea/Textarea"
 
 function formatTime(time?: string): string | null {
   if (!time) {
@@ -104,7 +111,7 @@ const EventInfoView = ({ event }: { event: Event }) => {
         {event.registration_starts && event.registration_ends && (
           <>
             <Row
-              col_1={<>{t("event.registration")}:</>}
+              col_1={<>{t("event.registrationTime")}:</>}
               col_2={
                 <>
                   {formatTime(event.registration_starts)} -{" "}
@@ -185,6 +192,145 @@ const BackButton = () => {
   )
 }
 
+const EventRegistrationFromFields = ({
+  subject,
+  customFields,
+}: {
+  subject: "self" | "avec"
+  customFields: CustomField[] | null
+}) => {
+  const { t } = useTranslation()
+  return (
+    <>
+      <Fieldset legend={t(`event.registrationFrom.legend.${subject}`)}>
+        <Field
+          required
+          label={t("event.registrationFrom.name")}
+          id={`${subject}-name`}
+          name={`${subject}-name`}
+          type="text"
+        />
+        <Field
+          required
+          label={t("event.registrationFrom.email")}
+          id={`${subject}-email`}
+          name="email"
+          type="email"
+        />
+        <Field
+          required
+          label={t("event.registrationFrom.phone")}
+          id={`${subject}-phone`}
+          name={`${subject}-phone`}
+          type="tel"
+        />
+        {customFields &&
+          customFields.map(customField => {
+            switch (customField.type) {
+              case "text": {
+                return (
+                  <Field
+                    label={customField.name}
+                    id={`${subject}-${customField.id}`}
+                    name={`${subject}-${customField.id}`}
+                    type="text"
+                  />
+                )
+              }
+              case "textarea": {
+                return (
+                  <Textarea
+                    label={customField.name}
+                    id={`${subject}-${customField.id}`}
+                  />
+                )
+              }
+              case "checkbox": {
+                return (
+                  <Checkbox
+                    label={customField.name}
+                    id={`${subject}-${customField.id}`}
+                  />
+                )
+              }
+              case "radio": {
+                break (
+                  <FieldRadioGroup
+                    legend={customField.name}
+                    name={`${subject}-${customField.id}`}
+                    options={customField.options}
+                  />
+                )
+              }
+              default: {
+                return <></>
+              }
+            }
+          })}
+        <Checkbox
+          id={`${subject}-name_can_be_public`}
+          name={`${subject}-name_can_be_public`}
+        />
+        <Checkbox
+          required
+          id={`${subject}-accepted_privacy_policy`}
+          name={`${subject}-accepted_privacy_policy`}
+          label={t("event.registrationFrom.privacyPolicy")}
+        />
+      </Fieldset>
+    </>
+  )
+}
+
+const EventRegistration = ({
+  event,
+}: {
+  event: Event
+}) => {
+  const [customFields, setCustomFields] = useState<CustomField[] | null>(null)
+  const { t } = useTranslation()
+
+  useEffect(() => {
+    if (!event.id) return
+
+    fetch(`/api/events/${event.id}/fields`)
+      .then(r => {
+        if (!r.ok) throw new Error()
+        return r.json()
+      })
+      .then(setCustomFields)
+      .catch(() => setCustomFields(null))
+  }, [event])
+
+  const updateRegistration = ({}: {}) => {}
+
+  return (
+    <>
+      <form
+        id={"registration"}
+        action={updateRegistration}
+        className={styles.form}
+      >
+        <EventRegistrationFromFields
+          subject={"self"}
+          customFields={customFields}
+        />
+
+        {event.avec && (
+          <EventRegistrationFromFields
+            subject={"avec"}
+            customFields={customFields}
+          />
+        )}
+      </form>
+
+      <CallToActionButton form={"registration"}>
+        {t("event.registrationFrom.submit")}
+      </CallToActionButton>
+    </>
+  )
+}
+
 const EventPage = ({
   params,
 }: {
@@ -192,7 +338,27 @@ const EventPage = ({
 }) => {
   const { slug } = use(params)
   const { t } = useTranslation()
+  const id = slug[0]
+
   const [event, setEvent] = useState<Event | null>(null)
+  const [isRegistrationFormVisible, setRegistrationFormVisible] =
+    useState(false)
+
+  const toggleRegistrationFormVisible = () => {
+    setRegistrationFormVisible(prev => !prev)
+  }
+
+  useEffect(() => {
+    if (!id) return
+
+    fetch(`/api/events/${id}`)
+      .then(r => {
+        if (!r.ok) throw new Error()
+        return r.json()
+      })
+      .then(setEvent)
+      .catch(() => setEvent(null))
+  }, [id])
 
   const {
     data: eventsList = [],
@@ -208,37 +374,33 @@ const EventPage = ({
     return processEvents(eventsList as Event[])
   }, [eventsList])
 
-  const id = slug[0]
-
-  useEffect(() => {
-    if (!id) return
-
-    fetch(`/api/events/${id}`)
-      .then(r => {
-        if (!r.ok) throw new Error()
-        return r.json()
-      })
-      .then(setEvent)
-      .catch(() => setEvent(null))
-  }, [id])
+  const now = new Date()
+  const canRegister =
+    event &&
+    event.registration_starts &&
+    event.registration_ends &&
+    (now >= new Date(event.registration_starts) && now <= new Date(event.registration_ends)) &&
+    (event.membership_required ? /* TODO test if is a member of TKO-äly*/ true : true)
 
   let eventPageContent: ReactNode
 
   if (!event) {
     eventPageContent = <p>{t("event.notExits")}</p>
+  } else if (canRegister && isRegistrationFormVisible) {
+    eventPageContent = <EventRegistration event={event} />
   } else {
     eventPageContent = (
       <>
         <EventInfoView event={event} />
-        {event.registration_starts && (
-          <Link
-            href={`https://tko-aly.fi/event/${event.id}`}
+        {canRegister && (
+          <button
+            onClick={toggleRegistrationFormVisible}
             className={styles.eventRegistration}
           >
-            Ilmoittautuminen
-          </Link>
+            {t("event.registration")}
+          </button>
         )}
-        <EventDisclaimer/>
+        <EventDisclaimer />
       </>
     )
   }
@@ -257,7 +419,6 @@ const EventPage = ({
         <div style={{ marginLeft: "48px", width: "95%" }}>
           {eventPageContent}
         </div>
-        
       </div>
     </div>
   )

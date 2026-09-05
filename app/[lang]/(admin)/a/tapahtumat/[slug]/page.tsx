@@ -19,7 +19,7 @@ const EditEventPage = async ({
   if (Number.isNaN(eventId)) notFound()
 
   const baseUrl =
-    process.env.EVENTS_API_BASE_URL ?? "http://events-microservice:3040"
+    process.env.EVENTS_API_BASE_URL ?? "http://events-service:3040"
   const token =
     process.env.EVENT_SERVICE_TOKEN ?? process.env.SERVICE_AUTH_TOKEN
 

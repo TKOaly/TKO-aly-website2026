@@ -269,12 +269,13 @@
     "category": "Tyyppi",
     "alcoholMeter": "Alkoholiasteikko",
     "organizer": "Järjestävä taho",
-    "registration": "Ilmoittautumisaika",
+    "registrationTime": "Ilmoittautumisaika",
     "canCancel": "Ilmoittautumisen voi perua",
     "canNotCancel": "Ilmoittautuminen on sitova",
     "responsible": "Vastuuhenkilö",
     "notExits": "Tapahtumaa ei ole olemassa",
     "price": "Hinta",
+    "registration": "Ilmoittautuminen",
     "safety": {
       "text": {
         "safetySpace": "TKO-älyn järjestämissä tapahtumissa noudatetaan turvallisemman tilan periaatteita. Periaatteet löydät",
@@ -285,6 +286,20 @@
       "link": {
         "text": "täältä",
         "form": "tämän lomakkeen"
+      }
+    },
+    "eventRegistrationFrom": {
+      "name": "Nimi",
+      "email": "Sähköposti",
+      "phone": "Puhelinnumero",
+      "namePublic": "Nimeni voi näkyä tapahtuman iloittautumisen yhteydessä",
+      "privacyPolicy": {
+        "text": "Hyväksyn ",
+        "link": "tietosuojakäytännön"
+      },
+      "legend": {
+        "self": "Registration",
+        "avec": "Avec registration"
       }
     }
   }
