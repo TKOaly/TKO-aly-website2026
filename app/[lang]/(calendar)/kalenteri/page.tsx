@@ -160,14 +160,16 @@ export function processEvents(eventsData: Event[]): ProcessedEvent[] {
   })
 }
 
-export default function Calendar() {
+export default function calendar({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = use(params)
+
   const {
     data: eventsList = [],
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["eventList"],
-    queryFn: (): Promise<Event[]> => fetch("/api/events/list").then(r => r.json()),
+    queryKey: ["eventList", lang],
+    queryFn: () => getEventList(lang),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
