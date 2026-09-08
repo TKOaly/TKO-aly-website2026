@@ -7,8 +7,9 @@ import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
 import Link from "next/link"
 import styles from "./Kalenteri.module.css"
-import { useState, ReactNode, useMemo } from "react"
+import { useState, ReactNode, useMemo, use } from "react"
 import type { Event, ProcessedEvent } from "./types"
+import { getEventList } from "./eventApiConnection"
 
 function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
   const calendarEvents = events.map(event => ({
