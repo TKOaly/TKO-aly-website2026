@@ -7,6 +7,7 @@ import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
 import { EventListView, Legend, processEvents } from "../page"
 import { useQuery } from "@tanstack/react-query"
+import { getEventById, getEventList } from "../eventApiConnection"
 
 function formatTime(time?: string): string | null {
   if (!time) {
@@ -190,37 +191,24 @@ const EventPage = ({
 }: {
   params: Promise<{ lang: string; slug: string[] }>
 }) => {
-  const { slug } = use(params)
+  const { lang, slug } = use(params)
   const { t } = useTranslation()
-  const [event, setEvent] = useState<Event | null>(null)
 
   const {
     data: eventsList = [],
     error: eventsListError,
     isLoading: isEventsListLoading,
   } = useQuery({
-    queryKey: ["eventList"],
-    queryFn: (): Promise<Event[]> =>
-      fetch("/api/events/list").then(r => r.json()),
+    queryKey: ["eventList", lang],
+    queryFn: () => getEventList(lang),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
     return processEvents(eventsList as Event[])
   }, [eventsList])
 
-  const id = slug[0]
-
-  useEffect(() => {
-    if (!id) return
-
-    fetch(`/api/events/${id}`)
-      .then(r => {
-        if (!r.ok) throw new Error()
-        return r.json()
-      })
-      .then(setEvent)
-      .catch(() => setEvent(null))
-  }, [id])
+  const id = Number(slug[0])
+  const event = use(getEventById(id, lang))
 
   let eventPageContent: ReactNode
 
@@ -238,7 +226,7 @@ const EventPage = ({
             Ilmoittautuminen
           </Link>
         )}
-        <EventDisclaimer/>
+        <EventDisclaimer />
       </>
     )
   }
@@ -257,7 +245,6 @@ const EventPage = ({
         <div style={{ marginLeft: "48px", width: "95%" }}>
           {eventPageContent}
         </div>
-        
       </div>
     </div>
   )
