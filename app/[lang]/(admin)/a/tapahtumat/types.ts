@@ -9,7 +9,7 @@ type EventTypeTranslation = {
   event_type: string
 }
 
-type EventType = {
+export type EventType = {
   id?: number
   implicit_alcohol_meter?: number
   translations: EventTypeTranslation[]
@@ -20,7 +20,7 @@ type LocationTranslation = {
   location: string
 }
 
-type Location = {
+export type Location = {
   id?: number
   map_link?: string
   translations: LocationTranslation[]
