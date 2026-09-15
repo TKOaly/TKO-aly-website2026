@@ -1,21 +1,75 @@
-export type EventFormValues = {
+type EventTranslation = {
+  title: string
+  description: string
+  locale: string
+}
+
+type EventTypeTranslation = {
+  locale: string
+  event_type: string
+}
+
+type EventType = {
   id?: number
+  implicit_alcohol_meter?: number
+  translations: EventTypeTranslation[]
+}
+
+type LocationTranslation = {
+  locale: string
+  location: string
+}
+
+type Location = {
+  id?: number
+  map_link?: string
+  translations: LocationTranslation[]
+}
+
+type CustomFieldTranslation = {
+  locale: string
   name: string
-  starts: string | null
-  registration_starts: string | null
-  registration_ends: string | null
-  cancellation_starts: string | null
-  cancellation_ends: string | null
-  location: string | null
-  category: string | null
-  description: string | null
-  alcohol_meter: number | null
-  price: string | null
-  map: string | null
-  max_participants: number | null
-  membership_required: boolean | null
-  outsiders_allowed: boolean | null
-  responsible: string | null
-  show_responsible: boolean | null
-  avec: boolean | null
+}
+
+type CustomField = {
+  type: "textarea" | "radio" | "checkbox" | "text"
+  options?: string[]
+  required?: boolean
+  translations: CustomFieldTranslation[]
+}
+
+type RegistrationQuotaTranslation = {
+  locale: string
+  quota_name: string
+}
+
+type RegistrationQuota = {
+  max_participants: number
+  registration_starts: Date
+  registration_ends: Date
+  translations: RegistrationQuotaTranslation
+  membership_required?: boolean
+  outsiders_allowed?: boolean
+  avec_can_attend?: boolean
+  cancellation_starts?: Date
+  cancellation_ends?: Date
+  fields?: CustomField[]
+}
+
+export type EventFormValues = {
+  user_id: number
+  starts: Date
+  translations: EventTranslation[]
+  eventType: EventType
+  location: Location
+  publishing_time?: Date
+  alcohol_meter?: number
+  price?: string
+  show_responsible?: boolean
+  responsible?: string
+  weekly_event?: boolean
+  weekly_event_end_time?: Date
+  fields?: CustomField[]
+  registrationQuotas?: RegistrationQuota[]
+  template?: boolean
 }
