@@ -3,7 +3,6 @@ import { MapPin } from "lucide-react"
 
 import { getAsyncTranslation, ServerLink } from "@/app/i18n"
 import ExperienceSection from "@/components/Home/ExperienceSection"
-import TikTokSection from "@/components/Home/TikTokSection"
 
 import styles from "./page.module.css"
 
@@ -69,6 +68,17 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
+          <h1 className={styles.heroTitle}>{t("home.heroTitle")}</h1>
+          <p className={styles.heroSubtitle}>{t("home.heroSubtitle")}</p>
+          <p className={styles.heroDesc}>{t("home.heroDesc")}</p>
+          <div className={styles.heroActions}>
+            <ServerLink lang={lang} href="/jaseneksi" className="btn">
+              {t("home.joinButton")}
+            </ServerLink>
+            <ServerLink lang={lang} href="/kalenteri" className="btn2">
+              {t("home.eventsButton")}
+            </ServerLink>
+          </div>
           <ServerLink
             lang={lang}
             href="/yhteystiedot"
@@ -76,13 +86,6 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
           >
             <MapPin size={12} strokeWidth={3} /> Gurula DK115
           </ServerLink>
-          <h1 className={styles.heroTitle}>{t("home.heroTitle")}</h1>
-          <p className={styles.heroDesc}>{t("home.heroDesc")}</p>
-          <div>
-            <button className={styles.joinButton}>
-              {t("home.joinButton")}
-            </button>
-          </div>
         </div>
         <div className={styles.heroImageContainer}>
           <Image
@@ -105,43 +108,63 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
           </ServerLink>
         </div>
         <div className={styles.eventsGrid}>
-          {events.length > 0 ? (
-            events.map((event, index) => {
-              const isWide = index === 2
-              return (
-                <div
-                  key={event.id}
-                  className={`${styles.eventCard} ${isWide ? styles.eventCardWide : ""}`}
-                >
-                  <div className={isWide ? styles.eventInfo : ""}>
-                    <div>
-                      <div className={styles.eventDate}>
-                        {formatEventDate(event.starts)}
+          {events.length > 0
+            ? events.map((event, index) => {
+                const isWide = index === 2
+                return (
+                  <div
+                    key={event.id}
+                    className={`${styles.eventCard} ${isWide ? styles.eventCardWide : ""}`}
+                  >
+                    <div className={isWide ? styles.eventInfo : ""}>
+                      <div>
+                        <div className={styles.eventDate}>
+                          {formatEventDate(event.starts)}
+                        </div>
+                        <h3 className={styles.eventTitle}>{event.name}</h3>
+                        <p className={styles.eventLocation}>
+                          {event.location ? `@ ${event.location}` : ""}
+                        </p>
                       </div>
-                      <h3 className={styles.eventTitle}>{event.name}</h3>
-                      <p className={styles.eventLocation}>
-                        {event.location ? `@ ${event.location}` : ""}
-                      </p>
-                    </div>
-                    <div className={isWide ? "" : styles.eventActions}>
-                      <ServerLink lang={lang} href={`/kalenteri/${event.id}`}>
-                        <button className={styles.eventButton}>
+                      <div className={isWide ? "" : styles.eventActions}>
+                        <ServerLink
+                          lang={lang}
+                          href={`/kalenteri/${event.id}`}
+                          className="btn"
+                        >
                           {t("home.register")}
-                        </button>
-                      </ServerLink>
+                        </ServerLink>
+                      </div>
                     </div>
                   </div>
+                )
+              })
+            : [
+                {
+                  href: "/kalenteri",
+                  title: t("home.fillerCalendarTitle"),
+                  desc: t("home.fillerCalendarDesc"),
+                },
+                {
+                  href: "/yhteystiedot",
+                  title: t("home.fillerGurulaTitle"),
+                  desc: t("home.fillerGurulaDesc"),
+                },
+              ].map(card => (
+                <div key={card.href} className={styles.eventCard}>
+                  <div>
+                    <h3 className={styles.eventTitle}>{card.title}</h3>
+                    <p className={styles.eventFillerDesc}>{card.desc}</p>
+                  </div>
+                  <div className={styles.eventActions}>
+                    <ServerLink lang={lang} href={card.href} className="btn">
+                      {t("common.readMore")}
+                    </ServerLink>
+                  </div>
                 </div>
-              )
-            })
-          ) : (
-            <p>{t("home.noEvents")}</p>
-          )}
+              ))}
         </div>
       </section>
-
-      {/* TikTok Social Media Section */}
-      <TikTokSection />
 
       {/* Try TKO-äly Experience Section */}
       <ExperienceSection

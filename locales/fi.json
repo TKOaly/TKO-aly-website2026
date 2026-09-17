@@ -47,15 +47,22 @@
       "editProfile": "Muokkaa profiilia",
       "memberInvoice": "Jäsenmaksu"
     },
-    "openMenu": "Avaa valikko"
+    "openMenu": "Avaa valikko",
+    "closeMenu": "Sulje valikko"
   },
   "home": {
-    "heroTitle": "Helsingin yliopiston tietojenkäsittelytieteen opiskelijoiden ainejärjestö",
+    "heroTitle": "TKO-äly",
+    "heroSubtitle": "Helsingin yliopiston tietojenkäsittely- ja datatieteen opiskelijoiden ainejärjestö",
     "heroDesc": "Tervetuloa! TKO-äly ry on Helsingin yliopiston tietojenkäsittelytieteen ja datatieteen opiskelijoiden ainejärjestö. Järjestämme tapahtumia, valvomme etujasi ja ylläpidämme yhteistä olohuonettamme Gurulaa.",
     "joinButton": "LIITY JÄSENEKSI",
+    "eventsButton": "TAPAHTUMAT",
     "eventsTitle": "Tulevat tapahtumat",
     "allEvents": "Kaikki tapahtumat",
     "noEvents": "Ei tulevia tapahtumia.",
+    "fillerCalendarTitle": "Katso kalenteri",
+    "fillerCalendarDesc": "Tulevat tapahtumat ilmestyvät tähän. Sillä välin selaa yhteisökalenteria.",
+    "fillerGurulaTitle": "Gurulan arki",
+    "fillerGurulaDesc": "Gurula DK115 on auki viikoittain: kahvia, seurustelua ja opiskelua Exactumin kellarissa.",
     "register": "ilmoittaudu",
     "experience": "KOE TKO-äly",
     "experienceDesc": "Katso mitä yhteisöömme kuuluminen tarkoittaa.",
@@ -73,7 +80,10 @@
   "common": {
     "readMore": "Lue lisää",
     "backToTop": "Takaisin ylös",
-    "switchToEnglish": "In English"
+    "switchToEnglish": "In English",
+    "opensInNewWindow": "avautuu uuteen ikkunaan",
+    "copy": "Kopioi",
+    "copied": "Kopioitu"
   },
   "jaseneksi": {
     "title": "Liity Jäseneksi",
@@ -251,6 +261,9 @@
     "eInvoicing": "Verkkolaskutus",
     "links": "Linkit",
     "feedbackForm": "Yleinen palautelomake",
-    "harassmentContacts": "Häirintäyhdyshenkilöt"
+    "harassmentContacts": "Häirintäyhdyshenkilöt",
+    "contact": "Ota yhteyttä",
+    "collaborate": "Tee yhteistyötä",
+    "partnersThanks": "Kiitos yhteistyökumppaneillemme."
   }
 }
