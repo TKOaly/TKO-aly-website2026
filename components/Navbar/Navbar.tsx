@@ -124,7 +124,8 @@ function Navbar({ items }: { items: NavSection[] }) {
   }, [openId])
 
   useEffect(() => {
-    setOpenId(null)
+    const frame = requestAnimationFrame(() => setOpenId(null))
+    return () => cancelAnimationFrame(frame)
   }, [isMobileView])
 
   const t = (key: string) => translations[lang][key] || key
@@ -220,7 +221,7 @@ function Navbar({ items }: { items: NavSection[] }) {
                                     width={16}
                                     aria-hidden
                                   />
-                                  <span className={styles.srOnly}>
+                                  <span className="srOnly">
                                     ({t("opensInNewWindow")})
                                   </span>
                                 </>

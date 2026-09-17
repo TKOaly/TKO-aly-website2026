@@ -64,12 +64,6 @@ export default function TableOfContents() {
   const pathname = usePathname()
 
   useLayoutEffect(() => {
-    const next = collectHeadings()
-    if (next.length > 0) {
-      setItems(next)
-      return
-    }
-
     const frame = requestAnimationFrame(() => {
       setItems(collectHeadings())
     })

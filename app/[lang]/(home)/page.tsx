@@ -3,7 +3,6 @@ import { MapPin } from "lucide-react"
 
 import { getAsyncTranslation, ServerLink } from "@/app/i18n"
 import ExperienceSection from "@/components/Home/ExperienceSection"
-import TikTokSection from "@/components/Home/TikTokSection"
 
 import styles from "./page.module.css"
 
@@ -73,10 +72,10 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
           <p className={styles.heroSubtitle}>{t("home.heroSubtitle")}</p>
           <p className={styles.heroDesc}>{t("home.heroDesc")}</p>
           <div className={styles.heroActions}>
-            <ServerLink lang={lang} href="/jaseneksi" className="btn btnCta">
+            <ServerLink lang={lang} href="/jaseneksi" className="btn">
               {t("home.joinButton")}
             </ServerLink>
-            <ServerLink lang={lang} href="/kalenteri" className="btn">
+            <ServerLink lang={lang} href="/kalenteri" className="btn2">
               {t("home.eventsButton")}
             </ServerLink>
           </div>
@@ -166,9 +165,6 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
               ))}
         </div>
       </section>
-
-      {/* TikTok Social Media Section */}
-      <TikTokSection />
 
       {/* Try TKO-äly Experience Section */}
       <ExperienceSection
