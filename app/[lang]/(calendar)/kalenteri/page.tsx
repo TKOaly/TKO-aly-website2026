@@ -71,7 +71,7 @@ export function EventListView({ events }: { events: ProcessedEvent[] }) {
   )
 }
 
-export function Legend() {
+function Legend() {
   const [isLegendVisible, setIsLegendVisible] = useState(false)
 
   const toggleLegendVisibility = () => {

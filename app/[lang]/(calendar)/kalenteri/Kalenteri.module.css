@@ -192,7 +192,6 @@
   height: 1.2rem;
   text-align: right;
   cursor: pointer;
-  user-select: none;
 }
 
 .alcoholMeterContainer details summary span {
@@ -203,10 +202,6 @@
 .alcoholMeterContainer details[open] summary span,
 .alcoholMeterContainer details summary:hover span {
   color: white;
-}
-
-.alcoholMeterContainer details summary::marker {
-  content: none;
 }
 
 .alcoholMeterInfo {

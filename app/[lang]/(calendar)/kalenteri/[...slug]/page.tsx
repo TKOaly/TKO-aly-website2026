@@ -5,7 +5,7 @@ import { ReactNode, useEffect, useState, useMemo, use } from "react"
 import type { Event, ProcessedEvent } from "../types"
 import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
-import { EventListView, Legend, processEvents } from "../page"
+import { EventListView, processEvents } from "../page"
 import { useQuery } from "@tanstack/react-query"
 
 function formatTime(time?: string): string | null {
