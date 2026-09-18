@@ -10,7 +10,7 @@ export async function GET(): Promise<NextResponse> {
     const response = await fetch(targetUrl, {
       headers: {
         Accept: "application/json",
-        "X-Token": secret
+        "X-Token": secret,
       },
       cache: "no-store",
     })
