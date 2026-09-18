@@ -249,5 +249,40 @@
     "links": "Links",
     "feedbackForm": "General feedback form",
     "harassmentContacts": "Harassment contacts"
+  },
+  "alcoholMeterInfo": {
+    "title": "More info",
+    "0": "The event is completely alcohol free.",
+    "1": "Some drinks may be had, but getting noticeably drunk is not for this event.",
+    "2": "Alcohol may be consumed, but it makes no difference for the event if people drink or don't.",
+    "3": "Alcohol consumption is associated with the event, but you can just as well participate alcohol free and you will not be pressured to drink.",
+    "4": "Alcohol plays a central role in this event, for example through gamified drinking. You can still participate alcohol free and you will not be pressured to drink."
+  },
+  "event": {
+    "back": "Back",
+    "time": "Time",
+    "location": "Location",
+    "map": "Map",
+    "category": "Type",
+    "alcoholMeter": "Alcohol scale",
+    "organizer": "Organizer",
+    "registration": "Registration period",
+    "canCancel": "Registration can be cancelled",
+    "canNotCancel": "Registration is biding",
+    "responsible": "Responsible person",
+    "notExits": "Event does not work",
+    "price": "Price",
+    "safety": {
+      "text": {
+        "safetySpace": "Events held by TKO-äly follow the principles for a safer space. The principles can be found",
+        "harrasmentContact1": "You can also contact TKO-äly's harrasment contact persons via",
+        "harrasmentContact2": "",
+        "feedback": "General feedback on TKO-äly and its events can be sent"
+      },
+      "link": {
+        "text": "here",
+        "form": "this form"
+      }
+    }
   }
 }
