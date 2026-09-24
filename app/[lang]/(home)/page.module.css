@@ -25,7 +25,9 @@
 
 .locationBadge,
 .viewAll {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   background-color: var(--yellow-400);
   color: var(--neutral-900);
   padding: var(--space-2) var(--space-4);
@@ -42,29 +44,42 @@
   text-decoration: underline;
 }
 
+.locationBadge:focus-visible,
+.viewAll:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 3px;
+}
+
 .heroTitle {
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  line-height: 1.1;
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.05;
   margin: 0;
 }
 
 @media (min-width: 400px) {
   .heroTitle {
-    font-size: 1.5rem;
-  }
-}
-
-@media (min-width: 550px) {
-  .heroTitle {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
 }
 
 @media (min-width: 768px) {
   .heroTitle {
-    font-size: 3.5rem;
+    font-size: 4rem;
+  }
+}
+
+.heroSubtitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  max-width: 40ch;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .heroSubtitle {
+    font-size: 1.375rem;
   }
 }
 
@@ -76,34 +91,14 @@
   border-left: var(--border-thick);
   padding-left: var(--space-4);
   line-height: 1.5;
+  margin: 0;
 }
 
-.joinButton {
-  color: var(--neutral-900);
-  background-color: var(--yellow);
-  box-shadow: var(--shadow);
-  border-bottom: 4px solid var(--neutral-900);
-  border-right: 4px solid var(--neutral-900);
-  border-top: 2px solid var(--neutral-200);
-  border-left: 2px solid var(--neutral-200);
-  padding: var(--space-4) var(--space-8);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  cursor: pointer;
-  transition:
-    box-shadow 0.1s ease,
-    transform 0.1s ease;
-}
-
-.joinButton:hover {
-  background-color: var(--yellow-300);
-}
-
-.joinButton:active {
-  background-color: var(--yellow-700);
-  box-shadow: 0px 0px 0px 0px #000000;
-  transform: translate(4px, 4px);
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
 }
 
 .heroImageContainer {
@@ -213,24 +208,15 @@
   text-transform: uppercase;
 }
 
+.eventFillerDesc {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  text-transform: none;
+}
+
 .eventActions {
   margin-top: var(--space-6);
   display: flex;
   justify-content: flex-end;
-}
-
-.eventButton {
-  border: var(--border);
-  padding: var(--space-2) var(--space-4);
-  font-weight: 700;
-  text-transform: uppercase;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.eventButton:hover {
-  background-color: var(--yellow-400);
-  color: var(--neutral-900);
 }

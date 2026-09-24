@@ -1,17 +1,31 @@
 .toc {
   display: none;
   position: sticky;
-  top: 6rem;
+  top: calc(var(--space-16) + var(--space-4));
   align-self: start;
   font-size: 0.9rem;
+  min-width: 250px;
   max-width: 250px;
   width: 100%;
+  background: var(--color-surface);
+  border: var(--border);
+  padding: var(--space-4);
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
   .toc {
     display: block;
   }
+}
+
+.toc[aria-hidden="true"] {
+  border: none;
+  background: transparent;
+  min-width: 0;
+  width: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 .tocList {
@@ -22,10 +36,7 @@
 
 .tocListNested {
   list-style: none;
-  padding-left: var(
-    --space-16,
-    1rem
-  ); /* Assuming --space-16 exists, fallback to 1rem */
+  padding-left: var(--space-4);
   margin: 0.5rem 0 0 0;
 }
 
@@ -38,18 +49,25 @@
 }
 
 .tocLink {
-  color: var(--color-text-secondary, #666);
-  text-decoration: none;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
   display: block;
   line-height: 1.4;
   transition: color 0.2s ease;
 }
 
 .tocLink:hover {
-  color: var(--color-primary, #aaa);
+  color: var(--color-text);
+}
+
+.tocLink:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
 }
 
 .active {
-  color: var(--color-primary, #fff);
+  color: var(--color-text);
   font-weight: bold;
+  text-decoration-thickness: 2px;
 }

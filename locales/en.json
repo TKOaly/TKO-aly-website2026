@@ -47,15 +47,22 @@
       "editProfile": "Edit profile",
       "memberInvoice": "Membership invoice"
     },
-    "openMenu": "Open menu"
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "home": {
-    "heroTitle": "The organization for computer science students at the University of Helsinki",
+    "heroTitle": "TKO-äly",
+    "heroSubtitle": "The student organization for computer science and data science students at the University of Helsinki",
     "heroDesc": "Welcome! TKO-äly ry is the organization for computer science and data science students at the University of Helsinki. We organize events, advocate for your interests, and maintain our common living room, Gurula.",
     "joinButton": "BECOME A MEMBER",
+    "eventsButton": "EVENTS",
     "eventsTitle": "Upcoming events",
     "allEvents": "All events",
     "noEvents": "No upcoming events.",
+    "fillerCalendarTitle": "See the calendar",
+    "fillerCalendarDesc": "Upcoming events will appear here. In the meantime, browse the community calendar.",
+    "fillerGurulaTitle": "Everyday Gurula",
+    "fillerGurulaDesc": "Gurula DK115 is open weekly: coffee, hanging out, and studying in the basement of Exactum.",
     "register": "register",
     "experience": "TRY TKO-äly EXPERIENCE",
     "experienceDesc": "Discover what it means to be a part of our community.",
@@ -73,7 +80,10 @@
   "common": {
     "readMore": "Read more",
     "backToTop": "Back to top",
-    "switchToFinnish": "Suomeksi"
+    "switchToFinnish": "Suomeksi",
+    "opensInNewWindow": "opens in a new window",
+    "copy": "Copy",
+    "copied": "Copied"
   },
   "jaseneksi": {
     "title": "Become a Member",
@@ -248,6 +258,9 @@
     "eInvoicing": "E-invoicing",
     "links": "Links",
     "feedbackForm": "General feedback form",
-    "harassmentContacts": "Harassment contacts"
+    "harassmentContacts": "Harassment contacts",
+    "contact": "Contact us",
+    "collaborate": "Work with us",
+    "partnersThanks": "Thank you to our partners."
   }
 }
