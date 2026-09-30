@@ -134,7 +134,7 @@ function Legend({ t }: { t: (key: string) => string }) {
 }
 
 function hasValidStartTime(event: Event): event is Event & { starts: string } {
-  return event.starts !== null
+  return event.starts !== undefined
 }
 
 export function processEvents(eventsData: Event[]): ProcessedEvent[] {

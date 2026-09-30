@@ -212,7 +212,7 @@ const EventPage = ({
     return processEvents(eventsList as Event[])
   }, [eventsList, eventsListError])
 
-  const id = slug[0]
+  const id = Number(slug[0])
 
   useEffect(() => {
     if (!id) return
