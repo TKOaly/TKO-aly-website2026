@@ -238,7 +238,7 @@ const EventPage = ({
             Ilmoittautuminen
           </Link>
         )}
-        <EventDisclaimer/>
+        <EventDisclaimer />
       </>
     )
   }
@@ -257,7 +257,6 @@ const EventPage = ({
         <div style={{ marginLeft: "48px", width: "95%" }}>
           {eventPageContent}
         </div>
-        
       </div>
     </div>
   )

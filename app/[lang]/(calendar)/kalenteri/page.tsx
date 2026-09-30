@@ -166,7 +166,8 @@ export default function Calendar() {
     isLoading,
   } = useQuery({
     queryKey: ["eventList"],
-    queryFn: (): Promise<Event[]> => fetch("/api/events/list").then(r => r.json()),
+    queryFn: (): Promise<Event[]> =>
+      fetch("/api/events/list").then(r => r.json()),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
