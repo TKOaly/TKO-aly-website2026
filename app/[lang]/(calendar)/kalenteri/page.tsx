@@ -168,6 +168,8 @@ export function processEvents(eventsData: Event[]): ProcessedEvent[] {
 
 export default function Calendar() {
   const { t } = useTranslation()
+  const now = new Date()
+  const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
 
   const {
     data: eventsList = [],
@@ -176,7 +178,9 @@ export default function Calendar() {
   } = useQuery({
     queryKey: ["eventList"],
     queryFn: (): Promise<Event[]> =>
-      fetch("/api/events/list").then(r => r.json()),
+      fetch(`/api/events/list?fromDate=${fromDate.toISOString()}`).then(r =>
+        r.json(),
+      ),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {

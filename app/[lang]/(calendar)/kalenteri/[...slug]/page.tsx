@@ -194,6 +194,9 @@ const EventPage = ({
   const { t } = useTranslation()
   const [event, setEvent] = useState<Event | null>(null)
 
+  const now = new Date()
+  const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+
   const {
     data: eventsList = [],
     error: eventsListError,
@@ -201,7 +204,9 @@ const EventPage = ({
   } = useQuery({
     queryKey: ["eventList"],
     queryFn: (): Promise<Event[]> =>
-      fetch("/api/events/list").then(r => r.json()),
+      fetch(`/api/events/list?fromDate=${fromDate.toISOString()}`).then(r =>
+        r.json(),
+      ),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
