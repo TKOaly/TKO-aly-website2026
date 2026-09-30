@@ -205,8 +205,12 @@ const EventPage = ({
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
+    if (eventsListError || !eventsList) {
+      return []
+    }
+
     return processEvents(eventsList as Event[])
-  }, [eventsList])
+  }, [eventsList, eventsListError])
 
   const id = slug[0]
 

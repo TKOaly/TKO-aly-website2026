@@ -171,8 +171,12 @@ export default function Calendar() {
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
+    if (error || !eventsList) {
+      return []
+    }
+
     return processEvents(eventsList as Event[])
-  }, [eventsList])
+  }, [eventsList, error])
 
   let viewContent: ReactNode
 
