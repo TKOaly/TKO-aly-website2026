@@ -272,6 +272,20 @@
     "responsible": "Responsible person",
     "notExits": "Event does not work",
     "price": "Price",
+    "registrationLink": "Registration",
+    "starts": "Starts",
+    "loading": "Loading events...",
+    "event.error": "Error",
+    "event.calender": "Event calender",
+    "legend": {
+      "canNotRegistration": "Can't register to event",
+      "registrationNotOpen": "Registration is not open",
+      "registrationOpen": "Registration is open",
+      "registrationClosed": "Registration is closed",
+      "passedEvent": "Event has passed",
+      "show": "Show legend",
+      "hide": "Hide legend"
+    },
     "safety": {
       "text": {
         "safetySpace": "Events held by TKO-äly follow the principles for a safer space. The principles can be found",

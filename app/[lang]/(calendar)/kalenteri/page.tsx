@@ -9,6 +9,7 @@ import Link from "next/link"
 import styles from "./Kalenteri.module.css"
 import { useState, ReactNode, useMemo } from "react"
 import type { Event, ProcessedEvent } from "./types"
+import { useTranslation } from "react-i18next"
 
 function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
   const calendarEvents = events.map(event => ({
@@ -38,7 +39,13 @@ function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
   )
 }
 
-export function EventListView({ events }: { events: ProcessedEvent[] }) {
+export function EventListView({
+  events,
+  t,
+}: {
+  events: ProcessedEvent[]
+  t: (key: string) => string
+}) {
   return (
     <div id={styles.eventsList}>
       {events.map(event => (
@@ -49,7 +56,7 @@ export function EventListView({ events }: { events: ProcessedEvent[] }) {
           >
             <h3>{event.name}</h3>
             <p>
-              <strong>Alkaa:</strong>{" "}
+              <strong>{t("event.starts")}:</strong>{" "}
               {new Date(event.starts).toLocaleDateString("fi-FI")},
               {new Date(event.starts).toLocaleTimeString("fi-FI", {
                 hour: "2-digit",
@@ -57,11 +64,11 @@ export function EventListView({ events }: { events: ProcessedEvent[] }) {
               })}
             </p>
             <p>
-              <strong>Sijainti:</strong> {event.location}
+              <strong>{t("event.starts")}:</strong> {event.location}
             </p>
             {event.organizer && (
               <p>
-                <strong>Järjestävä taho:</strong> {event.organizer}
+                <strong>{t("event.organizer")}:</strong> {event.organizer}
               </p>
             )}
           </div>
@@ -71,7 +78,7 @@ export function EventListView({ events }: { events: ProcessedEvent[] }) {
   )
 }
 
-function Legend() {
+function Legend({ t }: { t: (key: string) => string }) {
   const [isLegendVisible, setIsLegendVisible] = useState(false)
 
   const toggleLegendVisibility = () => {
@@ -87,40 +94,40 @@ function Legend() {
               className={styles.legendColorBall}
               style={{ backgroundColor: "#0066ff" }}
             ></span>{" "}
-            Tapahtumaan ei ilmoittautumista
+            {t("event.legend.canNotRegistration")}
           </p>
           <p>
             <span
               className={styles.legendColorBall}
               style={{ backgroundColor: "#ffff00" }}
             ></span>{" "}
-            Ilmoittautuminen ei ole alkanut
+            {t("event.legend.registrationNotOpen")}
           </p>
           <p>
             <span
               className={styles.legendColorBall}
               style={{ backgroundColor: "#00ff00" }}
             ></span>{" "}
-            Ilmoittautuminen on auki
+            {t("event.legend.registrationOpen")}
           </p>
           <p>
             <span
               className={styles.legendColorBall}
               style={{ backgroundColor: "#ff0000" }}
             ></span>{" "}
-            Ilmoittautuminen on päättynyt
+            {t("event.legend.registrationClosed")}
           </p>
           <p>
             <span
               className={styles.legendColorBall}
               style={{ backgroundColor: "#6e6e6eff" }}
             ></span>{" "}
-            Tapahtuma on mennyt
+            {t("event.legend.passedEvent")}
           </p>
         </div>
       )}
       <button onClick={toggleLegendVisibility} title="Kalenterin selite">
-        {isLegendVisible ? "Piilota selite" : "Näytä selite"}
+        {isLegendVisible ? t("event.legend.show") : t("event.legend.hide")}
       </button>
     </div>
   )
@@ -160,6 +167,8 @@ export function processEvents(eventsData: Event[]): ProcessedEvent[] {
 }
 
 export default function Calendar() {
+  const { t } = useTranslation()
+
   const {
     data: eventsList = [],
     error,
@@ -181,18 +190,22 @@ export default function Calendar() {
   let viewContent: ReactNode
 
   if (isLoading) {
-    viewContent = <p>Ladataan tapahtumia...</p>
+    viewContent = <p>{t("event.loading")}</p>
   } else if (error) {
-    viewContent = <p>Virhe: {error.message}</p>
+    viewContent = (
+      <p>
+        {t("event.error")}: {error.message}
+      </p>
+    )
   } else {
     viewContent = (
       <div id={styles.calenderPageContainer}>
         <div id={styles.eventsListContainer}>
-          <EventListView events={processedEvents} />
+          <EventListView events={processedEvents} t={t} />
         </div>
         <div style={{ marginLeft: "48px", width: "95%" }}>
           <EventCalendarView events={processedEvents} />
-          <Legend />
+          <Legend t={t} />
         </div>
       </div>
     )
@@ -202,7 +215,7 @@ export default function Calendar() {
     <div id={styles.calendarColor}>
       <div id={styles.calendar}>
         <div id={styles.calendarTitle}>
-          <h1>Tapahtumakalenteri</h1>
+          <h1>{t("event.calender")}</h1>
         </div>
         {viewContent}
       </div>

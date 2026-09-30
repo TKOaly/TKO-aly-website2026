@@ -239,7 +239,7 @@ const EventPage = ({
             href={`https://tko-aly.fi/event/${event.id}`}
             className={styles.eventRegistration}
           >
-            Ilmoittautuminen
+            {t("event.registrationLink")}
           </Link>
         )}
         <EventDisclaimer />
@@ -253,7 +253,7 @@ const EventPage = ({
       <div id={styles.calenderPageContainer}>
         <div className={styles.eventsListEventPageContainer}>
           {!isEventsListLoading && !eventsListError ? (
-            <EventListView events={processedEvents} />
+            <EventListView events={processedEvents} t={t} />
           ) : (
             <></>
           )}

@@ -275,6 +275,20 @@
     "responsible": "Vastuuhenkilö",
     "notExits": "Tapahtumaa ei ole olemassa",
     "price": "Hinta",
+    "registrationLink": "Ilmoittautuminen",
+    "starts": "Alkaa",
+    "loading": "Ladataan tapahtumia...",
+    "event.error": "Virhe",
+    "event.calender": "Tapahtuma kalenteri",
+    "legend": {
+      "canNotRegistration": "Tapahtumaan ei ilmoittautumista",
+      "registrationNotOpen": "Ilmoittautuminen ei ole alkanut",
+      "registrationOpen": "Ilmoittautuminen on auki",
+      "registrationClosed": "Ilmoittautuminen on päättynyt",
+      "passedEvent": "Tapahtuma on mennyt",
+      "show": "Näytä selite",
+      "hide": "Piilota selite"
+    },
     "safety": {
       "text": {
         "safetySpace": "TKO-älyn järjestämissä tapahtumissa noudatetaan turvallisemman tilan periaatteita. Periaatteet löydät",
