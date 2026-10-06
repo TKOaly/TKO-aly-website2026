@@ -7,6 +7,7 @@ import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
 import { EventListView, processEvents } from "../page"
 import { useQuery } from "@tanstack/react-query"
+import { getEventById, getEventList } from "../eventApiConnection"
 
 function formatTime(time?: string): string | null {
   if (!time) {
@@ -190,9 +191,8 @@ const EventPage = ({
 }: {
   params: Promise<{ lang: string; slug: string[] }>
 }) => {
-  const { slug } = use(params)
+  const { lang, slug } = use(params)
   const { t } = useTranslation()
-  const [event, setEvent] = useState<Event | null>(null)
 
   const now = new Date()
   const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
@@ -202,34 +202,19 @@ const EventPage = ({
     error: eventsListError,
     isLoading: isEventsListLoading,
   } = useQuery({
-    queryKey: ["eventList"],
-    queryFn: (): Promise<Event[]> =>
-      fetch(`/api/events/list?fromDate=${fromDate.toISOString()}`).then(r =>
-        r.json(),
-      ),
+    queryKey: ["eventList", lang],
+    queryFn: () => getEventList(lang),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
     if (eventsListError || !eventsList) {
       return []
     }
-
     return processEvents(eventsList as Event[])
   }, [eventsList, eventsListError])
 
   const id = Number(slug[0])
-
-  useEffect(() => {
-    if (!id) return
-
-    fetch(`/api/events/${id}`)
-      .then(r => {
-        if (!r.ok) throw new Error()
-        return r.json()
-      })
-      .then(setEvent)
-      .catch(() => setEvent(null))
-  }, [id])
+  const event = use(getEventById(id, lang))
 
   let eventPageContent: ReactNode
 
