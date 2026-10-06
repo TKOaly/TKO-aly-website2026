@@ -266,7 +266,7 @@
     "category": "Type",
     "alcoholMeter": "Alcohol scale",
     "organizer": "Organizer",
-    "registration": "Registration period",
+    "registrationTime": "Registration period",
     "canCancel": "Registration can be cancelled",
     "canNotCancel": "Registration is biding",
     "responsible": "Responsible person",
