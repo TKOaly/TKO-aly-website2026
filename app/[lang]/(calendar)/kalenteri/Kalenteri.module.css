@@ -55,12 +55,12 @@
   width: 15%;
 }
 
-#eventsListEventPageContainer {
+.eventsListEventPageContainer {
   width: 15%;
 }
 
 @media (max-width: 1024px) {
-  #eventsListEventPageContainer {
+  .eventsListEventPageContainer {
     display: none;
   }
 
@@ -69,10 +69,8 @@
     width: 70%;
   }
 
-  #calenderPageContainer {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  #calendarViewContainer {
+    display: none;
   }
 }
 
@@ -107,17 +105,6 @@
 
 .eventListItem p {
   margin: 5px 0;
-}
-
-.eventContainer {
-  margin-left: 48px;
-  width: 95%;
-}
-
-@media (max-width: 768px) {
-  .eventContainer {
-    margin-left: var(--space-2-5);
-  }
 }
 
 .eventInfo {

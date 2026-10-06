@@ -207,7 +207,10 @@ export default function Calendar() {
         <div id={styles.eventsListContainer}>
           <EventListView events={processedEvents} t={t} />
         </div>
-        <div style={{ marginLeft: "48px", width: "95%" }}>
+        <div
+          id={styles.calendarViewContainer}
+          style={{ marginLeft: "48px", width: "95%" }}
+        >
           <EventCalendarView events={processedEvents} />
           <Legend t={t} />
         </div>
