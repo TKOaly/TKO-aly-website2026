@@ -8,38 +8,8 @@ import fiLocale from "@fullcalendar/core/locales/fi"
 import Link from "next/link"
 import styles from "./Kalenteri.module.css"
 import { useState, ReactNode, useMemo } from "react"
-
-type Event = {
-  id: number
-  user_id: number | null
-  name: string | null
-  created: string | null
-  starts: string | null
-  registration_starts: string | null
-  registration_ends: string | null
-  cancellation_starts: string | null
-  cancellation_ends: string | null
-  location: string | null
-  category: string | null
-  description: string | null
-  alcohol_meter: number | null
-  price: string | null
-  map: string | null
-  max_participants: number | null
-  realised_participants: number | null
-  membership_required: boolean | null
-  outsiders_allowed: boolean | null
-  template: boolean | null
-  responsible: string | null
-  show_responsible: boolean | null
-  avec: boolean | null
-  deleted: boolean | null
-}
-
-type ProcessedEvent = Event & {
-  starts: string
-  backgroundColor: string
-}
+import type { Event, ProcessedEvent } from "./types"
+import { useTranslation } from "react-i18next"
 
 function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
   const calendarEvents = events.map(event => ({
@@ -69,18 +39,19 @@ function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
   )
 }
 
-function EventListView({ events }: { events: ProcessedEvent[] }) {
+export function EventListView({ events }: { events: ProcessedEvent[] }) {
+  const { t } = useTranslation()
   return (
-    <div id={styles["events-list"]}>
+    <div id={styles.eventsList}>
       {events.map(event => (
         <Link key={event.id} href={`/kalenteri/${event.id}`}>
           <div
-            className={styles["event-list-item"]}
+            className={styles.eventListItem}
             style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
           >
             <h3>{event.name}</h3>
             <p>
-              <strong>Alkaa:</strong>{" "}
+              <strong>{t("event.starts")}:</strong>{" "}
               {new Date(event.starts).toLocaleDateString("fi-FI")},
               {new Date(event.starts).toLocaleTimeString("fi-FI", {
                 hour: "2-digit",
@@ -88,9 +59,13 @@ function EventListView({ events }: { events: ProcessedEvent[] }) {
               })}
             </p>
             <p>
-              <strong>Sijainti:</strong> {event.location}
+              <strong>{t("event.location")}:</strong> {event.location}
             </p>
-            <p>{event.description}</p>
+            {event.organizer && (
+              <p>
+                <strong>{t("event.organizer")}:</strong> {event.organizer}
+              </p>
+            )}
           </div>
         </Link>
       ))}
@@ -98,11 +73,67 @@ function EventListView({ events }: { events: ProcessedEvent[] }) {
   )
 }
 
-function hasValidStartTime(event: Event): event is Event & { starts: string } {
-  return event.starts !== null
+function Legend() {
+  const { t } = useTranslation()
+  const [isLegendVisible, setIsLegendVisible] = useState(false)
+
+  const toggleLegendVisibility = () => {
+    setIsLegendVisible(prev => !prev)
+  }
+
+  return (
+    <div id={styles.calendarInstructions}>
+      {isLegendVisible && (
+        <div id={styles.legend}>
+          <p>
+            <span
+              className={styles.legendColorBall}
+              style={{ backgroundColor: "#0066ff" }}
+            ></span>{" "}
+            {t("event.legend.canNotRegistration")}
+          </p>
+          <p>
+            <span
+              className={styles.legendColorBall}
+              style={{ backgroundColor: "#ffff00" }}
+            ></span>{" "}
+            {t("event.legend.registrationNotOpen")}
+          </p>
+          <p>
+            <span
+              className={styles.legendColorBall}
+              style={{ backgroundColor: "#00ff00" }}
+            ></span>{" "}
+            {t("event.legend.registrationOpen")}
+          </p>
+          <p>
+            <span
+              className={styles.legendColorBall}
+              style={{ backgroundColor: "#ff0000" }}
+            ></span>{" "}
+            {t("event.legend.registrationClosed")}
+          </p>
+          <p>
+            <span
+              className={styles.legendColorBall}
+              style={{ backgroundColor: "#6e6e6eff" }}
+            ></span>{" "}
+            {t("event.legend.passedEvent")}
+          </p>
+        </div>
+      )}
+      <button onClick={toggleLegendVisibility} title="Kalenterin selite">
+        {isLegendVisible ? t("event.legend.show") : t("event.legend.hide")}
+      </button>
+    </div>
+  )
 }
 
-function processEvents(eventsData: Event[]): ProcessedEvent[] {
+function hasValidStartTime(event: Event): event is Event & { starts: string } {
+  return event.starts !== undefined
+}
+
+export function processEvents(eventsData: Event[]): ProcessedEvent[] {
   const now = new Date()
 
   return eventsData.filter(hasValidStartTime).map(event => {
@@ -132,109 +163,64 @@ function processEvents(eventsData: Event[]): ProcessedEvent[] {
 }
 
 export default function Calendar() {
-  const [isLegendVisible, setIsLegendVisible] = useState(false)
-  const [isListView, setIsListView] = useState(false)
-
-  const toggleLegendVisibility = () => {
-    setIsLegendVisible(prev => !prev)
-  }
+  const { t } = useTranslation()
+  const now = new Date()
+  const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
 
   const {
     data: eventsList = [],
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["events"],
-    queryFn: (): Promise<Event[]> => fetch("/api/events").then(r => r.json()),
+    queryKey: ["eventList"],
+    queryFn: (): Promise<Event[]> =>
+      fetch(`/api/events/list?fromDate=${fromDate.toISOString()}`).then(r =>
+        r.json(),
+      ),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
+    if (error || !eventsList) {
+      return []
+    }
+
     return processEvents(eventsList as Event[])
-  }, [eventsList])
+  }, [eventsList, error])
 
   let viewContent: ReactNode
 
   if (isLoading) {
-    viewContent = <p>Ladataan tapahtumia...</p>
+    viewContent = <p>{t("event.loading")}</p>
   } else if (error) {
-    viewContent = <p>Virhe: {error.message}</p>
-  } else if (isListView) {
-    viewContent = <EventListView events={processedEvents} />
+    viewContent = (
+      <p>
+        {t("event.error")}: {error.message}
+      </p>
+    )
   } else {
-    viewContent = <EventCalendarView events={processedEvents} />
+    viewContent = (
+      <div id={styles.calendarPageContainer}>
+        <div id={styles.eventsListContainer}>
+          <EventListView events={processedEvents} />
+        </div>
+        <div
+          id={styles.calendarViewContainer}
+          style={{ marginLeft: "48px", width: "95%" }}
+        >
+          <EventCalendarView events={processedEvents} />
+          <Legend />
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div id={styles.calendar}>
-      <div id={styles["calendar-title"]}>
-        <h1>Tapahtumakalenteri</h1>
-      </div>
-      <div id={styles["calendar-control-bar"]}>
-        <div id={styles["calendar-view-toggle"]}>
-          <button
-            id={styles["show-calendar-button"]}
-            className={`${styles["view-toggle-button"]} ${!isListView ? styles["view-toggle-active"] : ""}`}
-            title="Kalenterinäkymä"
-            aria-label="Näytä kalenterinäkymä"
-            onClick={() => setIsListView(false)}
-          >
-            Kalenteri
-          </button>
-          <button
-            id={styles["show-list-button"]}
-            className={`${styles["view-toggle-button"]} ${isListView ? styles["view-toggle-active"] : ""}`}
-            title="Listanäkymä"
-            aria-label="Näytä listanäkymä"
-            onClick={() => setIsListView(true)}
-          >
-            Lista
-          </button>
+    <div id={styles.calendarColor}>
+      <div id={styles.calendar}>
+        <div id={styles.calendarTitle}>
+          <h1>{t("event.calendar")}</h1>
         </div>
-      </div>
-      {viewContent}
-      <div id={styles["calendar-instructions"]}>
-        {isLegendVisible && (
-          <div id={styles.legend}>
-            <p>
-              <span
-                className={styles["legend-color-ball"]}
-                style={{ backgroundColor: "#0066ff" }}
-              ></span>{" "}
-              Tapahtumaan ei ilmoittautumista
-            </p>
-            <p>
-              <span
-                className={styles["legend-color-ball"]}
-                style={{ backgroundColor: "#ffff00" }}
-              ></span>{" "}
-              Ilmoittautuminen ei ole alkanut
-            </p>
-            <p>
-              <span
-                className={styles["legend-color-ball"]}
-                style={{ backgroundColor: "#00ff00" }}
-              ></span>{" "}
-              Ilmoittautuminen on auki
-            </p>
-            <p>
-              <span
-                className={styles["legend-color-ball"]}
-                style={{ backgroundColor: "#ff0000" }}
-              ></span>{" "}
-              Ilmoittautuminen on päättynyt
-            </p>
-            <p>
-              <span
-                className={styles["legend-color-ball"]}
-                style={{ backgroundColor: "#6e6e6eff" }}
-              ></span>{" "}
-              Tapahtuma on mennyt
-            </p>
-          </div>
-        )}
-        <button onClick={toggleLegendVisibility} title="Kalenterin selite">
-          {isLegendVisible ? "Piilota selite" : "Näytä selite"}
-        </button>
+        {viewContent}
       </div>
     </div>
   )
