@@ -39,13 +39,8 @@ function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
   )
 }
 
-export function EventListView({
-  events,
-  t,
-}: {
-  events: ProcessedEvent[]
-  t: (key: string) => string
-}) {
+export function EventListView({ events }: { events: ProcessedEvent[] }) {
+  const { t } = useTranslation()
   return (
     <div id={styles.eventsList}>
       {events.map(event => (
@@ -64,7 +59,7 @@ export function EventListView({
               })}
             </p>
             <p>
-              <strong>{t("event.starts")}:</strong> {event.location}
+              <strong>{t("event.location")}:</strong> {event.location}
             </p>
             {event.organizer && (
               <p>
@@ -78,7 +73,8 @@ export function EventListView({
   )
 }
 
-function Legend({ t }: { t: (key: string) => string }) {
+function Legend() {
+  const { t } = useTranslation()
   const [isLegendVisible, setIsLegendVisible] = useState(false)
 
   const toggleLegendVisibility = () => {
@@ -205,14 +201,14 @@ export default function Calendar() {
     viewContent = (
       <div id={styles.calenderPageContainer}>
         <div id={styles.eventsListContainer}>
-          <EventListView events={processedEvents} t={t} />
+          <EventListView events={processedEvents} />
         </div>
         <div
           id={styles.calendarViewContainer}
           style={{ marginLeft: "48px", width: "95%" }}
         >
           <EventCalendarView events={processedEvents} />
-          <Legend t={t} />
+          <Legend />
         </div>
       </div>
     )

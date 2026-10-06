@@ -258,7 +258,7 @@ const EventPage = ({
       <div id={styles.calenderPageContainer}>
         <div className={styles.eventsListEventPageContainer}>
           {!isEventsListLoading && !eventsListError ? (
-            <EventListView events={processedEvents} t={t} />
+            <EventListView events={processedEvents} />
           ) : (
             <></>
           )}
