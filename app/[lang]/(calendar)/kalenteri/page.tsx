@@ -199,7 +199,7 @@ export default function Calendar() {
     )
   } else {
     viewContent = (
-      <div id={styles.calenderPageContainer}>
+      <div id={styles.calendarPageContainer}>
         <div id={styles.eventsListContainer}>
           <EventListView events={processedEvents} />
         </div>
@@ -218,7 +218,7 @@ export default function Calendar() {
     <div id={styles.calendarColor}>
       <div id={styles.calendar}>
         <div id={styles.calendarTitle}>
-          <h1>{t("event.calender")}</h1>
+          <h1>{t("event.calendar")}</h1>
         </div>
         {viewContent}
       </div>

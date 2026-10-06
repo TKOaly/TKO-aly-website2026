@@ -275,8 +275,8 @@
     "registrationLink": "Registration",
     "starts": "Starts",
     "loading": "Loading events...",
-    "event.error": "Error",
-    "event.calender": "Event calender",
+    "error": "Error",
+    "calendar": "Event calendar",
     "legend": {
       "canNotRegistration": "Can't register to event",
       "registrationNotOpen": "Registration is not open",

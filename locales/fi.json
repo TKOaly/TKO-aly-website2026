@@ -278,8 +278,8 @@
     "registrationLink": "Ilmoittautuminen",
     "starts": "Alkaa",
     "loading": "Ladataan tapahtumia...",
-    "event.error": "Virhe",
-    "event.calender": "Tapahtuma kalenteri",
+    "error": "Virhe",
+    "calendar": "Tapahtumakalenteri",
     "legend": {
       "canNotRegistration": "Tapahtumaan ei ilmoittautumista",
       "registrationNotOpen": "Ilmoittautuminen ei ole alkanut",
