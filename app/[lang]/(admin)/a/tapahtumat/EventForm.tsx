@@ -1,4 +1,5 @@
-import Alert from "@/components/Alert/Alert"
+"use client"
+
 import CallToActionButton from "@/components/Buttons/CallToActionButton"
 import Checkbox from "@/components/Checkbox/Checkbox"
 import Field from "@/components/Field/Field"
@@ -9,6 +10,7 @@ import Textarea from "@/components/Textarea/Textarea"
 import TemplatePicker from "./luo/TemplatePicker"
 import type { EventFormValues } from "./types"
 import styles from "./luo/LuoTapahtuma.module.css"
+import Alert from "@/components/Alert/Alert"
 
 export const toDateInputValue = (iso: string | null | undefined): string => {
   if (!iso) return ""
@@ -74,7 +76,7 @@ const EventForm = ({
             id="name"
             name="name"
             type="text"
-            defaultValue={defaultValues?.name}
+            defaultValue={defaultValues?.translations.at(0)?.title}
           />
           <Field
             required
@@ -82,7 +84,7 @@ const EventForm = ({
             id="date"
             name="date"
             type="date"
-            defaultValue={toDateInputValue(defaultValues?.starts)}
+            defaultValue={toDateInputValue(defaultValues?.toLocaleString())}
           />
           <Field
             required
@@ -90,7 +92,7 @@ const EventForm = ({
             id="time"
             name="time"
             type="time"
-            defaultValue={toTimeInputValue(defaultValues?.starts)}
+            defaultValue={defaultValues?.starts.toLocaleString()}
           />
 
           <Field
@@ -101,7 +103,9 @@ const EventForm = ({
             type="text"
             list="venue-datalist"
             placeholder={t("luoTapahtuma.required.venuePlaceholder")}
-            defaultValue={defaultValues?.location ?? ""}
+            defaultValue={
+              defaultValues?.location.translations.at(0)?.location ?? ""
+            }
           />
           <datalist id="venue-datalist">
             <option value="Paikka 1" />
@@ -117,7 +121,9 @@ const EventForm = ({
             type="text"
             placeholder={t("luoTapahtuma.required.eventTypePlaceholder")}
             list="event-type-datalist"
-            defaultValue={defaultValues?.category ?? ""}
+            defaultValue={
+              defaultValues?.eventType.translations.at(0)?.event_type ?? ""
+            }
           />
           <datalist id="event-type-datalist">
             <option value="Tyyppi 1" />
@@ -131,7 +137,7 @@ const EventForm = ({
             label={t("luoTapahtuma.required.description")}
             name="description"
             rows={5}
-            defaultValue={defaultValues?.description ?? ""}
+            defaultValue={defaultValues?.translations.at(0)?.description ?? ""}
           />
         </Fieldset>
 
@@ -182,7 +188,7 @@ const EventForm = ({
             id="map_link"
             name="map_link"
             type="url"
-            defaultValue={defaultValues?.map ?? ""}
+            defaultValue={defaultValues?.location.map_link ?? ""}
           />
 
           <FieldSelect
@@ -214,78 +220,7 @@ const EventForm = ({
             <option value="5">{t("luoTapahtuma.optional.alcoholHeavy")}</option>
           </FieldSelect>
 
-          <div className={styles.checkboxList}>
-            <Checkbox
-              id="can_participate"
-              name="can_participate"
-              label={t("luoTapahtuma.optional.canParticipate")}
-              defaultChecked={defaultValues?.outsiders_allowed ?? false}
-            />
-            <Checkbox
-              id="membership_required"
-              name="membership_required"
-              label={t("luoTapahtuma.optional.membershipRequired")}
-              defaultChecked={defaultValues?.membership_required ?? false}
-            />
-            <Checkbox
-              id="avec"
-              name="avec"
-              label={t("luoTapahtuma.optional.avec")}
-              defaultChecked={defaultValues?.avec ?? false}
-            />
-          </div>
-
-          <Field
-            label={t("luoTapahtuma.optional.maxParticipants")}
-            id="max_participants"
-            name="max_participants"
-            type="number"
-            min="0"
-            defaultValue={
-              defaultValues?.max_participants != null
-                ? String(defaultValues.max_participants)
-                : ""
-            }
-          />
-          <Field
-            label={t("luoTapahtuma.optional.registrationStarts")}
-            id="registration_starts"
-            name="registration_starts"
-            type="datetime-local"
-            defaultValue={toDateTimeLocalValue(
-              defaultValues?.registration_starts,
-            )}
-          />
-          <Field
-            label={t("luoTapahtuma.optional.registrationEnds")}
-            id="registration_ends"
-            name="registration_ends"
-            type="datetime-local"
-            defaultValue={toDateTimeLocalValue(
-              defaultValues?.registration_ends,
-            )}
-          />
-
           <Alert>{t("luoTapahtuma.optional.cancellationAlert")}</Alert>
-
-          <Field
-            label={t("luoTapahtuma.optional.cancellationStarts")}
-            id="cancellation_starts"
-            name="cancellation_starts"
-            type="datetime-local"
-            defaultValue={toDateTimeLocalValue(
-              defaultValues?.cancellation_starts,
-            )}
-          />
-          <Field
-            label={t("luoTapahtuma.optional.cancellationEnds")}
-            id="cancellation_ends"
-            name="cancellation_ends"
-            type="datetime-local"
-            defaultValue={toDateTimeLocalValue(
-              defaultValues?.cancellation_ends,
-            )}
-          />
 
           <Checkbox
             id="save_as_template"
