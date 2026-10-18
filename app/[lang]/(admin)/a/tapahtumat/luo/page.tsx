@@ -75,7 +75,6 @@ const AddEventPage = async ({ params }: Props) => {
       <EventForm
         action={createEvent}
         templates={templates}
-        t={t}
         submitLabel={t("luoTapahtuma.submit")}
         templateLabel={t("luoTapahtuma.templateLabel")}
         templatePlaceholder={t("luoTapahtuma.templatePlaceholder")}

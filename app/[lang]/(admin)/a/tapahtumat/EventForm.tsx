@@ -1,5 +1,6 @@
 "use client"
 
+import { For } from "@chakra-ui/react"
 import CallToActionButton from "@/components/Buttons/CallToActionButton"
 import Checkbox from "@/components/Checkbox/Checkbox"
 import Field from "@/components/Field/Field"
@@ -8,10 +9,15 @@ import FieldSelect from "@/components/FieldSelect/FieldSelect"
 import FieldRadioGroup from "@/components/FieldRadioGroup/FieldRadioGroup"
 import Textarea from "@/components/Textarea/Textarea"
 import TemplatePicker from "./luo/TemplatePicker"
-import type { EventFormValues } from "./types"
+import type {
+  EventFormValues,
+  RegistrationQuota,
+  CustomField,
+  ListItem,
+} from "./types"
 import styles from "./luo/LuoTapahtuma.module.css"
-import Alert from "@/components/Alert/Alert"
-
+import { useEffect, useId, useRef, useState } from "react"
+import { useTranslation } from "@/app/i18n/client"
 export const toDateInputValue = (iso: string | null | undefined): string => {
   if (!iso) return ""
   const d = new Date(iso)
@@ -32,13 +38,153 @@ export const toDateTimeLocalValue = (
   return isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 16)
 }
 
+const RadioOptionFields = ({
+  id,
+  onChange,
+}: {
+  id: string
+  onChange?: (options: string[]) => void
+}) => {
+  const { t } = useTranslation()
+  const [radioOptions, setRadioOptions] = useState<ListItem<string>[]>([
+    { id: 0, value: "" },
+  ])
+  const nextId = useRef(1)
+
+  useEffect(() => {
+    onChange?.(radioOptions.map(option => option.value))
+  }, [radioOptions])
+
+  const addRadioOption = () => {
+    setRadioOptions(prev => [...prev, { id: nextId.current, value: "" }])
+    nextId.current++
+  }
+
+  const removeRadioOption = (id: number) => {
+    setRadioOptions(prev => prev.filter(option => option.id !== id))
+  }
+
+  const updateRadioOption = (id: number, value: string) => {
+    setRadioOptions(prev =>
+      prev.map(option => (option.id === id ? { ...option, value } : option)),
+    )
+  }
+
+  return (
+    <>
+      {radioOptions.map((option, index) => (
+        <div key={option.id} style={{ display: "flex" }}>
+          <Field
+            label={t("luoTapahtuma.customField.option")}
+            id={`${id}_${index}`}
+            name={`customFieldOption_${index}`}
+            value={option.value}
+            type="text"
+            onChange={e => updateRadioOption(option.id, e.target.value)}
+          />
+          {radioOptions.length !== 1 && (
+            <button
+              onClick={() => removeRadioOption(option.id)}
+              className={styles.addButton}
+              type="button"
+            >
+              -
+            </button>
+          )}
+        </div>
+      ))}
+      <button
+        onClick={addRadioOption}
+        className={styles.addButton}
+        type="button"
+      >
+        +
+      </button>
+    </>
+  )
+}
+
+const CustomFieldsField = ({
+  defaultValues,
+  onChange,
+}: {
+  defaultValues?: CustomField
+  onChange?: (customField: CustomField) => void
+}) => {
+  const { t } = useTranslation()
+  const uuid = useId() 
+  const [customField, setCustomField] = useState<Partial<CustomField>>(
+    defaultValues ?? { type: "", required: false, translations: [] },
+  )
+
+  const update = (patch: Partial<CustomField>) => {
+    const next = { ...customField, ...patch }
+    setCustomField(next)
+    onChange?.(next as CustomField)
+  }
+
+  return (
+    <div>
+      <FieldSelect
+        id={`${uuid}_type`}
+        label={t("luoTapahtuma.customField.type")}
+        defaultValue={defaultValues?.type ?? ""}
+        onChange={e => update({ type: e.target.value as CustomField["type"] })}
+      >
+        <option value="">{t("luoTapahtuma.customField.types.default")}</option>
+        <option
+          value="textarea"
+          label={t("luoTapahtuma.customField.types.textarea")}
+        />
+        <option value="text" label={t("luoTapahtuma.customField.types.text")} />
+        <option
+          value="radio"
+          label={t("luoTapahtuma.customField.types.radio")}
+        />
+        <option
+          value="checkbox"
+          label={t("luoTapahtuma.customField.types.checkbox")}
+        />
+      </FieldSelect>
+
+      <Field
+        label={t("luoTapahtuma.customField.question")}
+        id={`${uuid}_name`}
+        type="text"
+        defaultValue={defaultValues?.translations.at(0)?.name}
+        onChange={e =>
+          update({
+            translations: [
+              { ...customField.translations?.at(0), name: e.target.value },
+              ...(customField.translations?.slice(1) ?? []),
+            ] as CustomField["translations"],
+          })
+        }
+      />
+
+      {customField.type === "radio" && (
+        <RadioOptionFields
+          id={`${uuid}_options`}
+          onChange={options => update({ options } as Partial<CustomField>)}
+        />
+      )}
+
+      <Checkbox
+        id={`${uuid}_required`}
+        label={t("luoTapahtuma.customField.required")}
+        defaultChecked={defaultValues?.required ?? false}
+        onChange={e => update({ required: e.target.checked })}
+      />
+    </div>
+  )
+}
+
 type Props = {
   action: (formData: FormData) => Promise<void>
   defaultValues?: EventFormValues
   templates?: EventFormValues[]
   templateLabel?: string
   templatePlaceholder?: string
-  t: (key: string) => string
   submitLabel: string
   formId?: string
 }
@@ -49,11 +195,43 @@ const EventForm = ({
   templates,
   templateLabel,
   templatePlaceholder,
-  t,
   submitLabel,
   formId = "event-form",
 }: Props) => {
   const isPaid = !!defaultValues?.price
+  const { t } = useTranslation()
+
+  const [customFieldsData, setCustomFields] = useState<ListItem<CustomField>[]>(
+    defaultValues?.fields
+      ? defaultValues.fields.map((field, id) => ({ id, value: field }))
+      : [],
+  )
+
+  const nextCustomFieldId = useRef(customFieldsData.length)
+
+  const addCustomFields = () => {
+    setCustomFields(prev => [
+      ...prev,
+      {
+        id: nextCustomFieldId.current,
+        value: {
+          type: "",
+          translations: [{ locale: "", name: "" }],
+        },
+      },
+    ])
+    nextCustomFieldId.current++
+  }
+
+  const removeCustomFields = (id: number) => {
+    setCustomFields(prev => prev.filter(field => field.id !== id))
+  }
+
+  const updateCustomFields = (id: number, value: CustomField) => {
+    setCustomFields(prev =>
+      prev.map(field => (field.id === id ? { ...field, value } : field)),
+    )
+  }
 
   return (
     <section className={styles.section}>
@@ -219,15 +397,43 @@ const EventForm = ({
             </option>
             <option value="5">{t("luoTapahtuma.optional.alcoholHeavy")}</option>
           </FieldSelect>
+        </Fieldset>
 
-          <Alert>{t("luoTapahtuma.optional.cancellationAlert")}</Alert>
+        {/* Custom fields details */}
+        <Fieldset legend={t("luoTapahtuma.customField.legend")}>
+          <For each={customFieldsData}>
+            {item => (
+              <div key={item.id} style={{ display: "flex" }}>
+                <CustomFieldsField
+                  defaultValues={item.value}
+                  onChange={field => updateCustomFields(item.id, field)}
+                />
+                <button
+                  onClick={() => removeCustomFields(item.id)}
+                  type="button"
+                >
+                  -
+                </button>
+              </div>
+            )}
+          </For>
 
-          <Checkbox
-            id="save_as_template"
-            name="save_as_template"
-            label={t("luoTapahtuma.optional.saveAsTemplate")}
+          <button onClick={addCustomFields} type="button">
+            {t("luoTapahtuma.customField.add")}
+          </button>
+
+          <input
+            type="hidden"
+            name="custom_fields"
+            value={JSON.stringify(customFieldsData.map(f => f.value))}
           />
         </Fieldset>
+
+        <Checkbox
+          id="save_as_template"
+          name="save_as_template"
+          label={t("luoTapahtuma.optional.saveAsTemplate")}
+        />
       </form>
 
       <CallToActionButton form={formId}>{submitLabel}</CallToActionButton>

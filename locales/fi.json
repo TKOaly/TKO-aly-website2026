@@ -227,6 +227,21 @@
       "cancellationEnds": "Ilmoittautumisen perumisen loppu",
       "saveAsTemplate": "Tallenna tapahtumapohjaksi"
     },
+    "customField": {
+      "legend": "Lisätietokentät",
+      "question": "Kysymys",
+      "type": "Tyyppi",      
+      "option": "Vaihtoehto",
+      "types": {
+        "default": "Valitse lisäkentän tyyppi",
+        "textarea": "Monirivinen teksti",
+        "text": "Yksirivinen teksti",
+        "radio": "Monivalinta",
+        "checkbox": "Valintaruutu"
+      },
+      "required": "Pakollinen",
+      "add": "Lisää lisätietokenttä"
+    },
     "submit": "Luo tapahtuma"
   },
   "muokkaaTapahtuma": {

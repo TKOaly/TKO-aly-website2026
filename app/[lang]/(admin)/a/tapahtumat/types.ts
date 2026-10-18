@@ -32,11 +32,13 @@ type CustomFieldTranslation = {
 }
 
 export type CustomField = {
-  type: "textarea" | "radio" | "checkbox" | "text"
+  type: "textarea" | "radio" | "checkbox" | "text" | ""
   options?: string[]
   required?: boolean
   translations: CustomFieldTranslation[]
 }
+
+export type ListItem<T> = { id: number; value: T }
 
 type RegistrationQuotaTranslation = {
   locale: string

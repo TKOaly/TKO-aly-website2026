@@ -65,7 +65,6 @@ const EditEventPage = async ({
       <EventForm
         action={updateEvent}
         defaultValues={event}
-        t={t}
         submitLabel={t("muokkaaTapahtuma.submit")}
       />
     </main>

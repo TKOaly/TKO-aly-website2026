@@ -224,6 +224,21 @@
       "cancellationEnds": "Cancellation ends",
       "saveAsTemplate": "Save as event template"
     },
+    "customField": {
+      "legend": "Additional fields",
+      "question": "Question",
+      "type": "Type",      
+      "option": "Option",
+      "types": {
+        "default": "Select Additional field's type",
+        "textarea": "Multiline text",
+        "text": "Single-line text",
+        "radio": "Multiple choice",
+        "checkbox": "Checkbox"
+      },
+      "required": "Pakollinen",
+      "add": "Add additional field"
+    },
     "submit": "Create event"
   },
   "muokkaaTapahtuma": {
