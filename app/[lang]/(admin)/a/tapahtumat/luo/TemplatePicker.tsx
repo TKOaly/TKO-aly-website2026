@@ -30,10 +30,7 @@ const toDateTimeLocalValue = (iso: string | null | undefined): string => {
 
 const setInputValue = (id: string, value: string) => {
   const el = document.getElementById(id) as
-    | HTMLInputElement
-    | HTMLTextAreaElement
-    | HTMLSelectElement
-    | null
+    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null
   if (el) el.value = value
 }
 
