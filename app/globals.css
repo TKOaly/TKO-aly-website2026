@@ -85,13 +85,13 @@
   --screen-2xl: 1536px;
 
   /* Dark theme (default) */
-  --color-bg: var(--neutral-800);
+  --color-bg: var(--neutral-900);
   --color-surface: var(--neutral-700);
-  --color-text: var(--neutral-50);
-  --color-text-muted: var(--neutral-300);
+  --color-text: var(--white);
+  --color-text-muted: var(--neutral-100);
   --color-text-inverted: var(--neutral-900);
   --color-accent: var(--yellow-500);
-  --color-link: var(--yellow-400);
+  --color-link: var(--yellow-300);
 
   --border: 2px solid hsl(50, 15%, 60%);
   --border-thick: 4px solid hsl(50, 15%, 60%);
@@ -118,11 +118,11 @@
 
     --color-bg: var(--neutral-50);
     --color-surface: var(--white);
-    --color-text: var(--neutral-800);
-    --color-text-muted: var(--neutral-500);
+    --color-text: var(--neutral-900);
+    --color-text-muted: var(--neutral-600);
     --color-text-inverted: var(--neutral-50);
-    --color-accent: var(--yellow-600);
-    --color-link: var(--blue-500);
+    --color-accent: var(--yellow-700);
+    --color-link: var(--blue-700);
 
     --border: 2px solid var(--neutral-900);
     --border-thick: 4px solid var(--neutral-900);
@@ -133,12 +133,102 @@
   }
 }
 
+html {
+  scroll-padding-top: calc(var(--space-16) + var(--space-4));
+}
+
 html,
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
+}
+
+.btn,
+.btn2 {
+  border-bottom: 4px solid var(--neutral-900);
+  border-right: 4px solid var(--neutral-900);
+  border-top: 2px solid var(--neutral-200);
+  border-left: 2px solid var(--neutral-200);
+  padding: var(--space-4) var(--space-8);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition:
+    box-shadow 0.1s ease,
+    transform 0.1s ease;
+}
+
+.btn {
+  color: var(--neutral-900);
+  background-color: var(--yellow);
+  box-shadow: 4px 4px 0 var(--yellow-700);
+}
+
+.btn2 {
+  color: var(--color-text);
+  background-color: transparent;
+  margin-right: var(--space-4);
+  box-shadow: 4px 4px 0 0 var(--neutral-200);
+}
+
+.btn:hover {
+  background-color: var(--yellow-300);
+}
+
+.btn:active {
+  background-color: var(--yellow-700);
+  box-shadow: 0px 0px 0px 0px #000000;
+  transform: translate(4px, 4px);
+}
+
+.btn2:hover {
+  background-color: #fff1;
+}
+
+.btn2:active {
+  background-color: var(--color-bg);
+  box-shadow: 0px 0px 0px 0px #000000;
+  transform: translate(4px, 4px);
+}
+
+.bottomBar,
+.bottomBarInner {
+  background: var(--color-bg);
+}
+
+@media (prefers-color-scheme: light) {
+  .btn,
+  .btn2 {
+    border-color: #000000;
+    box-shadow: 4px 4px 0 var(--neutral-900);
+  }
+
+  .btn2 {
+    box-shadow: 4px 4px 0 0 var(--neutral-900);
+  }
+
+  .btn2:hover:not(:active) {
+    background-color: #ffff;
+  }
+
+  .btn:focus-visible {
+    outline-color: var(--neutral-900);
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* @fullcalendar styles */
