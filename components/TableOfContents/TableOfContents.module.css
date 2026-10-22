@@ -7,9 +7,6 @@
   min-width: 250px;
   max-width: 250px;
   width: 100%;
-  background: var(--color-surface);
-  border: var(--border);
-  padding: var(--space-4);
   box-sizing: border-box;
 }
 
@@ -36,38 +33,47 @@
 
 .tocListNested {
   list-style: none;
-  padding-left: var(--space-4);
-  margin: 0.5rem 0 0 0;
+  padding-left: 0;
+  margin: var(--space-2) 0 0;
 }
 
 .tocItemParent {
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-3);
 }
 
 .tocItemChild {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .tocLink {
+  box-sizing: border-box;
+  display: flex;
+  min-height: 2.75rem;
+  width: 100%;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border);
+  background: transparent;
   color: var(--color-text-muted);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  display: block;
   line-height: 1.4;
-  transition: color 0.2s ease;
+  text-decoration: none;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .tocLink:hover {
-  color: var(--color-text);
+  background: var(--yellow);
+  color: var(--neutral-900);
 }
 
 .tocLink:focus-visible {
-  outline: 3px solid var(--yellow);
+  outline: 2px solid var(--yellow);
   outline-offset: 2px;
 }
 
 .active {
-  color: var(--color-text);
+  background: var(--yellow);
+  color: var(--neutral-900);
   font-weight: bold;
-  text-decoration-thickness: 2px;
 }

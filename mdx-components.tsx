@@ -1,5 +1,7 @@
 import type { MDXComponents } from "mdx/types"
 
+import ArticleMetadata from "@/components/PublicArticleFrame/ArticleMetadata"
+
 function slugify(children: unknown) {
   return children
     ?.toString()
@@ -14,6 +16,7 @@ function slugify(children: unknown) {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
+    ArticleMetadata,
     h1: ({ children, ...props }) => {
       const slug = slugify(children)
       return (

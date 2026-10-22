@@ -1,6 +1,6 @@
 "use client"
 
-import { useLayoutEffect, useEffect, useState } from "react"
+import { useLayoutEffect, useEffect, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
 import styles from "./TableOfContents.module.css"
 
@@ -62,6 +62,7 @@ export default function TableOfContents() {
   const [items, setItems] = useState<TocItem[]>([])
   const [activeId, setActiveId] = useState<string>("")
   const pathname = usePathname()
+  const navRef = useRef<HTMLElement>(null)
 
   useLayoutEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -102,6 +103,30 @@ export default function TableOfContents() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [items, activeId])
 
+  // Keep the active link visible when the ToC itself is scrollable. Scroll the
+  // container directly: scrollIntoView would also scroll the page.
+  useEffect(() => {
+    const link = navRef.current?.querySelector<HTMLElement>(`.${styles.active}`)
+    if (!link) return
+
+    let container: HTMLElement | null = link.parentElement
+    while (
+      container &&
+      !/(auto|scroll)/.test(getComputedStyle(container).overflowY)
+    ) {
+      container = container.parentElement
+    }
+    if (!container) return
+
+    const containerRect = container.getBoundingClientRect()
+    const linkRect = link.getBoundingClientRect()
+    if (linkRect.top < containerRect.top) {
+      container.scrollTop -= containerRect.top - linkRect.top
+    } else if (linkRect.bottom > containerRect.bottom) {
+      container.scrollTop += linkRect.bottom - containerRect.bottom
+    }
+  }, [activeId])
+
   const renderLinks = (nodes: TocItem[], nested = false) => (
     <ul className={nested ? styles.tocListNested : styles.tocList}>
       {nodes.map(item => (
@@ -124,7 +149,9 @@ export default function TableOfContents() {
   return (
     <aside className={styles.toc} aria-hidden={items.length === 0}>
       {items.length > 0 && (
-        <nav aria-label="Table of Contents">{renderLinks(items)}</nav>
+        <nav ref={navRef} aria-label="Table of Contents">
+          {renderLinks(items)}
+        </nav>
       )}
     </aside>
   )

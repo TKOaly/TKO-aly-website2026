@@ -1,0 +1,122 @@
+.page {
+  display: grid;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+.metadataCard {
+  max-width: none;
+  padding: var(--space-4) var(--space-6);
+}
+
+.metadata {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+  font-family: monospace;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
+.metadata span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.path {
+  flex: 1 1 18rem;
+  font-weight: 700;
+}
+
+.status {
+  border: var(--border);
+  background: var(--yellow);
+  color: var(--neutral-900);
+  padding: var(--space-1) var(--space-2);
+  font-weight: 700;
+}
+
+.contentGrid {
+  display: grid;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: fit-content;
+}
+
+.sidebar > * {
+  flex-shrink: 0;
+}
+
+.sidebar > .tocTerminal {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 10rem;
+}
+
+.sidebar :global(.terminal) :global(.toc) {
+  display: block;
+  position: static;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.actions {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.actions button,
+.actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.actions button:hover,
+.actions a:hover {
+  background: var(--yellow);
+  color: var(--neutral-900);
+}
+
+.article {
+  min-width: 0;
+}
+
+.article :global(h1) {
+  margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .contentGrid {
+    grid-template-columns: minmax(240px, 0.34fr) minmax(0, 1fr);
+  }
+
+  .sidebar {
+    position: sticky;
+    top: calc(var(--space-16) + var(--space-4));
+    height: calc(100vh - var(--sidebar-offset, 12rem) - var(--space-8));
+  }
+}

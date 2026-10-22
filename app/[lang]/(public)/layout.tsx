@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
-import TableOfContents from "@/components/TableOfContents/TableOfContents"
+import PublicArticleFrame from "@/components/PublicArticleFrame/PublicArticleFrame"
 
 import styles from "./layout.module.css"
 
@@ -13,10 +13,7 @@ export default function PublicLayout({
     <>
       <Navbar />
       <div className={styles.layoutWrapper}>
-        <TableOfContents />
-        <main id="main-content" className={styles.main}>
-          {children}
-        </main>
+        <PublicArticleFrame>{children}</PublicArticleFrame>
       </div>
       <Footer />
     </>

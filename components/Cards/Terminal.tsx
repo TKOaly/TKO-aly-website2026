@@ -6,6 +6,8 @@ interface Props {
   barTitle?: string
   heading?: string
   callToAction?: ReactNode
+  mobileCollapsible?: boolean
+  className?: string
   children: ReactNode
 }
 
@@ -13,10 +15,12 @@ const Terminal = ({
   barTitle = "readme.md",
   heading = "Tervetuloa!",
   callToAction,
+  mobileCollapsible = true,
+  className,
   children,
 }: Props) => {
   return (
-    <section className={styles.terminal}>
+    <section className={`${styles.terminal} ${className ?? ""}`}>
       <div className={styles.topBar}>
         <div className={styles.dots}>
           <span className={styles.redDot}></span>
@@ -26,30 +30,46 @@ const Terminal = ({
         <span className={styles.barTitle}>{barTitle}</span>
         <div className={styles.spacer}></div>
       </div>
-      <div className={styles.desktopContent}>
-        <div className={styles.contentInner}>
-          <h2 className={styles.heading}>{heading}</h2>
-          <p>{children}</p>
+      {mobileCollapsible ? (
+        <>
+          <div className={styles.desktopContent}>
+            <div className={styles.contentInner}>
+              {heading ? <h2 className={styles.heading}>{heading}</h2> : null}
+              <div className={styles.text}>{children}</div>
+            </div>
+            {callToAction ? (
+              <a className={`${styles.link} ${styles.desktopLink}`} href="#">
+                Lue lisää
+              </a>
+            ) : null}
+          </div>
+          <div className={styles.mobileContent}>
+            <details className={styles.details}>
+              <summary className={styles.summary}>
+                {heading ? <h2 className={styles.heading}>{heading}</h2> : null}
+              </summary>
+              <div className={styles.text}>{children}</div>
+            </details>
+            {callToAction ? (
+              <a className={`${styles.link} ${styles.desktopLink}`} href="#">
+                Lue lisää
+              </a>
+            ) : null}
+          </div>
+        </>
+      ) : (
+        <div className={styles.alwaysVisible}>
+          <div className={styles.contentInner}>
+            {heading ? <h2 className={styles.heading}>{heading}</h2> : null}
+            <div className={styles.text}>{children}</div>
+          </div>
+          {callToAction ? (
+            <a className={`${styles.link} ${styles.desktopLink}`} href="#">
+              Lue lisää
+            </a>
+          ) : null}
         </div>
-        {callToAction ? (
-          <a className={`${styles.link} ${styles.desktopLink}`} href="#">
-            Lue lisää
-          </a>
-        ) : null}
-      </div>
-      <div className={styles.mobileContent}>
-        <details className={styles.details}>
-          <summary className={styles.summary}>
-            <h2 className={styles.heading}>{heading}</h2>
-          </summary>
-          <p className={styles.text}>{children}</p>
-        </details>
-        {callToAction ? (
-          <a className={`${styles.link} ${styles.desktopLink}`} href="#">
-            Lue lisää
-          </a>
-        ) : null}
-      </div>
+      )}
     </section>
   )
 }

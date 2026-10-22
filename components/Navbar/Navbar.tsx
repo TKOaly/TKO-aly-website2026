@@ -238,16 +238,18 @@ function Navbar({ items }: { items: NavSection[] }) {
           </ul>
 
           <ul className={styles.secondaryActionList}>
-            <li>
-              <button
-                type="button"
-                className={`${styles.dropdownToggle} ${styles.langButton}`}
-                onClick={toggleLanguage}
-              >
-                <Globe size={18} aria-hidden />
-                {otherLangLabel}
-              </button>
-            </li>
+            {!session && (
+              <li>
+                <button
+                  type="button"
+                  className={`${styles.dropdownToggle} ${styles.langButton}`}
+                  onClick={toggleLanguage}
+                >
+                  <Globe size={18} aria-hidden />
+                  {otherLangLabel}
+                </button>
+              </li>
+            )}
             {session ? (
               <li
                 className={`${styles.navItem} ${openId === "user" ? styles.open : ""}`}
@@ -299,6 +301,18 @@ function Navbar({ items }: { items: NavSection[] }) {
                         </ClientLink>
                       </li>
                     ))}
+                  <li>
+                    <ClientLink
+                      href="#"
+                      onClick={event => {
+                        event.preventDefault()
+                        setOpenId(null)
+                        toggleLanguage()
+                      }}
+                    >
+                      {otherLangLabel}
+                    </ClientLink>
+                  </li>
                   <li>
                     <ClientLink
                       href="#"

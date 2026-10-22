@@ -1,5 +1,6 @@
 import type { NextConfig } from "next"
 import createMDX from "@next/mdx"
+import path from "node:path"
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["beta.tko-aly.localhost"],
@@ -10,7 +11,11 @@ const nextConfig: NextConfig = {
 const withMDX = createMDX({
   extension: /\.(md|mdx)$/,
   options: {
-    remarkPlugins: [],
+    remarkPlugins: [
+      "remark-frontmatter",
+      path.resolve("lib/remark-article-metadata.mjs"),
+      ["remark-mdx-frontmatter", { name: "frontmatter" }],
+    ],
     rehypePlugins: [],
   },
 })

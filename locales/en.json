@@ -85,6 +85,13 @@
     "copy": "Copy",
     "copied": "Copied"
   },
+  "publicArticle": {
+    "added": "Added",
+    "minRead": "min read",
+    "shareArticle": "Share article",
+    "linkCopied": "Link copied",
+    "editOnGitHub": "Edit on GitHub"
+  },
   "jaseneksi": {
     "title": "Become a Member",
     "description": "You can register as a member using this form. You can pay either by bank transfer or arrange a cash payment with a board member.",

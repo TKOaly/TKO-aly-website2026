@@ -1,3 +1,10 @@
+---
+title: "Edunvalvonta"
+date: 2026-10-08
+readingTime: 5
+tag: "EDUNVALVONTA"
+---
+
 # Edunvalvonta
 
 ## Ainejärjestö - etujärjestö
