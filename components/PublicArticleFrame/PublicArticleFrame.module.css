@@ -106,7 +106,7 @@
 }
 
 .article :global(h1) {
-  margin-top: 0;
+  margin-top: var(--space-4);
 }
 
 /* Body text is sans-serif; headings and code keep the terminal's monospace. */
@@ -120,6 +120,75 @@
     Arial,
     sans-serif;
   letter-spacing: normal;
+}
+
+/* Centre the readable column inside the terminal and give it room. */
+.article > section > :not(:first-child) {
+  padding: var(--space-8) var(--space-6) var(--space-10);
+}
+
+.article > section > :not(:first-child) > div {
+  max-width: 75ch;
+  margin-inline: auto;
+}
+
+/* Markdown-style heading prefixes: "# ", "## ", ... */
+.article :global(h1) > :global(a)::before,
+.article :global(h2) > :global(a)::before,
+.article :global(h3) > :global(a)::before,
+.article :global(h4) > :global(a)::before,
+.article :global(h5) > :global(a)::before,
+.article :global(h6) > :global(a)::before {
+  color: var(--white);
+  margin-right: 0.4em;
+  transition: color 0.15s ease;
+}
+
+.article :global(h1) > :global(a)::before {
+  content: "#";
+}
+.article :global(h2) > :global(a)::before {
+  content: "##";
+}
+.article :global(h3) > :global(a)::before {
+  content: "###";
+}
+.article :global(h4) > :global(a)::before {
+  content: "####";
+}
+.article :global(h5) > :global(a)::before {
+  content: "#####";
+}
+.article :global(h6) > :global(a)::before {
+  content: "######";
+}
+
+.article :global(h1),
+.article :global(h2),
+.article :global(h3),
+.article :global(h4),
+.article :global(h5),
+.article :global(h6) {
+  transition: color 0.15s ease;
+}
+
+.article :global(h1) > :global(a),
+.article :global(h2) > :global(a),
+.article :global(h3) > :global(a),
+.article :global(h4) > :global(a),
+.article :global(h5) > :global(a),
+.article :global(h6) > :global(a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.article :global(h1) > :global(a):hover::before,
+.article :global(h2) > :global(a):hover::before,
+.article :global(h3) > :global(a):hover::before,
+.article :global(h4) > :global(a):hover::before,
+.article :global(h5) > :global(a):hover::before,
+.article :global(h6) > :global(a):hover::before {
+  color: var(--yellow);
 }
 
 .article :global(h1),
@@ -206,5 +275,52 @@
     position: sticky;
     top: calc(var(--space-16) + var(--space-4));
     height: calc(100vh - var(--sidebar-offset, 12rem) - var(--space-8));
+  }
+}
+
+.articleNav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.articleNavLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border: var(--border);
+  background: var(--neutral-800);
+  color: inherit;
+  font-family: monospace;
+  text-decoration: none;
+  box-shadow: 6px 6px 0 var(--yellow-700);
+}
+
+.articleNavLink:hover,
+.articleNavLink:focus-visible {
+  background: var(--yellow);
+  color: var(--neutral-900);
+}
+
+.articleNavNext {
+  grid-column: 2;
+  text-align: right;
+}
+
+.articleNavLabel {
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
+.articleNavTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .articleNavNext {
+    grid-column: auto;
   }
 }

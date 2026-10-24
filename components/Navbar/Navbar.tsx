@@ -32,9 +32,11 @@ const translations: Record<Lang, Record<string, string>> = {
     switchToEnglish: "In English",
     switchToFinnish: "Suomeksi",
     signOut: "Kirjaudu ulos",
-    signIn: "Kirjaudu sisään",
+    signIn: "Kirjaudu",
     openMenu: "Avaa valikko",
     opensInNewWindow: "avautuu uuteen ikkunaan",
+    switchToEnglishLabel: "Vaihda sivuston kieli englanniksi",
+    switchToFinnishLabel: "Vaihda sivuston kieli suomeksi",
   },
   en: {
     switchToEnglish: "In English",
@@ -43,6 +45,8 @@ const translations: Record<Lang, Record<string, string>> = {
     signIn: "Sign in",
     openMenu: "Open menu",
     opensInNewWindow: "opens in a new window",
+    switchToEnglishLabel: "Switch the site language to English",
+    switchToFinnishLabel: "Switch the site language to Finnish",
   },
 }
 
@@ -131,6 +135,10 @@ function Navbar({ items }: { items: NavSection[] }) {
 
   const otherLangLabel =
     lang === "fi" ? t("switchToEnglish") : t("switchToFinnish")
+
+  const otherLangCode = lang === "fi" ? "EN" : "FI"
+  const otherLangAriaLabel =
+    lang === "fi" ? t("switchToEnglishLabel") : t("switchToFinnishLabel")
 
   const userMenuId = "navbar-menu-user"
   const megaOpen = openId !== null && openId !== "user"
@@ -242,10 +250,11 @@ function Navbar({ items }: { items: NavSection[] }) {
                 <button
                   type="button"
                   className={`${styles.dropdownToggle} ${styles.langButton}`}
+                  aria-label={otherLangAriaLabel}
                   onClick={toggleLanguage}
                 >
                   <Globe size={18} aria-hidden />
-                  {otherLangLabel}
+                  {otherLangCode}
                 </button>
               </li>
             )}
@@ -329,7 +338,7 @@ function Navbar({ items }: { items: NavSection[] }) {
               <li>
                 <button
                   type="button"
-                  className={styles.dropdownToggle}
+                  className={styles.signInButton}
                   onClick={() => signIn("tkoaly")}
                 >
                   {t("signIn")}

@@ -7,6 +7,7 @@ import {
   FolderOpen,
   Share2,
 } from "lucide-react"
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { ReactNode } from "react"
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
@@ -35,10 +36,14 @@ function readMetadata() {
   })
 }
 
+export type ArticleLink = { href: string; title: string }
+
 export default function PublicArticleFrame({
   children,
+  articles = [],
 }: {
   children: ReactNode
+  articles?: ArticleLink[]
 }) {
   const pathname = usePathname()
   const [shared, setShared] = useState(false)
@@ -67,7 +72,14 @@ export default function PublicArticleFrame({
   }, [])
   const articlePath = pathname.replace(/^\/(fi|en)/, "") || "/"
   const articleName = articlePath.split("/").filter(Boolean).pop() || "index"
-  const language = pathname.startsWith("/en") ? en : fi
+  const lang = pathname.startsWith("/en") ? "en" : "fi"
+  const language = lang === "en" ? en : fi
+  const currentIndex = articles.findIndex(a => a.href === articlePath)
+  const previous = currentIndex > 0 ? articles[currentIndex - 1] : undefined
+  const next =
+    currentIndex >= 0 && currentIndex < articles.length - 1
+      ? articles[currentIndex + 1]
+      : undefined
   // The page's front-matter is exposed by <ArticleMetadata /> as a hidden
   // DOM marker; re-read it on every render so route changes pick it up.
   const metadata = JSON.parse(
@@ -155,6 +167,38 @@ export default function PublicArticleFrame({
           </Terminal>
         </main>
       </div>
+
+      {(previous || next) && (
+        <nav
+          className={styles.articleNav}
+          aria-label={language.publicArticle.otherArticles}
+        >
+          {previous && (
+            <Link
+              href={`/${lang}${previous.href}`}
+              className={styles.articleNavLink}
+              rel="prev"
+            >
+              <span className={styles.articleNavLabel}>
+                ← {language.publicArticle.previousArticle}
+              </span>
+              <span className={styles.articleNavTitle}>{previous.title}</span>
+            </Link>
+          )}
+          {next && (
+            <Link
+              href={`/${lang}${next.href}`}
+              className={`${styles.articleNavLink} ${styles.articleNavNext}`}
+              rel="next"
+            >
+              <span className={styles.articleNavLabel}>
+                {language.publicArticle.nextArticle} →
+              </span>
+              <span className={styles.articleNavTitle}>{next.title}</span>
+            </Link>
+          )}
+        </nav>
+      )}
     </div>
   )
 }

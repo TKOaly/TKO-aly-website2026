@@ -51,6 +51,33 @@
   cursor: pointer;
 }
 
+.signInButton {
+  display: inline-flex;
+  align-items: center;
+  height: var(--space-12);
+  padding: 0 var(--space-4);
+  background: var(--neutral-50);
+  color: var(--neutral-900);
+  box-shadow: 3px 3px 0 var(--neutral-900);
+  border: 3px solid var(--neutral-900);
+  font-family: monospace;
+  font-size: large;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.signInButton:hover {
+  background: var(--white);
+}
+
+.signInButton:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--neutral-900);
+  background: var(--neutral-200);
+}
+
 .langButton {
   display: inline-flex;
   align-items: center;

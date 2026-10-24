@@ -90,6 +90,9 @@
     "minRead": "min lukuaika",
     "shareArticle": "Jaa artikkeli",
     "linkCopied": "Linkki kopioitu",
+    "previousArticle": "Edellinen artikkeli",
+    "nextArticle": "Seuraava artikkeli",
+    "otherArticles": "Muut artikkelit",
     "editOnGitHub": "Muokkaa GitHubissa"
   },
   "jaseneksi": {
