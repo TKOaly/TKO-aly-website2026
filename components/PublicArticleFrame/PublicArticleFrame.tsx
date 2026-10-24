@@ -53,7 +53,10 @@ export default function PublicArticleFrame({
     if (!page || !sidebar) return
 
     const update = () => {
-      const top = sidebar.getBoundingClientRect().top + window.scrollY
+      // Measure the (non-sticky) grid parent: the sidebar itself is sticky, so
+      // its own position shifts with scroll and would skew the offset.
+      const anchor = sidebar.parentElement ?? sidebar
+      const top = anchor.getBoundingClientRect().top + window.scrollY
       sidebar.style.setProperty("--sidebar-offset", `${Math.round(top)}px`)
     }
     update()
@@ -116,7 +119,7 @@ export default function PublicArticleFrame({
         <aside ref={sidebarRef} className={styles.sidebar}>
           <Terminal
             className={styles.tocTerminal}
-            barTitle="Table of Contents"
+            barTitle="table of contents"
             heading=""
             mobileCollapsible={false}
           >

@@ -104,27 +104,45 @@ export default function TableOfContents() {
   }, [items, activeId])
 
   // Keep the active link visible when the ToC itself is scrollable. Scroll the
-  // container directly: scrollIntoView would also scroll the page.
+  // container directly (scrollIntoView would also scroll the page), and wait
+  // until the active link has settled so fast page scrolling doesn't make the
+  // ToC jump around.
   useEffect(() => {
-    const link = navRef.current?.querySelector<HTMLElement>(`.${styles.active}`)
-    if (!link) return
+    const timeout = window.setTimeout(() => {
+      const link = navRef.current?.querySelector<HTMLElement>(
+        `.${styles.active}`,
+      )
+      if (!link) return
 
-    let container: HTMLElement | null = link.parentElement
-    while (
-      container &&
-      !/(auto|scroll)/.test(getComputedStyle(container).overflowY)
-    ) {
-      container = container.parentElement
-    }
-    if (!container) return
+      let container: HTMLElement | null = link.parentElement
+      while (
+        container &&
+        !/(auto|scroll)/.test(getComputedStyle(container).overflowY)
+      ) {
+        container = container.parentElement
+      }
+      if (!container) return
 
-    const containerRect = container.getBoundingClientRect()
-    const linkRect = link.getBoundingClientRect()
-    if (linkRect.top < containerRect.top) {
-      container.scrollTop -= containerRect.top - linkRect.top
-    } else if (linkRect.bottom > containerRect.bottom) {
-      container.scrollTop += linkRect.bottom - containerRect.bottom
-    }
+      const containerRect = container.getBoundingClientRect()
+      const linkRect = link.getBoundingClientRect()
+      let delta = 0
+      if (linkRect.top < containerRect.top) {
+        delta = linkRect.top - containerRect.top
+      } else if (linkRect.bottom > containerRect.bottom) {
+        delta = linkRect.bottom - containerRect.bottom
+      }
+      if (delta === 0) return
+
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches
+      container.scrollTo({
+        top: container.scrollTop + delta,
+        behavior: reduceMotion ? "auto" : "smooth",
+      })
+    }, 150)
+
+    return () => window.clearTimeout(timeout)
   }, [activeId])
 
   const renderLinks = (nodes: TocItem[], nested = false) => (
@@ -149,7 +167,7 @@ export default function TableOfContents() {
   return (
     <aside className={styles.toc} aria-hidden={items.length === 0}>
       {items.length > 0 && (
-        <nav ref={navRef} aria-label="Table of Contents">
+        <nav ref={navRef} aria-label="table of contents">
           {renderLinks(items)}
         </nav>
       )}

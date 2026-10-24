@@ -8,7 +8,7 @@ import { ClientLink } from "@/app/i18n/client"
 import { useMatchMediaQuery } from "@/lib/useMatchMediaQuery"
 import { useToggleLanguage } from "@/lib/useToggleLanguage"
 import { useParams } from "next/navigation"
-import { useState, useEffect, useRef, useId } from "react"
+import { useState, useEffect, useRef } from "react"
 
 import MobileNavbar from "./MobileNavbar"
 import styles from "./Navbar.module.css"
@@ -73,7 +73,6 @@ function Navbar({ items }: { items: NavSection[] }) {
   const lang = (params?.lang as Lang) || "fi"
   const isMobileView = useMatchMediaQuery("lg")
   const toggleLanguage = useToggleLanguage(lang)
-  const baseId = useId()
 
   const [hidden, setHidden] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
@@ -133,7 +132,7 @@ function Navbar({ items }: { items: NavSection[] }) {
   const otherLangLabel =
     lang === "fi" ? t("switchToEnglish") : t("switchToFinnish")
 
-  const userMenuId = `${baseId}-user`
+  const userMenuId = "navbar-menu-user"
   const megaOpen = openId !== null && openId !== "user"
 
   return (
@@ -159,7 +158,7 @@ function Navbar({ items }: { items: NavSection[] }) {
           <ul className={styles.primaryList}>
             {items.map(section => {
               const id = sectionKey(section)
-              const panelId = `${baseId}-${id}`
+              const panelId = `navbar-menu-${id}`
               const isOpen = openId === id
               return (
                 <li
