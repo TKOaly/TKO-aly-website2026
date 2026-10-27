@@ -5,6 +5,7 @@ import {
   FormProvider,
   useFieldArray,
   useFormContext,
+  useWatch,
 } from "react-hook-form"
 import CallToActionButton from "@/components/Buttons/CallToActionButton"
 import Checkbox from "@/components/Checkbox/Checkbox"
@@ -77,77 +78,49 @@ const RadioOptionFields = ({ name }: { name: string }) => {
   )
 }
 
-const CustomFieldsField = ({
-  defaultValues,
-  onChange,
-}: {
-  defaultValues?: CustomField
-  onChange?: (customField: CustomField) => void
-}) => {
+const CustomFieldsField = ({ name }: { name: string }) => {
   const { t } = useTranslation()
-  const uuid = useId()
+  const { control, register } = useFormContext()
+  const id = useId()
 
-  const [customField, setCustomField] = useState<Partial<CustomField>>(
-    defaultValues ?? { type: "", required: false, translations: [] },
-  )
-
-  const update = (patch: Partial<CustomField>) => {
-    const next: CustomField = { ...customField, ...patch }
-    setCustomField(next)
-    onChange?.(next)
-  }
+  const type = useWatch({
+    control,
+    name: `${name}.type`,
+  })
 
   return (
     <div>
       <FieldSelect
-        id={`${uuid}_type`}
+        id={`${id}_type`}
         label={t("luoTapahtuma.customField.type")}
-        defaultValue={defaultValues?.type ?? ""}
-        onChange={e => update({ type: e.target.value as CustomField["type"] })}
+        {...register(`${name}.type`)}
       >
         <option value="">{t("luoTapahtuma.customField.types.default")}</option>
-        <option
-          value="textarea"
-          label={t("luoTapahtuma.customField.types.textarea")}
-        />
-        <option value="text" label={t("luoTapahtuma.customField.types.text")} />
-        <option
-          value="radio"
-          label={t("luoTapahtuma.customField.types.radio")}
-        />
-        <option
-          value="checkbox"
-          label={t("luoTapahtuma.customField.types.checkbox")}
-        />
+        <option value="textarea">
+          {t("luoTapahtuma.customField.types.textarea")}
+        </option>
+        <option value="text">{t("luoTapahtuma.customField.types.text")}</option>
+        <option value="radio">
+          {t("luoTapahtuma.customField.types.radio")}
+        </option>
+        <option value="checkbox">
+          {t("luoTapahtuma.customField.types.checkbox")}
+        </option>
       </FieldSelect>
 
       <Field
         label={t("luoTapahtuma.customField.question")}
-        id={`${uuid}_name`}
+        id={`${id}_name`}
         type="text"
-        defaultValue={defaultValues?.translations?.at(0)?.name}
-        onChange={e =>
-          update({
-            translations: [
-              { ...customField.translations?.at(0), name: e.target.value },
-              ...(customField.translations?.slice(1) ?? []),
-            ] as CustomField["translations"],
-          })
-        }
+        {...register(`${name}.translations.0.name`)}
       />
 
-      {customField.type === "radio" && (
-        <RadioOptionFields
-          id={`${uuid}_options`}
-          onChange={options => update({ options } as Partial<CustomField>)}
-        />
-      )}
+      {type === "radio" && <RadioOptionFields name={`${name}.options`} />}
 
       <Checkbox
-        id={`${uuid}_required`}
+        id={`${id}_required`}
         label={t("luoTapahtuma.customField.required")}
-        defaultChecked={defaultValues?.required ?? false}
-        onChange={e => update({ required: e.target.checked })}
+        {...register(`${name}.required`)}
       />
     </div>
   )
