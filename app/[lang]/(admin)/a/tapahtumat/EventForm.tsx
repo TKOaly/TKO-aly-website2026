@@ -167,11 +167,7 @@ const CustomFieldsFieldForm = ({
   )
 }
 
-const RegistrationQuotaField = ({
-  name,
-}: {
-  name: string
-}) => {
+const RegistrationQuotaField = ({ name }: { name: string }) => {
   const { t } = useTranslation()
   const { register } = useFormContext()
 
@@ -226,20 +222,12 @@ const RegistrationQuotaField = ({
         <legend>{t("luoTapahtuma.requestQuota.paymentLegend")}</legend>
 
         <label>
-          <input
-            type="radio"
-            value="paid"
-            {...register(`${name}.payment`)}
-          />
+          <input type="radio" value="paid" {...register(`${name}.payment`)} />
           {t("luoTapahtuma.requestQuota.paid")}
         </label>
 
         <label>
-          <input
-            type="radio"
-            value="free"
-            {...register(`${name}.payment`)}
-          />
+          <input type="radio" value="free" {...register(`${name}.payment`)} />
           {t("luoTapahtuma.requestQuota.free")}
         </label>
       </fieldset>
@@ -290,90 +278,41 @@ const RegistrationQuotaField = ({
   )
 }
 
-const RegistrationQuotaFrom = ({
-  defaultValues,
-  onChange,
-}: {
-  defaultValues?: RegistrationQuota[]
-  onChange?: (fields: RegistrationQuota[]) => void
-}) => {
+const RegistrationQuotaForm = () => {
   const { t } = useTranslation()
-  const [customFieldsData, setCustomFields] = useState<
-    ListItem<RegistrationQuota>[]
-  >(
-    defaultValues
-      ? defaultValues.map((field, id) => ({ id, value: field }))
-      : [],
-  )
+  const { control, getValues } = useFormContext()
 
-  useEffect(() => {
-    onChange?.(customFieldsData.map(item => item.value))
-  }, [customFieldsData])
-
-  const nextRegistrationQuotaId = useRef(customFieldsData.length)
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "registrationQuotas",
+  })
 
   const addRegistrationQuota = () => {
-    setCustomFields(prev => {
-      const first = prev[0]?.value
+    const first = getValues("registrationQuotas.0")
 
-      return [
-        ...prev,
-        {
-          id: nextRegistrationQuotaId.current,
-          value: first
-            ? {
-                registration_starts: first.registration_starts,
-                registration_ends: first.registration_ends,
-                cancellation_starts: first.cancellation_starts,
-                cancellation_ends: first.cancellation_ends,
-              }
-            : { id: nextRegistrationQuotaId.current, value: {} },
-        },
-      ]
-    })
-    nextRegistrationQuotaId.current++
-  }
-
-  const removeRegistrationQuota = (id: number) => {
-    setCustomFields(prev => prev.filter(field => field.id !== id))
-  }
-
-  const updateRegistrationQuota = (id: number, value: RegistrationQuota) => {
-    setCustomFields(prev =>
-      prev.map(field => (field.id === id ? { ...field, value } : field)),
-    )
+    append({
+      registration_starts: first?.registration_starts,
+      registration_ends: first?.registration_ends,
+      cancellation_starts: first?.cancellation_starts,
+      cancellation_ends: first?.cancellation_ends,
+    } as RegistrationQuota)
   }
 
   return (
     <Fieldset legend={t("luoTapahtuma.requestQuota.legend")}>
-      <For each={customFieldsData}>
-        {item => (
-          <div key={item.id} style={{ display: "flex" }}>
-            <RegistrationQuotaField
-              defaultValues={item.value}
-              onChange={field => updateRegistrationQuota(item.id, field)}
-            />
-            <button
-              onClick={() => removeRegistrationQuota(item.id)}
-              type="button"
-            >
-              -
-            </button>
-          </div>
-        )}
-      </For>
+      {fields.map((field, index) => (
+        <div key={field.id} style={{ display: "flex" }}>
+          <RegistrationQuotaField name={`registrationQuotas.${index}`} />
+
+          <button onClick={() => remove(index)} type="button">
+            -
+          </button>
+        </div>
+      ))}
 
       <button onClick={addRegistrationQuota} type="button">
         {t("luoTapahtuma.requestQuota.add")}
       </button>
-
-      {onChange && (
-        <input
-          type="hidden"
-          name="registration_quotas"
-          value={JSON.stringify(customFieldsData.map(f => f.value))}
-        />
-      )}
     </Fieldset>
   )
 }
@@ -488,7 +427,7 @@ const EventForm = ({
               }
             />
 
-            <RegistrationQuotaFrom
+            <RegistrationQuotaForm
               defaultValues={defaultValues?.registrationQuotas}
             />
           </Fieldset>
@@ -551,7 +490,7 @@ const EventForm = ({
             </FieldSelect>
           </Fieldset>
 
-          <CustomFieldsFieldFrom defaultValues={defaultValues?.fields} />
+          <CustomFieldsFieldForm defaultValues={defaultValues?.fields} />
 
           <Checkbox
             id="save_as_template"
