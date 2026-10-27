@@ -168,149 +168,124 @@ const CustomFieldsFieldForm = ({
 }
 
 const RegistrationQuotaField = ({
-  defaultValues,
-  onChange,
+  name,
 }: {
-  defaultValues?: RegistrationQuota
-  onChange?: (registrationQuota: RegistrationQuota) => void
+  name: string
 }) => {
   const { t } = useTranslation()
-  const uuid = useId()
-  const isPaid = !!defaultValues?.price
-  const [registrationQuota, setRegistrationQuota] = useState<
-    Partial<RegistrationQuota>
-  >(defaultValues ?? {})
+  const { register } = useFormContext()
 
-  const update = (patch: Partial<RegistrationQuota>) => {
-    const next = { ...registrationQuota, ...patch }
-    setRegistrationQuota(next)
-    onChange?.(next as RegistrationQuota)
+  const dateOptions = {
+    setValueAs: (value: string) => (value ? new Date(value) : undefined),
   }
-
-  const toDate = (value: string) => (value ? new Date(value) : undefined)
 
   return (
     <div>
       <Field
         label={t("luoTapahtuma.requestQuota.name")}
-        id={`${uuid}_quota_name`}
+        id={`${name}_quota_name`}
         type="text"
-        defaultValue={defaultValues?.translations?.quota_name}
-        onChange={e => update({ registration_starts: toDate(e.target.value) })}
+        {...register(`${name}.translations.quota_name`)}
       />
       <Field
         label={t("luoTapahtuma.requestQuota.maxParticipants")}
-        id="max_participants"
+        id={`${name}_max_participants`}
         type="number"
         min="0"
-        defaultValue={
-          defaultValues?.max_participants != null
-            ? String(defaultValues.max_participants)
-            : ""
-        }
-        onChange={e =>
-          update({
-            max_participants:
-              e.target.value === "" ? undefined : Number(e.target.value),
-          })
-        }
+        {...register(`${name}.max_participants`, {
+          setValueAs: (value: string) =>
+            value === "" ? undefined : Number(value),
+        })}
       />
       <Field
         label={t("luoTapahtuma.requestQuota.registrationStarts")}
-        id={`${uuid}_registration_starts`}
+        id={`${name}_registration_starts`}
         type="datetime-local"
-        defaultValue={defaultValues?.registration_starts?.toLocaleDateString()}
-        onChange={e => update({ registration_starts: toDate(e.target.value) })}
+        {...register(`${name}.registration_starts`, dateOptions)}
       />
       <Field
         label={t("luoTapahtuma.requestQuota.registrationEnds")}
-        id={`${uuid}_registration_ends`}
+        id={`${name}_registration_ends`}
         type="datetime-local"
-        defaultValue={toDateTimeLocalValue(
-          defaultValues?.registration_ends?.toLocaleDateString(),
-        )}
-        onChange={e => update({ registration_ends: toDate(e.target.value) })}
+        {...register(`${name}.registration_ends`, dateOptions)}
       />
       <Field
         label={t("luoTapahtuma.requestQuota.cancellationStarts")}
-        id={`${uuid}_cancellation_starts`}
+        id={`${name}_cancellation_starts`}
         type="datetime-local"
-        defaultValue={defaultValues?.cancellation_starts?.toLocaleDateString()}
-        onChange={e => update({ cancellation_starts: toDate(e.target.value) })}
+        {...register(`${name}.cancellation_starts`, dateOptions)}
       />
       <Field
         label={t("luoTapahtuma.requestQuota.cancellationEnds")}
-        id={`${uuid}_cancellation_ends`}
+        id={`${name}_cancellation_ends`}
         type="datetime-local"
-        defaultValue={defaultValues?.cancellation_ends?.toLocaleDateString()}
-        onChange={e => update({ cancellation_ends: toDate(e.target.value) })}
+        {...register(`${name}.cancellation_ends`, dateOptions)}
       />
 
-      <FieldRadioGroup
-        legend={t("luoTapahtuma.requestQuota.paymentLegend")}
-        name={`${uuid}_payment`}
-        options={[
-          {
-            value: "paid",
-            label: t("luoTapahtuma.requestQuota.paid"),
-            defaultChecked: isPaid,
-          },
-          {
-            value: "free",
-            label: t("luoTapahtuma.requestQuota.free"),
-            defaultChecked: !isPaid,
-          },
-        ]}
-      />
+      <fieldset>
+        <legend>{t("luoTapahtuma.requestQuota.paymentLegend")}</legend>
+
+        <label>
+          <input
+            type="radio"
+            value="paid"
+            {...register(`${name}.payment`)}
+          />
+          {t("luoTapahtuma.requestQuota.paid")}
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            value="free"
+            {...register(`${name}.payment`)}
+          />
+          {t("luoTapahtuma.requestQuota.free")}
+        </label>
+      </fieldset>
+
       <Field
         label={t("luoTapahtuma.optional.price")}
-        id="price"
-        name="price"
+        id={`${name}_price`}
         type="number"
         step="0.01"
         min="0"
-        defaultValue={defaultValues?.price ?? ""}
+        {...register(`${name}.price`, {
+          setValueAs: (value: string) =>
+            value === "" ? undefined : Number(value),
+        })}
       />
 
       <div className={styles.checkboxList}>
         <Checkbox
-          id={`${uuid}_outsiders_allowed`}
+          id={`${name}_outsiders_allowed`}
           label={t("luoTapahtuma.requestQuota.outsiders_allowed")}
-          defaultChecked={defaultValues?.outsiders_allowed ?? false}
-          onChange={e => update({ outsiders_allowed: e.target.checked })}
+          {...register(`${name}.outsiders_allowed`)}
         />
         <Checkbox
-          id={`${uuid}_membership_required`}
+          id={`${name}_membership_required`}
           label={t("luoTapahtuma.requestQuota.membershipRequired")}
-          defaultChecked={defaultValues?.membership_required ?? false}
-          onChange={e => update({ membership_required: e.target.checked })}
+          {...register(`${name}.membership_required`)}
         />
         <Checkbox
-          id={`${uuid}_avec_can_attend`}
+          id={`${name}_avec_can_attend`}
           label={t("luoTapahtuma.requestQuota.avec")}
-          defaultChecked={defaultValues?.avec_can_attend ?? false}
-          onChange={e => update({ avec_can_attend: e.target.checked })}
+          {...register(`${name}.avec_can_attend`)}
         />
         <Checkbox
-          id={`${uuid}_hidden`}
+          id={`${name}_hidden`}
           label={t("luoTapahtuma.requestQuota.hidden")}
-          defaultChecked={defaultValues?.hidden ?? false}
-          onChange={e => update({ hidden: e.target.checked })}
+          {...register(`${name}.hidden`)}
         />
         <Field
           label={t("luoTapahtuma.requestQuota.is_main_quota")}
-          id={`${uuid}_is_main_quota`}
-          type="radio"
-          name="main_quota"
-          checked={!!defaultValues?.is_main_quota}
-          onChange={e => update({ is_main_quota: e.target.checked })}
+          id={`${name}_is_main_quota`}
+          type="checkbox"
+          {...register(`${name}.is_main_quota`)}
         />
       </div>
 
-      <CustomFieldsFieldFrom
-        defaultValues={defaultValues?.fields}
-        onChange={fields => update({ fields: fields })}
-      />
+      <CustomFieldsFieldForm name={`${name}.fields`} />
     </div>
   )
 }
