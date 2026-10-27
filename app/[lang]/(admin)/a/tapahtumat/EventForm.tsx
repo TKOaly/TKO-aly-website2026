@@ -126,77 +126,43 @@ const CustomFieldsField = ({ name }: { name: string }) => {
   )
 }
 
-const CustomFieldsFieldFrom = ({
-  defaultValues,
-  onChange,
+const CustomFieldsFieldForm = ({
+  name,
 }: {
-  defaultValues?: CustomField[]
+  name: string
   onChange?: (fields: CustomField[]) => void
 }) => {
   const { t } = useTranslation()
-  const [customFieldsData, setCustomFields] = useState<ListItem<CustomField>[]>(
-    defaultValues
-      ? defaultValues.map((field, id) => ({ id, value: field }))
-      : [],
-  )
+  const { control } = useFormContext()
 
-  useEffect(() => {
-    onChange?.(customFieldsData.map(item => item.value))
-  }, [customFieldsData])
-
-  const nextCustomFieldId = useRef(customFieldsData.length)
-
-  const addCustomFields = () => {
-    setCustomFields(prev => [
-      ...prev,
-      {
-        id: nextCustomFieldId.current,
-        value: {
-          type: "",
-          translations: [{ locale: "", name: "" }],
-        },
-      },
-    ])
-    nextCustomFieldId.current++
-  }
-
-  const removeCustomFields = (id: number) => {
-    setCustomFields(prev => prev.filter(field => field.id !== id))
-  }
-
-  const updateCustomFields = (id: number, value: CustomField) => {
-    setCustomFields(prev =>
-      prev.map(field => (field.id === id ? { ...field, value } : field)),
-    )
-  }
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name,
+  })
 
   return (
     <Fieldset legend={t("luoTapahtuma.customField.legend")}>
-      <For each={customFieldsData}>
-        {item => (
-          <div key={item.id} style={{ display: "flex" }}>
-            <CustomFieldsField
-              defaultValues={item.value}
-              onChange={field => updateCustomFields(item.id, field)}
-            />
-            <button onClick={() => removeCustomFields(item.id)} type="button">
-              -
-            </button>
-          </div>
-        )}
-      </For>
+      {fields.map((field, index) => (
+        <div key={field.id} style={{ display: "flex" }}>
+          <CustomFieldsField name={`${name}.${index}`} />
 
-      <button onClick={addCustomFields} type="button">
+          <button onClick={() => remove(index)} type="button">
+            -
+          </button>
+        </div>
+      ))}
+
+      <button
+        onClick={() =>
+          append({
+            type: "",
+            translations: [{ locale: "", name: "" }],
+          })
+        }
+        type="button"
+      >
         {t("luoTapahtuma.customField.add")}
       </button>
-
-      {onChange && (
-        <input
-          type="hidden"
-          name="custom_fields"
-          value={JSON.stringify(customFieldsData.map(f => f.value))}
-        />
-      )}
     </Fieldset>
   )
 }
