@@ -1,6 +1,11 @@
 "use client"
 
-import { For } from "@chakra-ui/react"
+import {
+  useForm,
+  FormProvider,
+  useFieldArray,
+  useFormContext,
+} from "react-hook-form"
 import CallToActionButton from "@/components/Buttons/CallToActionButton"
 import Checkbox from "@/components/Checkbox/Checkbox"
 import Field from "@/components/Field/Field"
@@ -18,6 +23,7 @@ import type {
 import styles from "./luo/LuoTapahtuma.module.css"
 import { useEffect, useId, useRef, useState } from "react"
 import { useTranslation } from "@/app/i18n/client"
+
 export const toDateInputValue = (iso: string | null | undefined): string => {
   if (!iso) return ""
   const d = new Date(iso)
@@ -38,66 +44,33 @@ export const toDateTimeLocalValue = (
   return isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 16)
 }
 
-const RadioOptionFields = ({
-  id,
-  onChange,
-}: {
-  id: string
-  onChange?: (options: string[]) => void
-}) => {
+const RadioOptionFields = ({ name }: { name: string }) => {
   const { t } = useTranslation()
-  const [radioOptions, setRadioOptions] = useState<ListItem<string>[]>([
-    { id: 0, value: "" },
-  ])
-  const nextId = useRef(1)
+  const { control, register } = useFormContext()
 
-  useEffect(() => {
-    onChange?.(radioOptions.map(option => option.value))
-  }, [radioOptions])
-
-  const addRadioOption = () => {
-    setRadioOptions(prev => [...prev, { id: nextId.current, value: "" }])
-    nextId.current++
-  }
-
-  const removeRadioOption = (id: number) => {
-    setRadioOptions(prev => prev.filter(option => option.id !== id))
-  }
-
-  const updateRadioOption = (id: number, value: string) => {
-    setRadioOptions(prev =>
-      prev.map(option => (option.id === id ? { ...option, value } : option)),
-    )
-  }
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name,
+  })
 
   return (
     <>
-      {radioOptions.map((option, index) => (
-        <div key={option.id} style={{ display: "flex" }}>
+      {fields.map((field, index) => (
+        <div key={field.id} style={{ display: "flex" }}>
           <Field
             label={t("luoTapahtuma.customField.option")}
-            id={`${id}_${index}`}
-            name={`customFieldOption_${index}`}
-            value={option.value}
+            id={`${name}_${index}`}
             type="text"
-            onChange={e => updateRadioOption(option.id, e.target.value)}
+            {...register(`${name}.${index}.value`)}
           />
-          {radioOptions.length !== 1 && (
-            <button
-              onClick={() => removeRadioOption(option.id)}
-              className={styles.addButton}
-              type="button"
-            >
+          {fields.length !== 1 && (
+            <button onClick={() => remove(index)} type="button">
               -
             </button>
           )}
         </div>
       ))}
-      <button
-        onClick={addRadioOption}
-        className={styles.addButton}
-        type="button"
-      >
+      <button onClick={() => append({ value: "" })} type="button">
         +
       </button>
     </>
@@ -511,6 +484,7 @@ const EventForm = ({
   formId = "event-form",
 }: Props) => {
   const { t } = useTranslation()
+  const methods = useForm()
 
   return (
     <section className={styles.section}>
@@ -524,146 +498,154 @@ const EventForm = ({
         </div>
       )}
 
-      <form id={formId} action={action} className={styles.form}>
-        {/* Required details */}
-        <Fieldset legend={t("luoTapahtuma.required.legend")}>
-          <Field
-            required
-            label={t("luoTapahtuma.required.name")}
-            id="name"
-            name="name"
-            type="text"
-            defaultValue={defaultValues?.translations.at(0)?.title}
-          />
-          <Field
-            required
-            label={t("luoTapahtuma.required.date")}
-            id="date"
-            name="date"
-            type="date"
-            defaultValue={toDateInputValue(defaultValues?.toLocaleString())}
-          />
-          <Field
-            required
-            label={t("luoTapahtuma.required.time")}
-            id="time"
-            name="time"
-            type="time"
-            defaultValue={defaultValues?.starts.toLocaleString()}
-          />
+      <FormProvider {...methods}>
+        <form id={formId} action={action} className={styles.form}>
+          {/* Required details */}
+          <Fieldset legend={t("luoTapahtuma.required.legend")}>
+            <Field
+              required
+              label={t("luoTapahtuma.required.name")}
+              id="name"
+              name="name"
+              type="text"
+              defaultValue={defaultValues?.translations.at(0)?.title}
+            />
+            <Field
+              required
+              label={t("luoTapahtuma.required.date")}
+              id="date"
+              name="date"
+              type="date"
+              defaultValue={toDateInputValue(defaultValues?.toLocaleString())}
+            />
+            <Field
+              required
+              label={t("luoTapahtuma.required.time")}
+              id="time"
+              name="time"
+              type="time"
+              defaultValue={defaultValues?.starts.toLocaleString()}
+            />
 
-          <Field
-            required
-            label={t("luoTapahtuma.required.venue")}
-            id="venue"
-            name="venue"
-            type="text"
-            list="venue-datalist"
-            placeholder={t("luoTapahtuma.required.venuePlaceholder")}
-            defaultValue={
-              defaultValues?.location.translations.at(0)?.location ?? ""
-            }
-          />
-          <datalist id="venue-datalist">
-            <option value="Paikka 1" />
-            <option value="Paikka 2" />
-            <option value="Paikka 3" />
-          </datalist>
+            <Field
+              required
+              label={t("luoTapahtuma.required.venue")}
+              id="venue"
+              name="venue"
+              type="text"
+              list="venue-datalist"
+              placeholder={t("luoTapahtuma.required.venuePlaceholder")}
+              defaultValue={
+                defaultValues?.location.translations.at(0)?.location ?? ""
+              }
+            />
+            <datalist id="venue-datalist">
+              <option value="Paikka 1" />
+              <option value="Paikka 2" />
+              <option value="Paikka 3" />
+            </datalist>
 
-          <Field
-            required
-            label={t("luoTapahtuma.required.eventType")}
-            id="event_type"
-            name="event_type"
-            type="text"
-            placeholder={t("luoTapahtuma.required.eventTypePlaceholder")}
-            list="event-type-datalist"
-            defaultValue={
-              defaultValues?.eventType.translations.at(0)?.event_type ?? ""
-            }
-          />
-          <datalist id="event-type-datalist">
-            <option value="Tyyppi 1" />
-            <option value="Tyyppi 2" />
-            <option value="Tyyppi 3" />
-          </datalist>
+            <Field
+              required
+              label={t("luoTapahtuma.required.eventType")}
+              id="event_type"
+              name="event_type"
+              type="text"
+              placeholder={t("luoTapahtuma.required.eventTypePlaceholder")}
+              list="event-type-datalist"
+              defaultValue={
+                defaultValues?.eventType.translations.at(0)?.event_type ?? ""
+              }
+            />
+            <datalist id="event-type-datalist">
+              <option value="Tyyppi 1" />
+              <option value="Tyyppi 2" />
+              <option value="Tyyppi 3" />
+            </datalist>
 
-          <Textarea
-            required
-            id="description"
-            label={t("luoTapahtuma.required.description")}
-            name="description"
-            rows={5}
-            defaultValue={defaultValues?.translations.at(0)?.description ?? ""}
-          />
+            <Textarea
+              required
+              id="description"
+              label={t("luoTapahtuma.required.description")}
+              name="description"
+              rows={5}
+              defaultValue={
+                defaultValues?.translations.at(0)?.description ?? ""
+              }
+            />
 
-          <RegistrationQuotaFrom
-            defaultValues={defaultValues?.registrationQuotas}
-          />
-        </Fieldset>
+            <RegistrationQuotaFrom
+              defaultValues={defaultValues?.registrationQuotas}
+            />
+          </Fieldset>
 
-        {/* Optional details */}
-        <Fieldset legend={t("luoTapahtuma.optional.legend")}>
-          <Field
-            label={t("luoTapahtuma.optional.organizer")}
-            id="organizer"
-            name="organizer"
-            type="text"
-            defaultValue={defaultValues?.responsible ?? ""}
-          />
+          {/* Optional details */}
+          <Fieldset legend={t("luoTapahtuma.optional.legend")}>
+            <Field
+              label={t("luoTapahtuma.optional.organizer")}
+              id="organizer"
+              name="organizer"
+              type="text"
+              defaultValue={defaultValues?.responsible ?? ""}
+            />
+            <Checkbox
+              id="show_contact"
+              name="show_contact"
+              label={t("luoTapahtuma.optional.showContact")}
+              defaultChecked={defaultValues?.show_responsible ?? false}
+            />
+
+            <Field
+              label={t("luoTapahtuma.optional.mapLink")}
+              id="map_link"
+              name="map_link"
+              type="url"
+              defaultValue={defaultValues?.location.map_link ?? ""}
+            />
+
+            <FieldSelect
+              id="alcohol_scale"
+              name="alcohol_scale"
+              label={t("luoTapahtuma.optional.alcoholScale")}
+              defaultValue={
+                defaultValues?.alcohol_meter != null
+                  ? String(defaultValues.alcohol_meter)
+                  : ""
+              }
+            >
+              <option value="">
+                {t("luoTapahtuma.optional.alcoholSelectDefault")}
+              </option>
+              <option value="0">
+                {t("luoTapahtuma.optional.alcoholNone")}
+              </option>
+              <option value="1">
+                {t("luoTapahtuma.optional.alcoholLevel1")}
+              </option>
+              <option value="2">
+                {t("luoTapahtuma.optional.alcoholLevel2")}
+              </option>
+              <option value="3">
+                {t("luoTapahtuma.optional.alcoholModerate")}
+              </option>
+              <option value="4">
+                {t("luoTapahtuma.optional.alcoholLevel4")}
+              </option>
+              <option value="5">
+                {t("luoTapahtuma.optional.alcoholHeavy")}
+              </option>
+            </FieldSelect>
+          </Fieldset>
+
+          <CustomFieldsFieldFrom defaultValues={defaultValues?.fields} />
+
           <Checkbox
-            id="show_contact"
-            name="show_contact"
-            label={t("luoTapahtuma.optional.showContact")}
-            defaultChecked={defaultValues?.show_responsible ?? false}
+            id="save_as_template"
+            name="save_as_template"
+            label={t("luoTapahtuma.optional.saveAsTemplate")}
           />
-
-          <Field
-            label={t("luoTapahtuma.optional.mapLink")}
-            id="map_link"
-            name="map_link"
-            type="url"
-            defaultValue={defaultValues?.location.map_link ?? ""}
-          />
-
-          <FieldSelect
-            id="alcohol_scale"
-            name="alcohol_scale"
-            label={t("luoTapahtuma.optional.alcoholScale")}
-            defaultValue={
-              defaultValues?.alcohol_meter != null
-                ? String(defaultValues.alcohol_meter)
-                : ""
-            }
-          >
-            <option value="">
-              {t("luoTapahtuma.optional.alcoholSelectDefault")}
-            </option>
-            <option value="0">{t("luoTapahtuma.optional.alcoholNone")}</option>
-            <option value="1">
-              {t("luoTapahtuma.optional.alcoholLevel1")}
-            </option>
-            <option value="2">
-              {t("luoTapahtuma.optional.alcoholLevel2")}
-            </option>
-            <option value="3">
-              {t("luoTapahtuma.optional.alcoholModerate")}
-            </option>
-            <option value="4">
-              {t("luoTapahtuma.optional.alcoholLevel4")}
-            </option>
-            <option value="5">{t("luoTapahtuma.optional.alcoholHeavy")}</option>
-          </FieldSelect>
-        </Fieldset>
-
-        <CustomFieldsFieldFrom defaultValues={defaultValues?.fields} />
-
-        <Checkbox
-          id="save_as_template"
-          name="save_as_template"
-          label={t("luoTapahtuma.optional.saveAsTemplate")}
-        />
-      </form>
+        </form>
+      </FormProvider>
 
       <CallToActionButton form={formId}>{submitLabel}</CallToActionButton>
     </section>
