@@ -214,20 +214,12 @@
       "alcoholLevel4": "4",
       "alcoholHeavy": "5 - Heavy alcohol use",
       "canParticipate": "Event registration is available",
-      "membershipRequired": "Participants must be members",
-      "avec": "Event participants can register an accompaniment",
-      "maxParticipants": "Maximum number of participants",
-      "registrationStarts": "Registration starts",
-      "registrationEnds": "Registration ends",
-      "cancellationAlert": "You can use these to set the most common cancellation options:",
-      "cancellationStarts": "Cancellation starts",
-      "cancellationEnds": "Cancellation ends",
       "saveAsTemplate": "Save as event template"
     },
     "customField": {
       "legend": "Additional fields",
       "question": "Question",
-      "type": "Type",      
+      "type": "Type",
       "option": "Option",
       "types": {
         "default": "Select Additional field's type",
@@ -236,7 +228,21 @@
         "radio": "Multiple choice",
         "checkbox": "Checkbox"
       },
-      "required": "Pakollinen",
+      "requestQuota": {
+        "name": "Quota name",
+        "maxParticipants": "Maximum number of participants",
+        "registrationStarts": "Registration starts",
+        "registrationEnds": "Registration ends",
+        "cancellationAlert": "You can use these to set the most common cancellation options:",
+        "cancellationStarts": "Cancellation starts",
+        "cancellationEnds": "Cancellation ends",
+        "membershipRequired": "Participants must be members",
+        "avec": "Event participants can register an accompaniment",
+        "hidden": "Hidden",
+        "mainQuota": "Main quota",
+        "legend": "Registration quotas",
+        "add": "Add registration quotas"
+      },
       "add": "Add additional field"
     },
     "submit": "Create event"

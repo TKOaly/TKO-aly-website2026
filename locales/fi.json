@@ -217,20 +217,12 @@
       "alcoholLevel4": "4",
       "alcoholHeavy": "5 - Runsaasti alkoholia",
       "canParticipate": "Tapahtumaan voi ilmoittautua",
-      "membershipRequired": "Ilmoittautujien oltava jäseniä",
-      "avec": "Tapahtumaan voi ilmoittaa seuralaisen",
-      "maxParticipants": "Suurin osallistujamäärä",
-      "registrationStarts": "Ilmoittautumisen alku",
-      "registrationEnds": "Ilmoittautumisen loppu",
-      "cancellationAlert": "Näillä voit asettaa tyypillisimmät perumistavat:",
-      "cancellationStarts": "Ilmoittautumisen perumisen alku",
-      "cancellationEnds": "Ilmoittautumisen perumisen loppu",
       "saveAsTemplate": "Tallenna tapahtumapohjaksi"
     },
     "customField": {
       "legend": "Lisätietokentät",
       "question": "Kysymys",
-      "type": "Tyyppi",      
+      "type": "Tyyppi",
       "option": "Vaihtoehto",
       "types": {
         "default": "Valitse lisäkentän tyyppi",
@@ -241,6 +233,22 @@
       },
       "required": "Pakollinen",
       "add": "Lisää lisätietokenttä"
+    },
+    "requestQuota": {
+      "name": "Kiintiön nimi",
+      "maxParticipants": "Suurin osallistujamäärä",
+      "registrationStarts": "Ilmoittautumisen alku",
+      "registrationEnds": "Ilmoittautumisen loppu",
+      "cancellationAlert": "Näillä voit asettaa tyypillisimmät perumistavat:",
+      "cancellationStarts": "Ilmoittautumisen perumisen alku",
+      "cancellationEnds": "Ilmoittautumisen perumisen loppu",
+      "outsiders_allowed": "Ei jäsen voi ilmoittautua",
+      "membershipRequired": "Ilmoittautujien oltava jäseniä",
+      "avec_can_attend": "Tapahtumaan voi ilmoittaa seuralaisen",
+      "hidden": "Piilotettu",
+      "is_main_quota": "Pää kiintiö",
+      "legend": "Ilmoittautumis kiintiöt",
+      "add": "Lisää ilmoittautumis kiintiö"
     },
     "submit": "Luo tapahtuma"
   },

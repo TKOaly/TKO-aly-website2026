@@ -32,10 +32,10 @@ type CustomFieldTranslation = {
 }
 
 export type CustomField = {
-  type: "textarea" | "radio" | "checkbox" | "text" | ""
+  type?: "textarea" | "radio" | "checkbox" | "text" | ""
   options?: string[]
   required?: boolean
-  translations: CustomFieldTranslation[]
+  translations?: CustomFieldTranslation[]
 }
 
 export type ListItem<T> = { id: number; value: T }
@@ -46,23 +46,25 @@ type RegistrationQuotaTranslation = {
 }
 
 export type RegistrationQuota = {
-  max_participants: number
-  registration_starts: Date
-  registration_ends: Date
-  translations: RegistrationQuotaTranslation
+  max_participants?: number
+  registration_starts?: Date
+  registration_ends?: Date
+  translations?: RegistrationQuotaTranslation
   membership_required?: boolean
   outsiders_allowed?: boolean
   avec_can_attend?: boolean
+  hidden?: boolean
+  is_main_quota?: boolean
   cancellation_starts?: Date
   cancellation_ends?: Date
   fields?: CustomField[]
+  price?: string
 }
 
 export type EventFormValues = {
   user_id: number
   starts: Date
   alcohol_meter?: number
-  price?: string
   responsible?: string
   show_responsible?: boolean
   weekly_event?: boolean

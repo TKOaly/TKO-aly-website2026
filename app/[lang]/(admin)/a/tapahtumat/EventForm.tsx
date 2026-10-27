@@ -112,15 +112,16 @@ const CustomFieldsField = ({
   onChange?: (customField: CustomField) => void
 }) => {
   const { t } = useTranslation()
-  const uuid = useId() 
+  const uuid = useId()
+
   const [customField, setCustomField] = useState<Partial<CustomField>>(
     defaultValues ?? { type: "", required: false, translations: [] },
   )
 
   const update = (patch: Partial<CustomField>) => {
-    const next = { ...customField, ...patch }
+    const next: CustomField = { ...customField, ...patch }
     setCustomField(next)
-    onChange?.(next as CustomField)
+    onChange?.(next)
   }
 
   return (
@@ -151,7 +152,7 @@ const CustomFieldsField = ({
         label={t("luoTapahtuma.customField.question")}
         id={`${uuid}_name`}
         type="text"
-        defaultValue={defaultValues?.translations.at(0)?.name}
+        defaultValue={defaultValues?.translations?.at(0)?.name}
         onChange={e =>
           update({
             translations: [
@@ -179,33 +180,23 @@ const CustomFieldsField = ({
   )
 }
 
-type Props = {
-  action: (formData: FormData) => Promise<void>
-  defaultValues?: EventFormValues
-  templates?: EventFormValues[]
-  templateLabel?: string
-  templatePlaceholder?: string
-  submitLabel: string
-  formId?: string
-}
-
-const EventForm = ({
-  action,
+const CustomFieldsFieldFrom = ({
   defaultValues,
-  templates,
-  templateLabel,
-  templatePlaceholder,
-  submitLabel,
-  formId = "event-form",
-}: Props) => {
-  const isPaid = !!defaultValues?.price
+  onChange,
+}: {
+  defaultValues?: CustomField[]
+  onChange?: (fields: CustomField[]) => void
+}) => {
   const { t } = useTranslation()
-
   const [customFieldsData, setCustomFields] = useState<ListItem<CustomField>[]>(
-    defaultValues?.fields
-      ? defaultValues.fields.map((field, id) => ({ id, value: field }))
+    defaultValues
+      ? defaultValues.map((field, id) => ({ id, value: field }))
       : [],
   )
+
+  useEffect(() => {
+    onChange?.(customFieldsData.map(item => item.value))
+  }, [customFieldsData])
 
   const nextCustomFieldId = useRef(customFieldsData.length)
 
@@ -232,6 +223,294 @@ const EventForm = ({
       prev.map(field => (field.id === id ? { ...field, value } : field)),
     )
   }
+
+  return (
+    <Fieldset legend={t("luoTapahtuma.customField.legend")}>
+      <For each={customFieldsData}>
+        {item => (
+          <div key={item.id} style={{ display: "flex" }}>
+            <CustomFieldsField
+              defaultValues={item.value}
+              onChange={field => updateCustomFields(item.id, field)}
+            />
+            <button onClick={() => removeCustomFields(item.id)} type="button">
+              -
+            </button>
+          </div>
+        )}
+      </For>
+
+      <button onClick={addCustomFields} type="button">
+        {t("luoTapahtuma.customField.add")}
+      </button>
+
+      {onChange && (
+        <input
+          type="hidden"
+          name="custom_fields"
+          value={JSON.stringify(customFieldsData.map(f => f.value))}
+        />
+      )}
+    </Fieldset>
+  )
+}
+
+const RegistrationQuotaField = ({
+  defaultValues,
+  onChange,
+}: {
+  defaultValues?: RegistrationQuota
+  onChange?: (registrationQuota: RegistrationQuota) => void
+}) => {
+  const { t } = useTranslation()
+  const uuid = useId()
+  const isPaid = !!defaultValues?.price
+  const [registrationQuota, setRegistrationQuota] = useState<
+    Partial<RegistrationQuota>
+  >(defaultValues ?? {})
+
+  const update = (patch: Partial<RegistrationQuota>) => {
+    const next = { ...registrationQuota, ...patch }
+    setRegistrationQuota(next)
+    onChange?.(next as RegistrationQuota)
+  }
+
+  const toDate = (value: string) => (value ? new Date(value) : undefined)
+
+  return (
+    <div>
+      <Field
+        label={t("luoTapahtuma.requestQuota.name")}
+        id={`${uuid}_quota_name`}
+        type="text"
+        defaultValue={defaultValues?.translations?.quota_name}
+        onChange={e => update({ registration_starts: toDate(e.target.value) })}
+      />
+      <Field
+        label={t("luoTapahtuma.requestQuota.maxParticipants")}
+        id="max_participants"
+        type="number"
+        min="0"
+        defaultValue={
+          defaultValues?.max_participants != null
+            ? String(defaultValues.max_participants)
+            : ""
+        }
+        onChange={e =>
+          update({
+            max_participants:
+              e.target.value === "" ? undefined : Number(e.target.value),
+          })
+        }
+      />
+      <Field
+        label={t("luoTapahtuma.requestQuota.registrationStarts")}
+        id={`${uuid}_registration_starts`}
+        type="datetime-local"
+        defaultValue={defaultValues?.registration_starts?.toLocaleDateString()}
+        onChange={e => update({ registration_starts: toDate(e.target.value) })}
+      />
+      <Field
+        label={t("luoTapahtuma.requestQuota.registrationEnds")}
+        id={`${uuid}_registration_ends`}
+        type="datetime-local"
+        defaultValue={toDateTimeLocalValue(
+          defaultValues?.registration_ends?.toLocaleDateString(),
+        )}
+        onChange={e => update({ registration_ends: toDate(e.target.value) })}
+      />
+      <Field
+        label={t("luoTapahtuma.requestQuota.cancellationStarts")}
+        id={`${uuid}_cancellation_starts`}
+        type="datetime-local"
+        defaultValue={defaultValues?.cancellation_starts?.toLocaleDateString()}
+        onChange={e => update({ cancellation_starts: toDate(e.target.value) })}
+      />
+      <Field
+        label={t("luoTapahtuma.requestQuota.cancellationEnds")}
+        id={`${uuid}_cancellation_ends`}
+        type="datetime-local"
+        defaultValue={defaultValues?.cancellation_ends?.toLocaleDateString()}
+        onChange={e => update({ cancellation_ends: toDate(e.target.value) })}
+      />
+
+      <FieldRadioGroup
+        legend={t("luoTapahtuma.requestQuota.paymentLegend")}
+        name={`${uuid}_payment`}
+        options={[
+          {
+            value: "paid",
+            label: t("luoTapahtuma.requestQuota.paid"),
+            defaultChecked: isPaid,
+          },
+          {
+            value: "free",
+            label: t("luoTapahtuma.requestQuota.free"),
+            defaultChecked: !isPaid,
+          },
+        ]}
+      />
+      <Field
+        label={t("luoTapahtuma.optional.price")}
+        id="price"
+        name="price"
+        type="number"
+        step="0.01"
+        min="0"
+        defaultValue={defaultValues?.price ?? ""}
+      />
+
+      <div className={styles.checkboxList}>
+        <Checkbox
+          id={`${uuid}_outsiders_allowed`}
+          label={t("luoTapahtuma.requestQuota.outsiders_allowed")}
+          defaultChecked={defaultValues?.outsiders_allowed ?? false}
+          onChange={e => update({ outsiders_allowed: e.target.checked })}
+        />
+        <Checkbox
+          id={`${uuid}_membership_required`}
+          label={t("luoTapahtuma.requestQuota.membershipRequired")}
+          defaultChecked={defaultValues?.membership_required ?? false}
+          onChange={e => update({ membership_required: e.target.checked })}
+        />
+        <Checkbox
+          id={`${uuid}_avec_can_attend`}
+          label={t("luoTapahtuma.requestQuota.avec")}
+          defaultChecked={defaultValues?.avec_can_attend ?? false}
+          onChange={e => update({ avec_can_attend: e.target.checked })}
+        />
+        <Checkbox
+          id={`${uuid}_hidden`}
+          label={t("luoTapahtuma.requestQuota.hidden")}
+          defaultChecked={defaultValues?.hidden ?? false}
+          onChange={e => update({ hidden: e.target.checked })}
+        />
+        <Field
+          label={t("luoTapahtuma.requestQuota.is_main_quota")}
+          id={`${uuid}_is_main_quota`}
+          type="radio"
+          name="main_quota"
+          checked={!!defaultValues?.is_main_quota}
+          onChange={e => update({ is_main_quota: e.target.checked })}
+        />
+      </div>
+
+      <CustomFieldsFieldFrom
+        defaultValues={defaultValues?.fields}
+        onChange={fields => update({ fields: fields })}
+      />
+    </div>
+  )
+}
+
+const RegistrationQuotaFrom = ({
+  defaultValues,
+  onChange,
+}: {
+  defaultValues?: RegistrationQuota[]
+  onChange?: (fields: RegistrationQuota[]) => void
+}) => {
+  const { t } = useTranslation()
+  const [customFieldsData, setCustomFields] = useState<
+    ListItem<RegistrationQuota>[]
+  >(
+    defaultValues
+      ? defaultValues.map((field, id) => ({ id, value: field }))
+      : [],
+  )
+
+  useEffect(() => {
+    onChange?.(customFieldsData.map(item => item.value))
+  }, [customFieldsData])
+
+  const nextRegistrationQuotaId = useRef(customFieldsData.length)
+
+  const addRegistrationQuota = () => {
+    setCustomFields(prev => {
+      const first = prev[0]?.value
+
+      return [
+        ...prev,
+        {
+          id: nextRegistrationQuotaId.current,
+          value: first
+            ? {
+                registration_starts: first.registration_starts,
+                registration_ends: first.registration_ends,
+                cancellation_starts: first.cancellation_starts,
+                cancellation_ends: first.cancellation_ends,
+              }
+            : { id: nextRegistrationQuotaId.current, value: {} },
+        },
+      ]
+    })
+    nextRegistrationQuotaId.current++
+  }
+
+  const removeRegistrationQuota = (id: number) => {
+    setCustomFields(prev => prev.filter(field => field.id !== id))
+  }
+
+  const updateRegistrationQuota = (id: number, value: RegistrationQuota) => {
+    setCustomFields(prev =>
+      prev.map(field => (field.id === id ? { ...field, value } : field)),
+    )
+  }
+
+  return (
+    <Fieldset legend={t("luoTapahtuma.requestQuota.legend")}>
+      <For each={customFieldsData}>
+        {item => (
+          <div key={item.id} style={{ display: "flex" }}>
+            <RegistrationQuotaField
+              defaultValues={item.value}
+              onChange={field => updateRegistrationQuota(item.id, field)}
+            />
+            <button
+              onClick={() => removeRegistrationQuota(item.id)}
+              type="button"
+            >
+              -
+            </button>
+          </div>
+        )}
+      </For>
+
+      <button onClick={addRegistrationQuota} type="button">
+        {t("luoTapahtuma.requestQuota.add")}
+      </button>
+
+      {onChange && (
+        <input
+          type="hidden"
+          name="registration_quotas"
+          value={JSON.stringify(customFieldsData.map(f => f.value))}
+        />
+      )}
+    </Fieldset>
+  )
+}
+
+type Props = {
+  action: (formData: FormData) => Promise<void>
+  defaultValues?: EventFormValues
+  templates?: EventFormValues[]
+  templateLabel?: string
+  templatePlaceholder?: string
+  submitLabel: string
+  formId?: string
+}
+
+const EventForm = ({
+  action,
+  defaultValues,
+  templates,
+  templateLabel,
+  templatePlaceholder,
+  submitLabel,
+  formId = "event-form",
+}: Props) => {
+  const { t } = useTranslation()
 
   return (
     <section className={styles.section}>
@@ -317,6 +596,10 @@ const EventForm = ({
             rows={5}
             defaultValue={defaultValues?.translations.at(0)?.description ?? ""}
           />
+
+          <RegistrationQuotaFrom
+            defaultValues={defaultValues?.registrationQuotas}
+          />
         </Fieldset>
 
         {/* Optional details */}
@@ -335,32 +618,6 @@ const EventForm = ({
             defaultChecked={defaultValues?.show_responsible ?? false}
           />
 
-          <FieldRadioGroup
-            legend={t("luoTapahtuma.optional.paymentLegend")}
-            name="payment"
-            options={[
-              {
-                value: "paid",
-                label: t("luoTapahtuma.optional.paid"),
-                defaultChecked: isPaid,
-              },
-              {
-                value: "free",
-                label: t("luoTapahtuma.optional.free"),
-                defaultChecked: !isPaid,
-              },
-            ]}
-          />
-
-          <Field
-            label={t("luoTapahtuma.optional.price")}
-            id="price"
-            name="price"
-            type="number"
-            step="0.01"
-            min="0"
-            defaultValue={defaultValues?.price ?? ""}
-          />
           <Field
             label={t("luoTapahtuma.optional.mapLink")}
             id="map_link"
@@ -399,35 +656,7 @@ const EventForm = ({
           </FieldSelect>
         </Fieldset>
 
-        {/* Custom fields details */}
-        <Fieldset legend={t("luoTapahtuma.customField.legend")}>
-          <For each={customFieldsData}>
-            {item => (
-              <div key={item.id} style={{ display: "flex" }}>
-                <CustomFieldsField
-                  defaultValues={item.value}
-                  onChange={field => updateCustomFields(item.id, field)}
-                />
-                <button
-                  onClick={() => removeCustomFields(item.id)}
-                  type="button"
-                >
-                  -
-                </button>
-              </div>
-            )}
-          </For>
-
-          <button onClick={addCustomFields} type="button">
-            {t("luoTapahtuma.customField.add")}
-          </button>
-
-          <input
-            type="hidden"
-            name="custom_fields"
-            value={JSON.stringify(customFieldsData.map(f => f.value))}
-          />
-        </Fieldset>
+        <CustomFieldsFieldFrom defaultValues={defaultValues?.fields} />
 
         <Checkbox
           id="save_as_template"
