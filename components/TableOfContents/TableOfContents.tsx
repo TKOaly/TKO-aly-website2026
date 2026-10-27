@@ -61,6 +61,8 @@ function collectHeadings(): TocItem[] {
 export default function TableOfContents() {
   const [items, setItems] = useState<TocItem[]>([])
   const [activeId, setActiveId] = useState<string>("")
+  // Accordions start open; clicking toggles them.
+  const [manual, setManual] = useState<Record<string, boolean>>({})
   const pathname = usePathname()
   const navRef = useRef<HTMLElement>(null)
 
@@ -145,30 +147,78 @@ export default function TableOfContents() {
     return () => window.clearTimeout(timeout)
   }, [activeId])
 
-  const renderLinks = (nodes: TocItem[], nested = false) => (
-    <ul className={nested ? styles.tocListNested : styles.tocList}>
-      {nodes.map(item => (
-        <li
-          key={item.id}
-          className={nested ? styles.tocItemChild : styles.tocItemParent}
-        >
-          <a
-            href={`#${item.id}`}
-            className={`${styles.tocLink} ${activeId === item.id ? styles.active : ""}`}
-          >
-            {item.text}
-          </a>
-          {item.children.length > 0 && renderLinks(item.children, true)}
-        </li>
-      ))}
-    </ul>
+  const renderLink = (item: TocItem) => (
+    <a
+      href={`#${item.id}`}
+      title={item.text}
+      className={`${styles.tocLink} ${activeId === item.id ? styles.active : ""}`}
+    >
+      <span className={styles.tocText}>{item.text}</span>
+    </a>
   )
+
+  const renderItem = (item: TocItem) => {
+    if (item.children.length === 0) {
+      return (
+        <li key={item.id} className={styles.tocItemParent}>
+          {renderLink(item)}
+        </li>
+      )
+    }
+
+    const open = manual[item.id] ?? true
+    const panelId = `toc-${item.id}`
+    return (
+      <li key={item.id} className={styles.tocItemParent}>
+        <button
+          type="button"
+          className={`${styles.tocLink} ${styles.tocToggle}`}
+          aria-expanded={open}
+          aria-controls={panelId}
+          title={item.text}
+          onClick={() =>
+            setManual(current => ({ ...current, [item.id]: !open }))
+          }
+        >
+          <span aria-hidden className={styles.chevron}>
+            {open ? "−" : "+"}
+          </span>
+          <span className={styles.tocText}>{item.text}</span>
+        </button>
+        <ul id={panelId} className={styles.tocListNested} hidden={!open}>
+          {item.children.map(child => (
+            <li key={child.id} className={styles.tocItemChild}>
+              {renderLink(child)}
+            </li>
+          ))}
+        </ul>
+      </li>
+    )
+  }
+
+  const renderTree = (nodes: TocItem[]) =>
+    nodes.map(node =>
+      node.level === 1 ? (
+        <li key={node.id} className={styles.tocItemParent}>
+          <p className={styles.tocTitle} title={node.text}>
+            {node.text}
+          </p>
+          {node.children.length > 0 && (
+            <ul className={styles.tocListNested}>
+              {node.children.map(renderItem)}
+            </ul>
+          )}
+        </li>
+      ) : (
+        renderItem(node)
+      ),
+    )
 
   return (
     <aside className={styles.toc} aria-hidden={items.length === 0}>
       {items.length > 0 && (
         <nav ref={navRef} aria-label="table of contents">
-          {renderLinks(items)}
+          <ul className={styles.tocList}>{renderTree(items)}</ul>
         </nav>
       )}
     </aside>

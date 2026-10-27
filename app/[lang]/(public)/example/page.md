@@ -1,13 +1,13 @@
 ---
 title: "Esimerkkisivu"
+description: "Tämä sivu esittelee julkisen artikkelipohjan kaikki ominaisuudet."
+author: "TKO-äly"
 date: 2026-10-24
 readingTime: 3
 tag: "ESIMERKKI"
 coverImage: "https://www.tko-aly.fi/images/kyykka2008.png"
 coverImageAlt: "Kyykkäpelaajia vuodelta 2008"
 ---
-
-# Esimerkkisivu
 
 Tämä sivu esittelee kaikki julkisen artikkelipohjan ominaisuudet: front matter -metatiedot, sisällysluettelon, otsikkotasot, listat, koodin, taulukot ja linkit. Sivu on tarkoitettu vain kehityskäyttöön.
 

@@ -89,7 +89,10 @@ export default function FooterClient({
           <div className={styles.sponsorsTitleRow}>
             <h2 className={styles.sponsorsTitle}>{t("footer.partners")}</h2>
             <div className={styles.sponsorsDivider} />
-            <ClientLink href="/yrityksille" className="btn">
+            <ClientLink
+              href="/yrityksille"
+              className={`btn ${styles.collaborateButton}`}
+            >
               {t("footer.collaborate")}
             </ClientLink>
           </div>

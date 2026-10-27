@@ -1,16 +1,10 @@
 "use client"
 
-import {
-  CalendarDays,
-  Clock3,
-  ExternalLink,
-  FolderOpen,
-  Share2,
-} from "lucide-react"
+import { ExternalLink, FolderOpen, Share2 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { ReactNode } from "react"
-import { useEffect, useRef, useState, useSyncExternalStore } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import en from "@/locales/en.json"
 import fi from "@/locales/fi.json"
@@ -20,21 +14,6 @@ import Terminal from "@/components/Cards/Terminal"
 import TableOfContents from "@/components/TableOfContents/TableOfContents"
 
 import styles from "./PublicArticleFrame.module.css"
-
-type ArticleMetadataValues = { tag: string; date: string; readTime: string }
-
-const EMPTY_METADATA = JSON.stringify({ tag: "", date: "", readTime: "" })
-
-const subscribeNever = () => () => {}
-
-function readMetadata() {
-  const marker = document.querySelector<HTMLElement>("[data-article-metadata]")
-  return JSON.stringify({
-    tag: marker?.dataset.articleTag || "",
-    date: marker?.dataset.articleDate || "",
-    readTime: marker?.dataset.articleReadTime || "",
-  })
-}
 
 export type ArticleLink = { href: string; title: string }
 
@@ -80,12 +59,6 @@ export default function PublicArticleFrame({
     currentIndex >= 0 && currentIndex < articles.length - 1
       ? articles[currentIndex + 1]
       : undefined
-  // The page's front-matter is exposed by <ArticleMetadata /> as a hidden
-  // DOM marker; re-read it on every render so route changes pick it up.
-  const metadata = JSON.parse(
-    useSyncExternalStore(subscribeNever, readMetadata, () => EMPTY_METADATA),
-  ) as ArticleMetadataValues
-
   const share = async () => {
     const shareData = { title: document.title, url: window.location.href }
     try {
@@ -109,21 +82,6 @@ export default function PublicArticleFrame({
             <FolderOpen size={16} aria-hidden /> ~/public/toiminta/{articleName}
             .md
           </span>
-          {metadata.date && (
-            <span>
-              <CalendarDays size={16} aria-hidden />{" "}
-              {language.publicArticle.added} {metadata.date}
-            </span>
-          )}
-          {metadata.readTime && (
-            <span>
-              <Clock3 size={16} aria-hidden /> {metadata.readTime}{" "}
-              {language.publicArticle.minRead}
-            </span>
-          )}
-          {metadata.tag && (
-            <span className={styles.status}>{metadata.tag}</span>
-          )}
         </div>
       </Card>
 

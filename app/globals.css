@@ -133,6 +133,17 @@
   }
 }
 
+/* One h1 style for every page. */
+h1 {
+  margin: 0;
+  font-size: var(--space-10);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
 html {
   scroll-padding-top: calc(var(--space-16) + var(--space-4));
 }

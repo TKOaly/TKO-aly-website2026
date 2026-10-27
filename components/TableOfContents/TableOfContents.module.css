@@ -77,3 +77,67 @@
   color: var(--neutral-900);
   font-weight: bold;
 }
+
+.tocTitle {
+  margin: 0 0 var(--space-2);
+  font-weight: bold;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tocToggle {
+  justify-content: space-between;
+  gap: var(--space-2);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.chevron {
+  flex: none;
+  width: 1ch;
+  font-weight: normal;
+}
+
+.tocToggle[aria-expanded="true"]:hover {
+  color: var(--neutral-900);
+}
+
+.tocItemChild .tocLink {
+  min-height: 2.25rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.tocItemChild .tocLink:hover,
+.tocItemChild .active {
+  color: var(--neutral-900);
+}
+
+/* Accordion headers read as plain text; only the links inside are buttons. */
+.tocToggle {
+  min-height: 0;
+  padding: var(--space-1) 0;
+  border: 0;
+  background: transparent;
+  justify-content: flex-start;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  font-weight: normal;
+}
+
+.tocToggle:hover,
+.tocToggle[aria-expanded="true"]:hover {
+  background: transparent;
+  color: var(--yellow);
+}
+
+/* One line per entry; the full text is in the title attribute. */
+.tocText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

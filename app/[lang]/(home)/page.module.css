@@ -50,25 +50,6 @@
   outline-offset: 3px;
 }
 
-.heroTitle {
-  font-size: 1.75rem;
-  font-weight: 800;
-  line-height: 1.05;
-  margin: 0;
-}
-
-@media (min-width: 400px) {
-  .heroTitle {
-    font-size: 2.25rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .heroTitle {
-    font-size: 4rem;
-  }
-}
-
 .heroSubtitle {
   font-size: 1.125rem;
   font-weight: 700;

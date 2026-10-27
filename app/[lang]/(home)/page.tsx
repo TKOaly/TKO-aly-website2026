@@ -68,7 +68,7 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>{t("home.heroTitle")}</h1>
+          <h1>{t("home.heroTitle")}</h1>
           <p className={styles.heroSubtitle}>{t("home.heroSubtitle")}</p>
           <p className={styles.heroDesc}>{t("home.heroDesc")}</p>
           <div className={styles.heroActions}>

@@ -31,14 +31,6 @@
   font-weight: 700;
 }
 
-.status {
-  border: var(--border);
-  background: var(--yellow);
-  color: var(--neutral-900);
-  padding: var(--space-1) var(--space-2);
-  font-weight: 700;
-}
-
 .contentGrid {
   display: grid;
   gap: var(--space-8);
@@ -128,7 +120,8 @@
 }
 
 .article > section > :not(:first-child) > div {
-  max-width: 75ch;
+  /* ~70 characters per line keeps text easy to read. */
+  max-width: 70ch;
   margin-inline: auto;
 }
 
@@ -145,22 +138,23 @@
 }
 
 .article :global(h1) > :global(a)::before {
-  content: "#";
+  content: "";
+  display: none;
 }
 .article :global(h2) > :global(a)::before {
-  content: "##";
+  content: "#";
 }
 .article :global(h3) > :global(a)::before {
-  content: "###";
+  content: "##";
 }
 .article :global(h4) > :global(a)::before {
-  content: "####";
+  content: "###";
 }
 .article :global(h5) > :global(a)::before {
-  content: "#####";
+  content: "####";
 }
 .article :global(h6) > :global(a)::before {
-  content: "######";
+  content: "#####";
 }
 
 .article :global(h1),
@@ -191,7 +185,6 @@
   color: var(--yellow);
 }
 
-.article :global(h1),
 .article :global(h2),
 .article :global(h3),
 .article :global(code),
@@ -323,4 +316,131 @@
   .articleNavNext {
     grid-column: auto;
   }
+}
+
+/* ── Article typography ── */
+.article > section > :not(:first-child) {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--neutral-100);
+}
+
+.article :global(h1) {
+  margin-bottom: var(--space-5);
+}
+
+.article :global(h2) {
+  margin: var(--space-12) 0 var(--space-4);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.article :global(h3) {
+  margin: var(--space-8) 0 var(--space-3);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.article :global(p) {
+  margin: 0 0 var(--space-5);
+}
+
+.article :global(ul),
+.article :global(ol) {
+  margin: 0 0 var(--space-5);
+  padding-left: var(--space-6);
+}
+
+.article :global(li) {
+  margin-bottom: var(--space-2);
+}
+
+.article :global(p a),
+.article :global(li a),
+.article :global(td a) {
+  color: var(--yellow);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article :global(p a):hover,
+.article :global(li a):hover,
+.article :global(td a):hover {
+  color: var(--white);
+}
+
+.article :global(code) {
+  background: var(--neutral-700, #2a2a2a);
+  color: var(--yellow);
+}
+
+.article :global(pre) {
+  margin: 0 0 var(--space-6);
+  padding: var(--space-5);
+  border: 2px solid var(--neutral-600, #3a3a3a);
+  background: #0b0b0b;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.article :global(pre code) {
+  background: transparent;
+  color: inherit;
+}
+
+.article :global(blockquote) {
+  display: flex;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-8);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--neutral-600, #333);
+  border-left-width: 1px;
+  background: #141414;
+  color: var(--neutral-200);
+  font-family: monospace;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.article :global(blockquote)::before {
+  content: "//";
+  flex: none;
+  color: var(--yellow);
+  font-weight: 800;
+  font-style: italic;
+}
+
+.article :global(blockquote) > :global(p) {
+  margin: 0;
+}
+
+.article :global(table) {
+  width: 100%;
+  margin: 0 0 var(--space-6);
+  border: 2px solid var(--neutral-600, #3a3a3a);
+}
+
+.article :global(th),
+.article :global(td) {
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-top: 1px solid var(--neutral-600, #333);
+}
+
+.article :global(th) {
+  border-top: 0;
+  background: var(--neutral-700, #262626);
+  color: var(--neutral-200);
+  font-family: monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.article :global(img[data-cover-image]) {
+  aspect-ratio: 16 / 9;
+  max-height: none;
+  margin-bottom: var(--space-8);
+  border: 2px solid var(--neutral-600, #3a3a3a);
 }
