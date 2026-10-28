@@ -10,9 +10,10 @@ import { NavSection, userNavItems, adminNavItems } from "./Navbar"
 
 interface MobileNavbarProps {
   items: NavSection[]
+  disabledRoutes?: string[]
 }
 
-const MobileNavbar = ({ items }: MobileNavbarProps) => {
+const MobileNavbar = ({ items, disabledRoutes = [] }: MobileNavbarProps) => {
   const mobileMenuRef = useRef<HTMLDialogElement>(null)
   const { data: session } = useSession()
   const { t, lang: language } = useTranslation()
@@ -77,16 +78,18 @@ const MobileNavbar = ({ items }: MobileNavbarProps) => {
 
           {session && (
             <section>
-              {userNavItems.map(item => (
-                <ClientLink
-                  key={item.href}
-                  href={item.href}
-                  className={styles.mobileLink}
-                  onClick={() => mobileMenuRef.current?.close()}
-                >
-                  {item.labels[lang]}
-                </ClientLink>
-              ))}
+              {userNavItems
+                .filter(item => !disabledRoutes.includes(item.href))
+                .map(item => (
+                  <ClientLink
+                    key={item.href}
+                    href={item.href}
+                    className={styles.mobileLink}
+                    onClick={() => mobileMenuRef.current?.close()}
+                  >
+                    {item.labels[lang]}
+                  </ClientLink>
+                ))}
               {session?.user &&
                 (session.user as { admin?: boolean })?.admin &&
                 adminNavItems.map(item => (

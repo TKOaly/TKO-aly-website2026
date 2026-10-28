@@ -6,6 +6,7 @@ import Fieldset from "@/components/Fieldset/Fieldset"
 import MobileCallToActionButton from "@/components/Buttons/CallToActionButton"
 import PageHeader from "@/components/PageHeader/PageHeader"
 import { getAsyncTranslation } from "@/app/i18n"
+import { requireDevEnv } from "@/lib/featureFlags"
 
 import styles from "./Jaseneksi.module.css"
 
@@ -14,6 +15,7 @@ type Props = {
 }
 
 const MembershipPage = async ({ params }: Props) => {
+  requireDevEnv()
   const { lang } = await params
   const { t } = await getAsyncTranslation(lang)
 

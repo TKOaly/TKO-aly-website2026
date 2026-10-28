@@ -1,6 +1,7 @@
 import PageHeader from "@/components/PageHeader/PageHeader"
 import Accordion from "@/components/Accordion/Accordion"
 import { getAsyncTranslation } from "@/app/i18n"
+import { requireDevEnv } from "@/lib/featureFlags"
 
 import styles from "./Jasenmaksu.module.css"
 
@@ -9,6 +10,7 @@ type Props = {
 }
 
 const MembershipInvoicePage = async ({ params }: Props) => {
+  requireDevEnv()
   const { lang } = await params
   const { t } = await getAsyncTranslation(lang)
 

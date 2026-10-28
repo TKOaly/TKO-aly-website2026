@@ -5,6 +5,7 @@ import FieldSelect from "@/components/FieldSelect/FieldSelect"
 import Fieldset from "@/components/Fieldset/Fieldset"
 import PageHeader from "@/components/PageHeader/PageHeader"
 import { getAsyncTranslation } from "@/app/i18n"
+import { requireDevEnv } from "@/lib/featureFlags"
 
 import styles from "./Muokkaa.module.css"
 
@@ -13,6 +14,7 @@ type Props = {
 }
 
 const EditUserPage = async ({ params }: Props) => {
+  requireDevEnv()
   const { lang } = await params
   const { t } = await getAsyncTranslation(lang)
 

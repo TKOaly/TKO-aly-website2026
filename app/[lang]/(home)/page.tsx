@@ -3,6 +3,7 @@ import { MapPin } from "lucide-react"
 
 import { getAsyncTranslation, ServerLink } from "@/app/i18n"
 import ExperienceSection from "@/components/Home/ExperienceSection"
+import { isDevEnv } from "@/lib/featureFlags"
 
 import styles from "./page.module.css"
 
@@ -72,9 +73,11 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
           <p className={styles.heroSubtitle}>{t("home.heroSubtitle")}</p>
           <p className={styles.heroDesc}>{t("home.heroDesc")}</p>
           <div className={styles.heroActions}>
-            <ServerLink lang={lang} href="/jaseneksi" className="btn">
-              {t("home.joinButton")}
-            </ServerLink>
+            {isDevEnv() && (
+              <ServerLink lang={lang} href="/jaseneksi" className="btn">
+                {t("home.joinButton")}
+              </ServerLink>
+            )}
             <ServerLink lang={lang} href="/kalenteri" className="btn2">
               {t("home.eventsButton")}
             </ServerLink>

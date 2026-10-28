@@ -71,7 +71,13 @@ function sectionKey(section: NavSection) {
     .replace(/[^a-z0-9]+/g, "-")
 }
 
-function Navbar({ items }: { items: NavSection[] }) {
+function Navbar({
+  items,
+  disabledRoutes = [],
+}: {
+  items: NavSection[]
+  disabledRoutes?: string[]
+}) {
   const { data: session } = useSession()
   const params = useParams()
   const lang = (params?.lang as Lang) || "fi"
@@ -287,16 +293,18 @@ function Navbar({ items }: { items: NavSection[] }) {
                   className={`${styles.dropdownMenu} ${openId === "user" ? styles.dropdownMenuOpen : ""}`}
                   hidden={openId !== "user"}
                 >
-                  {userNavItems.map(item => (
-                    <li key={item.href}>
-                      <ClientLink
-                        href={item.href}
-                        onClick={() => setOpenId(null)}
-                      >
-                        {item.labels[lang]}
-                      </ClientLink>
-                    </li>
-                  ))}
+                  {userNavItems
+                    .filter(item => !disabledRoutes.includes(item.href))
+                    .map(item => (
+                      <li key={item.href}>
+                        <ClientLink
+                          href={item.href}
+                          onClick={() => setOpenId(null)}
+                        >
+                          {item.labels[lang]}
+                        </ClientLink>
+                      </li>
+                    ))}
                   {session?.user &&
                     (session.user as { admin?: boolean })?.admin &&
                     adminNavItems.map(item => (
@@ -351,7 +359,7 @@ function Navbar({ items }: { items: NavSection[] }) {
 
       {isMobileView && (
         <div className={styles.mobileSlot}>
-          <MobileNavbar items={items} />
+          <MobileNavbar items={items} disabledRoutes={disabledRoutes} />
         </div>
       )}
     </nav>
