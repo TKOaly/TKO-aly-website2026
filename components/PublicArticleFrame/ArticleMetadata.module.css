@@ -6,7 +6,7 @@
   margin: 0 0 var(--space-6);
   font-size: 1.3rem;
   line-height: 1.6;
-  color: var(--neutral-100);
+  color: var(--color-text);
 }
 
 .meta {
@@ -16,11 +16,11 @@
   gap: var(--space-3) var(--space-6);
   margin-bottom: var(--space-8);
   padding: var(--space-4) 0;
-  border-top: 1px solid var(--neutral-600);
-  border-bottom: 1px solid var(--neutral-600);
+  border-top: 1px solid var(--neutral-400);
+  border-bottom: 1px solid var(--neutral-400);
   font-family: monospace;
   font-size: 0.875rem;
-  color: var(--neutral-200);
+  color: var(--color-text-muted);
 }
 
 .meta span {
@@ -44,8 +44,8 @@
   margin: 0;
   line-height: 1;
   padding: var(--space-2);
-  border: 2px solid var(--yellow);
-  color: var(--yellow);
+  border: 2px solid var(--color-link);
+  color: var(--color-link);
   font-size: 0.8125rem;
   font-weight: 800;
   letter-spacing: 0.06em;
@@ -64,5 +64,5 @@
   margin-top: var(--space-2);
   font-family: monospace;
   font-size: 0.8125rem;
-  color: var(--neutral-200);
+  color: var(--color-text-muted);
 }

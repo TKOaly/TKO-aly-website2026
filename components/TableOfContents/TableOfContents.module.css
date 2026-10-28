@@ -131,7 +131,7 @@
 .tocToggle:hover,
 .tocToggle[aria-expanded="true"]:hover {
   background: transparent;
-  color: var(--yellow);
+  color: var(--color-link);
 }
 
 /* One line per entry; the full text is in the title attribute. */
