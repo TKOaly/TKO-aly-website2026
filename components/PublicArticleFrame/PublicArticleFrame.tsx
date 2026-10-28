@@ -15,6 +15,9 @@ import TableOfContents from "@/components/TableOfContents/TableOfContents"
 
 import styles from "./PublicArticleFrame.module.css"
 
+const GITHUB_EDIT_BASE =
+  "https://github.com/TKOaly/TKO-aly-website2026/blob/main/app/%5Blang%5D/(public)"
+
 export type ArticleLink = { href: string; title: string }
 
 export default function PublicArticleFrame({
@@ -51,6 +54,7 @@ export default function PublicArticleFrame({
   }, [])
   const articlePath = pathname.replace(/^\/(fi|en)/, "") || "/"
   const articleName = articlePath.split("/").filter(Boolean).pop() || "index"
+  const editUrl = `${GITHUB_EDIT_BASE}${articlePath === "/" ? "" : articlePath}/page.md`
   const lang = pathname.startsWith("/en") ? "en" : "fi"
   const language = lang === "en" ? en : fi
   const currentIndex = articles.findIndex(a => a.href === articlePath)
@@ -103,11 +107,7 @@ export default function PublicArticleFrame({
                   ? language.publicArticle.linkCopied
                   : language.publicArticle.shareArticle}
               </button>
-              <a
-                href="https://github.com/tko-aly/tko-aly/tree/main/services/website2026"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={editUrl} target="_blank" rel="noreferrer">
                 <ExternalLink size={16} aria-hidden />{" "}
                 {language.publicArticle.editOnGitHub}
               </a>

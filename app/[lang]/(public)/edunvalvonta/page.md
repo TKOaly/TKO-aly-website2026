@@ -5,8 +5,6 @@ readingTime: 5
 tag: "EDUNVALVONTA"
 ---
 
-# Edunvalvonta
-
 ## Ainejärjestö - etujärjestö
 
 Ainejärjestön tärkein tehtävä on olla opiskelijoiden etujärjestö ja valvoa, että opisjelijoiden ääni kuuluu yliopiston päätöksenteossa. Osastoilla, joilla on opiskelijamyönteinen hallintokulttuuri (kuten meillä), ainejärjestö ottaa usein kantaa valmisteilla oleviin asioihin. Ainejärjestöaktiivit keskustelevat muun muassa osaston henkilökunnan kanssa erilaisista opintoihin ja opiskelijoiden asemaan liittyvistä aiheista. Ainejärjestö on ennen kaikkea itsenäinen vaikuttaja, joka tekee tarvittaessa myös aloitteita opiskelijoilta saadun palautteen pohjalta.
