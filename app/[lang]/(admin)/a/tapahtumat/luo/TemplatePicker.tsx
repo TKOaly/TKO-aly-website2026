@@ -1,100 +1,39 @@
 "use client"
 
 import type { ChangeEvent } from "react"
+import { useFormContext } from "react-hook-form"
 import FieldSelect from "@/components/FieldSelect/FieldSelect"
-import type { Event } from "../types"
+import type { Event, EventFormValues } from "../types"
+import { splitDateTime } from "../EventForm"
+import { useTranslation } from "@/app/i18n/client"
 
 type Props = {
   templates: Event[]
   label: string
   placeholder: string
+  locale: string
 }
 
-const toDateInputValue = (iso: string | null | undefined): string => {
-  if (!iso) return ""
-  const d = new Date(iso)
-  return isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 10)
-}
+const getTitle = (tpl: Event, locale?: string) =>
+  tpl.translations.find(t => t.locale === locale)?.title ??
+  tpl.translations[0]?.title
 
-const toTimeInputValue = (iso: string | null | undefined): string => {
-  if (!iso) return ""
-  const d = new Date(iso)
-  return isNaN(d.getTime()) ? "" : d.toISOString().slice(11, 16)
-}
+const TemplatePicker = ({ templates, label, placeholder, locale }: Props) => {
+  const { t } = useTranslation()
+  const { reset, getValues } = useFormContext<EventFormValues>()
 
-const toDateTimeLocalValue = (iso: string | null | undefined): string => {
-  if (!iso) return ""
-  const d = new Date(iso)
-  return isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 16)
-}
-
-const setInputValue = (id: string, value: string) => {
-  const el = document.getElementById(id) as
-    | HTMLInputElement
-    | HTMLTextAreaElement
-    | HTMLSelectElement
-    | null
-  if (el) el.value = value
-}
-
-const setCheckboxValue = (id: string, checked: boolean) => {
-  const el = document.getElementById(id) as HTMLInputElement | null
-  if (el) el.checked = checked
-}
-
-const TemplatePicker = ({ templates, label, placeholder }: Props) => {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const id = Number(e.target.value)
-    const tpl = templates.find(t => t.id === id)
-
+    const tpl = templates.find(t => t.id === Number(e.target.value))
     if (!tpl) return
 
-    setInputValue("name", tpl.name)
-    setInputValue("date", toDateInputValue(tpl.starts))
-    setInputValue("time", toTimeInputValue(tpl.starts))
-    setInputValue("venue", tpl.location ?? "")
-    setInputValue("event_type", tpl.category ?? "")
-    setInputValue("description", tpl.description ?? "")
-    setInputValue("organizer", tpl.responsible ?? "")
-    setInputValue("price", tpl.price != null ? String(tpl.price) : "")
-    setInputValue("map_link", tpl.map ?? "")
-    setInputValue(
-      "alcohol_scale",
-      tpl.alcohol_meter != null ? String(tpl.alcohol_meter) : "",
-    )
-    setInputValue(
-      "max_participants",
-      tpl.max_participants != null ? String(tpl.max_participants) : "",
-    )
-    setInputValue(
-      "registration_starts",
-      toDateTimeLocalValue(tpl.registration_starts),
-    )
-    setInputValue(
-      "registration_ends",
-      toDateTimeLocalValue(tpl.registration_ends),
-    )
-    setInputValue(
-      "cancellation_starts",
-      toDateTimeLocalValue(tpl.cancellation_starts),
-    )
-    setInputValue(
-      "cancellation_ends",
-      toDateTimeLocalValue(tpl.cancellation_ends),
-    )
+    const { id, starts, template, ...templateValues } = tpl
 
-    setCheckboxValue("show_contact", tpl.show_responsible ?? false)
-    setCheckboxValue("can_participate", tpl.outsiders_allowed ?? false)
-    setCheckboxValue("membership_required", tpl.membership_required ?? false)
-    setCheckboxValue("avec", tpl.avec ?? false)
-
-    // payment radio: derive from whether a price is set
-    const payment = tpl.price ? "paid" : "free"
-    document
-      .querySelectorAll<HTMLInputElement>('input[name="payment"]')
-      .forEach(radio => {
-        radio.checked = radio.value === payment
-      })
+    reset({
+      ...getValues(),
+      ...templateValues,
+      ...splitDateTime(starts.toLocaleDateString()),
+      template: false,
+    })
   }
 
   return (
@@ -102,7 +41,7 @@ const TemplatePicker = ({ templates, label, placeholder }: Props) => {
       <option value="">{placeholder}</option>
       {templates.map(tpl => (
         <option key={tpl.id} value={tpl.id}>
-          {tpl.name}
+          {`${getTitle(tpl, locale)} [${t("luoTapahtuma.template")}]`}
         </option>
       ))}
     </FieldSelect>

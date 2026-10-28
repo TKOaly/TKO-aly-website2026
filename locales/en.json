@@ -181,6 +181,7 @@
     "descriptionEm": "you",
     "descriptionSuf": "want to organize an event?",
     "descriptionLink": "See the instructions here!",
+    "template": "Template",
     "templateLabel": "Search event template",
     "templatePlaceholder": "-- Select an event template from the list --",
     "required": {

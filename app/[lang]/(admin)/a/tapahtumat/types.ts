@@ -60,6 +60,7 @@ export type RegistrationQuota = {
 }
 
 export type Event = {
+  id: number
   user_id: number
   starts: Date
   alcohol_meter?: number
@@ -75,7 +76,7 @@ export type Event = {
   registrationQuotas: RegistrationQuota[]
 }
 
-export type EventFormValues = Omit<Event, "starts"> & {
+export type EventFormValues = Omit<Event, "id" | "user_id" | "starts"> & {
   date: string
   time: string
 }

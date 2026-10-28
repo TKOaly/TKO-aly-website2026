@@ -15,11 +15,7 @@ import FieldSelect from "@/components/FieldSelect/FieldSelect"
 import FieldRadioGroup from "@/components/FieldRadioGroup/FieldRadioGroup"
 import Textarea from "@/components/Textarea/Textarea"
 import TemplatePicker from "./luo/TemplatePicker"
-import type {
-  Event,
-  RegistrationQuota,
-  EventFormValues,
-} from "./types"
+import type { Event, RegistrationQuota, EventFormValues } from "./types"
 import styles from "./luo/LuoTapahtuma.module.css"
 import { useId } from "react"
 import { useTranslation } from "@/app/i18n/client"
@@ -42,6 +38,16 @@ export const toDateTimeLocalValue = (
   if (!iso) return ""
   const d = new Date(iso)
   return isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 16)
+}
+
+export const splitDateTime = (value?: string) => {
+  if (!value) return { date: "", time: "" }
+  const d = new Date(value)
+  const pad = (n: number) => String(n).padStart(2, "0")
+  return {
+    date: `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`,
+    time: `${pad(d.getHours())}:${pad(d.getMinutes())}`,
+  }
 }
 
 const RadioOptionFields = ({ name }: { name: string }) => {
@@ -212,19 +218,20 @@ const RegistrationQuotaField = ({ name }: { name: string }) => {
         {...register(`${name}.cancellation_ends`, dateOptions)}
       />
 
-      <fieldset>
-        <legend>{t("luoTapahtuma.requestQuota.paymentLegend")}</legend>
-
-        <label>
-          <input type="radio" value="paid" {...register(`${name}.payment`)} />
-          {t("luoTapahtuma.requestQuota.paid")}
-        </label>
-
-        <label>
-          <input type="radio" value="free" {...register(`${name}.payment`)} />
-          {t("luoTapahtuma.requestQuota.free")}
-        </label>
-      </fieldset>
+      <FieldRadioGroup
+        legend={t("luoTapahtuma.optional.paymentLegend")}
+        options={[
+          {
+            value: "paid",
+            label: t("luoTapahtuma.optional.paid"),
+          },
+          {
+            value: "free",
+            label: t("luoTapahtuma.optional.free"),
+          },
+        ]}
+        {...register(`${name}.isPaid`)}
+      />
 
       <Field
         label={t("luoTapahtuma.optional.price")}
@@ -318,6 +325,7 @@ type Props = {
   templateLabel?: string
   templatePlaceholder?: string
   submitLabel: string
+  locale: string
   formId?: string
 }
 
@@ -328,11 +336,18 @@ const EventForm = ({
   templateLabel,
   templatePlaceholder,
   submitLabel,
+  locale,
   formId = "event-form",
 }: Props) => {
   const { t } = useTranslation()
+  const { starts, ...restDefaults } = defaultValues ?? {}
 
-  const methods = useForm<EventFormValues>({})
+  const methods = useForm<EventFormValues>({
+    defaultValues: {
+      ...restDefaults,
+      ...splitDateTime(starts?.toLocaleDateString()),
+    },
+  })
 
   return (
     <section className={styles.section}>
@@ -343,6 +358,7 @@ const EventForm = ({
               templates={templates}
               label={templateLabel}
               placeholder={templatePlaceholder}
+              locale={locale}
             />
           </div>
         )}
