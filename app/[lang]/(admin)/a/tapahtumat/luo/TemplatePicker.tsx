@@ -2,10 +2,10 @@
 
 import type { ChangeEvent } from "react"
 import FieldSelect from "@/components/FieldSelect/FieldSelect"
-import type { EventFormValues } from "../types"
+import type { Event } from "../types"
 
 type Props = {
-  templates: EventFormValues[]
+  templates: Event[]
   label: string
   placeholder: string
 }

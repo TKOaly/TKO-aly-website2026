@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import EventForm from "../EventForm"
 import { buildEventPayload } from "../eventPayload"
-import type { EventFormValues } from "../types"
+import type { Event } from "../types"
 
 import styles from "./LuoTapahtuma.module.css"
 
@@ -21,7 +21,7 @@ const AddEventPage = async ({ params }: Props) => {
   const token =
     process.env.EVENT_SERVICE_TOKEN ?? process.env.SERVICE_AUTH_TOKEN
 
-  let templates: EventFormValues[] = []
+  let templates: Event[] = []
   try {
     const res = await fetch(`${baseUrl}/api/events/templates`, {
       headers: token ? { "X-Token": token } : {},

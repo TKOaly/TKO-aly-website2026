@@ -38,8 +38,6 @@ export type CustomField = {
   translations?: CustomFieldTranslation[]
 }
 
-export type ListItem<T> = { id: number; value: T }
-
 type RegistrationQuotaTranslation = {
   locale: string
   quota_name: string
@@ -61,7 +59,7 @@ export type RegistrationQuota = {
   price?: string
 }
 
-export type EventFormValues = {
+export type Event = {
   user_id: number
   starts: Date
   alcohol_meter?: number
@@ -75,4 +73,9 @@ export type EventFormValues = {
   eventType: EventType
   fields: CustomField[]
   registrationQuotas: RegistrationQuota[]
+}
+
+export type EventFormValues = Omit<Event, "starts"> & {
+  date: string
+  time: string
 }

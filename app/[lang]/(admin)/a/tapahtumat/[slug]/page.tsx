@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { redirect, notFound } from "next/navigation"
 import EventForm from "../EventForm"
 import { buildEventPayload } from "../eventPayload"
-import type { EventFormValues } from "../types"
+import type { Event } from "../types"
 import styles from "../luo/LuoTapahtuma.module.css"
 
 const EditEventPage = async ({
@@ -30,7 +30,7 @@ const EditEventPage = async ({
 
   if (!res.ok) notFound()
 
-  const event: EventFormValues = await res.json()
+  const event: Event = await res.json()
 
   const updateEvent = async (formData: FormData) => {
     "use server"
