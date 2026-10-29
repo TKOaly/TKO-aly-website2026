@@ -55,17 +55,6 @@
   min-height: 10rem;
 }
 
-.sidebar :global(.terminal) :global(.toc) {
-  display: block;
-  position: static;
-  width: auto;
-  min-width: 0;
-  max-width: none;
-  padding: 0;
-  border: 0;
-  background: transparent;
-}
-
 .actions {
   display: grid;
   gap: var(--space-3);
