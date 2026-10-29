@@ -1,4 +1,10 @@
-# README
+---
+title: "README"
+description: "README on ainejärjestömme opiskelijalehti, joka käsittelee opiskelua, tietojenkäsittelytiedettä ja vapaa-aikaa."
+date: 2026-03-25
+readingTime: 2
+tag: "TOIMINTA"
+---
 
 README on ainejärjestömme pieni ja pippurinen opiskelijalehti. README käsittelee aiheita laajalla skaalalla, esimerkiksi opiskeluun, tietojenkäsittelytieteeseen, sekä vapaa-aikaan liittyen. Julkaisemme ajankohtaisia artikkeleita järjestön ja laitoksen tuoreimmista kuulumisista, sekä kevyempää sisältöä. Kaikki vanhat ja tuoreemmatkin numerot ovat luettavissa PDF:nä tämän sivun alalaidassa. Lisää tekstejä löytyy [blogistamme](https://blog.tko-aly.fi).
 

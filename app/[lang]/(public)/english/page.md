@@ -1,4 +1,10 @@
-# English
+---
+title: "English"
+description: "TKO-äly ry is the organization for computer science and data science students at the University of Helsinki."
+date: 2026-03-25
+readingTime: 1
+tag: "YHDISTYS"
+---
 
 TKO-äly ry is the organization for students of computer science and data science at the University of Helsinki. We offer the whole range of student activity: student representation, exam preparation and other extra teaching to help with your studies, and parties, board game events, movie nights, sauna and many other recreational activities for your free time.
 

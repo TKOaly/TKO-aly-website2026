@@ -8,7 +8,7 @@ import { ClientLink } from "@/app/i18n/client"
 import { useMatchMediaQuery } from "@/lib/useMatchMediaQuery"
 import { useToggleLanguage } from "@/lib/useToggleLanguage"
 import { useParams } from "next/navigation"
-import { useState, useEffect, useRef, useId } from "react"
+import { useState, useEffect, useRef } from "react"
 
 import MobileNavbar from "./MobileNavbar"
 import styles from "./Navbar.module.css"
@@ -32,9 +32,11 @@ const translations: Record<Lang, Record<string, string>> = {
     switchToEnglish: "In English",
     switchToFinnish: "Suomeksi",
     signOut: "Kirjaudu ulos",
-    signIn: "Kirjaudu sisään",
+    signIn: "Kirjaudu",
     openMenu: "Avaa valikko",
     opensInNewWindow: "avautuu uuteen ikkunaan",
+    switchToEnglishLabel: "Vaihda sivuston kieli englanniksi",
+    switchToFinnishLabel: "Vaihda sivuston kieli suomeksi",
   },
   en: {
     switchToEnglish: "In English",
@@ -43,6 +45,8 @@ const translations: Record<Lang, Record<string, string>> = {
     signIn: "Sign in",
     openMenu: "Open menu",
     opensInNewWindow: "opens in a new window",
+    switchToEnglishLabel: "Switch the site language to English",
+    switchToFinnishLabel: "Switch the site language to Finnish",
   },
 }
 
@@ -67,13 +71,18 @@ function sectionKey(section: NavSection) {
     .replace(/[^a-z0-9]+/g, "-")
 }
 
-function Navbar({ items }: { items: NavSection[] }) {
+function Navbar({
+  items,
+  disabledRoutes = [],
+}: {
+  items: NavSection[]
+  disabledRoutes?: string[]
+}) {
   const { data: session } = useSession()
   const params = useParams()
   const lang = (params?.lang as Lang) || "fi"
   const isMobileView = useMatchMediaQuery("lg")
   const toggleLanguage = useToggleLanguage(lang)
-  const baseId = useId()
 
   const [hidden, setHidden] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
@@ -133,7 +142,11 @@ function Navbar({ items }: { items: NavSection[] }) {
   const otherLangLabel =
     lang === "fi" ? t("switchToEnglish") : t("switchToFinnish")
 
-  const userMenuId = `${baseId}-user`
+  const otherLangCode = lang === "fi" ? "EN" : "FI"
+  const otherLangAriaLabel =
+    lang === "fi" ? t("switchToEnglishLabel") : t("switchToFinnishLabel")
+
+  const userMenuId = "navbar-menu-user"
   const megaOpen = openId !== null && openId !== "user"
 
   return (
@@ -159,7 +172,7 @@ function Navbar({ items }: { items: NavSection[] }) {
           <ul className={styles.primaryList}>
             {items.map(section => {
               const id = sectionKey(section)
-              const panelId = `${baseId}-${id}`
+              const panelId = `navbar-menu-${id}`
               const isOpen = openId === id
               return (
                 <li
@@ -238,16 +251,19 @@ function Navbar({ items }: { items: NavSection[] }) {
           </ul>
 
           <ul className={styles.secondaryActionList}>
-            <li>
-              <button
-                type="button"
-                className={`${styles.dropdownToggle} ${styles.langButton}`}
-                onClick={toggleLanguage}
-              >
-                <Globe size={18} aria-hidden />
-                {otherLangLabel}
-              </button>
-            </li>
+            {!session && (
+              <li>
+                <button
+                  type="button"
+                  className={`${styles.dropdownToggle} ${styles.langButton}`}
+                  aria-label={otherLangAriaLabel}
+                  onClick={toggleLanguage}
+                >
+                  <Globe size={18} aria-hidden />
+                  {otherLangCode}
+                </button>
+              </li>
+            )}
             {session ? (
               <li
                 className={`${styles.navItem} ${openId === "user" ? styles.open : ""}`}
@@ -277,16 +293,18 @@ function Navbar({ items }: { items: NavSection[] }) {
                   className={`${styles.dropdownMenu} ${openId === "user" ? styles.dropdownMenuOpen : ""}`}
                   hidden={openId !== "user"}
                 >
-                  {userNavItems.map(item => (
-                    <li key={item.href}>
-                      <ClientLink
-                        href={item.href}
-                        onClick={() => setOpenId(null)}
-                      >
-                        {item.labels[lang]}
-                      </ClientLink>
-                    </li>
-                  ))}
+                  {userNavItems
+                    .filter(item => !disabledRoutes.includes(item.href))
+                    .map(item => (
+                      <li key={item.href}>
+                        <ClientLink
+                          href={item.href}
+                          onClick={() => setOpenId(null)}
+                        >
+                          {item.labels[lang]}
+                        </ClientLink>
+                      </li>
+                    ))}
                   {session?.user &&
                     (session.user as { admin?: boolean })?.admin &&
                     adminNavItems.map(item => (
@@ -299,6 +317,18 @@ function Navbar({ items }: { items: NavSection[] }) {
                         </ClientLink>
                       </li>
                     ))}
+                  <li>
+                    <ClientLink
+                      href="#"
+                      onClick={event => {
+                        event.preventDefault()
+                        setOpenId(null)
+                        toggleLanguage()
+                      }}
+                    >
+                      {otherLangLabel}
+                    </ClientLink>
+                  </li>
                   <li>
                     <ClientLink
                       href="#"
@@ -316,7 +346,7 @@ function Navbar({ items }: { items: NavSection[] }) {
               <li>
                 <button
                   type="button"
-                  className={styles.dropdownToggle}
+                  className={styles.signInButton}
                   onClick={() => signIn("tkoaly")}
                 >
                   {t("signIn")}
@@ -329,7 +359,7 @@ function Navbar({ items }: { items: NavSection[] }) {
 
       {isMobileView && (
         <div className={styles.mobileSlot}>
-          <MobileNavbar items={items} />
+          <MobileNavbar items={items} disabledRoutes={disabledRoutes} />
         </div>
       )}
     </nav>

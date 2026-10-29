@@ -1,4 +1,10 @@
-# Yrityksille
+---
+title: "Yrityksille"
+description: "Tietoa yhteistyöstä TKO-älyn kanssa ja yritysten mahdollisuuksista näkyä opiskelijoille."
+date: 2026-03-25
+readingTime: 2
+tag: "YRITYKSET"
+---
 
 TKO-äly ry on Helsingin yliopiston tietojenkäsittelytieteen ja datatieteen opiskelijoiden ainejärjestö. Järjestö on perustettu vuonna 1988. Järjestössä on tällä hetkellä noin 900 jäsentä. TKO-äly ajaa aktiivisesti tietojenkäsittelytieteen opiskelijoiden etua ja samalla tarjoaa palveluita niin vapaa-aikaan kuin opintoihin liittyen.
 

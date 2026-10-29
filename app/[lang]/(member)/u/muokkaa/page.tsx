@@ -5,6 +5,7 @@ import FieldSelect from "@/components/FieldSelect/FieldSelect"
 import Fieldset from "@/components/Fieldset/Fieldset"
 import PageHeader from "@/components/PageHeader/PageHeader"
 import { getAsyncTranslation } from "@/app/i18n"
+import { requireDevEnv } from "@/lib/featureFlags"
 
 import styles from "./Muokkaa.module.css"
 
@@ -13,6 +14,7 @@ type Props = {
 }
 
 const EditUserPage = async ({ params }: Props) => {
+  requireDevEnv()
   const { lang } = await params
   const { t } = await getAsyncTranslation(lang)
 
@@ -27,7 +29,7 @@ const EditUserPage = async ({ params }: Props) => {
             id="username"
             name="username"
             type="text"
-            defaultValue="boriss"
+            defaultValue="essi"
             autoComplete="username"
           />
 
@@ -36,7 +38,7 @@ const EditUserPage = async ({ params }: Props) => {
             id="fullname"
             name="fullname"
             type="text"
-            defaultValue="boriss jerjomkin"
+            defaultValue="Essi Esimerkki"
             autoComplete="name"
             hint={t("muokkaa.personal.fullname.hint")}
           />
@@ -46,7 +48,7 @@ const EditUserPage = async ({ params }: Props) => {
             id="nickname"
             name="nickname"
             type="text"
-            defaultValue="borre"
+            defaultValue="essi"
             autoComplete="given-name"
             hint={t("muokkaa.personal.nickname.hint")}
           />
@@ -56,7 +58,7 @@ const EditUserPage = async ({ params }: Props) => {
             id="email"
             name="email"
             type="email"
-            defaultValue="boriss.jerjomkin@helsinki.fi"
+            defaultValue="essi.esimerkki@example.com"
             autoComplete="email"
           />
 
@@ -65,7 +67,7 @@ const EditUserPage = async ({ params }: Props) => {
             id="hometown"
             name="hometown"
             type="text"
-            defaultValue="helsinki"
+            defaultValue="Helsinki"
           />
 
           <Field

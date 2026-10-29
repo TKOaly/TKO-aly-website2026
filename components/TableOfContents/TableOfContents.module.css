@@ -7,9 +7,6 @@
   min-width: 250px;
   max-width: 250px;
   width: 100%;
-  background: var(--color-surface);
-  border: var(--border);
-  padding: var(--space-4);
   box-sizing: border-box;
 }
 
@@ -36,38 +33,111 @@
 
 .tocListNested {
   list-style: none;
-  padding-left: var(--space-4);
-  margin: 0.5rem 0 0 0;
+  padding-left: 0;
+  margin: var(--space-2) 0 0;
 }
 
 .tocItemParent {
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-3);
 }
 
 .tocItemChild {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .tocLink {
+  box-sizing: border-box;
+  display: flex;
+  min-height: 2.75rem;
+  width: 100%;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border);
+  background: transparent;
   color: var(--color-text-muted);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  display: block;
   line-height: 1.4;
-  transition: color 0.2s ease;
+  text-decoration: none;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .tocLink:hover {
-  color: var(--color-text);
+  background: var(--yellow);
+  color: var(--neutral-900);
 }
 
 .tocLink:focus-visible {
-  outline: 3px solid var(--yellow);
+  outline: 2px solid var(--yellow);
   outline-offset: 2px;
 }
 
 .active {
-  color: var(--color-text);
+  background: var(--yellow);
+  color: var(--neutral-900);
   font-weight: bold;
-  text-decoration-thickness: 2px;
+}
+
+.tocTitle {
+  margin: 0 0 var(--space-2);
+  font-weight: bold;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tocToggle {
+  justify-content: space-between;
+  gap: var(--space-2);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.chevron {
+  flex: none;
+  width: 1ch;
+  font-weight: normal;
+}
+
+.tocToggle[aria-expanded="true"]:hover {
+  color: var(--neutral-900);
+}
+
+.tocItemChild .tocLink {
+  min-height: 2.25rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.tocItemChild .tocLink:hover,
+.tocItemChild .active {
+  color: var(--neutral-900);
+}
+
+/* Accordion headers read as plain text; only the links inside are buttons. */
+.tocToggle {
+  min-height: 0;
+  padding: var(--space-1) 0;
+  border: 0;
+  background: transparent;
+  justify-content: flex-start;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  font-weight: normal;
+}
+
+.tocToggle:hover,
+.tocToggle[aria-expanded="true"]:hover {
+  background: transparent;
+  color: var(--color-link);
+}
+
+/* One line per entry; the full text is in the title attribute. */
+.tocText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

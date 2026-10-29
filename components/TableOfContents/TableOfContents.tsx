@@ -1,6 +1,6 @@
 "use client"
 
-import { useLayoutEffect, useEffect, useState } from "react"
+import { useLayoutEffect, useEffect, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
 import styles from "./TableOfContents.module.css"
 
@@ -61,7 +61,10 @@ function collectHeadings(): TocItem[] {
 export default function TableOfContents() {
   const [items, setItems] = useState<TocItem[]>([])
   const [activeId, setActiveId] = useState<string>("")
+  // Accordions start open; clicking toggles them.
+  const [manual, setManual] = useState<Record<string, boolean>>({})
   const pathname = usePathname()
+  const navRef = useRef<HTMLElement>(null)
 
   useLayoutEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -102,29 +105,121 @@ export default function TableOfContents() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [items, activeId])
 
-  const renderLinks = (nodes: TocItem[], nested = false) => (
-    <ul className={nested ? styles.tocListNested : styles.tocList}>
-      {nodes.map(item => (
-        <li
-          key={item.id}
-          className={nested ? styles.tocItemChild : styles.tocItemParent}
-        >
-          <a
-            href={`#${item.id}`}
-            className={`${styles.tocLink} ${activeId === item.id ? styles.active : ""}`}
-          >
-            {item.text}
-          </a>
-          {item.children.length > 0 && renderLinks(item.children, true)}
-        </li>
-      ))}
-    </ul>
+  // Keep the active link visible when the ToC itself is scrollable. Scroll the
+  // container directly (scrollIntoView would also scroll the page), and wait
+  // until the active link has settled so fast page scrolling doesn't make the
+  // ToC jump around.
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      const link = navRef.current?.querySelector<HTMLElement>(
+        `.${styles.active}`,
+      )
+      if (!link) return
+
+      let container: HTMLElement | null = link.parentElement
+      while (
+        container &&
+        !/(auto|scroll)/.test(getComputedStyle(container).overflowY)
+      ) {
+        container = container.parentElement
+      }
+      if (!container) return
+
+      const containerRect = container.getBoundingClientRect()
+      const linkRect = link.getBoundingClientRect()
+      let delta = 0
+      if (linkRect.top < containerRect.top) {
+        delta = linkRect.top - containerRect.top
+      } else if (linkRect.bottom > containerRect.bottom) {
+        delta = linkRect.bottom - containerRect.bottom
+      }
+      if (delta === 0) return
+
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches
+      container.scrollTo({
+        top: container.scrollTop + delta,
+        behavior: reduceMotion ? "auto" : "smooth",
+      })
+    }, 150)
+
+    return () => window.clearTimeout(timeout)
+  }, [activeId])
+
+  const renderLink = (item: TocItem) => (
+    <a
+      href={`#${item.id}`}
+      title={item.text}
+      className={`${styles.tocLink} ${activeId === item.id ? styles.active : ""}`}
+    >
+      <span className={styles.tocText}>{item.text}</span>
+    </a>
   )
+
+  const renderItem = (item: TocItem) => {
+    if (item.children.length === 0) {
+      return (
+        <li key={item.id} className={styles.tocItemParent}>
+          {renderLink(item)}
+        </li>
+      )
+    }
+
+    const open = manual[item.id] ?? true
+    const panelId = `toc-${item.id}`
+    return (
+      <li key={item.id} className={styles.tocItemParent}>
+        <button
+          type="button"
+          className={`${styles.tocLink} ${styles.tocToggle}`}
+          aria-expanded={open}
+          aria-controls={panelId}
+          title={item.text}
+          onClick={() =>
+            setManual(current => ({ ...current, [item.id]: !open }))
+          }
+        >
+          <span aria-hidden className={styles.chevron}>
+            {open ? "−" : "+"}
+          </span>
+          <span className={styles.tocText}>{item.text}</span>
+        </button>
+        <ul id={panelId} className={styles.tocListNested} hidden={!open}>
+          {item.children.map(child => (
+            <li key={child.id} className={styles.tocItemChild}>
+              {renderLink(child)}
+            </li>
+          ))}
+        </ul>
+      </li>
+    )
+  }
+
+  const renderTree = (nodes: TocItem[]) =>
+    nodes.map(node =>
+      node.level === 1 ? (
+        <li key={node.id} className={styles.tocItemParent}>
+          <p className={styles.tocTitle} title={node.text}>
+            {node.text}
+          </p>
+          {node.children.length > 0 && (
+            <ul className={styles.tocListNested}>
+              {node.children.map(renderItem)}
+            </ul>
+          )}
+        </li>
+      ) : (
+        renderItem(node)
+      ),
+    )
 
   return (
     <aside className={styles.toc} aria-hidden={items.length === 0}>
       {items.length > 0 && (
-        <nav aria-label="Table of Contents">{renderLinks(items)}</nav>
+        <nav ref={navRef} aria-label="table of contents">
+          <ul className={styles.tocList}>{renderTree(items)}</ul>
+        </nav>
       )}
     </aside>
   )

@@ -1,4 +1,10 @@
-# Vuosijuhlat
+---
+title: "Vuosijuhlat"
+description: "Vinkkejä vuosijuhlaa varten ja tietoa TKO-älyn vuosijuhlista."
+date: 2026-03-25
+readingTime: 3
+tag: "TOIMINTA"
+---
 
 ## Vinkkejä vuosijuhlaa varten
 

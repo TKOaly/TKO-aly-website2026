@@ -1,0 +1,434 @@
+.page {
+  display: grid;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+.metadataCard {
+  max-width: none;
+  padding: var(--space-4) var(--space-6);
+}
+
+.metadata {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+  font-family: monospace;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
+.metadata span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.path {
+  flex: 1 1 18rem;
+  font-weight: 700;
+}
+
+.contentGrid {
+  display: grid;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: fit-content;
+}
+
+.sidebar > * {
+  flex-shrink: 0;
+}
+
+.sidebar > .tocTerminal {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 10rem;
+}
+
+.actions {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.actions button,
+.actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.actions button:hover,
+.actions a:hover {
+  background: var(--yellow);
+  color: var(--neutral-900);
+}
+
+.article {
+  min-width: 0;
+}
+
+.article :global(h1) {
+  margin-top: var(--space-4);
+}
+
+/* Body text is sans-serif; headings and code keep the terminal's monospace. */
+.article > section > :not(:first-child) {
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  letter-spacing: normal;
+}
+
+/* Centre the readable column inside the terminal and give it room. */
+.article > section > :not(:first-child) {
+  padding: var(--space-8) var(--space-6) var(--space-10);
+}
+
+.article > section > :not(:first-child) > div {
+  /* ~70 characters per line keeps text easy to read. */
+  max-width: 70ch;
+  margin-inline: auto;
+}
+
+/* Markdown-style heading prefixes: "# ", "## ", ... */
+.article :global(h1) > :global(a)::before,
+.article :global(h2) > :global(a)::before,
+.article :global(h3) > :global(a)::before,
+.article :global(h4) > :global(a)::before,
+.article :global(h5) > :global(a)::before,
+.article :global(h6) > :global(a)::before {
+  color: var(--color-text);
+  margin-right: 0.4em;
+  transition: color 0.15s ease;
+}
+
+.article :global(h1) > :global(a)::before {
+  content: "";
+  display: none;
+}
+.article :global(h2) > :global(a)::before {
+  content: "#";
+}
+.article :global(h3) > :global(a)::before {
+  content: "##";
+}
+.article :global(h4) > :global(a)::before {
+  content: "###";
+}
+.article :global(h5) > :global(a)::before {
+  content: "####";
+}
+.article :global(h6) > :global(a)::before {
+  content: "#####";
+}
+
+.article :global(h1),
+.article :global(h2),
+.article :global(h3),
+.article :global(h4),
+.article :global(h5),
+.article :global(h6) {
+  transition: color 0.15s ease;
+}
+
+.article :global(h1) > :global(a),
+.article :global(h2) > :global(a),
+.article :global(h3) > :global(a),
+.article :global(h4) > :global(a),
+.article :global(h5) > :global(a),
+.article :global(h6) > :global(a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.article :global(h1) > :global(a):hover::before,
+.article :global(h2) > :global(a):hover::before,
+.article :global(h3) > :global(a):hover::before,
+.article :global(h4) > :global(a):hover::before,
+.article :global(h5) > :global(a):hover::before,
+.article :global(h6) > :global(a):hover::before {
+  color: var(--color-link);
+}
+
+.article :global(h2),
+.article :global(h3),
+.article :global(code),
+.article :global(pre) {
+  font-family: monospace;
+}
+
+.article :global(code) {
+  padding: 0.1em 0.35em;
+  background: rgb(255 255 255 / 0.08);
+  font-size: 0.9em;
+}
+
+.article :global(pre) {
+  overflow-x: auto;
+  padding: var(--space-4);
+  border: var(--border);
+  background: var(--neutral-900);
+}
+
+.article :global(pre code) {
+  padding: 0;
+  background: transparent;
+  font-size: 0.875rem;
+}
+
+.article :global(img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: var(--border);
+}
+
+.article :global(img[data-cover-image]) {
+  width: 100%;
+  max-height: 24rem;
+  margin-bottom: var(--space-6);
+  object-fit: cover;
+}
+
+.article :global(iframe) {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: var(--border);
+}
+
+.article :global(table) {
+  display: table;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.article :global(th),
+.article :global(td) {
+  padding: var(--space-2) var(--space-4);
+  border: var(--border);
+  text-align: left;
+}
+
+.article :global(th) {
+  background: var(--yellow);
+  color: var(--neutral-900);
+}
+
+.article :global(blockquote) {
+  margin-left: 0;
+  padding-left: var(--space-4);
+  border-left: 4px solid var(--yellow);
+}
+
+@media (min-width: 768px) {
+  .contentGrid {
+    grid-template-columns: minmax(240px, 0.34fr) minmax(0, 1fr);
+  }
+
+  .sidebar {
+    position: sticky;
+    top: calc(var(--space-16) + var(--space-4));
+    height: calc(100vh - var(--sidebar-offset, 12rem) - var(--space-8));
+  }
+}
+
+.articleNav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.articleNavLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border: var(--border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: monospace;
+  text-decoration: none;
+  box-shadow: 6px 6px 0 var(--yellow-700);
+}
+
+.articleNavLink:hover,
+.articleNavLink:focus-visible {
+  background: var(--yellow);
+  color: var(--neutral-900);
+}
+
+.articleNavNext {
+  grid-column: 2;
+  text-align: right;
+}
+
+.articleNavLabel {
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
+.articleNavTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .articleNavNext {
+    grid-column: auto;
+  }
+}
+
+/* ── Article typography ── */
+.article > section > :not(:first-child) {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.article :global(h1) {
+  margin-bottom: var(--space-5);
+}
+
+.article :global(h2) {
+  margin: var(--space-12) 0 var(--space-4);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.article :global(h3) {
+  margin: var(--space-8) 0 var(--space-3);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.article :global(p) {
+  margin: 0 0 var(--space-5);
+}
+
+.article :global(ul),
+.article :global(ol) {
+  margin: 0 0 var(--space-5);
+  padding-left: var(--space-6);
+}
+
+.article :global(li) {
+  margin-bottom: var(--space-2);
+}
+
+.article :global(p a),
+.article :global(li a),
+.article :global(td a) {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article :global(p a):hover,
+.article :global(li a):hover,
+.article :global(td a):hover {
+  color: var(--color-text);
+}
+
+.article :global(code) {
+  background: var(--color-bg);
+  color: var(--color-link);
+}
+
+.article :global(pre) {
+  margin: 0 0 var(--space-6);
+  padding: var(--space-5);
+  border: var(--border);
+  background: var(--color-bg);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.article :global(pre code) {
+  background: transparent;
+  color: inherit;
+}
+
+.article :global(blockquote) {
+  display: flex;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-8);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--neutral-400);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-family: monospace;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.article :global(blockquote)::before {
+  content: "//";
+  flex: none;
+  color: var(--color-link);
+  font-weight: 800;
+  font-style: italic;
+}
+
+.article :global(blockquote) > :global(p) {
+  margin: 0;
+}
+
+.article :global(table) {
+  width: 100%;
+  margin: 0 0 var(--space-6);
+  border: var(--border);
+}
+
+.article :global(th),
+.article :global(td) {
+  overflow-wrap: anywhere;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-top: 1px solid var(--neutral-400);
+}
+
+.article :global(th) {
+  border-top: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.article :global(img[data-cover-image]) {
+  aspect-ratio: 16 / 9;
+  max-height: none;
+  margin-bottom: var(--space-8);
+  border: var(--border);
+}

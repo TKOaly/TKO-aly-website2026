@@ -85,6 +85,17 @@
     "copy": "Kopioi",
     "copied": "Kopioitu"
   },
+  "publicArticle": {
+    "added": "Lisätty",
+    "minRead": "min lukuaika",
+    "shareArticle": "Jaa artikkeli",
+    "linkCopied": "Linkki kopioitu",
+    "previousArticle": "Edellinen artikkeli",
+    "nextArticle": "Seuraava artikkeli",
+    "otherArticles": "Muut artikkelit",
+    "tags": "Tunnisteet",
+    "editOnGitHub": "Muokkaa GitHubissa"
+  },
   "jaseneksi": {
     "title": "Liity Jäseneksi",
     "description": "Voit rekisteröityä jäseneksi tällä lomakkeella. Voit maksaa joko tilisiirrolla tai sopia käteismaksusta hallituslaisen kanssa.",
