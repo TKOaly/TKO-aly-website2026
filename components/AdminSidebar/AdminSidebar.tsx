@@ -10,8 +10,11 @@ export default function AdminSidebar() {
     { href: "/a/navigaatio", label: "Navigation" },
     { href: "/a/footeri", label: "Footer" },
     { href: "/a/sponsorit", label: "Sponsors" },
-    { href: "/a/tapahtumat", label: "Events" },
   ]
+
+  if (process.env.SHOW_EVENT_CREATION) {
+    navItems.push({ href: "/a/tapahtumat", label: "Events" })
+  }
 
   // Assuming pathname looks like "/fi/a/navigaatio" or "/en/a/navigaatio"
   // We can extract the language prefix.
