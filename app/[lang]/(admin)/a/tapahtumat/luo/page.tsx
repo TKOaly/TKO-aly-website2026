@@ -36,6 +36,10 @@ const AddEventPage = async ({ params }: Props) => {
 
   const createEvent = async (formData: FormData) => {
     "use server"
+    if (!process.env.SUBMIT_EVENT_CREATION_FORM) {
+      return
+    }
+
     const baseUrl =
       process.env.EVENTS_API_BASE_URL ?? "http://events-microservice:3040"
     const token =

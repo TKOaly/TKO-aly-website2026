@@ -16,6 +16,10 @@ const TapahtumatPage = async ({
 }: {
   params: Promise<{ lang: string }>
 }) => {
+  if (!process.env.SHOW_EVENT_CREATION) {
+    return <></>
+  }
+
   const { lang } = await params
   const { t } = await getAsyncTranslation(lang)
 
