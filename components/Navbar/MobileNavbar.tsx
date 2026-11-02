@@ -15,7 +15,7 @@ interface MobileNavbarProps {
 
 const MobileNavbar = ({ items, disabledRoutes = [] }: MobileNavbarProps) => {
   const mobileMenuRef = useRef<HTMLDialogElement>(null)
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const { t, lang: language } = useTranslation()
   const lang = (language as string) || "fi"
   const toggleLanguage = useToggleLanguage(lang)
@@ -106,7 +106,9 @@ const MobileNavbar = ({ items, disabledRoutes = [] }: MobileNavbarProps) => {
           )}
         </nav>
 
-        <section className={styles.mobileDialogFooter}>
+        <section
+          className={`${styles.mobileDialogFooter} ${status === "loading" ? styles.authLoading : ""}`}
+        >
           <button
             type="button"
             className={styles.mobileActionButton}

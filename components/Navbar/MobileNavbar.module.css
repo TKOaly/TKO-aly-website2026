@@ -144,3 +144,7 @@
 .mobileActionButton:focus {
   background: var(--neutral-600);
 }
+
+.authLoading {
+  visibility: hidden;
+}

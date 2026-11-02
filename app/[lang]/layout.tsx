@@ -1,5 +1,8 @@
-import Providers from "@/components/Providers"
 import type { Metadata } from "next"
+import { getServerSession } from "next-auth/next"
+
+import { config as authOptions } from "@/auth"
+import Providers from "@/components/Providers"
 import "../globals.css"
 
 export const metadata: Metadata = {
@@ -24,15 +27,17 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const session = await getServerSession(authOptions)
+
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   )

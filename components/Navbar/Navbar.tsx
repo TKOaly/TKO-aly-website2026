@@ -78,7 +78,7 @@ function Navbar({
   items: NavSection[]
   disabledRoutes?: string[]
 }) {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const params = useParams()
   const lang = (params?.lang as Lang) || "fi"
   const isMobileView = useMatchMediaQuery("lg")
@@ -250,7 +250,9 @@ function Navbar({
             })}
           </ul>
 
-          <ul className={styles.secondaryActionList}>
+          <ul
+            className={`${styles.secondaryActionList} ${status === "loading" ? styles.authLoading : ""}`}
+          >
             {!session && (
               <li>
                 <button
