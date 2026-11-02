@@ -55,6 +55,14 @@
   min-height: 10rem;
 }
 
+.notice {
+  margin: 0 0 var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  border: var(--border);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
 .actions {
   display: grid;
   gap: var(--space-3);

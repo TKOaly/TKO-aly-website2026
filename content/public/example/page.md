@@ -5,6 +5,7 @@ author: "TKO-äly"
 date: 2026-10-24
 readingTime: 3
 tag: "ESIMERKKI"
+# devOnly: true
 coverImage: "https://www.tko-aly.fi/images/kyykka2008.png"
 coverImageAlt: "Kyykkäpelaajia vuodelta 2008"
 ---

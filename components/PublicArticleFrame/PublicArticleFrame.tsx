@@ -15,17 +15,21 @@ import TableOfContents from "@/components/TableOfContents/TableOfContents"
 
 import styles from "./PublicArticleFrame.module.css"
 
-const GITHUB_EDIT_BASE =
-  "https://github.com/TKOaly/TKO-aly-website2026/blob/main/app/%5Blang%5D/(public)"
+const GITHUB_BLOB_BASE =
+  "https://github.com/TKOaly/TKO-aly-website2026/blob/main"
 
 export type ArticleLink = { href: string; title: string }
 
 export default function PublicArticleFrame({
   children,
   articles = [],
+  sourceFile,
+  translationMissing = false,
 }: {
   children: ReactNode
   articles?: ArticleLink[]
+  sourceFile: string
+  translationMissing?: boolean
 }) {
   const pathname = usePathname()
   const [shared, setShared] = useState(false)
@@ -54,7 +58,7 @@ export default function PublicArticleFrame({
   }, [])
   const articlePath = pathname.replace(/^\/(fi|en)/, "") || "/"
   const articleName = articlePath.split("/").filter(Boolean).pop() || "index"
-  const editUrl = `${GITHUB_EDIT_BASE}${articlePath === "/" ? "" : articlePath}/page.md`
+  const editUrl = `${GITHUB_BLOB_BASE}/${sourceFile}`
   const lang = pathname.startsWith("/en") ? "en" : "fi"
   const language = lang === "en" ? en : fi
   const currentIndex = articles.findIndex(a => a.href === articlePath)
@@ -121,6 +125,11 @@ export default function PublicArticleFrame({
             heading=""
             mobileCollapsible={false}
           >
+            {translationMissing && (
+              <p className={styles.notice} role="note">
+                {language.publicArticle.translationMissing}
+              </p>
+            )}
             {children}
           </Terminal>
         </main>

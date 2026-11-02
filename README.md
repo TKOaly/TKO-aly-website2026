@@ -22,6 +22,17 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Articles
+
+Public pages are Markdown files in `content/public/<slug>/`, rendered by `app/[lang]/(public)/[...slug]/page.tsx`:
+
+| File         | Language |
+| ------------ | -------- |
+| `page.md`    | Finnish  |
+| `page.en.md` | English  |
+
+A page without a translation shows the Finnish file with a notice. Add `devOnly: true` to the front matter to hide a page outside `APP_ENV=dev`. New pages must also be added to the navbar (`data/navbar.json`) to appear in the menu and prev/next navigation.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
