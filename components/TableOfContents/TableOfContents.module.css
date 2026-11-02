@@ -141,3 +141,34 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Placeholder until headings are collected, so the sidebar keeps its width. */
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.skeletonLine {
+  height: 2.25rem;
+  border: var(--border);
+  background: var(--color-surface);
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+}
+
+.skeletonLine:first-child {
+  height: 1.5rem;
+  width: 60%;
+}
+
+@keyframes skeleton-pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonLine {
+    animation: none;
+  }
+}

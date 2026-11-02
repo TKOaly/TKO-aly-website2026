@@ -60,6 +60,7 @@ function collectHeadings(): TocItem[] {
 
 export default function TableOfContents() {
   const [items, setItems] = useState<TocItem[]>([])
+  const [collected, setCollected] = useState(false)
   const [activeId, setActiveId] = useState<string>("")
   // Accordions start open; clicking toggles them.
   const [manual, setManual] = useState<Record<string, boolean>>({})
@@ -69,6 +70,7 @@ export default function TableOfContents() {
   useLayoutEffect(() => {
     const frame = requestAnimationFrame(() => {
       setItems(collectHeadings())
+      setCollected(true)
     })
     return () => cancelAnimationFrame(frame)
   }, [pathname])
@@ -215,7 +217,14 @@ export default function TableOfContents() {
     )
 
   return (
-    <aside className={styles.toc} aria-hidden={items.length === 0}>
+    <aside className={styles.toc} aria-hidden={collected && items.length === 0}>
+      {!collected && (
+        <div className={styles.skeleton} aria-hidden>
+          {[0, 1, 2, 3, 4].map(i => (
+            <span key={i} className={styles.skeletonLine} />
+          ))}
+        </div>
+      )}
       {items.length > 0 && (
         <nav ref={navRef} aria-label="table of contents">
           <ul className={styles.tocList}>{renderTree(items)}</ul>
