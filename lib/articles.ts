@@ -3,7 +3,7 @@ import { join } from "node:path"
 
 export type Lang = "fi" | "en"
 
-const contentDir = join(process.cwd(), "content", "public")
+const contentDir = join(process.cwd(), "content")
 const extensions = ["md", "mdx"] as const
 const slugPattern = /^[A-Za-z0-9-]+$/
 
@@ -27,7 +27,7 @@ export function findArticle(slug: string, lang: Lang): Article | null {
     : (["en", "fi"] as const)) {
     const suffix = candidate === "fi" ? "" : `.${candidate}`
     for (const ext of extensions) {
-      const file = `content/public/${slug}/page${suffix}.${ext}`
+      const file = `content/${slug}/page${suffix}.${ext}`
       if (existsSync(join(contentDir, slug, `page${suffix}.${ext}`))) {
         return { slug, lang: candidate, suffix, ext, file }
       }

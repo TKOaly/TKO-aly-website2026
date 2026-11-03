@@ -18,7 +18,7 @@ type Props = { params: Promise<{ lang: string; slug: string[] }> }
 
 const load = (article: Article) =>
   import(
-    `../../../../content/public/${article.slug}/page${article.suffix}.${article.ext}`
+    `../../../../content/${article.slug}/page${article.suffix}.${article.ext}`
   )
 
 async function resolve({ params }: Props) {

@@ -24,7 +24,7 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Articles
 
-Public pages are Markdown files in `content/public/<slug>/`, rendered by `app/[lang]/(public)/[...slug]/page.tsx`:
+Public pages are Markdown files in `content/<slug>/`, rendered by `app/[lang]/(public)/[...slug]/page.tsx`:
 
 | File         | Language |
 | ------------ | -------- |
