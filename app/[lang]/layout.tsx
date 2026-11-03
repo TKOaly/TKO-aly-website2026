@@ -1,9 +1,16 @@
 import type { Metadata } from "next"
+import { League_Gothic } from "next/font/google"
 import { getServerSession } from "next-auth/next"
 
 import { config as authOptions } from "@/auth"
 import Providers from "@/components/Providers"
 import "../globals.css"
+
+const headingFont = League_Gothic({
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-heading",
+})
 
 export const metadata: Metadata = {
   title: { default: "TKO-äly", template: "%s | TKO-äly" },
@@ -36,7 +43,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body className={headingFont.variable}>
         <Providers session={session}>{children}</Providers>
       </body>
     </html>

@@ -2,11 +2,20 @@ import { useRef } from "react"
 import { ExternalLink, Globe, Menu, X } from "lucide-react"
 import { useSession, signIn, signOut } from "next-auth/react"
 
+import { usePathname } from "next/navigation"
+
 import { ClientLink, useTranslation } from "@/app/i18n/client"
 import { useToggleLanguage } from "@/lib/useToggleLanguage"
 
 import styles from "./MobileNavbar.module.css"
-import { NavSection, userNavItems, adminNavItems } from "./Navbar"
+import {
+  NavSection,
+  userNavItems,
+  adminNavItems,
+  isActiveLink,
+  isActiveSection,
+  pathWithoutLang,
+} from "./Navbar"
 
 interface MobileNavbarProps {
   items: NavSection[]
@@ -18,6 +27,7 @@ const MobileNavbar = ({ items, disabledRoutes = [] }: MobileNavbarProps) => {
   const { data: session, status } = useSession()
   const { t, lang: language } = useTranslation()
   const lang = (language as string) || "fi"
+  const path = pathWithoutLang(usePathname())
   const toggleLanguage = useToggleLanguage(lang)
   const otherLangLabel = lang === "fi" ? "In English" : "Suomeksi"
 
@@ -44,7 +54,7 @@ const MobileNavbar = ({ items, disabledRoutes = [] }: MobileNavbarProps) => {
         <nav className={styles.mobileNav}>
           {items.map(section => (
             <section key={section.labels.fi || section.labels.en}>
-              <details>
+              <details open={isActiveSection(section, path) || undefined}>
                 <summary className={styles.mobileSectionHeading}>
                   {section.labels[lang]}
                 </summary>
@@ -53,6 +63,9 @@ const MobileNavbar = ({ items, disabledRoutes = [] }: MobileNavbarProps) => {
                     <li key={link.href}>
                       <ClientLink
                         href={link.href}
+                        aria-current={
+                          isActiveLink(link, path) ? "page" : undefined
+                        }
                         target={link.external ? "_blank" : undefined}
                         rel={link.external ? "noopener noreferrer" : undefined}
                         onClick={() => mobileMenuRef.current?.close()}

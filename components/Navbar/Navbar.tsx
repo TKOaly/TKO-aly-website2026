@@ -7,7 +7,7 @@ import { ExternalLink, Globe, User } from "lucide-react"
 import { ClientLink } from "@/app/i18n/client"
 import { useMatchMediaQuery } from "@/lib/useMatchMediaQuery"
 import { useToggleLanguage } from "@/lib/useToggleLanguage"
-import { useParams } from "next/navigation"
+import { useParams, usePathname } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
 
 import MobileNavbar from "./MobileNavbar"
@@ -65,6 +65,17 @@ export const adminNavItems: NavLink[] = [
   },
 ]
 
+/** Path without the language prefix, e.g. "/fi/hallitus" -> "/hallitus". */
+export function pathWithoutLang(pathname: string | null) {
+  return "/" + (pathname ?? "").split("/").slice(2).join("/").replace(/\/$/, "")
+}
+
+export const isActiveLink = (link: NavLink, path: string) =>
+  !link.external && link.href === path
+
+export const isActiveSection = (section: NavSection, path: string) =>
+  section.links.some(link => isActiveLink(link, path))
+
 function sectionKey(section: NavSection) {
   return (section.labels.fi || section.labels.en)
     .toLowerCase()
@@ -81,6 +92,7 @@ function Navbar({
   const { data: session, status } = useSession()
   const params = useParams()
   const lang = (params?.lang as Lang) || "fi"
+  const path = pathWithoutLang(usePathname())
   const isMobileView = useMatchMediaQuery("lg")
   const toggleLanguage = useToggleLanguage(lang)
 
@@ -185,7 +197,7 @@ function Navbar({
                 >
                   <button
                     type="button"
-                    className={styles.dropdownToggle}
+                    className={`${styles.dropdownToggle} ${isActiveSection(section, path) ? styles.activeSection : ""}`}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                     ref={el => {
@@ -217,6 +229,9 @@ function Navbar({
                           <li key={link.href}>
                             <ClientLink
                               href={link.href}
+                              aria-current={
+                                isActiveLink(link, path) ? "page" : undefined
+                              }
                               target={link.external ? "_blank" : undefined}
                               rel={
                                 link.external

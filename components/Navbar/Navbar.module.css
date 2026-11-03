@@ -96,6 +96,10 @@
   background: var(--yellow-700);
 }
 
+.activeSection {
+  background: var(--yellow-600);
+}
+
 /* ── Mega menu (full-width section dropdowns) ── */
 .navItem {
   position: relative;
@@ -207,6 +211,13 @@
 .megaMenuLinks li a:hover {
   background: var(--yellow-200);
   color: var(--neutral-900);
+}
+
+.megaMenuLinks li a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.4em;
+  text-decoration-thickness: 3px;
 }
 
 .megaMenuLinks li a:focus {

@@ -182,6 +182,17 @@
   color: var(--color-link);
 }
 
+.article :global(h1),
+.article :global(h2),
+.article :global(h3),
+.article :global(h4),
+.article :global(h5),
+.article :global(h6) {
+  font-family: var(--font-heading), "Arial Narrow", sans-serif;
+  font-weight: 400; /* League Gothic ships a single weight; avoid faux bold */
+  letter-spacing: 0.02em;
+}
+
 .article :global(h2),
 .article :global(h3),
 .article :global(code),
@@ -269,7 +280,7 @@
 
 .articleNav {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-6);
   margin-top: var(--space-4);
 }
@@ -309,6 +320,10 @@
 }
 
 @media (max-width: 600px) {
+  .articleNav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .articleNavNext {
     grid-column: auto;
   }
