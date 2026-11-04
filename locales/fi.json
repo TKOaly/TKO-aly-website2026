@@ -83,7 +83,20 @@
     "switchToEnglish": "In English",
     "opensInNewWindow": "avautuu uuteen ikkunaan",
     "copy": "Kopioi",
-    "copied": "Kopioitu"
+    "copied": "Kopioitu",
+    "skipToContent": "Siirry pääsisältöön"
+  },
+  "publicArticle": {
+    "added": "Lisätty",
+    "minRead": "min lukuaika",
+    "shareArticle": "Jaa artikkeli",
+    "linkCopied": "Linkki kopioitu",
+    "previousArticle": "Edellinen artikkeli",
+    "nextArticle": "Seuraava artikkeli",
+    "otherArticles": "Muut artikkelit",
+    "tags": "Tunnisteet",
+    "translationMissing": "Tämä sivu ei ole vielä saatavilla suomeksi.",
+    "editOnGitHub": "Muokkaa GitHubissa"
   },
   "jaseneksi": {
     "title": "Liity Jäseneksi",
@@ -111,11 +124,24 @@
         "placeholder": "Masa",
         "hint": "Kutsumanimi näkyy muille käyttäjille."
       },
-      "email": { "label": "Sähköposti", "placeholder": "matti@example.com" },
-      "hometown": { "label": "Kotikunta", "placeholder": "Helsinki" },
-      "phone": { "label": "Puhelinnumero", "placeholder": "+358 40 123 4567" },
-      "password": { "label": "Salasana" },
-      "passwordConfirm": { "label": "Salasana uudelleen" }
+      "email": {
+        "label": "Sähköposti",
+        "placeholder": "matti@example.com"
+      },
+      "hometown": {
+        "label": "Kotikunta",
+        "placeholder": "Helsinki"
+      },
+      "phone": {
+        "label": "Puhelinnumero",
+        "placeholder": "+358 40 123 4567"
+      },
+      "password": {
+        "label": "Salasana"
+      },
+      "passwordConfirm": {
+        "label": "Salasana uudelleen"
+      }
     },
     "other": {
       "legend": "Muut tiedot",
@@ -314,5 +340,28 @@
         "form": "tämän lomakkeen"
       }
     }
+  },
+  "notFound": {
+    "title": "404",
+    "heading": "Sivua ei löytynyt",
+    "text": "Hanhi etsi joka paikasta, mutta sivua ei löytynyt. Se on voinut siirtyä tai osoite on kirjoitettu väärin.",
+    "home": "Takaisin etusivulle",
+    "alt": "Hämmentynyt hanhi katsoo sivulle nokka auki"
+  },
+  "serverError": {
+    "title": "500",
+    "heading": "Jokin meni pieleen",
+    "text": "Palvelimella tapahtui virhe, ja hanhi lähti jahtaamaan sitä. Yritä hetken kuluttua uudelleen.",
+    "retry": "Yritä uudelleen",
+    "home": "Takaisin etusivulle",
+    "alt": "Valkoinen hanhi juoksee nokka auki jahtaamassa jotakin"
+  },
+  "sitemap": {
+    "title": "Sivukartta",
+    "description": "Kaikki sivuston sivut yhdessä paikassa. Sivukartta auttaa löytämään sivut ilman valikoita.",
+    "main": "Pääsivut",
+    "home": "Etusivu",
+    "calendar": "Tapahtumakalenteri",
+    "other": "Muut linkit"
   }
 }

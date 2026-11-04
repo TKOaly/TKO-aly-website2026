@@ -83,7 +83,20 @@
     "switchToFinnish": "Suomeksi",
     "opensInNewWindow": "opens in a new window",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "skipToContent": "Skip to main content"
+  },
+  "publicArticle": {
+    "added": "Added",
+    "minRead": "min read",
+    "shareArticle": "Share article",
+    "linkCopied": "Link copied",
+    "previousArticle": "Previous article",
+    "nextArticle": "Next article",
+    "otherArticles": "More articles",
+    "tags": "Tags",
+    "translationMissing": "This page is not available in English yet. Showing the Finnish version.",
+    "editOnGitHub": "Edit on GitHub"
   },
   "jaseneksi": {
     "title": "Become a Member",
@@ -97,7 +110,10 @@
     },
     "personal": {
       "legend": "Personal details",
-      "username": { "label": "Username", "placeholder": "e.g. teekkari123" },
+      "username": {
+        "label": "Username",
+        "placeholder": "e.g. teekkari123"
+      },
       "fullname": {
         "label": "Full name",
         "placeholder": "John Doe",
@@ -108,11 +124,24 @@
         "placeholder": "Johnny",
         "hint": "The nickname is visible to other users."
       },
-      "email": { "label": "Email", "placeholder": "john@example.com" },
-      "hometown": { "label": "Hometown", "placeholder": "Helsinki" },
-      "phone": { "label": "Phone number", "placeholder": "+358 40 123 4567" },
-      "password": { "label": "Password" },
-      "passwordConfirm": { "label": "Confirm password" }
+      "email": {
+        "label": "Email",
+        "placeholder": "john@example.com"
+      },
+      "hometown": {
+        "label": "Hometown",
+        "placeholder": "Helsinki"
+      },
+      "phone": {
+        "label": "Phone number",
+        "placeholder": "+358 40 123 4567"
+      },
+      "password": {
+        "label": "Password"
+      },
+      "passwordConfirm": {
+        "label": "Confirm password"
+      }
     },
     "other": {
       "legend": "Other details",
@@ -311,5 +340,28 @@
         "form": "this form"
       }
     }
+  },
+  "notFound": {
+    "title": "404",
+    "heading": "Page not found",
+    "text": "The goose looked everywhere but could not find this page. It may have moved, or the address may be mistyped.",
+    "home": "Back to the home page",
+    "alt": "A puzzled goose looking sideways with its beak open"
+  },
+  "serverError": {
+    "title": "500",
+    "heading": "Something went wrong",
+    "text": "The server hit an error and the goose has run off chasing it. Please try again in a moment.",
+    "retry": "Try again",
+    "home": "Back to the home page",
+    "alt": "A white goose running with its beak open, chasing something"
+  },
+  "sitemap": {
+    "title": "Sitemap",
+    "description": "Every page of the site in one place. The sitemap helps you find pages without using the menus.",
+    "main": "Main pages",
+    "home": "Home",
+    "calendar": "Event calendar",
+    "other": "Other links"
   }
 }

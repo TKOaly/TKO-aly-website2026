@@ -64,7 +64,7 @@ const EditEventPage = async ({
   }
 
   return (
-    <main className={styles.main}>
+    <main id="main-content" className={styles.main}>
       <PageHeader title={t("muokkaaTapahtuma.title")} />
       <EventForm
         action={updateEvent}

@@ -27,14 +27,18 @@ export default function AdminSidebar() {
       style={{
         width: "250px",
         minWidth: "250px",
-        borderRight: "1px solid #eaeaea",
+        borderRight: "1px solid var(--color-border)",
         padding: "2rem 1rem",
         display: "flex",
         flexDirection: "column",
         gap: "0.5rem",
       }}
     >
-      <h3 style={{ margin: "0 0 1rem 0.5rem", color: "#666" }}>Admin Menu</h3>
+      <h3
+        style={{ margin: "0 0 1rem 0.5rem", color: "var(--color-text-muted)" }}
+      >
+        Admin Menu
+      </h3>
       <nav style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
         {navItems.map(item => {
           const href = `${langPrefix}${item.href}`
@@ -48,8 +52,12 @@ export default function AdminSidebar() {
                 borderRadius: "4px",
                 textDecoration: "none",
                 fontWeight: isActive ? "bold" : "normal",
-                backgroundColor: isActive ? "#f0f0f0" : "transparent",
-                color: isActive ? "#000" : "#444",
+                backgroundColor: isActive
+                  ? "var(--color-surface-active)"
+                  : "transparent",
+                color: isActive
+                  ? "var(--color-text)"
+                  : "var(--color-text-muted)",
               }}
             >
               {item.label}

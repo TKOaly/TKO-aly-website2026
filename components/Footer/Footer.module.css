@@ -24,6 +24,19 @@
   flex-wrap: wrap;
 }
 
+.sponsorsTitleRow .collaborateButton {
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  box-shadow: 3px 3px 0 var(--yellow-700);
+}
+
+@media (prefers-color-scheme: light) {
+  .sponsorsTitleRow .collaborateButton {
+    box-shadow: 3px 3px 0 var(--neutral-900);
+  }
+}
+
 .sponsorsTitle {
   flex-shrink: 0;
   background-color: var(--yellow);
@@ -208,6 +221,17 @@
   margin-top: auto;
 }
 
+.formLinks :global(.btn) {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+}
+
 .formLink {
   display: flex;
   align-items: flex-start;
@@ -261,6 +285,12 @@
   text-align: center;
   font-size: small;
   color: var(--color-text-muted);
+}
+
+.bottomBarLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 @media (prefers-color-scheme: light) {

@@ -2,21 +2,32 @@ import { useRef } from "react"
 import { ExternalLink, Globe, Menu, X } from "lucide-react"
 import { useSession, signIn, signOut } from "next-auth/react"
 
+import { usePathname } from "next/navigation"
+
 import { ClientLink, useTranslation } from "@/app/i18n/client"
 import { useToggleLanguage } from "@/lib/useToggleLanguage"
 
 import styles from "./MobileNavbar.module.css"
-import { NavSection, userNavItems, adminNavItems } from "./Navbar"
+import {
+  NavSection,
+  userNavItems,
+  adminNavItems,
+  isActiveLink,
+  isActiveSection,
+  pathWithoutLang,
+} from "./Navbar"
 
 interface MobileNavbarProps {
   items: NavSection[]
+  disabledRoutes?: string[]
 }
 
-const MobileNavbar = ({ items }: MobileNavbarProps) => {
+const MobileNavbar = ({ items, disabledRoutes = [] }: MobileNavbarProps) => {
   const mobileMenuRef = useRef<HTMLDialogElement>(null)
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const { t, lang: language } = useTranslation()
   const lang = (language as string) || "fi"
+  const path = pathWithoutLang(usePathname())
   const toggleLanguage = useToggleLanguage(lang)
   const otherLangLabel = lang === "fi" ? "In English" : "Suomeksi"
 
@@ -43,7 +54,7 @@ const MobileNavbar = ({ items }: MobileNavbarProps) => {
         <nav className={styles.mobileNav}>
           {items.map(section => (
             <section key={section.labels.fi || section.labels.en}>
-              <details>
+              <details open={isActiveSection(section, path) || undefined}>
                 <summary className={styles.mobileSectionHeading}>
                   {section.labels[lang]}
                 </summary>
@@ -52,6 +63,9 @@ const MobileNavbar = ({ items }: MobileNavbarProps) => {
                     <li key={link.href}>
                       <ClientLink
                         href={link.href}
+                        aria-current={
+                          isActiveLink(link, path) ? "page" : undefined
+                        }
                         target={link.external ? "_blank" : undefined}
                         rel={link.external ? "noopener noreferrer" : undefined}
                         onClick={() => mobileMenuRef.current?.close()}
@@ -77,16 +91,18 @@ const MobileNavbar = ({ items }: MobileNavbarProps) => {
 
           {session && (
             <section>
-              {userNavItems.map(item => (
-                <ClientLink
-                  key={item.href}
-                  href={item.href}
-                  className={styles.mobileLink}
-                  onClick={() => mobileMenuRef.current?.close()}
-                >
-                  {item.labels[lang]}
-                </ClientLink>
-              ))}
+              {userNavItems
+                .filter(item => !disabledRoutes.includes(item.href))
+                .map(item => (
+                  <ClientLink
+                    key={item.href}
+                    href={item.href}
+                    className={styles.mobileLink}
+                    onClick={() => mobileMenuRef.current?.close()}
+                  >
+                    {item.labels[lang]}
+                  </ClientLink>
+                ))}
               {session?.user &&
                 (session.user as { admin?: boolean })?.admin &&
                 adminNavItems.map(item => (
@@ -103,7 +119,9 @@ const MobileNavbar = ({ items }: MobileNavbarProps) => {
           )}
         </nav>
 
-        <section className={styles.mobileDialogFooter}>
+        <section
+          className={`${styles.mobileDialogFooter} ${status === "loading" ? styles.authLoading : ""}`}
+        >
           <button
             type="button"
             className={styles.mobileActionButton}
