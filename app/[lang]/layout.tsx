@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth/next"
 
 import { config as authOptions } from "@/auth"
 import Providers from "@/components/Providers"
+import SkipLink from "@/components/SkipLink/SkipLink"
+import { getAsyncTranslation } from "@/app/i18n"
 import "../globals.css"
 
 const headingFont = League_Gothic({
@@ -36,14 +38,19 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode
+  params: Promise<{ lang: string }>
 }>) {
+  const { lang } = await params
+  const { t } = await getAsyncTranslation(lang)
   const session = await getServerSession(authOptions)
 
   return (
-    <html lang="en">
+    <html lang={lang}>
       <body className={headingFont.variable}>
+        <SkipLink label={t("common.skipToContent")} />
         <Providers session={session}>{children}</Providers>
       </body>
     </html>

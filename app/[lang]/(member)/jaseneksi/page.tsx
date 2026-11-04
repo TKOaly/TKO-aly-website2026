@@ -20,7 +20,7 @@ const MembershipPage = async ({ params }: Props) => {
   const { t } = await getAsyncTranslation(lang)
 
   return (
-    <main className={styles.main}>
+    <main id="main-content" className={styles.main}>
       <PageHeader
         title={t("jaseneksi.title")}
         description={t("jaseneksi.description")}

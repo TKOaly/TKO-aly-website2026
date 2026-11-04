@@ -15,7 +15,7 @@ const MembershipInvoicePage = async ({ params }: Props) => {
   const { t } = await getAsyncTranslation(lang)
 
   return (
-    <main className={styles.main}>
+    <main id="main-content" className={styles.main}>
       <PageHeader title={t("jasenmaksu.title")} />
 
       <Accordion summary={t("jasenmaksu.accordionSummary")}>

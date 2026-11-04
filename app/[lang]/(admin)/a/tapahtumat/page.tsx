@@ -38,7 +38,7 @@ const TapahtumatPage = async ({
   }
 
   return (
-    <main className={styles.main}>
+    <main id="main-content" className={styles.main}>
       <PageHeader title={t("tapahtumaLista.title")}>
         <Link href={`/${lang}/a/tapahtumat/luo`} className={styles.newLink}>
           {t("tapahtumaLista.createNew")}

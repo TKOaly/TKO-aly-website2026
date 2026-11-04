@@ -19,7 +19,7 @@ const EditUserPage = async ({ params }: Props) => {
   const { t } = await getAsyncTranslation(lang)
 
   return (
-    <main className={styles.main}>
+    <main id="main-content" className={styles.main}>
       <PageHeader title={t("muokkaa.title")} />
 
       <form id="edit-user-form" className={styles.form}>

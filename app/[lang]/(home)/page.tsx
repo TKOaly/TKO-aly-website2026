@@ -65,7 +65,7 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
   const events = await getUpcomingEvents()
 
   return (
-    <main>
+    <main id="main-content">
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
