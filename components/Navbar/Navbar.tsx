@@ -36,7 +36,7 @@ const sectionImages: Record<
   toiminta: { image: orangeCat, bg: "hsl(40 50% 80%)" },
   tapahtumat: {
     image: runningMan,
-    bg: "hsl(200 90% 72%)",
+    bg: "hsl(140 55% 72%)",
     flush: true,
   },
   turvallisuus: {

@@ -287,6 +287,12 @@
   color: var(--color-text-muted);
 }
 
+.bottomBarLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 @media (prefers-color-scheme: light) {
   .cardHeading,
   .formLink {
