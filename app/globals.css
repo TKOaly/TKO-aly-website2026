@@ -92,6 +92,13 @@
   --color-text-inverted: var(--neutral-900);
   --color-accent: var(--yellow-500);
   --color-link: var(--yellow-300);
+  --page-dots: url("./assets/dot-pattern-light.svg");
+  --color-border: var(--neutral-400);
+  --color-surface-active: var(--neutral-600);
+  --color-danger: hsl(4, 100%, 80%);
+  --color-success: hsl(140, 65%, 65%);
+  --color-action: var(--blue-600);
+  --color-action-text: var(--white);
 
   --border: 2px solid hsl(50, 15%, 60%);
   --border-thick: 4px solid hsl(50, 15%, 60%);
@@ -123,6 +130,11 @@
     --color-text-inverted: var(--neutral-50);
     --color-accent: var(--yellow-700);
     --color-link: var(--blue-700);
+    --page-dots: url("./assets/dot-pattern.svg");
+    --color-border: var(--neutral-400);
+    --color-surface-active: var(--neutral-100);
+    --color-danger: hsl(350, 100%, 30%);
+    --color-success: hsl(140, 70%, 22%);
 
     --border: 2px solid var(--neutral-900);
     --border-thick: 4px solid var(--neutral-900);
@@ -133,8 +145,10 @@
   }
 }
 
-/* One h1 style for every page. */
-h1 {
+/* One h1 style for every page; .headingDisplay gives the same look to other
+   heading levels without changing the document outline. */
+h1,
+.headingDisplay {
   margin: 0;
   font-family: var(--font-heading), "Arial Narrow", sans-serif;
   font-size: calc(var(--space-10) * 2);
@@ -155,6 +169,12 @@ body {
   color: var(--color-text);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
+}
+
+/* Halftone dots over the page background, same pattern as the footer. */
+body {
+  background-image: var(--page-dots);
+  background-size: 3px 3px;
 }
 
 .btn,

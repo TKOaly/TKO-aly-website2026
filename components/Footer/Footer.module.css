@@ -31,6 +31,12 @@
   box-shadow: 3px 3px 0 var(--yellow-700);
 }
 
+@media (prefers-color-scheme: light) {
+  .sponsorsTitleRow .collaborateButton {
+    box-shadow: 3px 3px 0 var(--neutral-900);
+  }
+}
+
 .sponsorsTitle {
   flex-shrink: 0;
   background-color: var(--yellow);

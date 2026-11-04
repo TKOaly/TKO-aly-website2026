@@ -298,6 +298,12 @@
   box-shadow: 6px 6px 0 var(--yellow-700);
 }
 
+@media (prefers-color-scheme: light) {
+  .articleNavLink {
+    box-shadow: 6px 6px 0 var(--neutral-900);
+  }
+}
+
 .articleNavLink:hover,
 .articleNavLink:focus-visible {
   background: var(--yellow);

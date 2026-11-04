@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import Image, { type StaticImageData } from "next/image"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { ExternalLink, Globe, User } from "lucide-react"
 
@@ -10,10 +10,43 @@ import { useToggleLanguage } from "@/lib/useToggleLanguage"
 import { useParams, usePathname } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
 
+import fuksiDuck from "@/app/assets/fuksi-duck.svg"
+import neko from "@/app/assets/neko.svg"
+import orangeCat from "@/app/assets/orange-cat.svg"
+import aviatorDuck from "@/app/assets/aviator-duck.svg"
+import runningMan from "@/app/assets/running-man.svg"
+import sittingDuck from "@/app/assets/sitting-duck.svg"
+
 import MobileNavbar from "./MobileNavbar"
 import styles from "./Navbar.module.css"
 
 type Lang = "fi" | "en"
+
+// Decorative mascot and tile colour for each mega menu, keyed by sectionKey().
+const sectionImages: Record<
+  string,
+  {
+    image: StaticImageData
+    bg?: string
+    flush?: boolean
+    corner?: boolean
+  }
+> = {
+  yhdistys: { image: fuksiDuck, bg: "hsl(200 90% 72%)" },
+  toiminta: { image: orangeCat, bg: "hsl(40 50% 80%)" },
+  tapahtumat: {
+    image: runningMan,
+    bg: "hsl(200 90% 72%)",
+    flush: true,
+  },
+  turvallisuus: {
+    image: aviatorDuck,
+    bg: "hsl(200 90% 72%)",
+    corner: true,
+  },
+  fukseille: { image: sittingDuck },
+  yritykset: { image: neko, bg: "hsl(310 80% 65%)" },
+}
 
 export interface NavLink {
   href: string
@@ -216,6 +249,18 @@ function Navbar({
                     hidden={!isOpen}
                   >
                     <div className={styles.megaMenuInner}>
+                      {sectionImages[id] && (
+                        <div
+                          className={`${styles.megaMenuImage} ${sectionImages[id].flush ? styles.megaMenuImageFlush : ""} ${sectionImages[id].corner ? styles.megaMenuImageCorner : ""}`}
+                          style={
+                            {
+                              "--tile-bg": sectionImages[id].bg,
+                            } as React.CSSProperties
+                          }
+                        >
+                          <Image src={sectionImages[id].image} alt="" />
+                        </div>
+                      )}
                       <div className={styles.megaMenuHeader}>
                         <h3 className={styles.megaMenuTitle}>
                           {section.labels[lang]}

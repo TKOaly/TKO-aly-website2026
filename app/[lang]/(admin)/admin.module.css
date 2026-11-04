@@ -1,0 +1,22 @@
+/* Readable defaults for the admin area (WCAG 2.1 AA, contrast >= 4.5:1). */
+.admin button {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.admin button:hover:not(:disabled) {
+  background: var(--color-surface-active);
+}
+
+.admin button:disabled {
+  border-style: dashed;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.admin a {
+  color: var(--color-link);
+}

@@ -234,21 +234,29 @@ export default function NavAdminClient({
             <li
               key={index}
               style={{
-                border: "1px solid #ccc",
+                border: "1px solid var(--color-border)",
                 padding: "1rem",
                 marginBottom: "1rem",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 backgroundColor:
-                  selectedSectionIndex === index ? "#eee" : "transparent",
+                  selectedSectionIndex === index
+                    ? "var(--color-surface-active)"
+                    : "transparent",
               }}
             >
               <div>
                 <strong>
                   {section.labels.fi} / {section.labels.en}
                 </strong>
-                <p style={{ margin: 0, fontSize: "0.9rem", color: "#666" }}>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: "0.9rem",
+                    color: "var(--color-text-muted)",
+                  }}
+                >
                   {section.descriptions?.fi} / {section.descriptions?.en}
                 </p>
                 <button
@@ -292,7 +300,7 @@ export default function NavAdminClient({
                   style={{
                     padding: "0.25rem 0.5rem",
                     cursor: "pointer",
-                    color: "red",
+                    color: "var(--color-danger)",
                   }}
                 >
                   Delete
@@ -304,7 +312,12 @@ export default function NavAdminClient({
       </div>
 
       {selectedSectionIndex !== null && (
-        <div style={{ borderLeft: "4px solid #0070f3", paddingLeft: "1rem" }}>
+        <div
+          style={{
+            borderLeft: "4px solid var(--color-action)",
+            paddingLeft: "1rem",
+          }}
+        >
           <h2>
             Editing Links for &quot;{sections[selectedSectionIndex].labels.fi}
             &quot;
@@ -373,7 +386,7 @@ export default function NavAdminClient({
               <li
                 key={index}
                 style={{
-                  border: "1px solid #ddd",
+                  border: "1px solid var(--color-border)",
                   padding: "0.75rem",
                   marginBottom: "0.5rem",
                   display: "flex",
@@ -394,7 +407,7 @@ export default function NavAdminClient({
                       style={{
                         marginLeft: "0.5rem",
                         fontSize: "0.8rem",
-                        color: "#666",
+                        color: "var(--color-text-muted)",
                       }}
                     >
                       (External)
@@ -426,7 +439,7 @@ export default function NavAdminClient({
                     style={{
                       padding: "0.25rem 0.5rem",
                       cursor: "pointer",
-                      color: "red",
+                      color: "var(--color-danger)",
                     }}
                   >
                     Delete
@@ -441,7 +454,7 @@ export default function NavAdminClient({
       <div
         style={{
           marginTop: "2rem",
-          borderTop: "1px solid #ccc",
+          borderTop: "1px solid var(--color-border)",
           paddingTop: "1rem",
         }}
       >
@@ -452,8 +465,8 @@ export default function NavAdminClient({
             padding: "0.75rem 1.5rem",
             fontSize: "1rem",
             cursor: isSaving ? "not-allowed" : "pointer",
-            backgroundColor: "#0070f3",
-            color: "white",
+            backgroundColor: "var(--color-action)",
+            color: "var(--color-action-text)",
             border: "none",
             borderRadius: "4px",
           }}
@@ -467,8 +480,11 @@ export default function NavAdminClient({
           style={{
             marginTop: "1rem",
             padding: "1rem",
-            color: status.type === "success" ? "green" : "red",
-            border: `1px solid ${status.type === "success" ? "green" : "red"}`,
+            color:
+              status.type === "success"
+                ? "var(--color-success)"
+                : "var(--color-danger)",
+            border: `1px solid ${status.type === "success" ? "var(--color-success)" : "var(--color-danger)"}`,
             borderRadius: "4px",
           }}
         >
