@@ -461,3 +461,256 @@
   margin-bottom: var(--space-8);
   border: var(--border);
 }
+
+/* ── Mobile: share/edit at the end, floating table of contents ── */
+.mobileActions,
+.tocFab,
+.tocDrawer {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* The sidebar's ToC and actions move into the drawer and article footer. */
+  .sidebar {
+    display: none;
+  }
+
+  /* No boxes on mobile: the path and the article sit straight on the page. */
+  .page .metadataCard {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .article .articleTerminal {
+    overflow: visible;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* Hide the window bar (dots + file name). */
+  .article .articleTerminal > :first-child {
+    display: none;
+  }
+
+  /* The terminal body scrolls (overflow-y: auto), which also clips sideways
+     and cut off the button's hard shadow. No window on mobile, so no clip. */
+  .article > section > :not(:first-child) {
+    overflow: visible;
+    padding: 0;
+  }
+
+  /* Room for the floating button so it never covers the last lines. */
+  .page {
+    padding-bottom: var(--space-20);
+  }
+
+  .mobileActions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+    margin-top: var(--space-10);
+    padding-top: var(--space-6);
+    border-top: 2px dashed var(--neutral-400);
+    font-family: monospace;
+  }
+
+  .mobileActions button,
+  .mobileActions a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    box-sizing: border-box; /* keep padding + border inside the column */
+    width: 100%;
+    min-width: 0;
+    height: 3.25rem;
+    margin: 0;
+    padding: 0 var(--space-4);
+    line-height: 1.2;
+    border: var(--border);
+    background: transparent;
+    color: var(--color-text);
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Same look as the site's yellow .btn buttons: bevel border, hard shadow,
+     uppercase label, press-in on tap. */
+  .mobileActions .mobileActionPrimary {
+    border-top: 2px solid var(--neutral-200);
+    border-left: 2px solid var(--neutral-200);
+    border-bottom: 4px solid var(--neutral-900);
+    border-right: 4px solid var(--neutral-900);
+    background: var(--yellow);
+    color: var(--neutral-900);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    box-shadow: 4px 4px 0 var(--yellow-700);
+    transition:
+      box-shadow 0.1s ease,
+      transform 0.1s ease;
+  }
+
+  .mobileActions .mobileActionPrimary:hover {
+    background: var(--yellow-300);
+  }
+
+  .mobileActions .mobileActionPrimary:active {
+    background: var(--yellow-700);
+    box-shadow: 0 0 0 0 #000000;
+    transform: translate(4px, 4px);
+  }
+
+  .mobileActions a:hover,
+  .mobileActions a:focus-visible {
+    background: var(--yellow);
+    color: var(--neutral-900);
+  }
+
+  .tocFab {
+    position: fixed;
+    z-index: 50; /* below the navbar menus (998+) */
+    right: var(--space-4);
+    bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 3rem;
+    padding: 0 var(--space-5);
+    border: 2px solid var(--neutral-900);
+    background: var(--yellow);
+    color: var(--neutral-900);
+    font-family: monospace;
+    font-size: 0.9375rem;
+    font-weight: 800;
+    box-shadow: 4px 4px 0 var(--neutral-900);
+    cursor: pointer;
+  }
+
+  .tocFab {
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0s;
+  }
+
+  /* At the end of the article: fade out and leave the tab order. */
+  .tocFab.tocFabHidden {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0s 0.2s;
+  }
+
+  .tocFab[hidden] {
+    display: none;
+  }
+
+  .tocFab:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 3px;
+  }
+
+  /* Bottom sheet built on <dialog>: focus trap, Esc and backdrop for free. */
+  .tocDrawer[open] {
+    position: fixed;
+    inset: auto 0 0 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    max-height: min(80vh, 40rem);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-top: 2px solid var(--yellow);
+    background: var(--color-surface);
+    color: var(--color-text);
+    animation: toc-drawer-in 0.2s ease-out;
+  }
+
+  .tocDrawer::backdrop {
+    background: rgb(0 0 0 / 0.7);
+  }
+}
+
+.tocDrawerHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-2) var(--space-3) var(--space-5);
+  border-bottom: var(--border);
+}
+
+.tocDrawerHeader h2 {
+  margin: 0;
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.tocDrawerClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.tocDrawerClose:hover,
+.tocDrawerClose:focus-visible {
+  background: var(--yellow);
+  color: var(--neutral-900);
+}
+
+.tocDrawerBody {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-4) var(--space-5)
+    calc(var(--space-6) + env(safe-area-inset-bottom));
+}
+
+@keyframes toc-drawer-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tocDrawer[open] {
+    animation: none;
+  }
+
+  .tocFab,
+  .tocFab.tocFabHidden {
+    transition: none;
+  }
+}
+
+@media (max-width: 767px) and (prefers-color-scheme: light) {
+  .mobileActions .mobileActionPrimary {
+    border-color: #000000;
+    box-shadow: 4px 4px 0 var(--neutral-900);
+  }
+
+  .mobileActions .mobileActionPrimary:active {
+    box-shadow: 0 0 0 0 #000000;
+  }
+}

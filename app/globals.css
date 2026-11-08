@@ -151,9 +151,10 @@ h1,
 .headingDisplay {
   margin: 0;
   font-family: var(--font-heading), "Arial Narrow", sans-serif;
-  font-size: calc(var(--space-10) * 2);
+  font-size: clamp(2.75rem, 14vw, calc(var(--space-10) * 2));
   font-weight: 400;
   line-height: 1;
+  overflow-wrap: break-word;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   font-style: italic;

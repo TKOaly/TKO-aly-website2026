@@ -66,3 +66,42 @@
   font-size: 0.8125rem;
   color: var(--color-text-muted);
 }
+
+/* Share / edit icons beside the reading time — mobile only. */
+.meta .quickActions {
+  display: none;
+  gap: var(--space-2);
+}
+
+@media (max-width: 767px) {
+  .meta .quickActions {
+    display: inline-flex;
+  }
+}
+
+.quickActions button,
+.quickActions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* <button> is border-box by default but <a> is not: make them match. */
+  box-sizing: border-box;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: var(--border);
+  line-height: 1;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.quickActions button:hover,
+.quickActions button:focus-visible,
+.quickActions a:hover,
+.quickActions a:focus-visible {
+  background: var(--yellow);
+  color: var(--neutral-900);
+}

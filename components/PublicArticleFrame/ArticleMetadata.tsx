@@ -1,11 +1,19 @@
 "use client"
 
-import { CalendarDays, Clock3, User } from "lucide-react"
+import {
+  CalendarDays,
+  Check,
+  Clock3,
+  ExternalLink,
+  Share2,
+  User,
+} from "lucide-react"
 import { usePathname } from "next/navigation"
 
 import en from "@/locales/en.json"
 import fi from "@/locales/fi.json"
 
+import { useArticleActions } from "./ArticleActionsContext"
 import styles from "./ArticleMetadata.module.css"
 
 export type ArticleFrontmatter = {
@@ -50,6 +58,7 @@ export default function ArticleMetadata({
   const language = usePathname().startsWith("/en") ? en : fi
   const labels = language.publicArticle
   const allTags = tags ?? (tag ? [tag] : [])
+  const actions = useArticleActions()
 
   return (
     <header className={styles.header}>
@@ -72,6 +81,34 @@ export default function ArticleMetadata({
         {readingTime && (
           <span>
             <Clock3 size={16} aria-hidden /> {readingTime} {labels.minRead}
+          </span>
+        )}
+        {/* Mobile only: compact share / edit next to the reading time. */}
+        {actions && (
+          <span className={styles.quickActions}>
+            <button
+              type="button"
+              onClick={actions.share}
+              aria-label={
+                actions.shared ? labels.linkCopied : labels.shareArticle
+              }
+              title={actions.shared ? labels.linkCopied : labels.shareArticle}
+            >
+              {actions.shared ? (
+                <Check size={16} aria-hidden />
+              ) : (
+                <Share2 size={16} aria-hidden />
+              )}
+            </button>
+            <a
+              href={actions.editUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={labels.editOnGitHub}
+              title={labels.editOnGitHub}
+            >
+              <ExternalLink size={16} aria-hidden />
+            </a>
           </span>
         )}
         {date && (

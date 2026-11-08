@@ -16,6 +16,14 @@
   }
 }
 
+/* Mobile drawer: shown at every width and fills the sheet. */
+.toc.inDrawer {
+  display: block;
+  position: static;
+  min-width: 0;
+  max-width: none;
+}
+
 .toc[aria-hidden="true"] {
   border: none;
   background: transparent;

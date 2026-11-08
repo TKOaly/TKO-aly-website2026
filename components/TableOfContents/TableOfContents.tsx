@@ -58,7 +58,12 @@ function collectHeadings(): TocItem[] {
   return tocItems
 }
 
-export default function TableOfContents() {
+export default function TableOfContents({
+  inDrawer = false,
+}: {
+  /** Render inside the mobile drawer: always visible, full width. */
+  inDrawer?: boolean
+} = {}) {
   const [items, setItems] = useState<TocItem[]>([])
   const [collected, setCollected] = useState(false)
   const [activeId, setActiveId] = useState<string>("")
@@ -217,7 +222,10 @@ export default function TableOfContents() {
     )
 
   return (
-    <aside className={styles.toc} aria-hidden={collected && items.length === 0}>
+    <aside
+      className={`${styles.toc} ${inDrawer ? styles.inDrawer : ""}`}
+      aria-hidden={collected && items.length === 0}
+    >
       {!collected && (
         <div className={styles.skeleton} aria-hidden>
           {[0, 1, 2, 3, 4].map(i => (

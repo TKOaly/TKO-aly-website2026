@@ -96,7 +96,9 @@
     "otherArticles": "More articles",
     "tags": "Tags",
     "translationMissing": "This page is not available in English yet. Showing the Finnish version.",
-    "editOnGitHub": "Edit on GitHub"
+    "editOnGitHub": "Edit on GitHub",
+    "tableOfContents": "Contents",
+    "close": "Close contents"
   },
   "jaseneksi": {
     "title": "Become a Member",

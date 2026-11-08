@@ -96,7 +96,9 @@
     "otherArticles": "Muut artikkelit",
     "tags": "Tunnisteet",
     "translationMissing": "Tämä sivu ei ole vielä saatavilla suomeksi.",
-    "editOnGitHub": "Muokkaa GitHubissa"
+    "editOnGitHub": "Muokkaa GitHubissa",
+    "tableOfContents": "Sisällys",
+    "close": "Sulje sisällys"
   },
   "jaseneksi": {
     "title": "Liity Jäseneksi",
