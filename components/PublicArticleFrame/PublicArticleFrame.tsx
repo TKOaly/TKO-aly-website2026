@@ -225,7 +225,7 @@ export default function PublicArticleFrame({
         {/* Mobile: floating table-of-contents button that opens a drawer. */}
         <button
           type="button"
-          className={`${styles.tocFab} ${atArticleEnd ? styles.tocFabHidden : ""}`}
+          className={`btn ${styles.tocFab} ${atArticleEnd ? styles.tocFabHidden : ""}`}
           onClick={openToc}
           aria-haspopup="dialog"
           hidden={!hasHeadings}

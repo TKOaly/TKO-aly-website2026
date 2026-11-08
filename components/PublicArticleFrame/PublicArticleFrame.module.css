@@ -585,20 +585,12 @@
     gap: var(--space-2);
     min-height: 3rem;
     padding: 0 var(--space-5);
-    border: 2px solid var(--neutral-900);
-    background: var(--yellow);
-    color: var(--neutral-900);
     font-family: monospace;
     font-size: 0.9375rem;
-    font-weight: 800;
-    box-shadow: 4px 4px 0 var(--neutral-900);
-    cursor: pointer;
-  }
-
-  .tocFab {
     transition:
+      box-shadow 0.1s ease,
+      transform 0.1s ease,
       opacity 0.2s ease,
-      transform 0.2s ease,
       visibility 0s;
   }
 
