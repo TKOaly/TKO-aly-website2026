@@ -88,6 +88,18 @@
   filter: grayscale(0);
 }
 
+@media (max-width: 767px) {
+  .sponsorLogo,
+  .sponsorLink:hover .sponsorLogo {
+    filter: none;
+    transition: none;
+  }
+
+  .sponsorLink:hover {
+    opacity: 1;
+  }
+}
+
 .partnersThanks {
   margin: 0 0 var(--space-8);
   color: var(--color-text-muted);
