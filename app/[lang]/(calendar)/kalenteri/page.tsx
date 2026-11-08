@@ -9,7 +9,7 @@ import Link from "next/link"
 import styles from "./Kalenteri.module.css"
 import { useState, ReactNode, useMemo } from "react"
 import type { Event, ProcessedEvent } from "./types"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "@/app/i18n/client"
 
 function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
   const calendarEvents = events.map(event => ({
