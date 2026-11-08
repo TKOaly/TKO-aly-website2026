@@ -3,6 +3,7 @@ import createMDX from "@next/mdx"
 import path from "node:path"
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   allowedDevOrigins: ["beta.tko-aly.localhost"],
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   transpilePackages: ["accept-language"],
