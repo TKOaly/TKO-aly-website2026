@@ -89,7 +89,10 @@ export default function FooterClient({
           <div className={styles.sponsorsTitleRow}>
             <h2 className={styles.sponsorsTitle}>{t("footer.partners")}</h2>
             <div className={styles.sponsorsDivider} />
-            <ClientLink href="/yrityksille" className="btn">
+            <ClientLink
+              href="/yrityksille"
+              className={`btn ${styles.collaborateButton}`}
+            >
               {t("footer.collaborate")}
             </ClientLink>
           </div>
@@ -303,7 +306,10 @@ export default function FooterClient({
       </footer>
 
       <div className={styles.bottomBar}>
-        © {new Date().getFullYear()} TKO-äly ry
+        © {new Date().getFullYear()} TKO-äly ry ·{" "}
+        <ClientLink href="/sivukartta" className={styles.bottomBarLink}>
+          {t("sitemap.title")}
+        </ClientLink>
       </div>
     </div>
   )

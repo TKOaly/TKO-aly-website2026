@@ -96,6 +96,11 @@
   color: var(--color-text);
 }
 
+.mobileLink[aria-current="page"] {
+  background: var(--yellow);
+  color: var(--neutral-900);
+}
+
 .mobileLink:hover,
 .mobileLink:focus {
   background: var(--neutral-600);
@@ -143,4 +148,8 @@
 .mobileActionButton:hover,
 .mobileActionButton:focus {
   background: var(--neutral-600);
+}
+
+.authLoading {
+  visibility: hidden;
 }

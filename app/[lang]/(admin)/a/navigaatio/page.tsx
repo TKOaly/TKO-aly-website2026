@@ -15,6 +15,7 @@ const NavigationManagementPage = async ({
 
   return (
     <main
+      id="main-content"
       style={{
         display: "flex",
         flexDirection: "column",

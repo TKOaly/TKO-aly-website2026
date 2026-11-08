@@ -1,19 +1,52 @@
 "use client"
 
-import Image from "next/image"
+import Image, { type StaticImageData } from "next/image"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { ExternalLink, Globe, User } from "lucide-react"
 
 import { ClientLink } from "@/app/i18n/client"
 import { useMatchMediaQuery } from "@/lib/useMatchMediaQuery"
 import { useToggleLanguage } from "@/lib/useToggleLanguage"
-import { useParams } from "next/navigation"
-import { useState, useEffect, useRef, useId } from "react"
+import { useParams, usePathname } from "next/navigation"
+import { useState, useEffect, useRef } from "react"
+
+import fuksiDuck from "@/app/assets/fuksi-duck.svg"
+import neko from "@/app/assets/neko.svg"
+import orangeCat from "@/app/assets/orange-cat.svg"
+import aviatorDuck from "@/app/assets/aviator-duck.svg"
+import runningMan from "@/app/assets/running-man.svg"
+import sittingDuck from "@/app/assets/sitting-duck.svg"
 
 import MobileNavbar from "./MobileNavbar"
 import styles from "./Navbar.module.css"
 
 type Lang = "fi" | "en"
+
+// Decorative mascot and tile colour for each mega menu, keyed by sectionKey().
+const sectionImages: Record<
+  string,
+  {
+    image: StaticImageData
+    bg?: string
+    flush?: boolean
+    corner?: boolean
+  }
+> = {
+  yhdistys: { image: fuksiDuck, bg: "hsl(200 90% 72%)" },
+  toiminta: { image: orangeCat, bg: "hsl(40 50% 80%)" },
+  tapahtumat: {
+    image: runningMan,
+    bg: "hsl(140 55% 72%)",
+    flush: true,
+  },
+  turvallisuus: {
+    image: aviatorDuck,
+    bg: "hsl(200 90% 72%)",
+    corner: true,
+  },
+  fukseille: { image: sittingDuck },
+  yritykset: { image: neko, bg: "hsl(310 80% 65%)" },
+}
 
 export interface NavLink {
   href: string
@@ -32,9 +65,11 @@ const translations: Record<Lang, Record<string, string>> = {
     switchToEnglish: "In English",
     switchToFinnish: "Suomeksi",
     signOut: "Kirjaudu ulos",
-    signIn: "Kirjaudu sisään",
+    signIn: "Kirjaudu",
     openMenu: "Avaa valikko",
     opensInNewWindow: "avautuu uuteen ikkunaan",
+    switchToEnglishLabel: "Vaihda sivuston kieli englanniksi",
+    switchToFinnishLabel: "Vaihda sivuston kieli suomeksi",
   },
   en: {
     switchToEnglish: "In English",
@@ -43,6 +78,8 @@ const translations: Record<Lang, Record<string, string>> = {
     signIn: "Sign in",
     openMenu: "Open menu",
     opensInNewWindow: "opens in a new window",
+    switchToEnglishLabel: "Switch the site language to English",
+    switchToFinnishLabel: "Switch the site language to Finnish",
   },
 }
 
@@ -61,19 +98,36 @@ export const adminNavItems: NavLink[] = [
   },
 ]
 
+/** Path without the language prefix, e.g. "/fi/hallitus" -> "/hallitus". */
+export function pathWithoutLang(pathname: string | null) {
+  return "/" + (pathname ?? "").split("/").slice(2).join("/").replace(/\/$/, "")
+}
+
+export const isActiveLink = (link: NavLink, path: string) =>
+  !link.external && link.href === path
+
+export const isActiveSection = (section: NavSection, path: string) =>
+  section.links.some(link => isActiveLink(link, path))
+
 function sectionKey(section: NavSection) {
   return (section.labels.fi || section.labels.en)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
 }
 
-function Navbar({ items }: { items: NavSection[] }) {
-  const { data: session } = useSession()
+function Navbar({
+  items,
+  disabledRoutes = [],
+}: {
+  items: NavSection[]
+  disabledRoutes?: string[]
+}) {
+  const { data: session, status } = useSession()
   const params = useParams()
   const lang = (params?.lang as Lang) || "fi"
+  const path = pathWithoutLang(usePathname())
   const isMobileView = useMatchMediaQuery("lg")
   const toggleLanguage = useToggleLanguage(lang)
-  const baseId = useId()
 
   const [hidden, setHidden] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
@@ -133,7 +187,11 @@ function Navbar({ items }: { items: NavSection[] }) {
   const otherLangLabel =
     lang === "fi" ? t("switchToEnglish") : t("switchToFinnish")
 
-  const userMenuId = `${baseId}-user`
+  const otherLangCode = lang === "fi" ? "EN" : "FI"
+  const otherLangAriaLabel =
+    lang === "fi" ? t("switchToEnglishLabel") : t("switchToFinnishLabel")
+
+  const userMenuId = "navbar-menu-user"
   const megaOpen = openId !== null && openId !== "user"
 
   return (
@@ -159,7 +217,7 @@ function Navbar({ items }: { items: NavSection[] }) {
           <ul className={styles.primaryList}>
             {items.map(section => {
               const id = sectionKey(section)
-              const panelId = `${baseId}-${id}`
+              const panelId = `navbar-menu-${id}`
               const isOpen = openId === id
               return (
                 <li
@@ -172,7 +230,7 @@ function Navbar({ items }: { items: NavSection[] }) {
                 >
                   <button
                     type="button"
-                    className={styles.dropdownToggle}
+                    className={`${styles.dropdownToggle} ${isActiveSection(section, path) ? styles.activeSection : ""}`}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                     ref={el => {
@@ -191,6 +249,18 @@ function Navbar({ items }: { items: NavSection[] }) {
                     hidden={!isOpen}
                   >
                     <div className={styles.megaMenuInner}>
+                      {sectionImages[id] && (
+                        <div
+                          className={`${styles.megaMenuImage} ${sectionImages[id].flush ? styles.megaMenuImageFlush : ""} ${sectionImages[id].corner ? styles.megaMenuImageCorner : ""}`}
+                          style={
+                            {
+                              "--tile-bg": sectionImages[id].bg,
+                            } as React.CSSProperties
+                          }
+                        >
+                          <Image src={sectionImages[id].image} alt="" />
+                        </div>
+                      )}
                       <div className={styles.megaMenuHeader}>
                         <h3 className={styles.megaMenuTitle}>
                           {section.labels[lang]}
@@ -204,6 +274,9 @@ function Navbar({ items }: { items: NavSection[] }) {
                           <li key={link.href}>
                             <ClientLink
                               href={link.href}
+                              aria-current={
+                                isActiveLink(link, path) ? "page" : undefined
+                              }
                               target={link.external ? "_blank" : undefined}
                               rel={
                                 link.external
@@ -237,17 +310,22 @@ function Navbar({ items }: { items: NavSection[] }) {
             })}
           </ul>
 
-          <ul className={styles.secondaryActionList}>
-            <li>
-              <button
-                type="button"
-                className={`${styles.dropdownToggle} ${styles.langButton}`}
-                onClick={toggleLanguage}
-              >
-                <Globe size={18} aria-hidden />
-                {otherLangLabel}
-              </button>
-            </li>
+          <ul
+            className={`${styles.secondaryActionList} ${status === "loading" ? styles.authLoading : ""}`}
+          >
+            {!session && (
+              <li>
+                <button
+                  type="button"
+                  className={`${styles.dropdownToggle} ${styles.langButton}`}
+                  aria-label={otherLangAriaLabel}
+                  onClick={toggleLanguage}
+                >
+                  <Globe size={18} aria-hidden />
+                  {otherLangCode}
+                </button>
+              </li>
+            )}
             {session ? (
               <li
                 className={`${styles.navItem} ${openId === "user" ? styles.open : ""}`}
@@ -277,16 +355,18 @@ function Navbar({ items }: { items: NavSection[] }) {
                   className={`${styles.dropdownMenu} ${openId === "user" ? styles.dropdownMenuOpen : ""}`}
                   hidden={openId !== "user"}
                 >
-                  {userNavItems.map(item => (
-                    <li key={item.href}>
-                      <ClientLink
-                        href={item.href}
-                        onClick={() => setOpenId(null)}
-                      >
-                        {item.labels[lang]}
-                      </ClientLink>
-                    </li>
-                  ))}
+                  {userNavItems
+                    .filter(item => !disabledRoutes.includes(item.href))
+                    .map(item => (
+                      <li key={item.href}>
+                        <ClientLink
+                          href={item.href}
+                          onClick={() => setOpenId(null)}
+                        >
+                          {item.labels[lang]}
+                        </ClientLink>
+                      </li>
+                    ))}
                   {session?.user &&
                     (session.user as { admin?: boolean })?.admin &&
                     adminNavItems.map(item => (
@@ -299,6 +379,18 @@ function Navbar({ items }: { items: NavSection[] }) {
                         </ClientLink>
                       </li>
                     ))}
+                  <li>
+                    <ClientLink
+                      href="#"
+                      onClick={event => {
+                        event.preventDefault()
+                        setOpenId(null)
+                        toggleLanguage()
+                      }}
+                    >
+                      {otherLangLabel}
+                    </ClientLink>
+                  </li>
                   <li>
                     <ClientLink
                       href="#"
@@ -316,7 +408,7 @@ function Navbar({ items }: { items: NavSection[] }) {
               <li>
                 <button
                   type="button"
-                  className={styles.dropdownToggle}
+                  className={styles.signInButton}
                   onClick={() => signIn("tkoaly")}
                 >
                   {t("signIn")}
@@ -329,7 +421,7 @@ function Navbar({ items }: { items: NavSection[] }) {
 
       {isMobileView && (
         <div className={styles.mobileSlot}>
-          <MobileNavbar items={items} />
+          <MobileNavbar items={items} disabledRoutes={disabledRoutes} />
         </div>
       )}
     </nav>

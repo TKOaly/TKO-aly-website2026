@@ -61,7 +61,7 @@ const EventInfoView = ({ event }: { event: Event }) => {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">{event.name}</h1>
+      <h1>{event.name}</h1>
       <div className={styles.eventInfo}>
         <Row col_1={<>{t("event.time")}:</>} col_2={formatTime(event.starts)} />
 

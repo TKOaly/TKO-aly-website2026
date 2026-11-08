@@ -8,16 +8,6 @@
   text-align: start;
 }
 
-.title {
-  font-size: var(--space-10);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  font-style: italic;
-  margin: 0;
-}
-
 .description {
   line-height: 1.6;
 }

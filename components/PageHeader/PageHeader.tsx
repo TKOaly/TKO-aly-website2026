@@ -9,7 +9,7 @@ interface Props {
 const PageHeader = ({ title, description, children }: Props) => {
   return (
     <header className={styles.header}>
-      <h1 className={styles.title}>{title}</h1>
+      <h1>{title}</h1>
       {(description || children) && (
         <p className={styles.description}>{description ?? children}</p>
       )}

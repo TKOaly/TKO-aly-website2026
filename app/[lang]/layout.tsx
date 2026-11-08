@@ -1,6 +1,18 @@
-import Providers from "@/components/Providers"
 import type { Metadata } from "next"
+import { League_Gothic } from "next/font/google"
+import { getServerSession } from "next-auth/next"
+
+import { config as authOptions } from "@/auth"
+import Providers from "@/components/Providers"
+import SkipLink from "@/components/SkipLink/SkipLink"
+import { getAsyncTranslation } from "@/app/i18n"
 import "../globals.css"
+
+const headingFont = League_Gothic({
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-heading",
+})
 
 export const metadata: Metadata = {
   title: { default: "TKO-äly", template: "%s | TKO-äly" },
@@ -24,15 +36,22 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode
+  params: Promise<{ lang: string }>
 }>) {
+  const { lang } = await params
+  const { t } = await getAsyncTranslation(lang)
+  const session = await getServerSession(authOptions)
+
   return (
-    <html lang="en">
-      <body>
-        <Providers>{children}</Providers>
+    <html lang={lang}>
+      <body className={headingFont.variable}>
+        <SkipLink label={t("common.skipToContent")} />
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   )

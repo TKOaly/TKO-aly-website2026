@@ -28,8 +28,13 @@
 
 .secondaryActionList {
   display: flex;
+  padding-left: 0;
   align-items: center;
   gap: var(--space-2);
+}
+
+.authLoading {
+  visibility: hidden;
 }
 
 .secondaryActionList > .dropdownMenu > li:hover {
@@ -50,12 +55,49 @@
   cursor: pointer;
 }
 
+.signInButton {
+  display: inline-flex;
+  align-items: center;
+  height: var(--space-12);
+  padding: 0 var(--space-4);
+  background: var(--neutral-50);
+  color: var(--neutral-900);
+  box-shadow: 3px 3px 0 var(--neutral-900);
+  border: 3px solid var(--neutral-900);
+  font-family: monospace;
+  font-size: large;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.signInButton:hover {
+  background: var(--white);
+}
+
+.signInButton:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--neutral-900);
+  background: var(--neutral-200);
+}
+
+.langButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
 .dropdownToggle:hover {
   background: var(--yellow-600);
 }
 
 .dropdownToggle:focus {
   background: var(--yellow-700);
+}
+
+.activeSection {
+  background: var(--yellow-600);
 }
 
 /* ── Mega menu (full-width section dropdowns) ── */
@@ -81,7 +123,74 @@
   z-index: 999;
 }
 
+/* Diagonal hatch texture on the side gutters, fading out towards the centre:
+   ::before draws the hatch, ::after covers it with a surface-coloured gradient. */
+.megaMenu::before,
+.megaMenu::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.megaMenu::before {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-text) 0 1px,
+    transparent 1px 8px
+  );
+  opacity: 0.2;
+}
+
+.megaMenu::after {
+  background: linear-gradient(
+    to right,
+    transparent 0,
+    var(--color-surface) calc(50% - var(--screen-xl) / 2),
+    var(--color-surface) calc(50% + var(--screen-xl) / 2),
+    transparent 100%
+  );
+}
+
+/* A different gutter texture for every mega menu (hatch is the default).
+   Shapes sit on a 45deg lattice so the rows slope. */
+.megaMenu[data-section="yhdistys"]::before {
+  background:
+    radial-gradient(circle, #888 1px, transparent 1.5px) 0 0 / 18px 18px,
+    radial-gradient(circle, #888 1px, transparent 1.5px) 9px 9px / 18px 18px;
+}
+
+.megaMenu[data-section="toiminta"]::before {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='6.0' y='6.0' width='8' height='8' transform='rotate(45 10.0 10.0)' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3Crect x='26.0' y='26.0' width='8' height='8' transform='rotate(45 30.0 30.0)' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E")
+    0 0 / 24px 24px;
+}
+
+.megaMenu[data-section="tapahtumat"]::before {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Cpolygon points='13.0%2C5.0 15.1%2C10.1 20.6%2C10.5 16.4%2C14.1 17.7%2C19.5 13.0%2C16.6 8.3%2C19.5 9.6%2C14.1 5.4%2C10.5 10.9%2C10.1' fill='%23888'/%3E%3Cpolygon points='39.0%2C31.0 41.1%2C36.1 46.6%2C36.5 42.4%2C40.1 43.7%2C45.5 39.0%2C42.6 34.3%2C45.5 35.6%2C40.1 31.4%2C36.5 36.9%2C36.1' fill='%23888'/%3E%3C/svg%3E")
+    0 0 / 32px 32px;
+}
+
+.megaMenu[data-section="turvallisuus"]::before {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M11.0 4.0 L19.0 18.0 H3.0 Z' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3Cpath d='M33.0 26.0 L41.0 40.0 H25.0 Z' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E")
+    0 0 / 28px 28px;
+}
+
+.megaMenu[data-section="fukseille"]::before {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Cpath d='M9.0 4.0v10M4.0 9.0h10' stroke='%23888' stroke-width='1.5'/%3E%3Cpath d='M27.0 22.0v10M22.0 27.0h10' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E")
+    0 0 / 22px 22px;
+}
+
+.megaMenu[data-section="yhdistys"]::before,
+.megaMenu[data-section="toiminta"]::before,
+.megaMenu[data-section="tapahtumat"]::before,
+.megaMenu[data-section="turvallisuus"]::before,
+.megaMenu[data-section="fukseille"]::before {
+  opacity: 0.3;
+}
+
 .megaMenuInner {
+  position: relative;
+  z-index: 1;
   max-width: var(--screen-xl);
   width: 100%;
   padding: 0 var(--space-6);
@@ -117,6 +226,69 @@
   display: block;
 }
 /* eslint-enable css/use-baseline */
+
+/* Decorative mascot tile on the far left */
+.megaMenuImage {
+  box-sizing: border-box;
+  flex: 0 0 var(--space-44);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--space-44);
+  padding: var(--space-5) var(--space-2);
+  border: var(--space-1) solid rgb(255 255 255 / 0.9);
+  outline: 1px solid black;
+  position: relative;
+}
+
+/* Mascot touches the tile edges */
+.megaMenuImageFlush {
+  padding: 0;
+}
+
+.megaMenuImage.megaMenuImageFlush img {
+  object-position: left center;
+}
+
+/* Mascot floats in the bottom-right corner */
+.megaMenuImage.megaMenuImageCorner {
+  padding: 0;
+}
+
+.megaMenuImage.megaMenuImageCorner img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-position: right bottom;
+}
+
+/* Slightly transparent tile colour that leaves the mascot opaque. */
+.megaMenuImage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--tile-bg, var(--yellow));
+  opacity: 0.85;
+}
+
+/* Comic-book halftone overlay, same dot pattern as the footer's accent card. */
+.megaMenuImage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url("../../app/assets/dot-pattern.svg") 0 0 / 3px 3px repeat;
+  opacity: 0.6;
+}
+
+.megaMenuImage img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 
 /* Left descriptive header panel */
 .megaMenuHeader {
@@ -169,6 +341,13 @@
 .megaMenuLinks li a:hover {
   background: var(--yellow-200);
   color: var(--neutral-900);
+}
+
+.megaMenuLinks li a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.4em;
+  text-decoration-thickness: 3px;
 }
 
 .megaMenuLinks li a:focus {

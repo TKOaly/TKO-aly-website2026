@@ -66,7 +66,7 @@ const AddEventPage = async ({ params }: Props) => {
   }
 
   return (
-    <main className={styles.main}>
+    <main id="main-content" className={styles.main}>
       <PageHeader title={t("luoTapahtuma.title")}>
         {t("luoTapahtuma.descriptionPre")}{" "}
         <i>{t("luoTapahtuma.descriptionEm")}</i>{" "}

@@ -161,7 +161,7 @@ export default function FooterAdminClient({
             <li
               key={index}
               style={{
-                border: "1px solid #ccc",
+                border: "1px solid var(--color-border)",
                 padding: "1rem",
                 marginBottom: "1rem",
                 display: "flex",
@@ -173,7 +173,13 @@ export default function FooterAdminClient({
                 <strong>
                   {link.labels.fi} / {link.labels.en}
                 </strong>
-                <p style={{ margin: 0, fontSize: "0.9rem", color: "#666" }}>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: "0.9rem",
+                    color: "var(--color-text-muted)",
+                  }}
+                >
                   <a href={link.href} target="_blank" rel="noreferrer">
                     {link.href}
                   </a>
@@ -205,7 +211,7 @@ export default function FooterAdminClient({
                   style={{
                     padding: "0.25rem 0.5rem",
                     cursor: "pointer",
-                    color: "red",
+                    color: "var(--color-danger)",
                   }}
                 >
                   Delete
@@ -219,7 +225,7 @@ export default function FooterAdminClient({
       <div
         style={{
           marginTop: "2rem",
-          borderTop: "1px solid #ccc",
+          borderTop: "1px solid var(--color-border)",
           paddingTop: "1rem",
         }}
       >
@@ -230,8 +236,8 @@ export default function FooterAdminClient({
             padding: "0.75rem 1.5rem",
             fontSize: "1rem",
             cursor: isSaving ? "not-allowed" : "pointer",
-            backgroundColor: "#0070f3",
-            color: "white",
+            backgroundColor: "var(--color-action)",
+            color: "var(--color-action-text)",
             border: "none",
             borderRadius: "4px",
           }}
@@ -245,8 +251,11 @@ export default function FooterAdminClient({
           style={{
             marginTop: "1rem",
             padding: "1rem",
-            color: status.type === "success" ? "green" : "red",
-            border: `1px solid ${status.type === "success" ? "green" : "red"}`,
+            color:
+              status.type === "success"
+                ? "var(--color-success)"
+                : "var(--color-danger)",
+            border: `1px solid ${status.type === "success" ? "var(--color-success)" : "var(--color-danger)"}`,
             borderRadius: "4px",
           }}
         >
