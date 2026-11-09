@@ -7,7 +7,7 @@ import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
 import Link from "next/link"
 import styles from "./Kalenteri.module.css"
-import { useState, ReactNode, useMemo, use } from "react"
+import { useState, ReactNode, useMemo } from "react"
 import type { Event, ProcessedEvent } from "./types"
 import { useTranslation } from "@/app/i18n/client"
 import { getEventList } from "./eventApiConnection"
@@ -163,17 +163,19 @@ export function processEvents(eventsData: Event[]): ProcessedEvent[] {
   })
 }
 
-export default function calendar({ params }: { params: Promise<{ lang: string }> }) {
+export default function Calendar() {
   const { t } = useTranslation()
-  const { lang } = use(params)
+
+  const now = new Date()
+  const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
 
   const {
     data: eventsList = [],
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["eventList", lang],
-    queryFn: () => getEventList(lang),
+    queryKey: ["eventList", fromDate],
+    queryFn: () => getEventList(fromDate),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {

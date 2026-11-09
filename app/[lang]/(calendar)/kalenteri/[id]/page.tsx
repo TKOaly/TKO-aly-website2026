@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ReactNode, useEffect, useState, useMemo, use } from "react"
+import { ReactNode, useMemo, use } from "react"
 import type { Event, ProcessedEvent } from "../types"
 import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
@@ -186,12 +186,8 @@ const BackButton = () => {
   )
 }
 
-const EventPage = ({
-  params,
-}: {
-  params: Promise<{ lang: string; slug: string[] }>
-}) => {
-  const { lang, slug } = use(params)
+const EventPage = ({ params }: { params: Promise<{ id: number }> }) => {
+  const { id } = use(params)
   const { t } = useTranslation()
 
   const now = new Date()
@@ -202,8 +198,8 @@ const EventPage = ({
     error: eventsListError,
     isLoading: isEventsListLoading,
   } = useQuery({
-    queryKey: ["eventList", lang],
-    queryFn: () => getEventList(lang),
+    queryKey: ["eventList", fromDate],
+    queryFn: () => getEventList(fromDate),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
@@ -213,8 +209,7 @@ const EventPage = ({
     return processEvents(eventsList as Event[])
   }, [eventsList, eventsListError])
 
-  const id = Number(slug[0])
-  const event = use(getEventById(id, lang))
+  const event = use(getEventById(id))
 
   let eventPageContent: ReactNode
 
