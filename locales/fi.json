@@ -318,7 +318,10 @@
     "price": "Hinta",
     "registrationLink": "Ilmoittautuminen",
     "starts": "Alkaa",
-    "loading": "Ladataan tapahtumia...",
+    "loading": {
+      "event": "Ladataan tapahtumaa...",
+      "calendar": "Ladataan tapahtumia..."
+    },
     "error": "Virhe",
     "calendar": "Tapahtumakalenteri",
     "legend": {
