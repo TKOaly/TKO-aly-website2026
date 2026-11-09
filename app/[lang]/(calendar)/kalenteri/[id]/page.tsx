@@ -252,16 +252,14 @@ const EventPage = ({ params }: { params: Promise<{ id: number }> }) => {
     <div id={styles.calendar}>
       <BackButton />
       <div id={styles.calendarPageContainer}>
-        <div className={styles.eventsListEventPageContainer}>
+        <div id={styles.eventsListEventPageContainer}>
           {!isEventsListLoading && !eventsListError ? (
             <EventListView events={processedEvents} />
           ) : (
             <></>
           )}
         </div>
-        <div style={{ marginLeft: "48px", width: "95%" }}>
-          {eventPageContent}
-        </div>
+        <div id={styles.eventPageContentContainer}>{eventPageContent}</div>
       </div>
     </div>
   )

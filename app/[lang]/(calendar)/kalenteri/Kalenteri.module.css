@@ -55,23 +55,21 @@
   width: 20%;
 }
 
-.eventsListEventPageContainer {
+#eventsListEventPageContainer {
   width: 20%;
 }
 
-@media (max-width: 1024px) {
-  .eventsListEventPageContainer {
-    display: none;
-  }
+#eventPageContentContainer {
+  margin-left: 48px;
+  width: 95%;
+}
 
-  #eventsListContainer {
-    order: 1;
-    width: 70%;
-  }
+#calendarMobileTitle {
+  display: none;
+}
 
-  #calendarViewContainer {
-    display: none;
-  }
+#calendarTitle {
+  display: inherit;
 }
 
 #eventsList {
@@ -82,6 +80,7 @@
   overflow-x: visible;
   overflow-y: scroll;
   overscroll-behavior: contain;
+  color: #ffbb00;
 }
 
 #eventsList a {
@@ -243,4 +242,34 @@
 
 .eventSafetyDisclaimer a {
   color: var(--color-text-muted);
+}
+
+@media (max-width: 1024px) {
+  #eventPageContentContainer {
+    margin-left: 0;
+  }
+
+  #eventsListEventPageContainer {
+    display: none;
+  }
+
+  #eventsListContainer {
+    order: 1;
+    width: 100%;
+    align-items: center;
+  }
+
+  #calendarViewContainer {
+    display: none;
+  }
+
+  #calendarTitle {
+    display: none;
+  }
+
+  #calendarMobileTitle {
+    margin-top: 10px;
+    margin-left: 2.5%;
+    display: inherit;
+  }
 }
