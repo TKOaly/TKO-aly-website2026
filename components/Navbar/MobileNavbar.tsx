@@ -16,6 +16,7 @@ import {
   isActiveSection,
   pathWithoutLang,
 } from "./Navbar"
+import { isLoginEnabled } from "@/lib/featureFlags"
 
 interface MobileNavbarProps {
   items: NavSection[]
@@ -130,29 +131,30 @@ const MobileNavbar = ({ items, disabledRoutes = [] }: MobileNavbarProps) => {
             <Globe size={18} aria-hidden />
             {otherLangLabel}
           </button>
-          {session ? (
-            <button
-              type="button"
-              className={styles.mobileActionButton}
-              onClick={() => {
-                mobileMenuRef.current?.close()
-                signOut()
-              }}
-            >
-              {t("auth.signOut")}
-            </button>
-          ) : (
-            <button
-              type="button"
-              className={styles.mobileActionButton}
-              onClick={() => {
-                mobileMenuRef.current?.close()
-                signIn("tkoaly")
-              }}
-            >
-              {t("auth.signIn")}
-            </button>
-          )}
+          {isLoginEnabled() &&
+            (session ? (
+              <button
+                type="button"
+                className={styles.mobileActionButton}
+                onClick={() => {
+                  mobileMenuRef.current?.close()
+                  signOut()
+                }}
+              >
+                {t("auth.signOut")}
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={styles.mobileActionButton}
+                onClick={() => {
+                  mobileMenuRef.current?.close()
+                  signIn("tkoaly")
+                }}
+              >
+                {t("auth.signIn")}
+              </button>
+            ))}
         </section>
       </dialog>
     </>

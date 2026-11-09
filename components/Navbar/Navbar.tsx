@@ -19,6 +19,7 @@ import sittingDuck from "@/app/assets/sitting-duck.svg"
 
 import MobileNavbar from "./MobileNavbar"
 import styles from "./Navbar.module.css"
+import { isLoginEnabled } from "@/lib/featureFlags"
 
 type Lang = "fi" | "en"
 
@@ -326,95 +327,96 @@ function Navbar({
                 </button>
               </li>
             )}
-            {session ? (
-              <li
-                className={`${styles.navItem} ${openId === "user" ? styles.open : ""}`}
-                onMouseEnter={() => setOpenId("user")}
-                onMouseLeave={() =>
-                  setOpenId(current => (current === "user" ? null : current))
-                }
-              >
-                <button
-                  type="button"
-                  title={t("openMenu")}
-                  className={styles.whiteButton}
-                  aria-expanded={openId === "user"}
-                  aria-controls={userMenuId}
-                  aria-haspopup="true"
-                  ref={el => {
-                    toggleRefs.current.user = el
-                  }}
-                  onClick={() =>
-                    setOpenId(current => (current === "user" ? null : "user"))
+            {isLoginEnabled() &&
+              (session ? (
+                <li
+                  className={`${styles.navItem} ${openId === "user" ? styles.open : ""}`}
+                  onMouseEnter={() => setOpenId("user")}
+                  onMouseLeave={() =>
+                    setOpenId(current => (current === "user" ? null : current))
                   }
                 >
-                  <User height={24} width={24} />
-                </button>
-                <ul
-                  id={userMenuId}
-                  className={`${styles.dropdownMenu} ${openId === "user" ? styles.dropdownMenuOpen : ""}`}
-                  hidden={openId !== "user"}
-                >
-                  {userNavItems
-                    .filter(item => !disabledRoutes.includes(item.href))
-                    .map(item => (
-                      <li key={item.href}>
-                        <ClientLink
-                          href={item.href}
-                          onClick={() => setOpenId(null)}
-                        >
-                          {item.labels[lang]}
-                        </ClientLink>
-                      </li>
-                    ))}
-                  {session?.user &&
-                    (session.user as { admin?: boolean })?.admin &&
-                    adminNavItems.map(item => (
-                      <li key={item.href}>
-                        <ClientLink
-                          href={item.href}
-                          onClick={() => setOpenId(null)}
-                        >
-                          {item.labels[lang]}
-                        </ClientLink>
-                      </li>
-                    ))}
-                  <li>
-                    <ClientLink
-                      href="#"
-                      onClick={event => {
-                        event.preventDefault()
-                        setOpenId(null)
-                        toggleLanguage()
-                      }}
-                    >
-                      {otherLangLabel}
-                    </ClientLink>
-                  </li>
-                  <li>
-                    <ClientLink
-                      href="#"
-                      onClick={() => {
-                        setOpenId(null)
-                        signOut()
-                      }}
-                    >
-                      {t("signOut")}
-                    </ClientLink>
-                  </li>
-                </ul>
-              </li>
-            ) : (
-              <li>
-                <button
-                  type="button"
-                  className={styles.signInButton}
-                  onClick={() => signIn("tkoaly")}
-                >
-                  {t("signIn")}
-                </button>
-              </li>
-            )}
+                  <button
+                    type="button"
+                    title={t("openMenu")}
+                    className={styles.whiteButton}
+                    aria-expanded={openId === "user"}
+                    aria-controls={userMenuId}
+                    aria-haspopup="true"
+                    ref={el => {
+                      toggleRefs.current.user = el
+                    }}
+                    onClick={() =>
+                      setOpenId(current => (current === "user" ? null : "user"))
+                    }
+                  >
+                    <User height={24} width={24} />
+                  </button>
+                  <ul
+                    id={userMenuId}
+                    className={`${styles.dropdownMenu} ${openId === "user" ? styles.dropdownMenuOpen : ""}`}
+                    hidden={openId !== "user"}
+                  >
+                    {userNavItems
+                      .filter(item => !disabledRoutes.includes(item.href))
+                      .map(item => (
+                        <li key={item.href}>
+                          <ClientLink
+                            href={item.href}
+                            onClick={() => setOpenId(null)}
+                          >
+                            {item.labels[lang]}
+                          </ClientLink>
+                        </li>
+                      ))}
+                    {session?.user &&
+                      (session.user as { admin?: boolean })?.admin &&
+                      adminNavItems.map(item => (
+                        <li key={item.href}>
+                          <ClientLink
+                            href={item.href}
+                            onClick={() => setOpenId(null)}
+                          >
+                            {item.labels[lang]}
+                          </ClientLink>
+                        </li>
+                      ))}
+                    <li>
+                      <ClientLink
+                        href="#"
+                        onClick={event => {
+                          event.preventDefault()
+                          setOpenId(null)
+                          toggleLanguage()
+                        }}
+                      >
+                        {otherLangLabel}
+                      </ClientLink>
+                    </li>
+                    <li>
+                      <ClientLink
+                        href="#"
+                        onClick={() => {
+                          setOpenId(null)
+                          signOut()
+                        }}
+                      >
+                        {t("signOut")}
+                      </ClientLink>
+                    </li>
+                  </ul>
+                </li>
+              ) : (
+                <li>
+                  <button
+                    type="button"
+                    className={styles.signInButton}
+                    onClick={() => signIn("tkoaly")}
+                  >
+                    {t("signIn")}
+                  </button>
+                </li>
+              ))}
           </ul>
         </>
       )}

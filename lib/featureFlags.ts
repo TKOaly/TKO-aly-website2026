@@ -14,3 +14,11 @@ export const hiddenRoutes = () => (isDevEnv() ? [] : unfinishedRoutes)
 export function requireDevEnv() {
   if (!isDevEnv()) notFound()
 }
+
+export const isEventCreationFromVisible = () =>
+  process.env.SUBMIT_EVENT_CREATION_FORM === "true"
+
+export const isEventSubmissionEnabled = () =>
+  process.env.SUBMIT_EVENT_CREATION_FORM === "true"
+
+export const isLoginEnabled = () => process.env.LOGIN_ENABLED === "true"

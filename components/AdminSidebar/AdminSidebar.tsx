@@ -1,5 +1,6 @@
 "use client"
 
+import { isEventCreationFromVisible } from "@/lib/featureFlags"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -12,7 +13,7 @@ export default function AdminSidebar() {
     { href: "/a/sponsorit", label: "Sponsors" },
   ]
 
-  if (process.env.SHOW_EVENT_CREATION) {
+  if (isEventCreationFromVisible()) {
     navItems.push({ href: "/a/tapahtumat", label: "Events" })
   }
 

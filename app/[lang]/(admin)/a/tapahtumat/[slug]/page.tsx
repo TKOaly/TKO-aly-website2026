@@ -6,12 +6,20 @@ import EventForm from "../EventForm"
 import { buildEventPayload } from "../eventPayload"
 import type { EventFormValues } from "../types"
 import styles from "../luo/LuoTapahtuma.module.css"
+import {
+  isEventCreationFromVisible,
+  isEventSubmissionEnabled,
+} from "@/lib/featureFlags"
 
 const EditEventPage = async ({
   params,
 }: {
   params: Promise<{ lang: string; slug: string }>
 }) => {
+  if (isEventCreationFromVisible()) {
+    return <></>
+  }
+
   const { lang, slug } = await params
   const { t } = await getAsyncTranslation(lang)
 
@@ -34,7 +42,7 @@ const EditEventPage = async ({
 
   const updateEvent = async (formData: FormData) => {
     "use server"
-    if (!process.env.SUBMIT_EVENT_CREATION_FORM) {
+    if (isEventSubmissionEnabled()) {
       return
     }
 
