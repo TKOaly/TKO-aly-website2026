@@ -12,6 +12,7 @@ import { useState, ReactNode, useMemo, useCallback } from "react"
 import type { Event, ProcessedEvent } from "./types"
 import { useTranslation } from "@/app/i18n/client"
 import { getEventList } from "./eventApiConnection"
+import { isDevEnv } from "@/lib/featureFlags"
 
 function EventCalendarView({
   events,
@@ -35,7 +36,7 @@ function EventCalendarView({
       headerToolbar={{
         left: "prev,next today",
         center: "title",
-        right: "dayGridMonth",
+        right: "",
       }}
       datesSet={(arg: DatesSetArg) => onMonthChange(arg.view.currentStart)}
       initialView="dayGridMonth"
@@ -184,7 +185,12 @@ export default function Calendar() {
 
   const handleMonthChange = useCallback((date: Date) => {
     const first = new Date(date.getFullYear(), date.getMonth(), 1)
-    setViewMonth(prev => (prev.getTime() === first.getTime() ? prev : first))
+    const now = new Date()
+    const currentMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+
+    if (first <= currentMonth) {
+      setViewMonth(prev => (prev.getTime() === first.getTime() ? prev : first))
+    }
   }, [])
 
   const fromDate = new Date(
@@ -215,10 +221,12 @@ export default function Calendar() {
   if (isLoading) {
     viewContent = <p>{t("event.loading.calendar")}</p>
   } else if (error) {
-    viewContent = (
+    viewContent = isDevEnv() ? (
       <p>
         {t("event.error")}: {error.message}
       </p>
+    ) : (
+      <p>{t("event.notExits.calendar")}</p>
     )
   } else {
     viewContent = (

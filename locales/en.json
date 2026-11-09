@@ -314,7 +314,10 @@
     "canCancel": "Registration can be cancelled",
     "canNotCancel": "Registration is biding",
     "responsible": "Responsible person",
-    "notExits": "Event does not work",
+    "notExits": {
+      "event": "Event does not exits",
+      "calendar": "There is no events"
+    },
     "price": "Price",
     "registrationLink": "Registration",
     "starts": "Starts",
