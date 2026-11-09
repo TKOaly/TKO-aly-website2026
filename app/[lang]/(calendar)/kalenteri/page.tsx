@@ -5,14 +5,21 @@ import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
 import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
+import type { DatesSetArg } from "@fullcalendar/core"
 import Link from "next/link"
 import styles from "./Kalenteri.module.css"
-import { useState, ReactNode, useMemo } from "react"
+import { useState, ReactNode, useMemo, useCallback } from "react"
 import type { Event, ProcessedEvent } from "./types"
 import { useTranslation } from "@/app/i18n/client"
 import { getEventList } from "./eventApiConnection"
 
-function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
+function EventCalendarView({
+  events,
+  onMonthChange,
+}: {
+  events: ProcessedEvent[]
+  onMonthChange: (date: Date) => void
+}) {
   const calendarEvents = events.map(event => ({
     id: String(event.id),
     title: event.name || "Untitled Event",
@@ -28,8 +35,9 @@ function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
       headerToolbar={{
         left: "prev,next today",
         center: "title",
-        right: "dayGridMonth,listWeek",
+        right: "dayGridMonth",
       }}
+      datesSet={(arg: DatesSetArg) => onMonthChange(arg.view.currentStart)}
       initialView="dayGridMonth"
       editable={false}
       selectable={true}
@@ -169,8 +177,21 @@ export function processEvents(eventsData: Event[]): ProcessedEvent[] {
 export default function Calendar() {
   const { t } = useTranslation()
 
-  const now = new Date()
-  const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+  const [viewMonth, setViewMonth] = useState(() => {
+    const now = new Date()
+    return new Date(now.getFullYear(), now.getMonth(), 1)
+  })
+
+  const handleMonthChange = useCallback((date: Date) => {
+    const first = new Date(date.getFullYear(), date.getMonth(), 1)
+    setViewMonth(prev => (prev.getTime() === first.getTime() ? prev : first))
+  }, [])
+
+  const fromDate = new Date(
+    viewMonth.getFullYear(),
+    viewMonth.getMonth() - 1,
+    1,
+  )
 
   const {
     data: eventsList = [],
@@ -209,7 +230,10 @@ export default function Calendar() {
           id={styles.calendarViewContainer}
           style={{ marginLeft: "48px", width: "95%" }}
         >
-          <EventCalendarView events={processedEvents} />
+          <EventCalendarView
+            events={processedEvents}
+            onMonthChange={handleMonthChange}
+          />
           <Legend />
         </div>
       </div>
