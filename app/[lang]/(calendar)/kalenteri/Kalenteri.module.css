@@ -52,11 +52,11 @@
 }
 
 #eventsListContainer {
-  width: 15%;
+  width: 20%;
 }
 
 .eventsListEventPageContainer {
-  width: 15%;
+  width: 20%;
 }
 
 @media (max-width: 1024px) {
@@ -77,11 +77,15 @@
 #eventsList {
   display: flex;
   flex-direction: column;
-  justify-content: left;
   width: 100%;
+  height: 90%;
+  overflow-x: visible;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
 }
 
 #eventsList a {
+  max-width: 90%;
   text-decoration: none;
   color: inherit;
   display: block;
