@@ -79,14 +79,14 @@ const EventInfoView = ({ event }: { event: Event }) => {
 
         <Row col_1={<>{t("event.category")}:</>} col_2={event.category} />
 
-        {event.alcohol_meter && (
+        {!!event.alcohol_meter && (
           <Row
             col_1={<>{t("event.alcoholMeter")}:</>}
             col_2={<AlcoholMeter value={event.alcohol_meter} />}
           />
         )}
 
-        {event.organizer && (
+        {!!event.organizer && (
           <Row
             col_1={<>{t("event.organizer")}:</>}
             col_2={
@@ -99,11 +99,11 @@ const EventInfoView = ({ event }: { event: Event }) => {
           />
         )}
 
-        {event.price && (
+        {!!event.price && (
           <Row col_1={<>{t("event.price")}:</>} col_2={<>{event.price} €</>} />
         )}
 
-        {event.registration_starts && event.registration_ends && (
+        {!!event.registration_starts && !!event.registration_ends && (
           <>
             <Row
               col_1={<>{t("event.registration")}:</>}
@@ -115,7 +115,7 @@ const EventInfoView = ({ event }: { event: Event }) => {
               }
             />
 
-            {event.cancellation_starts && event.cancellation_ends ? (
+            {!!event.cancellation_starts && !!event.cancellation_ends ? (
               <Row
                 col_1={<>{t("event.canCancel")}:</>}
                 col_2={
@@ -131,7 +131,7 @@ const EventInfoView = ({ event }: { event: Event }) => {
           </>
         )}
 
-        {event.show_responsible && event.responsible && (
+        {!!event.show_responsible && !!event.responsible && (
           <Row
             col_1={<>{t("event.responsible")}:</>}
             col_2={event.responsible}
