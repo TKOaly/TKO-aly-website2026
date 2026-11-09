@@ -250,10 +250,9 @@ export default function Calendar() {
 
   return (
     <div id={styles.calendarColor}>
+      <h1 id={styles.calendarMobileTitle}>{t("event.calendar")}</h1>
       <div id={styles.calendar}>
-        <div id={styles.calendarTitle}>
-          <h1>{t("event.calendar")}</h1>
-        </div>
+        <h1 id={styles.calendarTitle}>{t("event.calendar")}</h1>
         {viewContent}
       </div>
     </div>
