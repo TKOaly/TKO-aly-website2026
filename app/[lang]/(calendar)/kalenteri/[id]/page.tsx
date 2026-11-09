@@ -8,6 +8,7 @@ import styles from "../Kalenteri.module.css"
 import { EventListView, processEvents } from "../page"
 import { useQuery } from "@tanstack/react-query"
 import { getEventById, getEventList } from "../eventApiConnection"
+import { isDevEnv } from "@/lib/featureFlags"
 
 function formatTime(time?: string): string | null {
   if (!time) {
@@ -223,7 +224,13 @@ const EventPage = ({ params }: { params: Promise<{ id: number }> }) => {
   if (isEventsLoading) {
     eventPageContent = <p>{t("event.loading.event")}</p>
   } else if (!event || eventError) {
-    eventPageContent = <p>{t("event.notExits")}</p>
+    eventPageContent = isDevEnv() ? (
+      <p>
+        {t("event.error")}: {eventError?.message}
+      </p>
+    ) : (
+      <p>{t("event.notExits.event")}</p>
+    )
   } else {
     eventPageContent = (
       <>

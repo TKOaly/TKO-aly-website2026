@@ -314,7 +314,10 @@
     "canCancel": "Ilmoittautumisen voi perua",
     "canNotCancel": "Ilmoittautuminen on sitova",
     "responsible": "Vastuuhenkilö",
-    "notExits": "Tapahtumaa ei ole olemassa",
+    "notExits": {
+      "event": "Tapahtumaa ei ole olemassa",
+      "calendar": "Tapahtumia ei ole olemassa"
+    },
     "price": "Hinta",
     "registrationLink": "Ilmoittautuminen",
     "starts": "Alkaa",
