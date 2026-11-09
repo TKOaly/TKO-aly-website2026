@@ -11,7 +11,13 @@ export async function getEventById(id: number): Promise<Event | undefined> {
   }
 
   const targetUrl = `${baseUrl.replace(/\/$/, "")}/api/events/${id}`
-  const response = await fetch(targetUrl, { next: { revalidate: 10 } })
+  const response = await fetch(targetUrl, {
+    headers: {
+      Accept: "application/json",
+      "X-Token": secret,
+    },
+    next: { revalidate: 10 },
+  })
 
   if (!response.ok) {
     throw new Error(
