@@ -209,11 +209,20 @@ const EventPage = ({ params }: { params: Promise<{ id: number }> }) => {
     return processEvents(eventsList as Event[])
   }, [eventsList, eventsListError])
 
-  const event = use(getEventById(id))
+  const {
+    data: event,
+    error: eventError,
+    isLoading: isEventsLoading,
+  } = useQuery({
+    queryKey: ["event", id],
+    queryFn: () => getEventById(id),
+  })
 
   let eventPageContent: ReactNode
 
-  if (!event) {
+  if (isEventsLoading) {
+    eventPageContent = <p>{t("event.loading.event")}</p>
+  } else if (!event || eventError) {
     eventPageContent = <p>{t("event.notExits")}</p>
   } else {
     eventPageContent = (

@@ -137,30 +137,33 @@ function hasValidStartTime(event: Event): event is Event & { starts: string } {
 export function processEvents(eventsData: Event[]): ProcessedEvent[] {
   const now = new Date()
 
-  return eventsData.filter(hasValidStartTime).map(event => {
-    const registrationStarts = event.registration_starts
-      ? new Date(event.registration_starts)
-      : null
-    const registrationEnds = event.registration_ends
-      ? new Date(event.registration_ends)
-      : null
-    const start = new Date(event.starts)
-    let backgroundColor: string
+  return eventsData
+    .filter(hasValidStartTime)
+    .map(event => {
+      const registrationStarts = event.registration_starts
+        ? new Date(event.registration_starts)
+        : null
+      const registrationEnds = event.registration_ends
+        ? new Date(event.registration_ends)
+        : null
+      const start = new Date(event.starts)
+      let backgroundColor: string
 
-    if (!registrationStarts || !registrationEnds) {
-      backgroundColor = now < start ? "#0066ff" : "#6e6e6e"
-    } else if (now >= registrationStarts && now <= registrationEnds) {
-      backgroundColor = "#00ff00"
-    } else if (now < registrationStarts) {
-      backgroundColor = "#ffff00"
-    } else if (now > start) {
-      backgroundColor = "#6e6e6e"
-    } else {
-      backgroundColor = "#ff0000"
-    }
+      if (!registrationStarts || !registrationEnds) {
+        backgroundColor = now < start ? "#0066ff" : "#6e6e6e"
+      } else if (now >= registrationStarts && now <= registrationEnds) {
+        backgroundColor = "#00ff00"
+      } else if (now < registrationStarts) {
+        backgroundColor = "#ffff00"
+      } else if (now > start) {
+        backgroundColor = "#6e6e6e"
+      } else {
+        backgroundColor = "#ff0000"
+      }
 
-    return { ...event, backgroundColor }
-  })
+      return { ...event, backgroundColor }
+    })
+    .reverse()
 }
 
 export default function Calendar() {
@@ -189,7 +192,7 @@ export default function Calendar() {
   let viewContent: ReactNode
 
   if (isLoading) {
-    viewContent = <p>{t("event.loading")}</p>
+    viewContent = <p>{t("event.loading.calendar")}</p>
   } else if (error) {
     viewContent = (
       <p>

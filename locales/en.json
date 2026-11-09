@@ -318,7 +318,10 @@
     "price": "Price",
     "registrationLink": "Registration",
     "starts": "Starts",
-    "loading": "Loading events...",
+    "loading": {
+      "event": "Loading event...",
+      "calendar": "Loading events..."
+    },
     "error": "Error",
     "calendar": "Event calendar",
     "legend": {
