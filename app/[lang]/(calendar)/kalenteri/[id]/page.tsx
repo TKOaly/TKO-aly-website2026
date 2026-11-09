@@ -9,6 +9,7 @@ import { EventListView, processEvents } from "../page"
 import { useQuery } from "@tanstack/react-query"
 import { getEventById, getEventList } from "../eventApiConnection"
 import { isDevEnv } from "@/lib/featureFlags"
+import MdxRenderer from "@/components/MdxRenderer/MdxRenderer"
 
 function formatTime(time?: string): string | null {
   if (!time) {
@@ -138,7 +139,7 @@ const EventInfoView = ({ event }: { event: Event }) => {
           />
         )}
       </div>
-      <p className={styles.eventText}>{event.description}</p>
+      <MdxRenderer source={event.description} className={styles.eventText} />
     </>
   )
 }
