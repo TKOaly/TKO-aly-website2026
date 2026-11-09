@@ -4,17 +4,12 @@ import type { Event } from "./types"
 
 const baseUrl: string | undefined = process.env.EVENTS_API_BASE_URL
 
-export async function getEventById(
-  id: number,
-  locale: string,
-): Promise<Event | undefined> {
+export async function getEventById(id: number): Promise<Event | undefined> {
   if (!baseUrl) {
     return undefined
   }
 
-  const params = new URLSearchParams({ locale })
-
-  const targetUrl = `${baseUrl.replace(/\/$/, "")}/api/events/${id}?${params}`
+  const targetUrl = `${baseUrl.replace(/\/$/, "")}/api/events/${id}`
   const response = await fetch(targetUrl)
 
   if (!response.ok) {
@@ -25,14 +20,13 @@ export async function getEventById(
 }
 
 export async function getEventList(
-  locale: string,
   fromDate?: Date,
 ): Promise<Event[] | undefined> {
   if (!baseUrl) {
     return undefined
   }
 
-  const params = new URLSearchParams({ locale })
+  const params = new URLSearchParams()
 
   if (fromDate) {
     params.set("fromDate", fromDate.toISOString())
