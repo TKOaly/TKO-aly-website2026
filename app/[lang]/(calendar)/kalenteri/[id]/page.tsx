@@ -192,8 +192,8 @@ const BackButton = () => {
   )
 }
 
-const EventPage = ({ params }: { params: Promise<{ rawId: string }> }) => {
-  const { rawId } = use(params)
+const EventPage = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id: rawId } = use(params)
   const { t } = useTranslation()
 
   const now = new Date()
@@ -234,7 +234,7 @@ const EventPage = ({ params }: { params: Promise<{ rawId: string }> }) => {
   if (isEventsLoading) {
     eventPageContent = <p>{t("event.loading.event")}</p>
   } else if (!event || eventError) {
-    ;<p>{t("event.notExist.event")}</p>
+    eventPageContent = <p>{t("event.notExist.event")}</p>
   } else {
     eventPageContent = (
       <>

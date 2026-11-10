@@ -205,6 +205,8 @@
 
 .eventText {
   max-width: 80ch;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .eventRegistration {
