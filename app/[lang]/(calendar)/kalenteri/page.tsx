@@ -133,7 +133,7 @@ function Legend() {
         </div>
       )}
       <button onClick={toggleLegendVisibility} title="Kalenterin selite">
-        {isLegendVisible ? t("event.legend.show") : t("event.legend.hide")}
+        {isLegendVisible ? t("event.legend.hide") : t("event.legend.show")}
       </button>
     </div>
   )
