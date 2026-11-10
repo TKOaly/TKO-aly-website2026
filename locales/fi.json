@@ -314,17 +314,11 @@
     "canCancel": "Ilmoittautumisen voi perua",
     "canNotCancel": "Ilmoittautuminen on sitova",
     "responsible": "Vastuuhenkilö",
-    "notExist": {
-      "event": "Tapahtumaa ei ole olemassa",
-      "calendar": "Tapahtumia ei ole olemassa"
-    },
+    "notExits": "Tapahtumaa ei ole olemassa",
     "price": "Hinta",
     "registrationLink": "Ilmoittautuminen",
     "starts": "Alkaa",
-    "loading": {
-      "event": "Ladataan tapahtumaa...",
-      "calendar": "Ladataan tapahtumia..."
-    },
+    "loading": "Ladataan tapahtumia...",
     "error": "Virhe",
     "calendar": "Tapahtumakalenteri",
     "legend": {

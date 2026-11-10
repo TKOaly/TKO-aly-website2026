@@ -314,17 +314,11 @@
     "canCancel": "Registration can be cancelled",
     "canNotCancel": "Registration is biding",
     "responsible": "Responsible person",
-    "notExist": {
-      "event": "Event does not exits",
-      "calendar": "There are no events"
-    },
+    "notExits": "Event does not work",
     "price": "Price",
     "registrationLink": "Registration",
     "starts": "Starts",
-    "loading": {
-      "event": "Loading event...",
-      "calendar": "Loading events..."
-    },
+    "loading": "Loading events...",
     "error": "Error",
     "calendar": "Event calendar",
     "legend": {

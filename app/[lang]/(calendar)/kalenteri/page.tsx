@@ -5,21 +5,13 @@ import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
 import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
-import type { DatesSetArg } from "@fullcalendar/core"
 import Link from "next/link"
 import styles from "./Kalenteri.module.css"
-import { useState, ReactNode, useMemo, useCallback } from "react"
+import { useState, ReactNode, useMemo } from "react"
 import type { Event, ProcessedEvent } from "./types"
 import { useTranslation } from "@/app/i18n/client"
-import { getEventList } from "./eventApiConnection"
 
-function EventCalendarView({
-  events,
-  onMonthChange,
-}: {
-  events: ProcessedEvent[]
-  onMonthChange: (date: Date) => void
-}) {
+function EventCalendarView({ events }: { events: ProcessedEvent[] }) {
   const calendarEvents = events.map(event => ({
     id: String(event.id),
     title: event.name || "Untitled Event",
@@ -35,9 +27,8 @@ function EventCalendarView({
       headerToolbar={{
         left: "prev,next today",
         center: "title",
-        right: "",
+        right: "dayGridMonth,listWeek",
       }}
-      datesSet={(arg: DatesSetArg) => onMonthChange(arg.view.currentStart)}
       initialView="dayGridMonth"
       editable={false}
       selectable={true}
@@ -132,7 +123,7 @@ function Legend() {
         </div>
       )}
       <button onClick={toggleLegendVisibility} title="Kalenterin selite">
-        {isLegendVisible ? t("event.legend.hide") : t("event.legend.show")}
+        {isLegendVisible ? t("event.legend.show") : t("event.legend.hide")}
       </button>
     </div>
   )
@@ -145,66 +136,47 @@ function hasValidStartTime(event: Event): event is Event & { starts: string } {
 export function processEvents(eventsData: Event[]): ProcessedEvent[] {
   const now = new Date()
 
-  return eventsData
-    .filter(hasValidStartTime)
-    .map(event => {
-      const registrationStarts = event.registration_starts
-        ? new Date(event.registration_starts)
-        : null
-      const registrationEnds = event.registration_ends
-        ? new Date(event.registration_ends)
-        : null
-      const start = new Date(event.starts)
-      let backgroundColor: string
+  return eventsData.filter(hasValidStartTime).map(event => {
+    const registrationStarts = event.registration_starts
+      ? new Date(event.registration_starts)
+      : null
+    const registrationEnds = event.registration_ends
+      ? new Date(event.registration_ends)
+      : null
+    const start = new Date(event.starts)
+    let backgroundColor: string
 
-      if (!registrationStarts || !registrationEnds) {
-        backgroundColor = now < start ? "#0066ff" : "#6e6e6e"
-      } else if (now >= registrationStarts && now <= registrationEnds) {
-        backgroundColor = "#00ff00"
-      } else if (now < registrationStarts) {
-        backgroundColor = "#ffff00"
-      } else if (now > start) {
-        backgroundColor = "#6e6e6e"
-      } else {
-        backgroundColor = "#ff0000"
-      }
+    if (!registrationStarts || !registrationEnds) {
+      backgroundColor = now < start ? "#0066ff" : "#6e6e6e"
+    } else if (now >= registrationStarts && now <= registrationEnds) {
+      backgroundColor = "#00ff00"
+    } else if (now < registrationStarts) {
+      backgroundColor = "#ffff00"
+    } else if (now > start) {
+      backgroundColor = "#6e6e6e"
+    } else {
+      backgroundColor = "#ff0000"
+    }
 
-      return { ...event, backgroundColor }
-    })
-    .reverse()
+    return { ...event, backgroundColor }
+  })
 }
 
 export default function Calendar() {
   const { t } = useTranslation()
-
-  const [viewMonth, setViewMonth] = useState(() => {
-    const now = new Date()
-    return new Date(now.getFullYear(), now.getMonth(), 1)
-  })
-
-  const handleMonthChange = useCallback((date: Date) => {
-    const first = new Date(date.getFullYear(), date.getMonth(), 1)
-    const now = new Date()
-    const currentMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-
-    if (first <= currentMonth) {
-      setViewMonth(prev => (prev.getTime() === first.getTime() ? prev : first))
-    }
-  }, [])
-
-  const fromDate = new Date(
-    viewMonth.getFullYear(),
-    viewMonth.getMonth() - 1,
-    1,
-  )
+  const now = new Date()
+  const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
 
   const {
     data: eventsList = [],
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["eventList", fromDate],
-    queryFn: () => getEventList(fromDate),
+    queryKey: ["eventList"],
+    queryFn: (): Promise<Event[]> =>
+      fetch(`/api/events/list?fromDate=${fromDate.toISOString()}`).then(r =>
+        r.json(),
+      ),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
@@ -218,9 +190,13 @@ export default function Calendar() {
   let viewContent: ReactNode
 
   if (isLoading) {
-    viewContent = <p>{t("event.loading.calendar")}</p>
+    viewContent = <p>{t("event.loading")}</p>
   } else if (error) {
-    ;<p>{t("event.notExist.calendar")}</p>
+    viewContent = (
+      <p>
+        {t("event.error")}: {error.message}
+      </p>
+    )
   } else {
     viewContent = (
       <div id={styles.calendarPageContainer}>
@@ -231,10 +207,7 @@ export default function Calendar() {
           id={styles.calendarViewContainer}
           style={{ marginLeft: "48px", width: "95%" }}
         >
-          <EventCalendarView
-            events={processedEvents}
-            onMonthChange={handleMonthChange}
-          />
+          <EventCalendarView events={processedEvents} />
           <Legend />
         </div>
       </div>
@@ -243,9 +216,10 @@ export default function Calendar() {
 
   return (
     <div id={styles.calendarColor}>
-      <h1 id={styles.calendarMobileTitle}>{t("event.calendar")}</h1>
       <div id={styles.calendar}>
-        <h1 id={styles.calendarTitle}>{t("event.calendar")}</h1>
+        <div id={styles.calendarTitle}>
+          <h1>{t("event.calendar")}</h1>
+        </div>
         {viewContent}
       </div>
     </div>
