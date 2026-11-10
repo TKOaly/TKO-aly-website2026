@@ -8,8 +8,8 @@ import styles from "../Kalenteri.module.css"
 import { EventListView, processEvents } from "../page"
 import { useQuery } from "@tanstack/react-query"
 import { getEventById, getEventList } from "../eventApiConnection"
-import { isDevEnv } from "@/lib/featureFlags"
 import MdxRenderer from "@/components/MdxRenderer/MdxRenderer"
+import { notFound } from "next/navigation"
 
 function formatTime(time?: string): string | null {
   if (!time) {
@@ -188,12 +188,17 @@ const BackButton = () => {
   )
 }
 
-const EventPage = ({ params }: { params: Promise<{ id: number }> }) => {
-  const { id } = use(params)
+const EventPage = ({ params }: { params: Promise<{ rawId: string }> }) => {
+  const { rawId } = use(params)
   const { t } = useTranslation()
 
   const now = new Date()
   const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+
+  const id = /^\d+$/.test(rawId) ? Number(rawId) : NaN
+  if (!Number.isSafeInteger(id) && id < 0) {
+    notFound()
+  }
 
   const {
     data: eventsList = [],
@@ -225,13 +230,7 @@ const EventPage = ({ params }: { params: Promise<{ id: number }> }) => {
   if (isEventsLoading) {
     eventPageContent = <p>{t("event.loading.event")}</p>
   } else if (!event || eventError) {
-    eventPageContent = isDevEnv() ? (
-      <p>
-        {t("event.error")}: {eventError?.message}
-      </p>
-    ) : (
-      <p>{t("event.notExist.event")}</p>
-    )
+    ;<p>{t("event.notExist.event")}</p>
   } else {
     eventPageContent = (
       <>

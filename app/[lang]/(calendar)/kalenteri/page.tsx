@@ -12,7 +12,6 @@ import { useState, ReactNode, useMemo, useCallback } from "react"
 import type { Event, ProcessedEvent } from "./types"
 import { useTranslation } from "@/app/i18n/client"
 import { getEventList } from "./eventApiConnection"
-import { isDevEnv } from "@/lib/featureFlags"
 
 function EventCalendarView({
   events,
@@ -221,13 +220,7 @@ export default function Calendar() {
   if (isLoading) {
     viewContent = <p>{t("event.loading.calendar")}</p>
   } else if (error) {
-    viewContent = isDevEnv() ? (
-      <p>
-        {t("event.error")}: {error.message}
-      </p>
-    ) : (
-      <p>{t("event.notExist.calendar")}</p>
-    )
+    ;<p>{t("event.notExist.calendar")}</p>
   } else {
     viewContent = (
       <div id={styles.calendarPageContainer}>
