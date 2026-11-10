@@ -314,7 +314,7 @@
     "canCancel": "Ilmoittautumisen voi perua",
     "canNotCancel": "Ilmoittautuminen on sitova",
     "responsible": "Vastuuhenkilö",
-    "notExits": {
+    "notExist": {
       "event": "Tapahtumaa ei ole olemassa",
       "calendar": "Tapahtumia ei ole olemassa"
     },
