@@ -8,7 +8,6 @@ import styles from "../Kalenteri.module.css"
 import { EventListView, processEvents } from "../page"
 import { useQuery } from "@tanstack/react-query"
 import { getEventById, getEventList } from "../eventApiConnection"
-import MdxRenderer from "@/components/MdxRenderer/MdxRenderer"
 import { notFound } from "next/navigation"
 
 function formatTime(time?: string): string | null {
@@ -139,7 +138,12 @@ const EventInfoView = ({ event }: { event: Event }) => {
           />
         )}
       </div>
-      <MdxRenderer source={event.description} className={styles.eventText} />
+      {!!event.description && (
+        <div
+          className={styles.eventText}
+          dangerouslySetInnerHTML={{ __html: event.description }}
+        />
+      )}
     </>
   )
 }
