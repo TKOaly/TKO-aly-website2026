@@ -1,12 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import { ReactNode, useEffect, useState, useMemo, use } from "react"
+import { ReactNode, useMemo, use } from "react"
 import type { Event, ProcessedEvent } from "../types"
 import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
 import { EventListView, processEvents } from "../page"
 import { useQuery } from "@tanstack/react-query"
+import { getEventById, getEventList } from "../eventApiConnection"
+import { notFound } from "next/navigation"
 
 function formatTime(time?: string): string | null {
   if (!time) {
@@ -77,14 +79,14 @@ const EventInfoView = ({ event }: { event: Event }) => {
 
         <Row col_1={<>{t("event.category")}:</>} col_2={event.category} />
 
-        {event.alcohol_meter && (
+        {!!event.alcohol_meter && (
           <Row
             col_1={<>{t("event.alcoholMeter")}:</>}
             col_2={<AlcoholMeter value={event.alcohol_meter} />}
           />
         )}
 
-        {event.organizer && (
+        {!!event.organizer && (
           <Row
             col_1={<>{t("event.organizer")}:</>}
             col_2={
@@ -97,11 +99,11 @@ const EventInfoView = ({ event }: { event: Event }) => {
           />
         )}
 
-        {event.price && (
+        {!!event.price && (
           <Row col_1={<>{t("event.price")}:</>} col_2={<>{event.price} €</>} />
         )}
 
-        {event.registration_starts && event.registration_ends && (
+        {!!event.registration_starts && !!event.registration_ends && (
           <>
             <Row
               col_1={<>{t("event.registration")}:</>}
@@ -113,7 +115,7 @@ const EventInfoView = ({ event }: { event: Event }) => {
               }
             />
 
-            {event.cancellation_starts && event.cancellation_ends ? (
+            {!!event.cancellation_starts && !!event.cancellation_ends ? (
               <Row
                 col_1={<>{t("event.canCancel")}:</>}
                 col_2={
@@ -129,14 +131,19 @@ const EventInfoView = ({ event }: { event: Event }) => {
           </>
         )}
 
-        {event.show_responsible && event.responsible && (
+        {!!event.show_responsible && !!event.responsible && (
           <Row
             col_1={<>{t("event.responsible")}:</>}
             col_2={event.responsible}
           />
         )}
       </div>
-      <p className={styles.eventText}>{event.description}</p>
+      {!!event.description && (
+        <div
+          className={styles.eventText}
+          dangerouslySetInnerHTML={{ __html: event.description }}
+        />
+      )}
     </>
   )
 }
@@ -185,56 +192,49 @@ const BackButton = () => {
   )
 }
 
-const EventPage = ({
-  params,
-}: {
-  params: Promise<{ lang: string; slug: string[] }>
-}) => {
-  const { slug } = use(params)
+const EventPage = ({ params }: { params: Promise<{ rawId: string }> }) => {
+  const { rawId } = use(params)
   const { t } = useTranslation()
-  const [event, setEvent] = useState<Event | null>(null)
 
   const now = new Date()
   const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+
+  const id = /^\d+$/.test(rawId) ? Number(rawId) : NaN
+  if (!Number.isSafeInteger(id) && id < 0) {
+    notFound()
+  }
 
   const {
     data: eventsList = [],
     error: eventsListError,
     isLoading: isEventsListLoading,
   } = useQuery({
-    queryKey: ["eventList"],
-    queryFn: (): Promise<Event[]> =>
-      fetch(`/api/events/list?fromDate=${fromDate.toISOString()}`).then(r =>
-        r.json(),
-      ),
+    queryKey: ["eventList", fromDate],
+    queryFn: () => getEventList(fromDate),
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
     if (eventsListError || !eventsList) {
       return []
     }
-
     return processEvents(eventsList as Event[])
   }, [eventsList, eventsListError])
 
-  const id = Number(slug[0])
-
-  useEffect(() => {
-    if (!id) return
-
-    fetch(`/api/events/${id}`)
-      .then(r => {
-        if (!r.ok) throw new Error()
-        return r.json()
-      })
-      .then(setEvent)
-      .catch(() => setEvent(null))
-  }, [id])
+  const {
+    data: event,
+    error: eventError,
+    isLoading: isEventsLoading,
+  } = useQuery({
+    queryKey: ["event", id],
+    queryFn: () => getEventById(id),
+  })
 
   let eventPageContent: ReactNode
 
-  if (!event) {
-    eventPageContent = <p>{t("event.notExits")}</p>
+  if (isEventsLoading) {
+    eventPageContent = <p>{t("event.loading.event")}</p>
+  } else if (!event || eventError) {
+    ;<p>{t("event.notExist.event")}</p>
   } else {
     eventPageContent = (
       <>
@@ -256,16 +256,14 @@ const EventPage = ({
     <div id={styles.calendar}>
       <BackButton />
       <div id={styles.calendarPageContainer}>
-        <div className={styles.eventsListEventPageContainer}>
+        <div id={styles.eventsListEventPageContainer}>
           {!isEventsListLoading && !eventsListError ? (
             <EventListView events={processedEvents} />
           ) : (
             <></>
           )}
         </div>
-        <div style={{ marginLeft: "48px", width: "95%" }}>
-          {eventPageContent}
-        </div>
+        <div id={styles.eventPageContentContainer}>{eventPageContent}</div>
       </div>
     </div>
   )
