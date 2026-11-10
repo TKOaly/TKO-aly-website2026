@@ -230,7 +230,7 @@ const EventPage = ({ params }: { params: Promise<{ id: number }> }) => {
         {t("event.error")}: {eventError?.message}
       </p>
     ) : (
-      <p>{t("event.notExits.event")}</p>
+      <p>{t("event.notExist.event")}</p>
     )
   } else {
     eventPageContent = (

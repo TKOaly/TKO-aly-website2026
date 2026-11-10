@@ -226,7 +226,7 @@ export default function Calendar() {
         {t("event.error")}: {error.message}
       </p>
     ) : (
-      <p>{t("event.notExits.calendar")}</p>
+      <p>{t("event.notExist.calendar")}</p>
     )
   } else {
     viewContent = (
