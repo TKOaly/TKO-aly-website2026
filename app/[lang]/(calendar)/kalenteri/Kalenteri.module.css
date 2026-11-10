@@ -52,36 +52,39 @@
 }
 
 #eventsListContainer {
-  width: 15%;
+  width: 20%;
 }
 
-.eventsListEventPageContainer {
-  width: 15%;
+#eventsListEventPageContainer {
+  width: 20%;
 }
 
-@media (max-width: 1024px) {
-  .eventsListEventPageContainer {
-    display: none;
-  }
+#eventPageContentContainer {
+  margin-left: 48px;
+  width: 95%;
+}
 
-  #eventsListContainer {
-    order: 1;
-    width: 70%;
-  }
+#calendarMobileTitle {
+  display: none;
+}
 
-  #calendarViewContainer {
-    display: none;
-  }
+#calendarTitle {
+  display: inherit;
 }
 
 #eventsList {
   display: flex;
   flex-direction: column;
-  justify-content: left;
   width: 100%;
+  height: 90%;
+  overflow-x: visible;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+  color: #ffbb00;
 }
 
 #eventsList a {
+  max-width: 90%;
   text-decoration: none;
   color: inherit;
   display: block;
@@ -202,6 +205,8 @@
 
 .eventText {
   max-width: 80ch;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .eventRegistration {
@@ -239,4 +244,34 @@
 
 .eventSafetyDisclaimer a {
   color: var(--color-text-muted);
+}
+
+@media (max-width: 1024px) {
+  #eventPageContentContainer {
+    margin-left: 0;
+  }
+
+  #eventsListEventPageContainer {
+    display: none;
+  }
+
+  #eventsListContainer {
+    order: 1;
+    width: 100%;
+    align-items: center;
+  }
+
+  #calendarViewContainer {
+    display: none;
+  }
+
+  #calendarTitle {
+    display: none;
+  }
+
+  #calendarMobileTitle {
+    margin-top: 10px;
+    margin-left: 2.5%;
+    display: inherit;
+  }
 }
