@@ -2,7 +2,6 @@
 title: "README"
 description: "README on ainejärjestömme opiskelijalehti, joka käsittelee opiskelua, tietojenkäsittelytiedettä ja vapaa-aikaa."
 date: 2026-03-25
-readingTime: 2
 tag: "TOIMINTA"
 ---
 

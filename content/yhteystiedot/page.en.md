@@ -2,7 +2,6 @@
 title: "Contact information"
 description: "TKO-äly ry's postal address and contact details."
 date: 2026-03-25
-readingTime: 1
 tag: "ASSOCIATION"
 ---
 

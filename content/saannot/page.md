@@ -2,7 +2,6 @@
 title: "Säännöt"
 description: "TKO-äly ry:n säännöt, jotka on hyväksytty yhdistysrekisteriin 22.10.2025."
 date: 2026-03-25
-readingTime: 7
 tag: "YHDISTYS"
 ---
 

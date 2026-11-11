@@ -2,7 +2,6 @@
 title: "Communications"
 description: "TKO-äly's communication channels: Telegram, mailing lists and social media."
 date: 2026-03-25
-readingTime: 1
 tag: "ASSOCIATION"
 ---
 

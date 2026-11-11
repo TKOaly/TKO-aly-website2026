@@ -2,7 +2,6 @@
 title: "English"
 description: "TKO-äly ry is the organization for computer science and data science students at the University of Helsinki."
 date: 2026-03-25
-readingTime: 1
 tag: "YHDISTYS"
 ---
 

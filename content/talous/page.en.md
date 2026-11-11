@@ -2,7 +2,6 @@
 title: "Finances"
 description: "The financial regulations available for download."
 date: 2026-03-25
-readingTime: 1
 tag: "ASSOCIATION"
 ---
 

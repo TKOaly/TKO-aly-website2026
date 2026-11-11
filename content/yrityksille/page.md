@@ -2,7 +2,6 @@
 title: "Yrityksille"
 description: "Tietoa yhteistyöstä TKO-älyn kanssa ja yritysten mahdollisuuksista näkyä opiskelijoille."
 date: 2026-03-25
-readingTime: 2
 tag: "YRITYKSET"
 ---
 

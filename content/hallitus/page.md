@@ -2,7 +2,6 @@
 title: "Hallitus"
 description: "TKO-älyn hallituksen virkailijat ja toimihenkilöt."
 date: 2026-04-07
-readingTime: 4
 tag: "YHDISTYS"
 ---
 

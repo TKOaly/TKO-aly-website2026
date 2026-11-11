@@ -2,7 +2,6 @@
 title: "For companies"
 description: "Information about cooperating with TKO-äly and companies' opportunities to be visible to students."
 date: 2026-03-25
-readingTime: 2
 tag: "COMPANIES"
 ---
 

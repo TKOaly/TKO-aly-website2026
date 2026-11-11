@@ -2,7 +2,6 @@
 title: "Ruokavälitys"
 description: "Ruokavälitys on vapaaehtoisten hoitama kahvikassa, joka tarjoaa pientä purtavaa ja juotavaa opiskelijoille."
 date: 2026-04-19
-readingTime: 3
 tag: "TOIMINTA"
 ---
 

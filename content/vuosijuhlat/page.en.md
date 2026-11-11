@@ -2,7 +2,6 @@
 title: "Annual celebration"
 description: "Tips for the annual celebration and information about TKO-äly's annual celebration."
 date: 2026-03-25
-readingTime: 3
 tag: "ACTIVITIES"
 ---
 

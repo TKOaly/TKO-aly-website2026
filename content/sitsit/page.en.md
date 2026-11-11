@@ -2,7 +2,6 @@
 title: "Sitsit"
 description: "A short summary of what sitsit, the academic table party, involves."
 date: 2026-03-25
-readingTime: 2
 tag: "ACTIVITIES"
 ---
 

@@ -2,7 +2,6 @@
 title: "Tiedotus"
 description: "TKO-älyn tiedotuskanavat: Telegram, sähköpostilistat ja sosiaalinen media."
 date: 2026-03-25
-readingTime: 1
 tag: "YHDISTYS"
 ---
 

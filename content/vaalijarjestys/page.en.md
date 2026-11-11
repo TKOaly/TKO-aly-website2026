@@ -2,7 +2,6 @@
 title: "Election system"
 description: "The voting and election rules available for download."
 date: 2026-03-25
-readingTime: 1
 tag: "ASSOCIATION"
 ---
 

@@ -2,7 +2,6 @@
 title: "Brand guide"
 description: "Guidelines for writing TKO-äly's name and using the logo."
 date: 2026-03-25
-readingTime: 2
 tag: "ASSOCIATION"
 ---
 

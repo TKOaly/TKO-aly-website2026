@@ -2,7 +2,6 @@
 title: "Insignia"
 description: "TKO-äly's ribbon and the association's other insignia."
 date: 2026-03-25
-readingTime: 4
 tag: "ASSOCIATION"
 ---
 

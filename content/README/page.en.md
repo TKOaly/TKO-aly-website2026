@@ -2,7 +2,6 @@
 title: "README"
 description: "README is our subject association's student magazine about studying, computer science and free time."
 date: 2026-03-25
-readingTime: 2
 tag: "ACTIVITIES"
 ---
 
