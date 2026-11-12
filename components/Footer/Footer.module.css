@@ -28,24 +28,46 @@
   padding: var(--space-2) var(--space-4);
   font-size: 0.75rem;
   letter-spacing: 0.1em;
+  border-width: 2px;
   box-shadow: 3px 3px 0 var(--yellow-700);
+  transition:
+    background-color 0.1s ease,
+    box-shadow 0.1s ease,
+    transform 0.1s ease;
+}
+
+.sponsorsTitleRow .collaborateButton:hover {
+  background-color: var(--yellow-300);
+  box-shadow: 5px 5px 0 var(--yellow-700);
+  transform: translate(-2px, -2px);
+}
+
+.sponsorsTitleRow .collaborateButton:active {
+  box-shadow: 0 0 0 var(--yellow-700);
+  transform: translate(3px, 3px);
 }
 
 @media (prefers-color-scheme: light) {
   .sponsorsTitleRow .collaborateButton {
     box-shadow: 3px 3px 0 var(--neutral-900);
   }
+
+  .sponsorsTitleRow .collaborateButton:hover {
+    box-shadow: 5px 5px 0 var(--neutral-900);
+  }
+
+  .sponsorsTitleRow .collaborateButton:active {
+    box-shadow: 0 0 0 var(--neutral-900);
+  }
 }
 
 .sponsorsTitle {
   flex-shrink: 0;
-  background-color: var(--yellow);
-  color: #000;
+  color: var(--color-text);
   font-size: 0.75rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  padding: var(--space-1) var(--space-3);
   margin: 0;
 }
 
