@@ -53,6 +53,15 @@
   flex-direction: column;
   flex: 1 1 auto;
   min-height: 10rem;
+  /* Padding moves into the scrolling body below, so its scrollbar sits flush
+     with the window edge and runs from the title bar to the bottom edge. */
+  --toc-bar-height: 2.125rem; /* the terminal's absolutely placed title bar */
+  padding: var(--toc-bar-height) 0 0;
+}
+
+.sidebar > .tocTerminal > :not(:first-child) {
+  padding: calc(var(--space-12) - var(--toc-bar-height)) var(--space-4)
+    var(--space-6);
 }
 
 .notice {
@@ -453,6 +462,14 @@
   font-size: 0.8125rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+/* Narrow screens: tighter cells, so short values (years, "1/23") don't wrap. */
+@media (max-width: 600px) {
+  .article :global(th),
+  .article :global(td) {
+    padding: var(--space-3) var(--space-2);
+  }
 }
 
 .article :global(img[data-cover-image]) {
