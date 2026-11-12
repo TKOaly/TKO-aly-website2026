@@ -9,6 +9,27 @@
   gap: var(--space-6);
   margin-bottom: var(--space-20);
   align-items: center;
+  position: relative;
+  isolation: isolate;
+}
+
+/* EXA building illustration behind both columns: the hero's full width and height. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("../../assets/exa.svg") center / cover no-repeat;
+  opacity: 0.1;
+  /* The artwork is black on white: invert it for the dark theme. */
+  filter: invert(1);
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: light) {
+  .hero::before {
+    filter: none;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -21,6 +42,16 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
+  padding: var(--space-8);
+  background: hsl(0 0% 14% / 0.55);
+  -webkit-backdrop-filter: blur(48px) saturate(1.3);
+  backdrop-filter: blur(48px) saturate(1.3);
+}
+
+@media (prefers-color-scheme: light) {
+  .heroContent {
+    background: hsl(0 0% 98% / 0.6);
+  }
 }
 
 .locationBadge,
@@ -66,11 +97,8 @@
 
 .heroDesc {
   font-size: 1.125rem;
-  color: var(--color-text-muted);
+  color: var(--color-text);
   max-width: 60ch;
-  border-color: var(--yellow);
-  border-left: var(--border-thick);
-  padding-left: var(--space-4);
   line-height: 1.5;
   margin: 0;
 }
