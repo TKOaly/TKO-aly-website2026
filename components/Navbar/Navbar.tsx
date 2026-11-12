@@ -23,6 +23,9 @@ import { isLoginEnabled } from "@/lib/featureFlags"
 
 type Lang = "fi" | "en"
 
+/** Scroll distance (px) over which the desktop logo shrinks to half size. */
+const LOGO_SHRINK_DISTANCE = 96
+
 // Decorative mascot and tile colour for each mega menu, keyed by sectionKey().
 const sectionImages: Record<
   string,
@@ -63,8 +66,6 @@ export interface NavSection {
 
 const translations: Record<Lang, Record<string, string>> = {
   fi: {
-    switchToEnglish: "In English",
-    switchToFinnish: "Suomeksi",
     signOut: "Kirjaudu ulos",
     signIn: "Kirjaudu",
     openMenu: "Avaa valikko",
@@ -73,8 +74,6 @@ const translations: Record<Lang, Record<string, string>> = {
     switchToFinnishLabel: "Vaihda sivuston kieli suomeksi",
   },
   en: {
-    switchToEnglish: "In English",
-    switchToFinnish: "Suomeksi",
     signOut: "Sign out",
     signIn: "Sign in",
     openMenu: "Open menu",
@@ -137,7 +136,21 @@ function Navbar({
   const toggleRefs = useRef<Record<string, HTMLButtonElement | null>>({})
 
   useEffect(() => {
+    // The desktop logo shrinks linearly from x1 at the top to x0.5 after
+    // LOGO_SHRINK_DISTANCE px of scrolling (see .logo in Navbar.module.css).
+    const updateLogoScale = () => {
+      const progress = Math.min(
+        Math.max(window.scrollY, 0) / LOGO_SHRINK_DISTANCE,
+        1,
+      )
+      navRef.current?.style.setProperty(
+        "--logo-scale",
+        String(1 - progress / 2),
+      )
+    }
+
     const handleScroll = () => {
+      updateLogoScale()
       const currentScrollY = window.scrollY
       const isAtBottom =
         window.innerHeight + currentScrollY >= document.body.scrollHeight - 10
@@ -152,6 +165,7 @@ function Navbar({
       lastScrollY.current = currentScrollY
     }
 
+    updateLogoScale()
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -185,9 +199,6 @@ function Navbar({
 
   const t = (key: string) => translations[lang][key] || key
 
-  const otherLangLabel =
-    lang === "fi" ? t("switchToEnglish") : t("switchToFinnish")
-
   const otherLangCode = lang === "fi" ? "EN" : "FI"
   const otherLangAriaLabel =
     lang === "fi" ? t("switchToEnglishLabel") : t("switchToFinnishLabel")
@@ -203,8 +214,9 @@ function Navbar({
       <ClientLink href="/" className={styles.logoLink}>
         <Image
           src="/logo-yellow-on-black.png"
-          width={48}
-          height={48}
+          className={styles.logo}
+          width={256}
+          height={256}
           alt="TKO-aly logo"
         />
       </ClientLink>
@@ -314,19 +326,17 @@ function Navbar({
           <ul
             className={`${styles.secondaryActionList} ${status === "loading" ? styles.authLoading : ""}`}
           >
-            {!session && (
-              <li>
-                <button
-                  type="button"
-                  className={`${styles.dropdownToggle} ${styles.langButton}`}
-                  aria-label={otherLangAriaLabel}
-                  onClick={toggleLanguage}
-                >
-                  <Globe size={18} aria-hidden />
-                  {otherLangCode}
-                </button>
-              </li>
-            )}
+            <li>
+              <button
+                type="button"
+                className={`${styles.dropdownToggle} ${styles.langButton}`}
+                aria-label={otherLangAriaLabel}
+                onClick={toggleLanguage}
+              >
+                <Globe size={18} aria-hidden />
+                {otherLangCode}
+              </button>
+            </li>
             {isLoginEnabled() &&
               (session ? (
                 <li
@@ -381,18 +391,6 @@ function Navbar({
                           </ClientLink>
                         </li>
                       ))}
-                    <li>
-                      <ClientLink
-                        href="#"
-                        onClick={event => {
-                          event.preventDefault()
-                          setOpenId(null)
-                          toggleLanguage()
-                        }}
-                      >
-                        {otherLangLabel}
-                      </ClientLink>
-                    </li>
                     <li>
                       <ClientLink
                         href="#"

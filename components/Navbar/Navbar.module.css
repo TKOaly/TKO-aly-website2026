@@ -16,6 +16,46 @@
   transform: translateY(-100%);
 }
 
+.logo {
+  width: 48px;
+  height: 48px;
+}
+
+/* ISOMPI LOGO deskariin */
+@media (min-width: 1281px) {
+  .navbar {
+    padding: 0 max(var(--space-4), calc((100% - var(--screen-xl)) / 2));
+    --navbar-logo-offset: 6px;
+    --navbar-logo-size: calc(
+      var(--space-16) * 2 - var(--navbar-logo-offset) * 2
+    );
+  }
+
+  .navbar.hidden {
+    transform: translateY(calc(-100% - var(--navbar-logo-size) / 2));
+  }
+
+  .logoLink {
+    position: relative;
+    flex: none;
+    align-self: stretch;
+    width: var(--navbar-logo-size);
+  }
+
+  .logo {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: var(--navbar-logo-size);
+    height: var(--navbar-logo-size);
+    transform: translateY(
+        calc(var(--navbar-logo-offset) * var(--logo-scale, 1) - var(--space-16))
+      )
+      scale(var(--logo-scale, 1));
+    transform-origin: left top;
+  }
+}
+
 .navbar li {
   list-style: none;
 }
