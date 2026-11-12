@@ -67,7 +67,7 @@
   color: var(--color-text-muted);
 }
 
-/* Share / edit icons beside the reading time — mobile only. */
+/* Edit icon beside the reading time — mobile only. */
 .meta .quickActions {
   display: none;
   gap: var(--space-2);
@@ -76,6 +76,18 @@
 @media (max-width: 767px) {
   .meta .quickActions {
     display: inline-flex;
+  }
+}
+
+/* Nothing but the edit icon: show the row on mobile only, so
+   desktop doesn't get an empty bar between two lines. */
+.meta.actionsOnly {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .meta.actionsOnly {
+    display: flex;
   }
 }
 

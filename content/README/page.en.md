@@ -1,9 +1,6 @@
 ---
 title: "README"
 description: "README is our subject association's student magazine about studying, computer science and free time."
-date: 2026-03-25
-readingTime: 2
-tag: "ACTIVITIES"
 ---
 
 README is the small but mighty magazine of our subject association. README deals with topics on a wide scale, for example related to studying, computer science and free time. We publish articles about the latest news of the association and the department, as well as lighter content. All issues, old and new, can be read as PDFs at the bottom of this page (the issues themselves are in Finnish). More texts can be found on [our blog](https://blog.tko-aly.fi).

@@ -1,8 +1,5 @@
 ---
 title: "Student advocacy"
-date: 2026-10-08
-readingTime: 5
-tag: "ADVOCACY"
 ---
 
 ## Subject association - interest organisation

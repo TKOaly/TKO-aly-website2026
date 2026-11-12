@@ -1,9 +1,6 @@
 ---
 title: "Rules"
 description: "The rules of TKO-äly ry, approved by the Finnish Register of Associations on 22 October 2025."
-date: 2026-03-25
-readingTime: 7
-tag: "ASSOCIATION"
 ---
 
 **These rules were approved by the Finnish Register of Associations on 22 October 2025.**

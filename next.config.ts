@@ -15,7 +15,7 @@ const withMDX = createMDX({
     remarkPlugins: [
       "remark-gfm",
       "remark-frontmatter",
-      path.resolve("lib/remark-article-metadata.mjs"),
+      path.resolve("lib/remark-page-metadata.mjs"),
       ["remark-mdx-frontmatter", { name: "frontmatter" }],
     ],
     rehypePlugins: [],

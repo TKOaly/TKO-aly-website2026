@@ -1,9 +1,6 @@
 ---
 title: "For companies"
 description: "Information about cooperating with TKO-äly and companies' opportunities to be visible to students."
-date: 2026-03-25
-readingTime: 2
-tag: "COMPANIES"
 ---
 
 TKO-äly ry is the subject association of computer science and data science students at the University of Helsinki. The association was founded in 1988 and currently has about 900 members. TKO-äly actively promotes the interests of computer science students and at the same time offers services for both leisure and studies.

@@ -86,14 +86,12 @@
     "copied": "Copied",
     "skipToContent": "Skip to main content"
   },
-  "publicArticle": {
+  "publicPage": {
     "added": "Added",
     "minRead": "min read",
-    "shareArticle": "Share article",
-    "linkCopied": "Link copied",
-    "previousArticle": "Previous article",
-    "nextArticle": "Next article",
-    "otherArticles": "More articles",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "otherPages": "More pages",
     "tags": "Tags",
     "translationMissing": "This page is not available in English yet. Showing the Finnish version.",
     "editOnGitHub": "Edit on GitHub",

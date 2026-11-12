@@ -1,7 +1,7 @@
 import type { ComponentPropsWithoutRef } from "react"
 import type { MDXComponents } from "mdx/types"
 
-import ArticleMetadata from "@/components/PublicArticleFrame/ArticleMetadata"
+import PageMetadata from "@/components/PublicPageFrame/PageMetadata"
 
 function slugify(children: unknown) {
   return children
@@ -29,7 +29,7 @@ function heading(Tag: "h1" | "h2" | "h3") {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
-    ArticleMetadata,
+    PageMetadata,
     h1: heading("h1"),
     h2: heading("h2"),
     h3: heading("h3"),

@@ -1,9 +1,6 @@
 ---
 title: "Bank accounts"
 description: "TKO-äly's bank account numbers."
-date: 2026-03-25
-readingTime: 1
-tag: "ASSOCIATION"
 ---
 
 ### Main account

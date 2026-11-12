@@ -1,51 +1,49 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
-import PublicArticleFrame from "@/components/PublicArticleFrame/PublicArticleFrame"
+import PublicPageFrame from "@/components/PublicPageFrame/PublicPageFrame"
 
 import {
-  type Article,
+  type ContentPage,
   type Lang,
-  articleSlugs,
-  findArticle,
-  isArticleHref,
-} from "@/lib/articles"
+  pageSlugs,
+  findPage,
+  isPageHref,
+} from "@/lib/pages"
 import { requireDevEnv } from "@/lib/featureFlags"
 import { getNavbar } from "@/lib/navbar"
 import type { NavSection } from "@/components/Navbar/Navbar"
 
 type Props = { params: Promise<{ lang: string; slug: string[] }> }
 
-const load = (article: Article) =>
-  import(
-    `../../../../content/${article.slug}/page${article.suffix}.${article.ext}`
-  )
+const load = (page: ContentPage) =>
+  import(`../../../../content/${page.slug}/page${page.suffix}.${page.ext}`)
 
 async function resolve({ params }: Props) {
   const { lang: rawLang, slug } = await params
   const lang: Lang = rawLang === "en" ? "en" : "fi"
-  const article = slug.length === 1 ? findArticle(slug[0], lang) : null
-  if (!article) notFound()
-  return { lang, article }
+  const page = slug.length === 1 ? findPage(slug[0], lang) : null
+  if (!page) notFound()
+  return { lang, page }
 }
 
 export const generateStaticParams = () =>
-  articleSlugs().map(slug => ({ slug: [slug] }))
+  pageSlugs().map(slug => ({ slug: [slug] }))
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { article } = await resolve(props)
-  return (await load(article)).metadata ?? {}
+  const { page } = await resolve(props)
+  return (await load(page)).metadata ?? {}
 }
 
-export default async function ArticlePage(props: Props) {
-  const { lang, article } = await resolve(props)
-  const { default: Content, frontmatter } = await load(article)
+export default async function PublicPage(props: Props) {
+  const { lang, page } = await resolve(props)
+  const { default: Content, frontmatter } = await load(page)
   if (frontmatter?.devOnly) requireDevEnv()
 
   const sections: NavSection[] = await getNavbar()
-  const articles = sections.flatMap(section =>
+  const pages = sections.flatMap(section =>
     section.links
-      .filter(link => !link.external && isArticleHref(link.href))
+      .filter(link => !link.external && isPageHref(link.href))
       .map(link => ({
         href: link.href,
         title: link.labels[lang] ?? link.labels.fi,
@@ -53,12 +51,12 @@ export default async function ArticlePage(props: Props) {
   )
 
   return (
-    <PublicArticleFrame
-      articles={articles}
-      sourceFile={article.file}
-      translationMissing={article.lang !== lang}
+    <PublicPageFrame
+      pages={pages}
+      sourceFile={page.file}
+      translationMissing={page.lang !== lang}
     >
       <Content />
-    </PublicArticleFrame>
+    </PublicPageFrame>
   )
 }
