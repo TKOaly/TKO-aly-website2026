@@ -1,9 +1,6 @@
 ---
 title: "Sitsit"
 description: "Tiivistetysti mitä sitsit eli akateeminen pöytäjuhla pitää sisällään."
-date: 2026-03-25
-readingTime: 2
-tag: "TOIMINTA"
 ---
 
 **Tässä tiivistetysti, mitä sitsit eli akateeminen pöytäjuhla pitää sisällään.**

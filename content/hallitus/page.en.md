@@ -1,9 +1,6 @@
 ---
 title: "Board"
 description: "The board members and officials of TKO-äly."
-date: 2026-04-07
-readingTime: 4
-tag: "ASSOCIATION"
 ---
 
 ## Officials 2026

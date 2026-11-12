@@ -1,4 +1,4 @@
-.page {
+.frame {
   display: grid;
   gap: var(--space-8);
   width: 100%;
@@ -99,16 +99,16 @@
   color: var(--neutral-900);
 }
 
-.article {
+.page {
   min-width: 0;
 }
 
-.article :global(h1) {
+.page :global(h1) {
   margin-top: var(--space-4);
 }
 
 /* Body text is sans-serif; headings and code keep the terminal's monospace. */
-.article > section > :not(:first-child) {
+.page > section > :not(:first-child) {
   font-family:
     system-ui,
     -apple-system,
@@ -121,128 +121,128 @@
 }
 
 /* Centre the readable column inside the terminal and give it room. */
-.article > section > :not(:first-child) {
+.page > section > :not(:first-child) {
   padding: var(--space-8) var(--space-6) var(--space-10);
 }
 
-.article > section > :not(:first-child) > div {
+.page > section > :not(:first-child) > div {
   /* ~70 characters per line keeps text easy to read. */
   max-width: 70ch;
   margin-inline: auto;
 }
 
 /* Markdown-style heading prefixes: "# ", "## ", ... */
-.article :global(h1) > :global(a)::before,
-.article :global(h2) > :global(a)::before,
-.article :global(h3) > :global(a)::before,
-.article :global(h4) > :global(a)::before,
-.article :global(h5) > :global(a)::before,
-.article :global(h6) > :global(a)::before {
+.page :global(h1) > :global(a)::before,
+.page :global(h2) > :global(a)::before,
+.page :global(h3) > :global(a)::before,
+.page :global(h4) > :global(a)::before,
+.page :global(h5) > :global(a)::before,
+.page :global(h6) > :global(a)::before {
   color: var(--color-text);
   margin-right: 0.4em;
   transition: color 0.15s ease;
 }
 
-.article :global(h1) > :global(a)::before {
+.page :global(h1) > :global(a)::before {
   content: "";
   display: none;
 }
-.article :global(h2) > :global(a)::before {
+.page :global(h2) > :global(a)::before {
   content: "#";
 }
-.article :global(h3) > :global(a)::before {
+.page :global(h3) > :global(a)::before {
   content: "##";
 }
-.article :global(h4) > :global(a)::before {
+.page :global(h4) > :global(a)::before {
   content: "###";
 }
-.article :global(h5) > :global(a)::before {
+.page :global(h5) > :global(a)::before {
   content: "####";
 }
-.article :global(h6) > :global(a)::before {
+.page :global(h6) > :global(a)::before {
   content: "#####";
 }
 
-.article :global(h1),
-.article :global(h2),
-.article :global(h3),
-.article :global(h4),
-.article :global(h5),
-.article :global(h6) {
+.page :global(h1),
+.page :global(h2),
+.page :global(h3),
+.page :global(h4),
+.page :global(h5),
+.page :global(h6) {
   transition: color 0.15s ease;
 }
 
-.article :global(h1) > :global(a),
-.article :global(h2) > :global(a),
-.article :global(h3) > :global(a),
-.article :global(h4) > :global(a),
-.article :global(h5) > :global(a),
-.article :global(h6) > :global(a) {
+.page :global(h1) > :global(a),
+.page :global(h2) > :global(a),
+.page :global(h3) > :global(a),
+.page :global(h4) > :global(a),
+.page :global(h5) > :global(a),
+.page :global(h6) > :global(a) {
   color: inherit;
   text-decoration: none;
 }
 
-.article :global(h1) > :global(a):hover::before,
-.article :global(h2) > :global(a):hover::before,
-.article :global(h3) > :global(a):hover::before,
-.article :global(h4) > :global(a):hover::before,
-.article :global(h5) > :global(a):hover::before,
-.article :global(h6) > :global(a):hover::before {
+.page :global(h1) > :global(a):hover::before,
+.page :global(h2) > :global(a):hover::before,
+.page :global(h3) > :global(a):hover::before,
+.page :global(h4) > :global(a):hover::before,
+.page :global(h5) > :global(a):hover::before,
+.page :global(h6) > :global(a):hover::before {
   color: var(--color-link);
 }
 
-.article :global(h1),
-.article :global(h2),
-.article :global(h3),
-.article :global(h4),
-.article :global(h5),
-.article :global(h6) {
+.page :global(h1),
+.page :global(h2),
+.page :global(h3),
+.page :global(h4),
+.page :global(h5),
+.page :global(h6) {
   font-family: var(--font-heading), "Arial Narrow", sans-serif;
   font-weight: 400; /* League Gothic ships a single weight; avoid faux bold */
   letter-spacing: 0.02em;
 }
 
-.article :global(h2),
-.article :global(h3),
-.article :global(code),
-.article :global(pre) {
+.page :global(h2),
+.page :global(h3),
+.page :global(code),
+.page :global(pre) {
   font-family: monospace;
 }
 
-.article :global(code) {
+.page :global(code) {
   padding: 0.1em 0.35em;
   background: rgb(255 255 255 / 0.08);
   font-size: 0.9em;
 }
 
-.article :global(pre) {
+.page :global(pre) {
   overflow-x: auto;
   padding: var(--space-4);
   border: var(--border);
   background: var(--neutral-900);
 }
 
-.article :global(pre code) {
+.page :global(pre code) {
   padding: 0;
   background: transparent;
   font-size: 0.875rem;
 }
 
-.article :global(img) {
+.page :global(img) {
   display: block;
   max-width: 100%;
   height: auto;
   border: var(--border);
 }
 
-.article :global(img[data-cover-image]) {
+.page :global(img[data-cover-image]) {
   width: 100%;
   max-height: 24rem;
   margin-bottom: var(--space-6);
   object-fit: cover;
 }
 
-.article :global(iframe) {
+.page :global(iframe) {
   display: block;
   width: 100%;
   max-width: 100%;
@@ -251,25 +251,25 @@
   border: var(--border);
 }
 
-.article :global(table) {
+.page :global(table) {
   display: table;
   max-width: 100%;
   border-collapse: collapse;
 }
 
-.article :global(th),
-.article :global(td) {
+.page :global(th),
+.page :global(td) {
   padding: var(--space-2) var(--space-4);
   border: var(--border);
   text-align: left;
 }
 
-.article :global(th) {
+.page :global(th) {
   background: var(--yellow);
   color: var(--neutral-900);
 }
 
-.article :global(blockquote) {
+.page :global(blockquote) {
   margin-left: 0;
   padding-left: var(--space-4);
   border-left: 4px solid var(--yellow);
@@ -287,14 +287,14 @@
   }
 }
 
-.articleNav {
+.pageNav {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-6);
   margin-top: var(--space-4);
 }
 
-.articleNavLink {
+.pageNavLink {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -308,100 +308,100 @@
 }
 
 @media (prefers-color-scheme: light) {
-  .articleNavLink {
+  .pageNavLink {
     box-shadow: 6px 6px 0 var(--neutral-900);
   }
 }
 
-.articleNavLink:hover,
-.articleNavLink:focus-visible {
+.pageNavLink:hover,
+.pageNavLink:focus-visible {
   background: var(--yellow);
   color: var(--neutral-900);
 }
 
-.articleNavNext {
+.pageNavNext {
   grid-column: 2;
   text-align: right;
 }
 
-.articleNavLabel {
+.pageNavLabel {
   font-size: 0.8125rem;
   opacity: 0.8;
 }
 
-.articleNavTitle {
+.pageNavTitle {
   font-size: 1.25rem;
   font-weight: 800;
 }
 
 @media (max-width: 600px) {
-  .articleNav {
+  .pageNav {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .articleNavNext {
+  .pageNavNext {
     grid-column: auto;
   }
 }
 
-/* ── Article typography ── */
-.article > section > :not(:first-child) {
+/* ── Page typography ── */
+.page > section > :not(:first-child) {
   font-size: 1.125rem;
   line-height: 1.7;
   color: var(--color-text);
 }
 
-.article :global(h1) {
+.page :global(h1) {
   margin-bottom: var(--space-5);
 }
 
-.article :global(h2) {
+.page :global(h2) {
   margin: var(--space-12) 0 var(--space-4);
   font-size: 1.75rem;
   font-weight: 800;
   line-height: 1.25;
 }
 
-.article :global(h3) {
+.page :global(h3) {
   margin: var(--space-8) 0 var(--space-3);
   font-size: 1.25rem;
   font-weight: 600;
 }
 
-.article :global(p) {
+.page :global(p) {
   margin: 0 0 var(--space-5);
 }
 
-.article :global(ul),
-.article :global(ol) {
+.page :global(ul),
+.page :global(ol) {
   margin: 0 0 var(--space-5);
   padding-left: var(--space-6);
 }
 
-.article :global(li) {
+.page :global(li) {
   margin-bottom: var(--space-2);
 }
 
-.article :global(p a),
-.article :global(li a),
-.article :global(td a) {
+.page :global(p a),
+.page :global(li a),
+.page :global(td a) {
   color: var(--color-link);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.article :global(p a):hover,
-.article :global(li a):hover,
-.article :global(td a):hover {
+.page :global(p a):hover,
+.page :global(li a):hover,
+.page :global(td a):hover {
   color: var(--color-text);
 }
 
-.article :global(code) {
+.page :global(code) {
   background: var(--color-bg);
   color: var(--color-link);
 }
 
-.article :global(pre) {
+.page :global(pre) {
   margin: 0 0 var(--space-6);
   padding: var(--space-5);
   border: var(--border);
@@ -410,12 +410,12 @@
   line-height: 1.7;
 }
 
-.article :global(pre code) {
+.page :global(pre code) {
   background: transparent;
   color: inherit;
 }
 
-.article :global(blockquote) {
+.page :global(blockquote) {
   display: flex;
   gap: var(--space-3);
   margin: 0 0 var(--space-8);
@@ -428,7 +428,7 @@
   line-height: 1.6;
 }
 
-.article :global(blockquote)::before {
+.page :global(blockquote)::before {
   content: "//";
   flex: none;
   color: var(--color-link);
@@ -436,25 +436,25 @@
   font-style: italic;
 }
 
-.article :global(blockquote) > :global(p) {
+.page :global(blockquote) > :global(p) {
   margin: 0;
 }
 
-.article :global(table) {
+.page :global(table) {
   width: 100%;
   margin: 0 0 var(--space-6);
   border: var(--border);
 }
 
-.article :global(th),
-.article :global(td) {
+.page :global(th),
+.page :global(td) {
   overflow-wrap: anywhere;
   padding: var(--space-3) var(--space-4);
   border: 0;
   border-top: 1px solid var(--neutral-400);
 }
 
-.article :global(th) {
+.page :global(th) {
   border-top: 0;
   background: var(--color-bg);
   color: var(--color-text);
@@ -466,20 +466,20 @@
 
 /* Narrow screens: tighter cells, so short values (years, "1/23") don't wrap. */
 @media (max-width: 600px) {
-  .article :global(th),
-  .article :global(td) {
+  .page :global(th),
+  .page :global(td) {
     padding: var(--space-3) var(--space-2);
   }
 }
 
-.article :global(img[data-cover-image]) {
+.page :global(img[data-cover-image]) {
   aspect-ratio: 16 / 9;
   max-height: none;
   margin-bottom: var(--space-8);
   border: var(--border);
 }
 
-/* ── Mobile: share/edit at the end, floating table of contents ── */
+/* ── Mobile: edit link at the end, floating table of contents ── */
 .mobileActions,
 .tocFab,
 .tocDrawer {
@@ -487,20 +487,20 @@
 }
 
 @media (max-width: 767px) {
-  /* The sidebar's ToC and actions move into the drawer and article footer. */
+  /* The sidebar's ToC and actions move into the drawer and page footer. */
   .sidebar {
     display: none;
   }
 
-  /* No boxes on mobile: the path and the article sit straight on the page. */
-  .page .metadataCard {
+  /* No boxes on mobile: the path and the page sit straight on the page. */
+  .frame .metadataCard {
     padding: 0;
     border: 0;
     background: transparent;
     box-shadow: none;
   }
 
-  .article .articleTerminal {
+  .page .pageTerminal {
     overflow: visible;
     padding: 0;
     border: 0;
@@ -509,19 +509,19 @@
   }
 
   /* Hide the window bar (dots + file name). */
-  .article .articleTerminal > :first-child {
+  .page .pageTerminal > :first-child {
     display: none;
   }
 
   /* The terminal body scrolls (overflow-y: auto), which also clips sideways
      and cut off the button's hard shadow. No window on mobile, so no clip. */
-  .article > section > :not(:first-child) {
+  .page > section > :not(:first-child) {
     overflow: visible;
     padding: 0;
   }
 
   /* Room for the floating button so it never covers the last lines. */
-  .page {
+  .frame {
     padding-bottom: var(--space-20);
   }
 
@@ -558,34 +558,6 @@
     cursor: pointer;
   }
 
-  /* Same look as the site's yellow .btn buttons: bevel border, hard shadow,
-     uppercase label, press-in on tap. */
-  .mobileActions .mobileActionPrimary {
-    border-top: 2px solid var(--neutral-200);
-    border-left: 2px solid var(--neutral-200);
-    border-bottom: 4px solid var(--neutral-900);
-    border-right: 4px solid var(--neutral-900);
-    background: var(--yellow);
-    color: var(--neutral-900);
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    box-shadow: 4px 4px 0 var(--yellow-700);
-    transition:
-      box-shadow 0.1s ease,
-      transform 0.1s ease;
-  }
-
-  .mobileActions .mobileActionPrimary:hover {
-    background: var(--yellow-300);
-  }
-
-  .mobileActions .mobileActionPrimary:active {
-    background: var(--yellow-700);
-    box-shadow: 0 0 0 0 #000000;
-    transform: translate(4px, 4px);
-  }
-
   .mobileActions a:hover,
   .mobileActions a:focus-visible {
     background: var(--yellow);
@@ -611,7 +583,7 @@
       visibility 0s;
   }
 
-  /* At the end of the article: fade out and leave the tab order. */
+  /* At the end of the page: fade out and leave the tab order. */
   .tocFab.tocFabHidden {
     opacity: 0;
     transform: translateY(var(--space-4));
@@ -710,16 +682,5 @@
   .tocFab,
   .tocFab.tocFabHidden {
     transition: none;
-  }
-}
-
-@media (max-width: 767px) and (prefers-color-scheme: light) {
-  .mobileActions .mobileActionPrimary {
-    border-color: #000000;
-    box-shadow: 4px 4px 0 var(--neutral-900);
-  }
-
-  .mobileActions .mobileActionPrimary:active {
-    box-shadow: 0 0 0 0 #000000;
   }
 }

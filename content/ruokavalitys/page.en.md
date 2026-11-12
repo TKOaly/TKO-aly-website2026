@@ -1,9 +1,6 @@
 ---
 title: "Food ordering (RV)"
 description: "Ruokavälitys (RV) is a volunteer-run coffee fund that provides small snacks and drinks to students."
-date: 2026-04-19
-readingTime: 3
-tag: "ACTIVITIES"
 ---
 
 The purpose of Ruokavälitys (RV) is to offer small snacks and drinks to poor souls exhausted by studying late in the evening, as well as other nice things to nibble on throughout the day.

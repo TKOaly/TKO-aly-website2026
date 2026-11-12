@@ -1,9 +1,6 @@
 ---
 title: "Tunnukset"
 description: "TKO-älyn nauha ja muut yhdistyksen tunnukset."
-date: 2026-03-25
-readingTime: 4
-tag: "YHDISTYS"
 ---
 
 ## TKO-älyn nauha

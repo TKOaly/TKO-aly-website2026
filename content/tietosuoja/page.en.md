@@ -1,9 +1,6 @@
 ---
 title: "Privacy"
 description: "Privacy notices of the registers maintained by the association, and the association's privacy policy."
-date: 2026-03-25
-readingTime: 1
-tag: "SAFETY"
 ---
 
 On this page you can find the privacy notices of the registers maintained by the association and the association's privacy policy.
