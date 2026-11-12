@@ -13,28 +13,30 @@
   isolation: isolate;
 }
 
-/* EXA building illustration behind both columns: the hero's full width and height. */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: url("../../assets/exa.svg") center / cover no-repeat;
-  opacity: 0.1;
-  /* The artwork is black on white: invert it for the dark theme. */
-  filter: invert(1);
-  pointer-events: none;
-}
-
-@media (prefers-color-scheme: light) {
-  .hero::before {
-    filter: none;
-  }
-}
-
 @media (min-width: 1024px) {
   .hero {
     grid-template-columns: 7fr 5fr;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    z-index: -1;
+    background: url("../../assets/exa.svg") center / cover no-repeat;
+    opacity: 0.1;
+    filter: invert(1);
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 1024px) and (prefers-color-scheme: light) {
+  .hero::before {
+    filter: none;
   }
 }
 
@@ -42,16 +44,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  padding: var(--space-8);
-  background: hsl(0 0% 14% / 0.55);
-  -webkit-backdrop-filter: blur(48px) saturate(1.3);
-  backdrop-filter: blur(48px) saturate(1.3);
-}
-
-@media (prefers-color-scheme: light) {
-  .heroContent {
-    background: hsl(0 0% 98% / 0.6);
-  }
 }
 
 .locationBadge,
@@ -81,6 +73,44 @@
   outline-offset: 3px;
 }
 
+.viewAll {
+  border-top: 2px solid var(--neutral-200);
+  border-left: 2px solid var(--neutral-200);
+  border-right: 2px solid var(--neutral-900);
+  border-bottom: 2px solid var(--neutral-900);
+  box-shadow: 3px 3px 0 var(--yellow-700);
+  transition:
+    background-color 0.1s ease,
+    box-shadow 0.1s ease,
+    transform 0.1s ease;
+}
+
+.viewAll:hover {
+  background-color: var(--yellow-300);
+  box-shadow: 5px 5px 0 var(--yellow-700);
+  transform: translate(-2px, -2px);
+}
+
+.viewAll:active {
+  box-shadow: 0 0 0 var(--yellow-700);
+  transform: translate(3px, 3px);
+}
+
+@media (prefers-color-scheme: light) {
+  .viewAll {
+    border-color: var(--neutral-900);
+    box-shadow: 3px 3px 0 var(--neutral-900);
+  }
+
+  .viewAll:hover {
+    box-shadow: 5px 5px 0 var(--neutral-900);
+  }
+
+  .viewAll:active {
+    box-shadow: 0 0 0 var(--neutral-900);
+  }
+}
+
 .heroSubtitle {
   font-size: 1.125rem;
   font-weight: 700;
@@ -97,10 +127,21 @@
 
 .heroDesc {
   font-size: 1.125rem;
-  color: var(--color-text);
+  color: var(--color-text-muted);
   max-width: 60ch;
+  border-color: var(--yellow);
+  border-left: var(--border-thick);
+  padding-left: var(--space-4);
   line-height: 1.5;
   margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .heroDesc {
+    color: var(--color-text);
+    border-left: 0;
+    padding-left: 0;
+  }
 }
 
 .heroActions {
