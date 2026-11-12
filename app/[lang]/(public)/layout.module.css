@@ -5,6 +5,12 @@
   padding: 0 var(--space-4);
 }
 
+@media (min-width: 1281px) {
+  .layoutWrapper {
+    margin: var(--space-24) auto;
+  }
+}
+
 .main {
   min-width: 0;
 }
