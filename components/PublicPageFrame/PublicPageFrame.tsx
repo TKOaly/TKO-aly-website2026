@@ -1,6 +1,6 @@
 "use client"
 
-import { ExternalLink, FolderOpen, ListTree, Share2, X } from "lucide-react"
+import { ExternalLink, FolderOpen, ListTree, X } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { ReactNode } from "react"
@@ -13,40 +13,39 @@ import Card from "@/components/Cards/Card"
 import Terminal from "@/components/Cards/Terminal"
 import TableOfContents from "@/components/TableOfContents/TableOfContents"
 
-import { ArticleActionsContext } from "./ArticleActionsContext"
-import styles from "./PublicArticleFrame.module.css"
+import { PageActionsContext } from "./PageActionsContext"
+import styles from "./PublicPageFrame.module.css"
 
 const GITHUB_BLOB_BASE =
   "https://github.com/TKOaly/TKO-aly-website2026/blob/main"
 
-export type ArticleLink = { href: string; title: string }
+export type PageLink = { href: string; title: string }
 
-export default function PublicArticleFrame({
+export default function PublicPageFrame({
   children,
-  articles = [],
+  pages = [],
   sourceFile,
   translationMissing = false,
 }: {
   children: ReactNode
-  articles?: ArticleLink[]
+  pages?: PageLink[]
   sourceFile: string
   translationMissing?: boolean
 }) {
   const pathname = usePathname()
-  const [shared, setShared] = useState(false)
-  const pageRef = useRef<HTMLDivElement>(null)
+  const frameRef = useRef<HTMLDivElement>(null)
   const sidebarRef = useRef<HTMLElement>(null)
   const tocDrawerRef = useRef<HTMLDialogElement>(null)
-  const articleEndRef = useRef<HTMLDivElement>(null)
-  const [atArticleEnd, setAtArticleEnd] = useState(false)
+  const pageEndRef = useRef<HTMLDivElement>(null)
+  const [atPageEnd, setAtPageEnd] = useState(false)
 
-  // Mobile: hide the floating contents button once the end-of-article
+  // Mobile: hide the floating contents button once the end-of-page
   // actions come into view (and while scrolled past them, e.g. the footer).
   useEffect(() => {
-    const end = articleEndRef.current
+    const end = pageEndRef.current
     if (!end) return
     const observer = new IntersectionObserver(([entry]) => {
-      setAtArticleEnd(entry.isIntersecting || entry.boundingClientRect.top < 0)
+      setAtPageEnd(entry.isIntersecting || entry.boundingClientRect.top < 0)
     })
     observer.observe(end)
     return () => observer.disconnect()
@@ -73,9 +72,9 @@ export default function PublicArticleFrame({
   // Expose the sidebar's distance from the top of the document so CSS can
   // size it to fit the viewport on first paint, before it becomes sticky.
   useEffect(() => {
-    const page = pageRef.current
+    const frameEl = frameRef.current
     const sidebar = sidebarRef.current
-    if (!page || !sidebar) return
+    if (!frameEl || !sidebar) return
 
     const update = () => {
       // Measure the (non-sticky) grid parent: the sidebar itself is sticky, so
@@ -87,43 +86,28 @@ export default function PublicArticleFrame({
     update()
 
     const observer = new ResizeObserver(update)
-    observer.observe(page)
+    observer.observe(frameEl)
     return () => observer.disconnect()
   }, [])
-  const articlePath = pathname.replace(/^\/(fi|en)/, "") || "/"
-  const articleName = articlePath.split("/").filter(Boolean).pop() || "index"
+  const pagePath = pathname.replace(/^\/(fi|en)/, "") || "/"
+  const pageName = pagePath.split("/").filter(Boolean).pop() || "index"
   const editUrl = `${GITHUB_BLOB_BASE}/${sourceFile}`
   const lang = pathname.startsWith("/en") ? "en" : "fi"
   const language = lang === "en" ? en : fi
-  const currentIndex = articles.findIndex(a => a.href === articlePath)
-  const previous = currentIndex > 0 ? articles[currentIndex - 1] : undefined
+  const currentIndex = pages.findIndex(a => a.href === pagePath)
+  const previous = currentIndex > 0 ? pages[currentIndex - 1] : undefined
   const next =
-    currentIndex >= 0 && currentIndex < articles.length - 1
-      ? articles[currentIndex + 1]
+    currentIndex >= 0 && currentIndex < pages.length - 1
+      ? pages[currentIndex + 1]
       : undefined
-  const share = async () => {
-    const shareData = { title: document.title, url: window.location.href }
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData)
-      } else {
-        await navigator.clipboard.writeText(window.location.href)
-      }
-      setShared(true)
-      window.setTimeout(() => setShared(false), 1800)
-    } catch {
-      setShared(false)
-    }
-  }
-
   return (
-    <ArticleActionsContext.Provider value={{ share, shared, editUrl }}>
-      <div ref={pageRef} className={styles.page}>
+    <PageActionsContext.Provider value={{ editUrl }}>
+      <div ref={frameRef} className={styles.frame}>
         <Card className={styles.metadataCard}>
-          <div className={styles.metadata} aria-label="Article metadata">
+          <div className={styles.metadata} aria-label="Page metadata">
             <span className={styles.path}>
               <FolderOpen size={16} aria-hidden /> ~/public/toiminta/
-              {articleName}
+              {pageName}
               .md
             </span>
           </div>
@@ -141,49 +125,33 @@ export default function PublicArticleFrame({
             </Terminal>
             <Card>
               <div className={styles.actions}>
-                <button type="button" onClick={share}>
-                  <Share2 size={16} aria-hidden />{" "}
-                  {shared
-                    ? language.publicArticle.linkCopied
-                    : language.publicArticle.shareArticle}
-                </button>
                 <a href={editUrl} target="_blank" rel="noreferrer">
                   <ExternalLink size={16} aria-hidden />{" "}
-                  {language.publicArticle.editOnGitHub}
+                  {language.publicPage.editOnGitHub}
                 </a>
               </div>
             </Card>
           </aside>
 
-          <main id="main-content" className={styles.article}>
+          <main id="main-content" className={styles.page}>
             <Terminal
-              className={styles.articleTerminal}
-              barTitle={`${articleName}.md`}
+              className={styles.pageTerminal}
+              barTitle={`${pageName}.md`}
               heading=""
               mobileCollapsible={false}
             >
               {translationMissing && (
                 <p className={styles.notice} role="note">
-                  {language.publicArticle.translationMissing}
+                  {language.publicPage.translationMissing}
                 </p>
               )}
               {children}
 
-              {/* Mobile: full-width actions at the end of the article. */}
-              <div ref={articleEndRef} className={styles.mobileActions}>
-                <button
-                  type="button"
-                  className={styles.mobileActionPrimary}
-                  onClick={share}
-                >
-                  <Share2 size={18} aria-hidden />{" "}
-                  {shared
-                    ? language.publicArticle.linkCopied
-                    : language.publicArticle.shareArticle}
-                </button>
+              {/* Mobile: full-width edit link at the end of the page. */}
+              <div ref={pageEndRef} className={styles.mobileActions}>
                 <a href={editUrl} target="_blank" rel="noreferrer">
                   <ExternalLink size={18} aria-hidden />{" "}
-                  {language.publicArticle.editOnGitHub}
+                  {language.publicPage.editOnGitHub}
                 </a>
               </div>
             </Terminal>
@@ -192,31 +160,31 @@ export default function PublicArticleFrame({
 
         {(previous || next) && (
           <nav
-            className={styles.articleNav}
-            aria-label={language.publicArticle.otherArticles}
+            className={styles.pageNav}
+            aria-label={language.publicPage.otherPages}
           >
             {previous && (
               <Link
                 href={`/${lang}${previous.href}`}
-                className={styles.articleNavLink}
+                className={styles.pageNavLink}
                 rel="prev"
               >
-                <span className={styles.articleNavLabel}>
-                  ← {language.publicArticle.previousArticle}
+                <span className={styles.pageNavLabel}>
+                  ← {language.publicPage.previousPage}
                 </span>
-                <span className={styles.articleNavTitle}>{previous.title}</span>
+                <span className={styles.pageNavTitle}>{previous.title}</span>
               </Link>
             )}
             {next && (
               <Link
                 href={`/${lang}${next.href}`}
-                className={`${styles.articleNavLink} ${styles.articleNavNext}`}
+                className={`${styles.pageNavLink} ${styles.pageNavNext}`}
                 rel="next"
               >
-                <span className={styles.articleNavLabel}>
-                  {language.publicArticle.nextArticle} →
+                <span className={styles.pageNavLabel}>
+                  {language.publicPage.nextPage} →
                 </span>
-                <span className={styles.articleNavTitle}>{next.title}</span>
+                <span className={styles.pageNavTitle}>{next.title}</span>
               </Link>
             )}
           </nav>
@@ -225,13 +193,13 @@ export default function PublicArticleFrame({
         {/* Mobile: floating table-of-contents button that opens a drawer. */}
         <button
           type="button"
-          className={`btn ${styles.tocFab} ${atArticleEnd ? styles.tocFabHidden : ""}`}
+          className={`btn ${styles.tocFab} ${atPageEnd ? styles.tocFabHidden : ""}`}
           onClick={openToc}
           aria-haspopup="dialog"
           hidden={!hasHeadings}
         >
           <ListTree size={18} aria-hidden />{" "}
-          {language.publicArticle.tableOfContents}
+          {language.publicPage.tableOfContents}
         </button>
 
         <dialog
@@ -249,14 +217,12 @@ export default function PublicArticleFrame({
           }}
         >
           <div className={styles.tocDrawerHeader}>
-            <h2 id="toc-drawer-title">
-              {language.publicArticle.tableOfContents}
-            </h2>
+            <h2 id="toc-drawer-title">{language.publicPage.tableOfContents}</h2>
             <button
               type="button"
               className={styles.tocDrawerClose}
               onClick={closeToc}
-              aria-label={language.publicArticle.close}
+              aria-label={language.publicPage.close}
             >
               <X size={20} aria-hidden />
             </button>
@@ -266,6 +232,6 @@ export default function PublicArticleFrame({
           </div>
         </dialog>
       </div>
-    </ArticleActionsContext.Provider>
+    </PageActionsContext.Provider>
   )
 }

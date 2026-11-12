@@ -86,14 +86,12 @@
     "copied": "Kopioitu",
     "skipToContent": "Siirry pääsisältöön"
   },
-  "publicArticle": {
+  "publicPage": {
     "added": "Lisätty",
     "minRead": "min lukuaika",
-    "shareArticle": "Jaa artikkeli",
-    "linkCopied": "Linkki kopioitu",
-    "previousArticle": "Edellinen artikkeli",
-    "nextArticle": "Seuraava artikkeli",
-    "otherArticles": "Muut artikkelit",
+    "previousPage": "Edellinen sivu",
+    "nextPage": "Seuraava sivu",
+    "otherPages": "Muut sivut",
     "tags": "Tunnisteet",
     "translationMissing": "Tämä sivu ei ole vielä saatavilla suomeksi.",
     "editOnGitHub": "Muokkaa GitHubissa",

@@ -1,16 +1,12 @@
 ---
 title: "Esimerkkisivu"
-description: "Tämä sivu esittelee julkisen artikkelipohjan kaikki ominaisuudet."
-author: "TKO-äly"
-date: 2026-10-24
-readingTime: 3
-tag: "ESIMERKKI"
+description: "Tämä sivu esittelee julkisen sivupohjan kaikki ominaisuudet."
 # devOnly: true
 coverImage: "https://www.tko-aly.fi/images/kyykka2008.png"
 coverImageAlt: "Kyykkäpelaajia vuodelta 2008"
 ---
 
-Tämä sivu esittelee kaikki julkisen artikkelipohjan ominaisuudet: front matter -metatiedot, sisällysluettelon, otsikkotasot, listat, koodin, taulukot ja linkit. Sivu on tarkoitettu vain kehityskäyttöön.
+Tämä sivu esittelee kaikki julkisen sivupohjan ominaisuudet: front matter -metatiedot, sisällysluettelon, otsikkotasot, listat, koodin, taulukot ja linkit. Sivu on tarkoitettu vain kehityskäyttöön.
 
 > Front matter luetaan sivun alussa olevasta YAML-lohkosta. Se näkyy sivun yläpalkissa (päivämäärä, lukuaika ja tunniste).
 
@@ -79,13 +75,13 @@ export function greet(name: string) {
 
 ## Taulukko
 
-| Ominaisuus    | Lähde        | Näkyy             |
-| ------------- | ------------ | ----------------- |
-| `title`       | front matter | välilehden nimi   |
-| `date`        | front matter | yläpalkki         |
-| `readingTime` | front matter | yläpalkki         |
-| `tag`         | front matter | yläpalkin merkki  |
-| `coverImage`  | front matter | artikkelin yläosa |
+| Ominaisuus    | Lähde        | Näkyy            |
+| ------------- | ------------ | ---------------- |
+| `title`       | front matter | välilehden nimi  |
+| `date`        | front matter | yläpalkki        |
+| `readingTime` | front matter | yläpalkki        |
+| `tag`         | front matter | yläpalkin merkki |
+| `coverImage`  | front matter | sivun yläosa     |
 
 ## Kuva
 

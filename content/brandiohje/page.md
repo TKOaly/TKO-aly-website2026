@@ -1,9 +1,6 @@
 ---
 title: "Brandiohje"
 description: "Ohjeet TKO-älyn nimen kirjoittamiseen ja logon käyttöön."
-date: 2026-03-25
-readingTime: 2
-tag: "YHDISTYS"
 ---
 
 ## Nimi

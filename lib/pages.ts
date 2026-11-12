@@ -7,7 +7,7 @@ const contentDir = join(process.cwd(), "content")
 const extensions = ["md", "mdx"] as const
 const slugPattern = /^[A-Za-z0-9-]+$/
 
-export interface Article {
+export interface ContentPage {
   slug: string
   /** Language of the file that was found; differs from the request when it falls back to Finnish. */
   lang: Lang
@@ -19,7 +19,7 @@ export interface Article {
 }
 
 /** page.md is Finnish, page.en.md English; a missing translation falls back to Finnish. */
-export function findArticle(slug: string, lang: Lang): Article | null {
+export function findPage(slug: string, lang: Lang): ContentPage | null {
   if (!slugPattern.test(slug)) return null
 
   for (const candidate of lang === "fi"
@@ -36,10 +36,10 @@ export function findArticle(slug: string, lang: Lang): Article | null {
   return null
 }
 
-export const isArticleHref = (href: string) =>
-  href.startsWith("/") && findArticle(href.slice(1), "fi") !== null
+export const isPageHref = (href: string) =>
+  href.startsWith("/") && findPage(href.slice(1), "fi") !== null
 
-export const articleSlugs = () =>
+export const pageSlugs = () =>
   readdirSync(contentDir, { withFileTypes: true })
     .filter(entry => entry.isDirectory())
     .map(entry => entry.name)
