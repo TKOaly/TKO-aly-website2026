@@ -24,7 +24,6 @@ tag: "YHDISTYS"
 - Buddhima Senaratha
 - Soumyadipta "Sammy" Kar
 - Tassu
-- Mittu Alho
 - Kauri-Viljar Vahter
 - Leevi Halme
 - Bryn Sloan
@@ -39,7 +38,6 @@ tag: "YHDISTYS"
 ### Casual-vastaava
 
 - Mariia "Martsu" Leventsova (casualvastaava(at)tko-aly.fi)
-- Mittu Alho
 
 ### Casual-tiimi
 
@@ -49,7 +47,7 @@ tag: "YHDISTYS"
 - Ville-Petteri "VP" Juselius
 - Sakari "Kussi" Marttinen
 - Tassu
-- Joonatan Paalanen
+- Pihka Paalanen
 - Juuso Kosonen
 - Viljami Ilola
 
@@ -115,7 +113,6 @@ tag: "YHDISTYS"
 
 - Mette Munne
 - Tassu
-- Mittu Alho
 - Juuso Kosonen
 - Ville-Petteri "VP" Juselius
 - Matias Jerkkola
@@ -132,7 +129,6 @@ tag: "YHDISTYS"
 ### LAN-tiimi
 
 - Mio Argillander
-- Mittu Alho
 - Eemeli "Tuupe" Nurmi
 - Hermanni Sallinen
 - Mariia "Martsu" Leventsova
@@ -182,7 +178,6 @@ tag: "YHDISTYS"
 - Juuso Kosonen
 - Khio Zahorsky
 - Oskar Blyt
-- Mittu Alho
 - Mariia "Martsu" Leventsova
 - Aapo Asikainen
 
@@ -226,7 +221,6 @@ tag: "YHDISTYS"
 - Khio Zahorsky
 - Aleksanteri Perkkiö
 - Aapo Simola
-- Mittu Alho
 - Bryn Sloan
 - Leevi Halme
 - Sakari "Kussi" Marttinen
@@ -275,7 +269,7 @@ tag: "YHDISTYS"
 
 ### Tärpistövastaava
 
-- Joonatan Paalanen (tarpisto(at)tko-aly.fi)
+- Pihka Paalanen (tarpisto(at)tko-aly.fi)
 
 ### TEK-yhdyshenkilö
 
@@ -299,7 +293,7 @@ tag: "YHDISTYS"
 - Onerva Tuppurainen
 - Saga Kantola
 - Kauri-Viljar Vahter
-- Joonatan Paalanen
+- Pihka Paalanen
 - Alexandra Holvi
 - Noora Oljakka
 - Mikael Merentie
