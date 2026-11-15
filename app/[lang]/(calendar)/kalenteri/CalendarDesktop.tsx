@@ -122,12 +122,73 @@ export default function CalendarDesktop({
 
   return (
     <div className={styles.layout}>
-      <Card wide className={styles.header}>
+      <ul className={styles.legend}>
+        <li className={styles.legendLabel}>{t("event.legendLabel")}:</li>
+        {LEGEND.map(item => (
+          <li key={item.key} className={styles.legendItem}>
+            <Swatch color={item.color} hollow={"hollow" in item} />
+            {legendLabel(item.key)}
+          </li>
+        ))}
+      </ul>
+
+      <Card wide className={styles.listCard}>
+        <h2 className={styles.listTitle}>{t("event.upcomingTitle")}</h2>
+        <div className={styles.listWrap}>
+          {upcoming.length === 0 ? (
+            <p className={styles.empty}>{t("event.noUpcoming")}</p>
+          ) : (
+            <ul className={styles.list}>
+              {upcoming.map(event => {
+                const starts = new Date(event.starts)
+                const status = statusOf(event.backgroundColor)
+                return (
+                  <li key={event.id}>
+                    <Link
+                      href={`/kalenteri/${event.id}`}
+                      className={styles.item}
+                    >
+                      <span className={styles.dateBox}>
+                        <span className={styles.day}>{starts.getDate()}</span>
+                        <span className={styles.month}>
+                          {MONTHS[starts.getMonth()]}
+                        </span>
+                      </span>
+                      <span className={styles.info}>
+                        <span className={styles.name}>{event.name}</span>
+                        <span className={styles.meta}>
+                          {WEEKDAYS[starts.getDay()]} {formatTime(starts)}
+                          {event.location ? ` · ${event.location}` : ""}
+                        </span>
+                        <span className={styles.status}>
+                          <Swatch
+                            color={status.color}
+                            hollow={"hollow" in status}
+                          />
+                          {legendLabel(status.key)}
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+        </div>
+      </Card>
+
+      <Terminal
+        barTitle=""
+        heading=""
+        mobileCollapsible={false}
+        flush
+        className={styles.calendarCard}
+      >
         <div className={styles.headerRow}>
           <div className={styles.nav}>
             <button
               type="button"
-              className={styles.navButton}
+              className={`btn2 ${styles.navButton}`}
               aria-label={t("event.previousMonth")}
               onClick={() => api()?.prev()}
             >
@@ -135,7 +196,7 @@ export default function CalendarDesktop({
             </button>
             <button
               type="button"
-              className={styles.navButton}
+              className={`btn2 ${styles.navButton}`}
               aria-label={t("event.nextMonth")}
               onClick={() => api()?.next()}
             >
@@ -147,75 +208,12 @@ export default function CalendarDesktop({
           </h2>
           <button
             type="button"
-            className={`btn btnSmall ${styles.todayButton}`}
+            className={`btn2 ${styles.todayButton}`}
             onClick={() => api()?.today()}
           >
             {t("event.today")}
           </button>
         </div>
-        <ul className={styles.legend}>
-          <li className={styles.legendLabel}>{t("event.legendLabel")}:</li>
-          {LEGEND.map(item => (
-            <li key={item.key} className={styles.legendItem}>
-              <Swatch color={item.color} hollow={"hollow" in item} />
-              {legendLabel(item.key)}
-            </li>
-          ))}
-        </ul>
-      </Card>
-
-      <Terminal
-        barTitle={t("event.upcomingTitle")}
-        heading=""
-        mobileCollapsible={false}
-        flush
-        className={styles.listCard}
-      >
-        {upcoming.length === 0 ? (
-          <p className={styles.empty}>{t("event.noUpcoming")}</p>
-        ) : (
-          <ul className={styles.list}>
-            {upcoming.map(event => {
-              const starts = new Date(event.starts)
-              const status = statusOf(event.backgroundColor)
-              return (
-                <li key={event.id}>
-                  <Link href={`/kalenteri/${event.id}`} className={styles.item}>
-                    <span className={styles.dateBox}>
-                      <span className={styles.day}>{starts.getDate()}</span>
-                      <span className={styles.month}>
-                        {MONTHS[starts.getMonth()]}
-                      </span>
-                    </span>
-                    <span className={styles.info}>
-                      <span className={styles.name}>{event.name}</span>
-                      <span className={styles.meta}>
-                        {WEEKDAYS[starts.getDay()]} {formatTime(starts)}
-                        {event.location ? ` · ${event.location}` : ""}
-                      </span>
-                      <span className={styles.status}>
-                        <Swatch
-                          color={status.color}
-                          hollow={"hollow" in status}
-                        />
-                        {legendLabel(status.key)}
-                      </span>
-                    </span>
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        )}
-      </Terminal>
-
-      <Terminal
-        barTitle=""
-        heading=""
-        mobileCollapsible={false}
-        flush
-        className={styles.calendarCard}
-      >
         <div className={styles.calendar}>
           <FullCalendar
             ref={calendarRef}
