@@ -96,7 +96,9 @@ const ExperienceSection = ({ t }: { t: ExperienceTranslations }) => {
   return (
     <section className={styles.experienceSection} id="experience">
       <div className={styles.experienceHeader}>
-        <h2 className="headingDisplay">{t.title}</h2>
+        <h2 className="headingDisplay" style={{ textTransform: "none" }}>
+          {t.title}
+        </h2>
         <p>{t.desc}</p>
       </div>
       <div className={styles.experienceLayout}>
