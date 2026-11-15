@@ -3,41 +3,29 @@
   display: grid;
   grid-template-columns: minmax(240px, 0.34fr) minmax(0, 1fr);
   gap: var(--space-8);
-  align-items: start;
+  align-items: stretch;
 }
 
-/* Header card */
-.header {
-  grid-column: 1 / -1;
-  padding: 0;
-}
-
+/* Calendar toolbar (inside the calendar terminal) */
 .headerRow {
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  padding: var(--space-6);
+  padding: 0 var(--space-6) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .nav {
   display: flex;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 .navButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--space-11);
-  height: var(--space-11);
-  border: var(--border);
-  background: transparent;
-  color: var(--color-text);
-  cursor: pointer;
-}
-
-.navButton:hover {
-  background: var(--color-surface-active);
+  width: var(--space-10);
+  height: var(--space-10);
 }
 
 .navButton:focus-visible,
@@ -49,15 +37,35 @@
 
 .monthTitle {
   flex: 1;
-  font-size: var(--space-14);
+  font-size: var(--space-10);
 }
 
 .monthTitle span {
   color: var(--yellow);
 }
 
-.todayButton {
+.headerRow .navButton,
+.headerRow .todayButton {
   margin: 0;
+  border-width: 2px;
+  box-shadow: 3px 3px 0 var(--neutral-200);
+}
+
+.headerRow .todayButton {
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+}
+
+.headerRow .navButton {
+  padding: 0;
+}
+
+@media (prefers-color-scheme: light) {
+  .headerRow .navButton,
+  .headerRow .todayButton {
+    box-shadow: 3px 3px 0 var(--neutral-900);
+  }
 }
 
 .legend {
@@ -65,8 +73,8 @@
   flex-wrap: wrap;
   gap: var(--space-2) var(--space-6);
   margin: 0;
-  padding: var(--space-3) var(--space-6);
-  border-top: 1px solid var(--color-border);
+  padding: 0;
+  grid-column: 1 / -1;
   list-style: none;
   font-family: monospace;
   font-size: 0.875rem;
@@ -95,12 +103,34 @@
 .layout > .listCard {
   min-width: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 20rem;
+  /* No right padding, so the list scrollbar sits on the card edge. */
+  padding: var(--space-4) 0 var(--space-4) var(--space-4);
 }
 
+.listTitle {
+  margin: 0 var(--space-4) var(--space-2) 0;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.listWrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Out of flow, so the list scrolls inside the card instead of making it taller
+   than the calendar. */
 .list {
-  max-height: 40rem;
+  position: absolute;
+  inset: 0;
   margin: 0;
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-4) 0 0;
   overflow-y: auto;
   list-style: none;
 }

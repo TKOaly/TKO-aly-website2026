@@ -328,7 +328,7 @@
     "today": "Today",
     "legendLabel": "legend",
     "noUpcoming": "No upcoming events.",
-    "upcomingTitle": "upcoming.log",
+    "upcomingTitle": "Upcoming events",
     "legend": {
       "canNotRegistration": "Can't register to event",
       "registrationNotOpen": "Registration is not open",

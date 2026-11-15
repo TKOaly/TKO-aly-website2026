@@ -328,7 +328,7 @@
     "today": "Tänään",
     "legendLabel": "selite",
     "noUpcoming": "Ei tulevia tapahtumia.",
-    "upcomingTitle": "tulevat.log",
+    "upcomingTitle": "Tulevat tapahtumat",
     "legend": {
       "canNotRegistration": "Tapahtumaan ei ilmoittautumista",
       "registrationNotOpen": "Ilmoittautuminen ei ole alkanut",
