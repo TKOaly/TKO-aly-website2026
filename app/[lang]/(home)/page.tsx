@@ -12,6 +12,7 @@ type CalendarEvent = {
   name: string
   starts: string
   location: string
+  registration_starts?: string | null
   deleted: boolean
 }
 
@@ -106,7 +107,11 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
       <section className={styles.eventsSection}>
         <div className={styles.eventsHeader}>
           <h2>{t("home.eventsTitle")}</h2>
-          <ServerLink lang={lang} className={styles.viewAll} href="/kalenteri">
+          <ServerLink
+            lang={lang}
+            className={`btn btnSmall ${styles.viewAll}`}
+            href="/kalenteri"
+          >
             {t("home.allEvents")}
           </ServerLink>
         </div>
@@ -135,7 +140,9 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
                           href={`/kalenteri/${event.id}`}
                           className="btn"
                         >
-                          {t("home.register")}
+                          {event.registration_starts
+                            ? t("home.register")
+                            : t("common.readMore")}
                         </ServerLink>
                       </div>
                     </div>

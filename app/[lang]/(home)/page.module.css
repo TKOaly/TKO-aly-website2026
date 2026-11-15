@@ -46,8 +46,7 @@
   gap: var(--space-6);
 }
 
-.locationBadge,
-.viewAll {
+.locationBadge {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -62,8 +61,7 @@
   text-decoration: none;
 }
 
-.locationBadge:hover,
-.viewAll:hover {
+.locationBadge:hover {
   text-decoration: underline;
 }
 
@@ -74,41 +72,17 @@
 }
 
 .viewAll {
-  border-top: 2px solid var(--neutral-200);
-  border-left: 2px solid var(--neutral-200);
-  border-right: 2px solid var(--neutral-900);
-  border-bottom: 2px solid var(--neutral-900);
-  box-shadow: 3px 3px 0 var(--yellow-700);
-  transition:
-    background-color 0.1s ease,
-    box-shadow 0.1s ease,
-    transform 0.1s ease;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  font-family: monospace;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .viewAll:hover {
-  background-color: var(--yellow-300);
-  box-shadow: 5px 5px 0 var(--yellow-700);
-  transform: translate(-2px, -2px);
-}
-
-.viewAll:active {
-  box-shadow: 0 0 0 var(--yellow-700);
-  transform: translate(3px, 3px);
-}
-
-@media (prefers-color-scheme: light) {
-  .viewAll {
-    border-color: var(--neutral-900);
-    box-shadow: 3px 3px 0 var(--neutral-900);
-  }
-
-  .viewAll:hover {
-    box-shadow: 5px 5px 0 var(--neutral-900);
-  }
-
-  .viewAll:active {
-    box-shadow: 0 0 0 var(--neutral-900);
-  }
+  text-decoration: underline;
 }
 
 .heroSubtitle {
