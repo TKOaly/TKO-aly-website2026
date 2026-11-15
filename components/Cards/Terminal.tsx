@@ -7,6 +7,10 @@ interface Props {
   heading?: string
   callToAction?: ReactNode
   mobileCollapsible?: boolean
+  /** Content shown at the right end of the title bar. */
+  barAside?: ReactNode
+  /** No inner padding or width limit, for tables, lists and calendars. */
+  flush?: boolean
   className?: string
   children: ReactNode
 }
@@ -16,11 +20,15 @@ const Terminal = ({
   heading = "Tervetuloa!",
   callToAction,
   mobileCollapsible = true,
+  barAside,
+  flush = false,
   className,
   children,
 }: Props) => {
   return (
-    <section className={`${styles.terminal} ${className ?? ""}`}>
+    <section
+      className={`${styles.terminal} ${flush ? styles.flush : ""} ${className ?? ""}`}
+    >
       <div className={styles.topBar}>
         <div className={styles.dots}>
           <span className={styles.redDot}></span>
@@ -28,7 +36,11 @@ const Terminal = ({
           <span className={styles.greenDot}></span>
         </div>
         <span className={styles.barTitle}>{barTitle}</span>
-        <div className={styles.spacer}></div>
+        {barAside ? (
+          <div className={styles.barAside}>{barAside}</div>
+        ) : (
+          <div className={styles.spacer}></div>
+        )}
       </div>
       {mobileCollapsible ? (
         <>

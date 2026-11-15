@@ -266,12 +266,12 @@ body {
 
 /* @fullcalendar styles */
 .fc {
-  width: 60%;
-  height: 60%;
+  width: 100%;
+  height: calc(100vh - var(--space-96));
   background-color: #141414;
 }
 
 a.fc-event {
   text-decoration: none;
-  color: #ffbb00;
+  color: var(--color-text);
 }
