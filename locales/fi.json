@@ -323,6 +323,12 @@
     },
     "error": "Virhe",
     "calendar": "Tapahtumakalenteri",
+    "previousMonth": "Edellinen kuukausi",
+    "nextMonth": "Seuraava kuukausi",
+    "today": "Tänään",
+    "legendLabel": "selite",
+    "noUpcoming": "Ei tulevia tapahtumia.",
+    "upcomingTitle": "tulevat.log",
     "legend": {
       "canNotRegistration": "Tapahtumaan ei ilmoittautumista",
       "registrationNotOpen": "Ilmoittautuminen ei ole alkanut",

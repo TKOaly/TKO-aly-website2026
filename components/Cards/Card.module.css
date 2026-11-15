@@ -9,3 +9,8 @@
 .card > * {
   max-width: var(--screen-xs);
 }
+
+.card.wide,
+.card.wide > * {
+  max-width: none;
+}

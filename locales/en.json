@@ -323,6 +323,12 @@
     },
     "error": "Error",
     "calendar": "Event calendar",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "today": "Today",
+    "legendLabel": "legend",
+    "noUpcoming": "No upcoming events.",
+    "upcomingTitle": "upcoming.log",
     "legend": {
       "canNotRegistration": "Can't register to event",
       "registrationNotOpen": "Registration is not open",

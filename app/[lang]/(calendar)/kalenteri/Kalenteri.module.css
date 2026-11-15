@@ -1,58 +1,23 @@
-#calendarPageContainer {
-  display: flex;
-  min-height: 80rem;
-  width: 100%;
-  margin: 0 auto;
-}
-
 #calendarColor {
-  color: #ffbb00;
+  color: var(--color-text);
   background-color: #141414;
 }
 
-#calendar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 95%;
-  height: 80rem;
-  padding: 20px;
+/* Centered page container; the dark background stays full width. */
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--screen-xl);
+  margin: 0 auto;
+  padding: var(--space-24) var(--space-4) 0;
 }
 
-#calendarInstructions {
-  width: 60%;
-  margin-top: 20px;
-  color: #ffbb00;
-  font-size: 1.2rem;
-  display: flex;
-  justify-content: end;
-  align-items: flex-start;
-  font-size: 32px;
-}
-
-#legend {
-  display: flex;
-  flex-direction: column;
-  border: dotted 2px #ffbb00;
-  font-size: 12px;
-}
-
-#legend p {
-  margin: 3px 5px;
-  display: flex;
-  align-items: center;
-}
-
-.legendColorBall {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 8px;
+.title {
+  margin-bottom: var(--space-5);
 }
 
 #eventsListContainer {
-  width: 20%;
+  min-width: 0;
 }
 
 #eventsListEventPageContainer {
@@ -64,14 +29,6 @@
   width: 95%;
 }
 
-#calendarMobileTitle {
-  display: none;
-}
-
-#calendarTitle {
-  display: inherit;
-}
-
 #eventsList {
   display: flex;
   flex-direction: column;
@@ -80,7 +37,7 @@
   overflow-x: visible;
   overflow-y: scroll;
   overscroll-behavior: contain;
-  color: #ffbb00;
+  color: var(--color-text);
 }
 
 #eventsList a {
@@ -100,7 +57,7 @@
 
 .eventListItem {
   width: 100%;
-  background-color: #1a252f;
+  background-color: var(--color-surface);
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 5px;
@@ -260,18 +217,18 @@
     width: 100%;
     align-items: center;
   }
+}
 
-  #calendarViewContainer {
-    display: none;
+.desktopOnly {
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  .desktopOnly {
+    display: block;
   }
 
-  #calendarTitle {
+  .mobileOnly {
     display: none;
-  }
-
-  #calendarMobileTitle {
-    margin-top: 10px;
-    margin-left: 2.5%;
-    display: inherit;
   }
 }
