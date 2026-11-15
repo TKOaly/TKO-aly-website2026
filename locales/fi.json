@@ -84,6 +84,7 @@
     "opensInNewWindow": "avautuu uuteen ikkunaan",
     "copy": "Kopioi",
     "copied": "Kopioitu",
+    "close": "Sulje",
     "skipToContent": "Siirry pääsisältöön"
   },
   "publicPage": {
@@ -329,6 +330,11 @@
     "legendLabel": "selite",
     "noUpcoming": "Ei tulevia tapahtumia.",
     "upcomingTitle": "Tulevat tapahtumat",
+    "eventSingular": "tapahtuma",
+    "eventPlural": "tapahtumaa",
+    "tabCalendar": "Tapahtumakalenteri",
+    "tabList": "Tapahtumalista",
+    "eventsShort": "Tapahtumat",
     "legend": {
       "canNotRegistration": "Tapahtumaan ei ilmoittautumista",
       "registrationNotOpen": "Ilmoittautuminen ei ole alkanut",
