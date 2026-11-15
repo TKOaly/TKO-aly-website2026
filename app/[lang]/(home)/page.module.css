@@ -270,3 +270,7 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.title {
+  text-transform: none;
+}
