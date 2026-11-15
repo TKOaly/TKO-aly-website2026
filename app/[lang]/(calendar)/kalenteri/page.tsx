@@ -1,47 +1,13 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import Link from "next/link"
 import styles from "./Kalenteri.module.css"
 import { useState, ReactNode, useMemo, useCallback } from "react"
 import type { Event, ProcessedEvent } from "./types"
 import { useTranslation } from "@/app/i18n/client"
 import { getEventList } from "./eventApiConnection"
 import CalendarDesktop from "./CalendarDesktop"
-
-export function EventListView({ events }: { events: ProcessedEvent[] }) {
-  const { t } = useTranslation()
-  return (
-    <div id={styles.eventsList}>
-      {events.map(event => (
-        <Link key={event.id} href={`/kalenteri/${event.id}`}>
-          <div
-            className={styles.eventListItem}
-            style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
-          >
-            <h3>{event.name}</h3>
-            <p>
-              <strong>{t("event.starts")}:</strong>{" "}
-              {new Date(event.starts).toLocaleDateString("fi-FI")},
-              {new Date(event.starts).toLocaleTimeString("fi-FI", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
-            <p>
-              <strong>{t("event.location")}:</strong> {event.location}
-            </p>
-            {event.organizer && (
-              <p>
-                <strong>{t("event.organizer")}:</strong> {event.organizer}
-              </p>
-            )}
-          </div>
-        </Link>
-      ))}
-    </div>
-  )
-}
+import CalendarMobile from "./CalendarMobile"
 
 function hasValidStartTime(event: Event): event is Event & { starts: string } {
   return event.starts !== undefined
@@ -136,7 +102,10 @@ export default function Calendar() {
           />
         </div>
         <div className={styles.mobileOnly}>
-          <EventListView events={processedEvents} />
+          <CalendarMobile
+            events={processedEvents}
+            onMonthChange={handleMonthChange}
+          />
         </div>
       </>
     )
