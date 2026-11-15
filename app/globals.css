@@ -268,7 +268,6 @@ body {
 .fc {
   width: 100%;
   height: calc(100vh - var(--space-96));
-  background-color: #141414;
 }
 
 a.fc-event {
