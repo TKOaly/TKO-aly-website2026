@@ -1,6 +1,6 @@
 "use client"
 
-import { CalendarDays, Clock3, ExternalLink, User } from "lucide-react"
+import { ExternalLink } from "lucide-react"
 import { usePathname } from "next/navigation"
 
 import en from "@/locales/en.json"
@@ -12,10 +12,6 @@ import styles from "./PageMetadata.module.css"
 export type PageFrontmatter = {
   title?: string
   description?: string
-  author?: string
-  date?: string
-  readingTime?: number | string
-  tag?: string
   tags?: string[]
   coverImage?: string
   coverImageAlt?: string
@@ -34,25 +30,21 @@ function slugify(text: string) {
 /**
  * Receives the page's YAML front-matter (injected by
  * lib/remark-page-metadata.mjs) and renders the page header: title,
- * description, an inline row of tags / author / read time / release date, and
+ * description, an inline row of tags, and
  * the cover image with its alt text as caption.
  */
 export default function PageMetadata({
   title,
   description,
-  author,
-  date,
-  readingTime,
-  tag,
   tags,
   coverImage,
   coverImageAlt,
 }: PageFrontmatter) {
   const language = usePathname().startsWith("/en") ? en : fi
   const labels = language.publicPage
-  const allTags = tags ?? (tag ? [tag] : [])
+  const allTags = tags ?? []
   const actions = usePageActions()
-  const hasMeta = allTags.length > 0 || !!author || !!readingTime || !!date
+  const hasMeta = allTags.length > 0
 
   return (
     <header className={styles.header}>
@@ -68,17 +60,7 @@ export default function PageMetadata({
               ))}
             </ul>
           )}
-          {author && (
-            <span>
-              <User size={16} aria-hidden /> {author}
-            </span>
-          )}
-          {readingTime && (
-            <span>
-              <Clock3 size={16} aria-hidden /> {readingTime} {labels.minRead}
-            </span>
-          )}
-          {/* Mobile only: compact edit link next to the reading time. */}
+          {/* Mobile only: compact edit link next to the tags. */}
           {actions && (
             <span className={styles.quickActions}>
               <a
@@ -90,12 +72,6 @@ export default function PageMetadata({
               >
                 <ExternalLink size={16} aria-hidden />
               </a>
-            </span>
-          )}
-          {date && (
-            <span>
-              <CalendarDays size={16} aria-hidden /> {labels.added}{" "}
-              <time dateTime={String(date)}>{String(date)}</time>
             </span>
           )}
         </div>

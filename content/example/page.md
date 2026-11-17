@@ -8,7 +8,7 @@ coverImageAlt: "Kyykkäpelaajia vuodelta 2008"
 
 Tämä sivu esittelee kaikki julkisen sivupohjan ominaisuudet: front matter -metatiedot, sisällysluettelon, otsikkotasot, listat, koodin, taulukot ja linkit. Sivu on tarkoitettu vain kehityskäyttöön.
 
-> Front matter luetaan sivun alussa olevasta YAML-lohkosta. Se näkyy sivun yläpalkissa (päivämäärä, lukuaika ja tunniste).
+> Front matter luetaan sivun alussa olevasta YAML-lohkosta. Se näkyy sivun yläosassa (otsikko, kuvaus ja tunnisteet).
 
 ## Tekstin muotoilu
 
@@ -59,9 +59,8 @@ Esimerkki front matterista:
 ```yaml
 ---
 title: "Otsikko"
-date: 2026-10-24
-readingTime: 3
-tag: "TUNNISTE"
+description: "Lyhyt kuvaus"
+tags: ["TUNNISTE"]
 ---
 ```
 
@@ -78,9 +77,8 @@ export function greet(name: string) {
 | Ominaisuus    | Lähde        | Näkyy            |
 | ------------- | ------------ | ---------------- |
 | `title`       | front matter | välilehden nimi  |
-| `date`        | front matter | yläpalkki        |
-| `readingTime` | front matter | yläpalkki        |
-| `tag`         | front matter | yläpalkin merkki |
+| `description` | front matter | otsikon alla     |
+| `tags`        | front matter | yläpalkin merkit |
 | `coverImage`  | front matter | sivun yläosa     |
 
 ## Kuva
