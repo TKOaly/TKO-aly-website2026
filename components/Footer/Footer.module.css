@@ -54,21 +54,11 @@
   aspect-ratio: 1;
   padding: var(--space-4);
   background-color: white;
-  transition: transform 0.2s ease;
+  transition: opacity 0.15s ease;
 }
 
 .sponsorLink:hover {
-  transform: scale(1.05);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sponsorLink {
-    transition: none;
-  }
-
-  .sponsorLink:hover {
-    transform: none;
-  }
+  opacity: 0.75;
 }
 
 .sponsorLogo {
@@ -84,14 +74,14 @@
 }
 
 @media (max-width: 767px) {
-  .sponsorLink:hover {
-    transform: none;
-  }
-
   .sponsorLogo,
   .sponsorLink:hover .sponsorLogo {
     filter: none;
     transition: none;
+  }
+
+  .sponsorLink:hover {
+    opacity: 1;
   }
 }
 
