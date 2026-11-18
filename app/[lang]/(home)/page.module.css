@@ -16,6 +16,14 @@
 @media (min-width: 1024px) {
   .hero {
     grid-template-columns: 7fr 5fr;
+    /* Background starts right under the navbar, so the hanging logo
+       sits on top of it. Hero grows with the viewport height. */
+    margin-top: 0;
+    box-sizing: border-box;
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+    min-height: calc(100dvh - var(--space-16));
+    max-height: none;
   }
 
   .hero::before {
@@ -146,6 +154,7 @@
   margin-bottom: var(--space-20);
   max-width: var(--screen-xl);
   margin: var(--space-40) auto;
+  padding-inline: var(--space-6);
 }
 
 .eventsHeader {
@@ -237,6 +246,31 @@
   color: var(--color-text-muted);
   line-height: 1.5;
   text-transform: none;
+}
+
+/* Mobile: no per-card button, and "all events" sits below the list. */
+.viewAllMobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .eventCard .eventCta {
+    display: none;
+  }
+
+  .viewAllDesktop {
+    display: none;
+  }
+
+  .viewAllMobile {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: var(--space-4);
+    font: inherit;
+    font-weight: 900;
+  }
 }
 
 .eventActions {

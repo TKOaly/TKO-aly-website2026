@@ -43,7 +43,7 @@
 
 .sponsorGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-4);
 }
 
@@ -54,11 +54,21 @@
   aspect-ratio: 1;
   padding: var(--space-4);
   background-color: white;
-  transition: opacity 0.15s ease;
+  transition: transform 0.2s ease;
 }
 
 .sponsorLink:hover {
-  opacity: 0.75;
+  transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sponsorLink {
+    transition: none;
+  }
+
+  .sponsorLink:hover {
+    transform: none;
+  }
 }
 
 .sponsorLogo {
@@ -74,14 +84,14 @@
 }
 
 @media (max-width: 767px) {
+  .sponsorLink:hover {
+    transform: none;
+  }
+
   .sponsorLogo,
   .sponsorLink:hover .sponsorLogo {
     filter: none;
     transition: none;
-  }
-
-  .sponsorLink:hover {
-    opacity: 1;
   }
 }
 
@@ -297,9 +307,15 @@
   }
 }
 
+@media (min-width: 480px) {
+  .sponsorGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (min-width: 640px) {
   .sponsorGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .cards {
