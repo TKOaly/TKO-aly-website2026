@@ -154,6 +154,7 @@
   margin-bottom: var(--space-20);
   max-width: var(--screen-xl);
   margin: var(--space-40) auto;
+  padding-inline: var(--space-6);
 }
 
 .eventsHeader {
@@ -245,6 +246,31 @@
   color: var(--color-text-muted);
   line-height: 1.5;
   text-transform: none;
+}
+
+/* Mobile: no per-card button, and "all events" sits below the list. */
+.viewAllMobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .eventCard .eventCta {
+    display: none;
+  }
+
+  .viewAllDesktop {
+    display: none;
+  }
+
+  .viewAllMobile {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: var(--space-4);
+    font: inherit;
+    font-weight: 900;
+  }
 }
 
 .eventActions {
