@@ -109,7 +109,7 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
           <h2>{t("home.eventsTitle")}</h2>
           <ServerLink
             lang={lang}
-            className={`btn btnSmall ${styles.viewAll} ${styles.viewAllDesktop}`}
+            className={`btn btnSmall ${styles.viewAll}`}
             href="/kalenteri"
           >
             {t("home.allEvents")}
@@ -134,9 +134,7 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
                           {event.location ? `@ ${event.location}` : ""}
                         </p>
                       </div>
-                      <div
-                        className={`${styles.eventCta} ${isWide ? "" : styles.eventActions}`}
-                      >
+                      <div className={isWide ? "" : styles.eventActions}>
                         <ServerLink
                           lang={lang}
                           href={`/kalenteri/${event.id}`}
@@ -176,13 +174,6 @@ const HomePage = async ({ params }: { params: Promise<{ lang: string }> }) => {
                 </div>
               ))}
         </div>
-        <ServerLink
-          lang={lang}
-          className={`btn ${styles.viewAll} ${styles.viewAllMobile}`}
-          href="/kalenteri"
-        >
-          {t("home.allEvents")}
-        </ServerLink>
       </section>
 
       {/* Try TKO-äly Experience Section */}
