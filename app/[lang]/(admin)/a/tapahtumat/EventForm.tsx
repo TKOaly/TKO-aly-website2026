@@ -20,26 +20,6 @@ import styles from "./luo/LuoTapahtuma.module.css"
 import { useId } from "react"
 import { useTranslation } from "@/app/i18n/client"
 
-export const toDateInputValue = (iso: string | null | undefined): string => {
-  if (!iso) return ""
-  const d = new Date(iso)
-  return isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 10)
-}
-
-export const toTimeInputValue = (iso: string | null | undefined): string => {
-  if (!iso) return ""
-  const d = new Date(iso)
-  return isNaN(d.getTime()) ? "" : d.toISOString().slice(11, 16)
-}
-
-export const toDateTimeLocalValue = (
-  iso: string | null | undefined,
-): string => {
-  if (!iso) return ""
-  const d = new Date(iso)
-  return isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 16)
-}
-
 export const splitDateTime = (value?: string) => {
   if (!value) return { date: "", time: "" }
   const d = new Date(value)
