@@ -66,6 +66,7 @@ const EditEventPage = async ({
         action={updateEvent}
         defaultValues={event}
         submitLabel={t("muokkaaTapahtuma.submit")}
+        locale={lang}
       />
     </main>
   )

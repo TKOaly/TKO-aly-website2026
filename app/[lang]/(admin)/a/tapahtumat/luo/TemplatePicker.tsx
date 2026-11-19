@@ -26,7 +26,7 @@ const TemplatePicker = ({ templates, label, placeholder, locale }: Props) => {
     const tpl = templates.find(t => t.id === Number(e.target.value))
     if (!tpl) return
 
-    const { id, starts, template, ...templateValues } = tpl
+    const { starts, ...templateValues } = tpl
 
     reset({
       ...getValues(),
