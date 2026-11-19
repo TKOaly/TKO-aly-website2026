@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8ff33" />
+    <title>Offline | TKO-äly</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #0a0a0a;
+        color: #fff;
+        font-family: system-ui, sans-serif;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      img {
+        width: 96px;
+        height: 96px;
+      }
+      h1 {
+        margin: 1rem 0 0.5rem;
+        color: #f8ff33;
+      }
+      p {
+        margin: 0.25rem 0;
+        color: #ccc;
+      }
+      button {
+        margin-top: 1.5rem;
+        padding: 0.75rem 1.5rem;
+        border: 0;
+        background: #f8ff33;
+        color: #0a0a0a;
+        font-weight: 700;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/icons/icon-192.png" alt="" />
+      <h1>Ei yhteyttä / You are offline</h1>
+      <p>Tarkista verkkoyhteytesi ja yritä uudelleen.</p>
+      <p>Check your connection and try again.</p>
+      <button onclick="location.reload()">Yritä uudelleen / Retry</button>
+    </main>
+  </body>
+</html>
