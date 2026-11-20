@@ -3,7 +3,7 @@
 import type { ChangeEvent } from "react"
 import { useFormContext } from "react-hook-form"
 import FieldSelect from "@/components/FieldSelect/FieldSelect"
-import type { Event, EventFormValues } from "../types"
+import type { Event, EventFormValues } from "../validators"
 import { splitDateTime } from "../EventForm"
 import { useTranslation } from "@/app/i18n/client"
 

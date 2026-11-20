@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import EventForm from "../EventForm"
 import { buildEventPayload } from "../eventPayload"
-import type { Event } from "../types"
+import type { Event } from "../validators"
 
 import styles from "./LuoTapahtuma.module.css"
 
