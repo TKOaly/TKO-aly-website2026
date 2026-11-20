@@ -8,8 +8,10 @@ import { useRouter as useNextRouter } from "next/navigation"
 import NextLink from "next/link"
 import { forwardRef, ComponentProps } from "react"
 import type { Url } from "next/dist/shared/lib/router/router"
+import { initZodI18n } from "./zod"
 
 i18next.use(initReactI18next).init(getOptions())
+initZodI18n()
 
 export const useTranslation = () => {
   const params = useParams()
