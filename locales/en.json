@@ -84,6 +84,7 @@
     "opensInNewWindow": "opens in a new window",
     "copy": "Copy",
     "copied": "Copied",
+    "close": "Close",
     "skipToContent": "Skip to main content"
   },
   "publicPage": {
@@ -323,6 +324,17 @@
     },
     "error": "Error",
     "calendar": "Event calendar",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "today": "Today",
+    "legendLabel": "legend",
+    "noUpcoming": "No upcoming events.",
+    "upcomingTitle": "Upcoming events",
+    "eventSingular": "event",
+    "eventPlural": "events",
+    "tabCalendar": "Event calendar",
+    "tabList": "Event list",
+    "eventsShort": "Events",
     "legend": {
       "canNotRegistration": "Can't register to event",
       "registrationNotOpen": "Registration is not open",

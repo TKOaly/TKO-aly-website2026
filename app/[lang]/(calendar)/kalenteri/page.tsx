@@ -1,142 +1,13 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import FullCalendar from "@fullcalendar/react"
-import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
-import listPlugin from "@fullcalendar/list"
-import fiLocale from "@fullcalendar/core/locales/fi"
-import type { DatesSetArg } from "@fullcalendar/core"
-import Link from "next/link"
 import styles from "./Kalenteri.module.css"
 import { useState, ReactNode, useMemo, useCallback } from "react"
 import type { Event, ProcessedEvent } from "./types"
 import { useTranslation } from "@/app/i18n/client"
 import { getEventList } from "./eventApiConnection"
-
-function EventCalendarView({
-  events,
-  onMonthChange,
-}: {
-  events: ProcessedEvent[]
-  onMonthChange: (date: Date) => void
-}) {
-  const calendarEvents = events.map(event => ({
-    id: String(event.id),
-    title: event.name || "Untitled Event",
-    start: event.starts,
-    url: `/kalenteri/${event.id}`,
-    backgroundColor: event.backgroundColor,
-  }))
-
-  return (
-    <FullCalendar
-      plugins={[dayGridPlugin, listPlugin]}
-      locale={fiLocale}
-      headerToolbar={{
-        left: "prev,next today",
-        center: "title",
-        right: "",
-      }}
-      datesSet={(arg: DatesSetArg) => onMonthChange(arg.view.currentStart)}
-      initialView="dayGridMonth"
-      editable={false}
-      selectable={true}
-      eventDisplay="list-item"
-      contentHeight={"60%"}
-      events={calendarEvents}
-    />
-  )
-}
-
-export function EventListView({ events }: { events: ProcessedEvent[] }) {
-  const { t } = useTranslation()
-  return (
-    <div id={styles.eventsList}>
-      {events.map(event => (
-        <Link key={event.id} href={`/kalenteri/${event.id}`}>
-          <div
-            className={styles.eventListItem}
-            style={{ borderLeft: `4px solid ${event.backgroundColor}` }}
-          >
-            <h3>{event.name}</h3>
-            <p>
-              <strong>{t("event.starts")}:</strong>{" "}
-              {new Date(event.starts).toLocaleDateString("fi-FI")},
-              {new Date(event.starts).toLocaleTimeString("fi-FI", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
-            <p>
-              <strong>{t("event.location")}:</strong> {event.location}
-            </p>
-            {event.organizer && (
-              <p>
-                <strong>{t("event.organizer")}:</strong> {event.organizer}
-              </p>
-            )}
-          </div>
-        </Link>
-      ))}
-    </div>
-  )
-}
-
-function Legend() {
-  const { t } = useTranslation()
-  const [isLegendVisible, setIsLegendVisible] = useState(false)
-
-  const toggleLegendVisibility = () => {
-    setIsLegendVisible(prev => !prev)
-  }
-
-  return (
-    <div id={styles.calendarInstructions}>
-      {isLegendVisible && (
-        <div id={styles.legend}>
-          <p>
-            <span
-              className={styles.legendColorBall}
-              style={{ backgroundColor: "#0066ff" }}
-            ></span>{" "}
-            {t("event.legend.canNotRegistration")}
-          </p>
-          <p>
-            <span
-              className={styles.legendColorBall}
-              style={{ backgroundColor: "#ffff00" }}
-            ></span>{" "}
-            {t("event.legend.registrationNotOpen")}
-          </p>
-          <p>
-            <span
-              className={styles.legendColorBall}
-              style={{ backgroundColor: "#00ff00" }}
-            ></span>{" "}
-            {t("event.legend.registrationOpen")}
-          </p>
-          <p>
-            <span
-              className={styles.legendColorBall}
-              style={{ backgroundColor: "#ff0000" }}
-            ></span>{" "}
-            {t("event.legend.registrationClosed")}
-          </p>
-          <p>
-            <span
-              className={styles.legendColorBall}
-              style={{ backgroundColor: "#6e6e6eff" }}
-            ></span>{" "}
-            {t("event.legend.passedEvent")}
-          </p>
-        </div>
-      )}
-      <button onClick={toggleLegendVisibility} title="Kalenterin selite">
-        {isLegendVisible ? t("event.legend.hide") : t("event.legend.show")}
-      </button>
-    </div>
-  )
-}
+import CalendarDesktop from "./CalendarDesktop"
+import CalendarMobile from "./CalendarMobile"
 
 function hasValidStartTime(event: Event): event is Event & { starts: string } {
   return event.starts !== undefined
@@ -220,32 +91,30 @@ export default function Calendar() {
   if (isLoading) {
     viewContent = <p>{t("event.loading.calendar")}</p>
   } else if (error) {
-    ;<p>{t("event.notExist.calendar")}</p>
+    viewContent = <p>{t("event.notExist.calendar")}</p>
   } else {
     viewContent = (
-      <div id={styles.calendarPageContainer}>
-        <div id={styles.eventsListContainer}>
-          <EventListView events={processedEvents} />
-        </div>
-        <div
-          id={styles.calendarViewContainer}
-          style={{ marginLeft: "48px", width: "95%" }}
-        >
-          <EventCalendarView
+      <>
+        <div className={styles.desktopOnly}>
+          <CalendarDesktop
             events={processedEvents}
             onMonthChange={handleMonthChange}
           />
-          <Legend />
         </div>
-      </div>
+        <div className={styles.mobileOnly}>
+          <CalendarMobile
+            events={processedEvents}
+            onMonthChange={handleMonthChange}
+          />
+        </div>
+      </>
     )
   }
 
   return (
     <div id={styles.calendarColor}>
-      <h1 id={styles.calendarMobileTitle}>{t("event.calendar")}</h1>
-      <div id={styles.calendar}>
-        <h1 id={styles.calendarTitle}>{t("event.calendar")}</h1>
+      <div className={styles.container}>
+        <h1 className={styles.title}>{t("event.calendar")}</h1>
         {viewContent}
       </div>
     </div>

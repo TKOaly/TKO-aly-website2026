@@ -15,6 +15,20 @@
   box-shadow: var(--shadow-thick);
 }
 
+/* Flush variant: content goes edge to edge below the title bar. */
+.terminal.flush {
+  padding: var(--space-12) 0 0;
+}
+
+.flush .contentInner {
+  max-width: none;
+}
+
+.flush .text {
+  padding-top: 0;
+  line-height: normal;
+}
+
 /* Top bar */
 .topBar {
   position: absolute;
@@ -60,6 +74,14 @@
   align-self: center;
   font-size: 0.875rem;
   font-weight: 500;
+  color: var(--neutral-900);
+}
+
+/* Right-aligned bar content */
+.barAside {
+  margin-left: auto;
+  padding-right: var(--space-2);
+  font-size: 0.875rem;
   color: var(--neutral-900);
 }
 

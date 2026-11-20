@@ -1,0 +1,71 @@
+/* Event page: back link, list column and the event itself. */
+.detailLayout {
+  display: block;
+}
+
+.detailList {
+  display: none;
+}
+
+.detailLayout > .detailCard {
+  min-width: 0;
+  margin: 0;
+  /* Side padding grows with the card, so a text line never exceeds 80
+     characters. */
+  padding: var(--space-6) max(var(--space-6), (100% - 80ch) / 2);
+}
+
+@media (min-width: 1025px) {
+  .detailLayout {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.34fr) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: stretch;
+  }
+
+  .detailLayout > .detailCard {
+    min-height: calc(100dvh - (var(--space-32) + var(--space-12)) * 2);
+  }
+
+  .detailLayout > .detailList {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 20rem;
+    margin: 0;
+    padding: var(--space-4) 0 var(--space-4) var(--space-4);
+  }
+}
+
+.listFab {
+  display: none;
+}
+
+/* Mobile: no boxes (like the public articles), the list opens in a drawer. */
+@media (max-width: 1024px) {
+  .detailLayout > .detailCard {
+    padding: 0 max(0px, (100% - 80ch) / 2);
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* Room for the floating button so it never covers the last lines. */
+  .page {
+    padding-bottom: var(--space-20);
+  }
+
+  .listFab {
+    position: fixed;
+    z-index: 50; /* below the navbar menus (998+) */
+    right: var(--space-4);
+    bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 3rem;
+    padding: 0 var(--space-5);
+    font-family: monospace;
+    font-size: 0.9375rem;
+  }
+}
