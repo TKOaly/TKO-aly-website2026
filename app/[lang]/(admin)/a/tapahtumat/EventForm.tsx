@@ -434,6 +434,11 @@ const EventForm = ({
     resolver: zodResolver(EventFormValuesSchema),
   })
 
+  const isRegistration = useWatch({
+    control: methods.control,
+    name: `isRegistration`,
+  })
+
   return (
     <section className={styles.section}>
       <FormProvider {...methods}>
@@ -571,9 +576,25 @@ const EventForm = ({
               {...methods.register("alcohol_meter")}
             />
             <FieldErrorMessage name="alcohol_meter" />
+
+            <FieldRadioGroup
+              legend={t("luoTapahtuma.optional.registrationLegend")}
+              options={[
+                {
+                  value: "yes",
+                  label: t("luoTapahtuma.optional.yes"),
+                },
+                {
+                  value: "no",
+                  label: t("luoTapahtuma.optional.no"),
+                },
+              ]}
+              {...methods.register("isRegistration")}
+            />
+            <FieldErrorMessage name="isRegistration" />
           </Fieldset>
 
-          <RegistrationQuotaForm />
+          {isRegistration === "yes" && <RegistrationQuotaForm />}
           <CustomFieldsFieldForm name="fields" />
 
           <Checkbox

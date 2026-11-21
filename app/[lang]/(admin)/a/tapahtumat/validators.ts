@@ -74,6 +74,7 @@ export const RegistrationQuotaSchema = z
     cancellation_starts: z.coerce.date().optional(),
     cancellation_ends: z.coerce.date().optional(),
     fields: z.array(CustomFieldSchema).optional(),
+    isPaid: z.string().optional(),
     price: z.string().optional(),
   })
   .superRefine((q, ctx) => {
@@ -99,6 +100,13 @@ export const RegistrationQuotaSchema = z
         message: "luoTapahtuma.error.registrationStartsAfterEnd",
       })
     }
+    if (q.isPaid == "paid" && !!q.price) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["price"],
+        message: "luoTapahtuma.error.required",
+      })
+    }
   })
 
 export const EventSchema = z.object({
@@ -122,10 +130,21 @@ export const EventFormValuesSchema = EventSchema.omit({
   id: true,
   user_id: true,
   starts: true,
-}).extend({
-  date: z.string(),
-  time: z.string(),
 })
+  .extend({
+    date: z.string(),
+    time: z.string(),
+    isRegistration: z.string(),
+  })
+  .superRefine((q, ctx) => {
+    if (q.isRegistration == "yes" && q.registrationQuotas.length == 0) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["isRegistration"],
+        message: "luoTapahtuma.error.oneRegistrationQuotaRequired",
+      })
+    }
+  })
 
 export type EventType = z.infer<typeof EventTypeSchema>
 export type Location = z.infer<typeof LocationSchema>
