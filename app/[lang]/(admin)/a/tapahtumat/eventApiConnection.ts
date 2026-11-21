@@ -8,7 +8,6 @@ const secret: string = process.env.EVENT_SERVICE_TOKEN || ""
 export async function getEditEvents(): Promise<EditEvent[]> {
   try {
     const res = await fetch(`${baseUrl}/api/events`, {
-      headers: { "X-Token": secret },
       cache: "no-store",
     })
 
