@@ -24,31 +24,33 @@ export const LocationTranslationSchema = z.object({
 
 export const LocationSchema = z.object({
   id: z.number().int().optional(),
-  map_link: z.string().url().optional().or(z.literal("")),
+  map_link: z.url().optional().or(z.literal("")),
   translations: z.array(LocationTranslationSchema),
 })
 
 export const CustomFieldTranslationSchema = z.object({
   locale: z.string().min(1),
   name: z.string().min(1),
+  options: z.array(z.string()).optional(),
 })
 
 export const CustomFieldSchema = z
   .object({
     type: z.enum(["textarea", "radio", "checkbox", "text", ""]).optional(),
-    options: z.array(z.string()).optional(),
     required: z.boolean().optional(),
     translations: z.array(CustomFieldTranslationSchema).optional(),
   })
   .superRefine((field, ctx) => {
-    if (
-      (field.type === "radio" || field.type === "checkbox") &&
-      (!field.options || field.options.length === 0)
-    ) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["options"],
-        message: "Options are required for radio and checkbox fields",
+    if (field.type === "radio") {
+      const translations = field.translations ?? []
+      translations.forEach((tr, i) => {
+        if (!tr.options?.length) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["translations", i, "options"],
+            message: "luoTapahtuma.error.optionsRequired",
+          })
+        }
       })
     }
   })
@@ -121,8 +123,8 @@ export const EventFormValuesSchema = EventSchema.omit({
   user_id: true,
   starts: true,
 }).extend({
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use format YYYY-MM-DD"),
-  time: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Use format HH:mm"),
+  date: z.string(),
+  time: z.string(),
 })
 
 export type EventType = z.infer<typeof EventTypeSchema>
@@ -130,4 +132,5 @@ export type Location = z.infer<typeof LocationSchema>
 export type CustomField = z.infer<typeof CustomFieldSchema>
 export type RegistrationQuota = z.infer<typeof RegistrationQuotaSchema>
 export type Event = z.infer<typeof EventSchema>
-export type EventFormValues = z.infer<typeof EventFormValuesSchema>
+export type EventFormInput = z.input<typeof EventFormValuesSchema>
+export type EventFormOutput = z.output<typeof EventFormValuesSchema>

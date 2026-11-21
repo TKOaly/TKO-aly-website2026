@@ -1,12 +1,7 @@
 "use client"
 
-import {
-  useForm,
-  FormProvider,
-  useFieldArray,
-  useFormContext,
-  useWatch,
-} from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import Alert from "@/components/Alert/Alert"
 import CallToActionButton from "@/components/Buttons/CallToActionButton"
 import Checkbox from "@/components/Checkbox/Checkbox"
 import Field from "@/components/Field/Field"
@@ -15,10 +10,29 @@ import FieldSelect from "@/components/FieldSelect/FieldSelect"
 import FieldRadioGroup from "@/components/FieldRadioGroup/FieldRadioGroup"
 import Textarea from "@/components/Textarea/Textarea"
 import TemplatePicker from "./luo/TemplatePicker"
-import type { Event, RegistrationQuota, EventFormValues } from "./validators"
+import {
+  LanguageTabs,
+  TRANSLATION_INPUT_LANGUAGES,
+  TranslationInput,
+} from "./TranslationInput"
+import {
+  type Event,
+  type RegistrationQuota,
+  EventFormValuesSchema,
+  EventFormInput,
+  EventFormOutput,
+} from "./validators"
 import styles from "./luo/LuoTapahtuma.module.css"
-import { useId } from "react"
 import { useTranslation } from "@/app/i18n/client"
+import {
+  get,
+  useForm,
+  FormProvider,
+  useFieldArray,
+  useFormContext,
+  useWatch,
+} from "react-hook-form"
+import { useId, useState } from "react"
 
 export const splitDateTime = (value?: string) => {
   if (!value) return { date: "", time: "" }
@@ -30,25 +44,64 @@ export const splitDateTime = (value?: string) => {
   }
 }
 
+const FieldErrorMessage = ({ name }: { name: string }) => {
+  const { t } = useTranslation()
+  const { getFieldState, formState } = useFormContext()
+  const { error } = getFieldState(name, formState)
+
+  if (!error?.message) return null
+
+  return <Alert>{t(error.message)}</Alert>
+}
+
 const RadioOptionFields = ({ name }: { name: string }) => {
   const { t } = useTranslation()
-  const { control, register } = useFormContext()
+  const {
+    control,
+    register,
+    formState: { errors },
+  } = useFormContext()
+  const [active, setActive] = useState(0)
 
   const { fields, append, remove } = useFieldArray({
     control,
     name,
   })
 
+  const hasError = (langIndex: number) =>
+    fields.some(
+      (_, index) =>
+        !!get(errors, `${name}.${index}.translations.${langIndex}.value`),
+    )
+
   return (
     <>
+      <LanguageTabs active={active} onChange={setActive} hasError={hasError} />
+
       {fields.map((field, index) => (
         <div key={field.id} style={{ display: "flex" }}>
-          <Field
-            label={t("luoTapahtuma.customField.option")}
-            id={`${name}_${index}`}
-            type="text"
-            {...register(`${name}.${index}.value`)}
-          />
+          <div>
+            {TRANSLATION_INPUT_LANGUAGES.map((lang, langIndex) => {
+              const base = `${name}.${index}.translations.${langIndex}`
+              return (
+                <div key={lang.code} hidden={active !== langIndex}>
+                  <input
+                    type="hidden"
+                    defaultValue={lang.code}
+                    {...register(`${base}.locale`)}
+                  />
+                  <Field
+                    label={t("luoTapahtuma.customField.option")}
+                    id={`${base}.value`}
+                    type="text"
+                    {...register(`${base}.options`)}
+                  />
+                  <FieldErrorMessage name={`${base}.value`} />
+                </div>
+              )
+            })}
+          </div>
+
           {fields.length !== 1 && (
             <button onClick={() => remove(index)} type="button">
               -
@@ -56,7 +109,18 @@ const RadioOptionFields = ({ name }: { name: string }) => {
           )}
         </div>
       ))}
-      <button onClick={() => append({ value: "" })} type="button">
+
+      <button
+        onClick={() =>
+          append({
+            translations: TRANSLATION_INPUT_LANGUAGES.map(lang => ({
+              locale: lang.code,
+              value: "",
+            })),
+          })
+        }
+        type="button"
+      >
         +
       </button>
     </>
@@ -92,12 +156,19 @@ const CustomFieldsField = ({ name }: { name: string }) => {
           {t("luoTapahtuma.customField.types.checkbox")}
         </option>
       </FieldSelect>
+      <FieldErrorMessage name={`${name}.type`} />
 
-      <Field
-        label={t("luoTapahtuma.customField.question")}
-        id={`${id}_name`}
-        type="text"
-        {...register(`${name}.translations.0.name`)}
+      <TranslationInput
+        name="translations"
+        field="name"
+        render={props => (
+          <Field
+            label={t("luoTapahtuma.customField.question")}
+            id={`${id}_name`}
+            type="text"
+            {...props}
+          />
+        )}
       />
 
       {type === "radio" && <RadioOptionFields name={`${name}.options`} />}
@@ -107,6 +178,7 @@ const CustomFieldsField = ({ name }: { name: string }) => {
         label={t("luoTapahtuma.customField.required")}
         {...register(`${name}.required`)}
       />
+      <FieldErrorMessage name={`${name}.required`} />
     </div>
   )
 }
@@ -149,20 +221,29 @@ const CustomFieldsFieldForm = ({ name }: { name: string }) => {
 
 const RegistrationQuotaField = ({ name }: { name: string }) => {
   const { t } = useTranslation()
-  const { register } = useFormContext()
+  const { register, control } = useFormContext()
 
   const dateOptions = {
     setValueAs: (value: string) => (value ? new Date(value) : undefined),
   }
 
+  const isPaid = useWatch({ control, name: `${name}.isPaid` })
+
   return (
     <div>
-      <Field
-        label={t("luoTapahtuma.requestQuota.name")}
-        id={`${name}_quota_name`}
-        type="text"
-        {...register(`${name}.translations.quota_name`)}
+      <TranslationInput
+        name={`${name}.translations`}
+        field="quota_name"
+        render={props => (
+          <Field
+            label={t("luoTapahtuma.requestQuota.name")}
+            id={`${name}_quota_name`}
+            type="text"
+            {...props}
+          />
+        )}
       />
+
       <Field
         label={t("luoTapahtuma.requestQuota.maxParticipants")}
         id={`${name}_max_participants`}
@@ -173,30 +254,39 @@ const RegistrationQuotaField = ({ name }: { name: string }) => {
             value === "" ? undefined : Number(value),
         })}
       />
+      <FieldErrorMessage name={`${name}.max_participants`} />
+
       <Field
         label={t("luoTapahtuma.requestQuota.registrationStarts")}
         id={`${name}_registration_starts`}
         type="datetime-local"
         {...register(`${name}.registration_starts`, dateOptions)}
       />
+      <FieldErrorMessage name={`${name}.registration_starts`} />
+
       <Field
         label={t("luoTapahtuma.requestQuota.registrationEnds")}
         id={`${name}_registration_ends`}
         type="datetime-local"
         {...register(`${name}.registration_ends`, dateOptions)}
       />
+      <FieldErrorMessage name={`${name}.registration_ends`} />
+
       <Field
         label={t("luoTapahtuma.requestQuota.cancellationStarts")}
         id={`${name}_cancellation_starts`}
         type="datetime-local"
         {...register(`${name}.cancellation_starts`, dateOptions)}
       />
+      <FieldErrorMessage name={`${name}.cancellation_starts`} />
+
       <Field
         label={t("luoTapahtuma.requestQuota.cancellationEnds")}
         id={`${name}_cancellation_ends`}
         type="datetime-local"
         {...register(`${name}.cancellation_ends`, dateOptions)}
       />
+      <FieldErrorMessage name={`${name}.cancellation_ends`} />
 
       <FieldRadioGroup
         legend={t("luoTapahtuma.optional.paymentLegend")}
@@ -213,17 +303,22 @@ const RegistrationQuotaField = ({ name }: { name: string }) => {
         {...register(`${name}.isPaid`)}
       />
 
-      <Field
-        label={t("luoTapahtuma.optional.price")}
-        id={`${name}_price`}
-        type="number"
-        step="0.01"
-        min="0"
-        {...register(`${name}.price`, {
-          setValueAs: (value: string) =>
-            value === "" ? undefined : Number(value),
-        })}
-      />
+      {isPaid === "paid" && (
+        <>
+          <Field
+            label={t("luoTapahtuma.optional.price")}
+            id={`${name}_price`}
+            type="number"
+            step="0.01"
+            min="0"
+            {...register(`${name}.price`, {
+              setValueAs: (value: string) =>
+                value === "" ? undefined : Number(value),
+            })}
+          />
+          <FieldErrorMessage name={`${name}.price`} />
+        </>
+      )}
 
       <div className={styles.checkboxList}>
         <Checkbox
@@ -231,27 +326,36 @@ const RegistrationQuotaField = ({ name }: { name: string }) => {
           label={t("luoTapahtuma.requestQuota.outsiders_allowed")}
           {...register(`${name}.outsiders_allowed`)}
         />
+        <FieldErrorMessage name={`${name}.outsiders_allowed`} />
+
         <Checkbox
           id={`${name}_membership_required`}
           label={t("luoTapahtuma.requestQuota.membershipRequired")}
           {...register(`${name}.membership_required`)}
         />
+        <FieldErrorMessage name={`${name}.outsiders_allowed`} />
+
         <Checkbox
           id={`${name}_avec_can_attend`}
           label={t("luoTapahtuma.requestQuota.avec")}
           {...register(`${name}.avec_can_attend`)}
         />
+        <FieldErrorMessage name={`${name}.avec_can_attend`} />
+
         <Checkbox
           id={`${name}_hidden`}
           label={t("luoTapahtuma.requestQuota.hidden")}
           {...register(`${name}.hidden`)}
         />
+        <FieldErrorMessage name={`${name}.avec_can_attend`} />
+
         <Field
           label={t("luoTapahtuma.requestQuota.is_main_quota")}
           id={`${name}_is_main_quota`}
           type="checkbox"
           {...register(`${name}.is_main_quota`)}
         />
+        <FieldErrorMessage name={`${name}.avec_can_attend`} />
       </div>
 
       <CustomFieldsFieldForm name={`${name}.fields`} />
@@ -322,11 +426,12 @@ const EventForm = ({
   const { t } = useTranslation()
   const { starts, ...restDefaults } = defaultValues ?? {}
 
-  const methods = useForm<EventFormValues>({
+  const methods = useForm<EventFormInput, unknown, EventFormOutput>({
     defaultValues: {
       ...restDefaults,
       ...splitDateTime(starts?.toLocaleDateString()),
     },
+    resolver: zodResolver(EventFormValuesSchema),
   })
 
   return (
@@ -345,12 +450,18 @@ const EventForm = ({
 
         <form id={formId} action={action} className={styles.form}>
           <Fieldset legend={t("luoTapahtuma.required.legend")}>
-            <Field
-              required
-              label={t("luoTapahtuma.required.title")}
-              id="title"
-              type="text"
-              {...methods.register("translations.0.title")}
+            <TranslationInput
+              name="translations"
+              field="title"
+              render={props => (
+                <Field
+                  required
+                  label={t("luoTapahtuma.required.title")}
+                  id="title"
+                  type="text"
+                  {...props}
+                />
+              )}
             />
 
             <Field
@@ -360,6 +471,7 @@ const EventForm = ({
               type="date"
               {...methods.register("date")}
             />
+            <FieldErrorMessage name="date" />
 
             <Field
               required
@@ -368,6 +480,7 @@ const EventForm = ({
               type="time"
               {...methods.register("time")}
             />
+            <FieldErrorMessage name="time" />
 
             <Field
               required
@@ -378,6 +491,7 @@ const EventForm = ({
               placeholder={t("luoTapahtuma.required.venuePlaceholder")}
               {...methods.register("location.translations.0.location")}
             />
+            <FieldErrorMessage name="location" />
 
             <datalist id="venue-datalist">
               <option value="Paikka 1" />
@@ -394,6 +508,7 @@ const EventForm = ({
               list="event-type-datalist"
               {...methods.register("eventType.translations.0.event_type")}
             />
+            <FieldErrorMessage name="eventType" />
 
             <datalist id="event-type-datalist">
               <option value="Tyyppi 1" />
@@ -401,15 +516,19 @@ const EventForm = ({
               <option value="Tyyppi 3" />
             </datalist>
 
-            <Textarea
-              required
-              id="description"
-              label={t("luoTapahtuma.required.description")}
-              rows={5}
-              {...methods.register("translations.0.description")}
+            <TranslationInput
+              name="translations"
+              field="description"
+              render={props => (
+                <Textarea
+                  required
+                  id="description"
+                  label={t("luoTapahtuma.required.description")}
+                  rows={5}
+                  {...props}
+                />
+              )}
             />
-
-            <RegistrationQuotaForm />
           </Fieldset>
 
           <Fieldset legend={t("luoTapahtuma.optional.legend")}>
@@ -419,12 +538,14 @@ const EventForm = ({
               type="text"
               {...methods.register("responsible")}
             />
+            <FieldErrorMessage name="organizer" />
 
             <Checkbox
               id="show_responsible"
               label={t("luoTapahtuma.optional.showContact")}
               {...methods.register("show_responsible")}
             />
+            <FieldErrorMessage name="show_responsible" />
 
             <Field
               label={t("luoTapahtuma.optional.mapLink")}
@@ -432,9 +553,10 @@ const EventForm = ({
               type="url"
               {...methods.register("location.map_link")}
             />
+            <FieldErrorMessage name="location.map_link" />
 
             <FieldRadioGroup
-              legend={t("luoTapahtuma.optional.paymentLegend")}
+              legend={t("luoTapahtuma.optional.alcoholMeter")}
               options={[
                 { value: "0", label: t("luoTapahtuma.optional.alcoholNone") },
                 { value: "1", label: t("luoTapahtuma.optional.alcoholLevel1") },
@@ -448,7 +570,10 @@ const EventForm = ({
               ]}
               {...methods.register("alcohol_meter")}
             />
+            <FieldErrorMessage name="alcohol_meter" />
           </Fieldset>
+
+          <RegistrationQuotaForm />
           <CustomFieldsFieldForm name="fields" />
 
           <Checkbox
@@ -456,6 +581,7 @@ const EventForm = ({
             label={t("luoTapahtuma.optional.saveAsTemplate")}
             {...methods.register("template")}
           />
+          <FieldErrorMessage name="template" />
         </form>
       </FormProvider>
 

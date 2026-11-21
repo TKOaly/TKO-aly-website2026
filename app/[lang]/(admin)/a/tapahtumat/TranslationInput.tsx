@@ -11,7 +11,7 @@ import {
 } from "react-hook-form"
 import { useTranslation } from "@/app/i18n/client"
 
-const LANGUAGES = [
+export const TRANSLATION_INPUT_LANGUAGES = [
   { code: "fi", label: "finnish" },
   { code: "en", label: "english" },
 ] as const
@@ -34,28 +34,14 @@ export function TranslationInput({
     formState: { errors },
   } = useFormContext()
   const [active, setActive] = useState(0)
+  const hasError = (langIndex: number) =>
+    !!get(errors, `${name}.${langIndex}.${field}`)
 
   return (
     <div>
-      <div role="tablist">
-        {LANGUAGES.map((lang, i) => {
-          const hasError = !!get(errors, `${name}.${i}.${field}`)
-          return (
-            <button
-              key={lang.code}
-              type="button"
-              role="tab"
-              aria-selected={active === i}
-              onClick={() => setActive(i)}
-            >
-              {t(`luoTapahtuma.language.${lang.label}`)}
-              {hasError ? " ⚠" : ""}
-            </button>
-          )
-        })}
-      </div>
+      <LanguageTabs active={active} onChange={setActive} hasError={hasError} />
 
-      {LANGUAGES.map((lang, i) => (
+      {TRANSLATION_INPUT_LANGUAGES.map((lang, i) => (
         <div key={lang.code} hidden={active !== i}>
           <input
             type="hidden"
@@ -68,11 +54,44 @@ export function TranslationInput({
             render={({ field: f, fieldState }) => (
               <>
                 {render(f)}
-                {fieldState.error && <Alert>{fieldState.error.message}</Alert>}
+                {!!fieldState.error?.message && (
+                  <Alert>{t(fieldState.error.message)}</Alert>
+                )}
               </>
             )}
           />
         </div>
+      ))}
+    </div>
+  )
+}
+
+type LanguageTabsProps = {
+  active: number
+  onChange: (index: number) => void
+  hasError?: (index: number) => boolean
+}
+
+export const LanguageTabs = ({
+  active,
+  onChange,
+  hasError,
+}: LanguageTabsProps) => {
+  const { t } = useTranslation()
+
+  return (
+    <div role="tablist">
+      {TRANSLATION_INPUT_LANGUAGES.map((lang, i) => (
+        <button
+          key={lang.code}
+          type="button"
+          role="tab"
+          aria-selected={active === i}
+          onClick={() => onChange(i)}
+        >
+          {t(`luoTapahtuma.language.${lang.label}`)}
+          {hasError?.(i) ? " ⚠" : ""}
+        </button>
       ))}
     </div>
   )
