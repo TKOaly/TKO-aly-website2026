@@ -78,6 +78,7 @@ const AddEventPage = async ({ params }: Props) => {
         submitLabel={t("luoTapahtuma.submit")}
         templateLabel={t("luoTapahtuma.templateLabel")}
         templatePlaceholder={t("luoTapahtuma.templatePlaceholder")}
+        locale={lang}
       />
     </main>
   )

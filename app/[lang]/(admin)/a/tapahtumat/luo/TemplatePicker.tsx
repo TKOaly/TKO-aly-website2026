@@ -3,7 +3,7 @@
 import type { ChangeEvent } from "react"
 import { useFormContext } from "react-hook-form"
 import FieldSelect from "@/components/FieldSelect/FieldSelect"
-import type { Event, EventFormValues } from "../validators"
+import type { Event, EventFormInput, EventFormOutput } from "../validators"
 import { splitDateTime } from "../EventForm"
 import { useTranslation } from "@/app/i18n/client"
 
@@ -20,7 +20,11 @@ const getTitle = (tpl: Event, locale?: string) =>
 
 const TemplatePicker = ({ templates, label, placeholder, locale }: Props) => {
   const { t } = useTranslation()
-  const { reset, getValues } = useFormContext<EventFormValues>()
+  const { reset, getValues } = useFormContext<
+    EventFormInput,
+    unknown,
+    EventFormOutput
+  >()
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const tpl = templates.find(t => t.id === Number(e.target.value))
