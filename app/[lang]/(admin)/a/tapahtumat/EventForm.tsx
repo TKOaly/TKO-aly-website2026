@@ -34,13 +34,14 @@ import {
 } from "react-hook-form"
 import { useId, useState } from "react"
 
-export const splitDateTime = (value?: string) => {
-  if (!value) return { date: "", time: "" }
+export const splitDateTime = (name: string, value?: string) => {
+  if (!value)
+    return { [`${name}_date`]: undefined, [`${name}_time`]: undefined }
   const d = new Date(value)
   const pad = (n: number) => String(n).padStart(2, "0")
   return {
-    date: `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`,
-    time: `${pad(d.getHours())}:${pad(d.getMinutes())}`,
+    [`${name}_date`]: `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`,
+    [`${name}_time`]: `${pad(d.getHours())}:${pad(d.getMinutes())}`,
   }
 }
 
@@ -52,6 +53,34 @@ const FieldErrorMessage = ({ name }: { name: string }) => {
   if (!error?.message) return null
 
   return <Alert>{t(error.message)}</Alert>
+}
+
+const TimeField = ({ name, legend }: { name: string; legend?: string }) => {
+  const { t } = useTranslation()
+  const { register } = useFormContext()
+
+  return (
+    <>
+      {!!legend && <legend className={styles.legend}>{legend}</legend>}
+      <Field
+        required
+        label={t("luoTapahtuma.date")}
+        id="date"
+        type="date"
+        {...register(`${name}_date`)}
+      />
+      <FieldErrorMessage name={`${name}_date`} />
+
+      <Field
+        required
+        label={t("luoTapahtuma.required.time")}
+        id="time"
+        type="time"
+        {...register(`${name}_date`)}
+      />
+      <FieldErrorMessage name={`${name}_time`} />
+    </>
+  )
 }
 
 const RadioOptionFields = ({ name }: { name: string }) => {
@@ -424,19 +453,25 @@ const EventForm = ({
   formId = "event-form",
 }: Props) => {
   const { t } = useTranslation()
-  const { starts, ...restDefaults } = defaultValues ?? {}
+  const { starts, weekly_event_end_time, publishing_time, ...restDefaults } =
+    defaultValues ?? {}
 
   const methods = useForm<EventFormInput, unknown, EventFormValues>({
     defaultValues: {
       ...restDefaults,
-      ...splitDateTime(starts?.toLocaleDateString()),
+      ...splitDateTime("starts", starts?.toLocaleDateString()),
+      ...splitDateTime(
+        "weeklyEventEnd",
+        weekly_event_end_time?.toLocaleDateString(),
+      ),
+      ...splitDateTime("publish", publishing_time?.toLocaleDateString()),
     },
     resolver: zodResolver(eventFormValuesSchema),
   })
 
-  const isRegistration = useWatch({
+  const [isRegistration, show_responsible, weekly_event] = useWatch({
     control: methods.control,
-    name: `isRegistration`,
+    name: ["isRegistration", "show_responsible", "weekly_event"],
   })
 
   return (
@@ -473,23 +508,7 @@ const EventForm = ({
               )}
             />
 
-            <Field
-              required
-              label={t("luoTapahtuma.required.date")}
-              id="date"
-              type="date"
-              {...methods.register("date")}
-            />
-            <FieldErrorMessage name="date" />
-
-            <Field
-              required
-              label={t("luoTapahtuma.required.time")}
-              id="time"
-              type="time"
-              {...methods.register("time")}
-            />
-            <FieldErrorMessage name="time" />
+            <TimeField name="starts" />
 
             <Field
               required
@@ -541,20 +560,41 @@ const EventForm = ({
           </Fieldset>
 
           <Fieldset legend={t("luoTapahtuma.optional.legend")}>
-            <Field
-              label={t("luoTapahtuma.optional.organizer")}
-              id="responsible"
-              type="text"
-              {...methods.register("responsible")}
-            />
-            <FieldErrorMessage name="organizer" />
-
             <Checkbox
               id="show_responsible"
-              label={t("luoTapahtuma.optional.showContact")}
+              label={t("luoTapahtuma.optional.showResponsible")}
               {...methods.register("show_responsible")}
             />
             <FieldErrorMessage name="show_responsible" />
+
+            {show_responsible && (
+              <>
+                <Field
+                  label={t("luoTapahtuma.optional.responsible")}
+                  id="responsible"
+                  type="text"
+                  {...methods.register("responsible")}
+                />
+                <FieldErrorMessage name="responsible" />
+              </>
+            )}
+
+            <Checkbox
+              id="weekly_event"
+              label={t("luoTapahtuma.optional.isWeeklyEvent")}
+              {...methods.register("weekly_event")}
+            />
+            {weekly_event && (
+              <TimeField
+                legend={t("luoTapahtuma.optional.weeklyEventEndTime")}
+                name="weeklyEventEnd"
+              />
+            )}
+
+            <TimeField
+              legend={t("luoTapahtuma.optional.publishingTime")}
+              name="publish"
+            />
 
             <Field
               label={t("luoTapahtuma.optional.mapLink")}

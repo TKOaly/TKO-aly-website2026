@@ -64,3 +64,19 @@ export async function postEvent(event: Event) {
     throw new Error(`Event creation failed with status ${response.status}`)
   }
 }
+
+export async function putEvent(eventId: number, event: Event) {
+  const response = await fetch(`${baseUrl}/api/events/${eventId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Token": secret,
+    },
+    body: JSON.stringify(event),
+    cache: "no-store",
+  })
+
+  if (!response.ok) {
+    throw new Error(`Event update failed with status ${response.status}`)
+  }
+}

@@ -5,7 +5,8 @@ import { redirect } from "next/navigation"
 import EventForm from "../EventForm"
 import styles from "./LuoTapahtuma.module.css"
 import { getTemplates, postEvent } from "../eventApiConnection"
-import { EventFormValues, eventSchema } from "../validators"
+import { EventFormValues } from "../validators"
+import { buildEventPayload } from "../eventPayload"
 
 type Props = {
   params: Promise<{ lang: string }>
@@ -18,15 +19,7 @@ const AddEventPage = async ({ params }: Props) => {
 
   const createEvent = async (formData: EventFormValues) => {
     "use server"
-    const { date, time, ...rest } = formData
-    const starts = new Date(`${date}T${time}`).toISOString()
-    const payload = eventSchema.parse({
-      starts,
-      deleted: false,
-      user_id: 0, // TODO user_id
-      ...rest,
-    })
-
+    const payload = buildEventPayload(formData)
     await postEvent(payload)
 
     revalidatePath(`/${lang}/kalenteri`)

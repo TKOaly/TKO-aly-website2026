@@ -30,12 +30,22 @@ const TemplatePicker = ({ templates, label, placeholder, locale }: Props) => {
     const tpl = templates.find(t => t.id === Number(e.target.value))
     if (!tpl) return
 
-    const { starts, ...templateValues } = tpl
+    const {
+      starts,
+      weekly_event_end_time,
+      publishing_time,
+      ...templateValues
+    } = tpl
 
     reset({
       ...getValues(),
       ...templateValues,
-      ...splitDateTime(starts.toLocaleDateString()),
+      ...splitDateTime("starts", starts?.toLocaleDateString()),
+      ...splitDateTime(
+        "weeklyEventEnd",
+        weekly_event_end_time?.toLocaleDateString(),
+      ),
+      ...splitDateTime("publish", publishing_time?.toLocaleDateString()),
       template: false,
     })
   }

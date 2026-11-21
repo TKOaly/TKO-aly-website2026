@@ -4,8 +4,9 @@ import { revalidatePath } from "next/cache"
 import { redirect, notFound } from "next/navigation"
 import EventForm from "../EventForm"
 import { buildEventPayload } from "../eventPayload"
-import type { Event } from "../validators"
+import type { Event, EventFormValues } from "../validators"
 import styles from "../luo/LuoTapahtuma.module.css"
+import { putEvent } from "../eventApiConnection"
 
 const EditEventPage = async ({
   params,
@@ -32,28 +33,10 @@ const EditEventPage = async ({
 
   const event: Event = await res.json()
 
-  const updateEvent = async (formData: FormData) => {
+  const updateEvent = async (formData: EventFormValues) => {
     "use server"
-    const baseUrl =
-      process.env.EVENTS_API_BASE_URL ?? "http://events-microservice:3040"
-    const token =
-      process.env.EVENT_SERVICE_TOKEN ?? process.env.SERVICE_AUTH_TOKEN
-
     const payload = buildEventPayload(formData)
-
-    const response = await fetch(`${baseUrl}/api/events/${eventId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        ...(token ? { "X-Token": token } : {}),
-      },
-      body: JSON.stringify(payload),
-      cache: "no-store",
-    })
-
-    if (!response.ok) {
-      throw new Error(`Event update failed with status ${response.status}`)
-    }
+    await putEvent(eventId, payload)
 
     revalidatePath(`/${lang}/kalenteri`)
     redirect(`/${lang}/kalenteri`)
@@ -63,7 +46,7 @@ const EditEventPage = async ({
     <main className={styles.main}>
       <PageHeader title={t("muokkaaTapahtuma.title")} />
       <EventForm
-        action={updateEvent}
+        onSubmit={updateEvent}
         defaultValues={event}
         submitLabel={t("muokkaaTapahtuma.submit")}
         locale={lang}

@@ -118,12 +118,14 @@ export const eventSchema = z.object({
   show_responsible: z.boolean().optional(),
   weekly_event: z.boolean().optional(),
   weekly_event_end_time: z.coerce.date().optional(),
+  publishing_time: z.coerce.date().optional(),
   template: z.boolean().optional(),
   translations: z.array(eventTranslationSchema),
   location: locationSchema,
   eventType: eventTypeSchema,
   fields: z.array(customFieldSchema),
   registrationQuotas: z.array(registrationQuotaSchema),
+  deleted: z.boolean().optional(),
 })
 
 export const eventsSchema = z.array(eventSchema)
@@ -133,10 +135,16 @@ export const eventFormValuesSchema = eventSchema
     id: true,
     user_id: true,
     starts: true,
+    publishing_time: true,
+    weekly_event_end_time: true,
   })
   .extend({
-    date: z.string(),
-    time: z.string(),
+    starts_date: z.string(),
+    starts_time: z.string(),
+    publish_date: z.string().optional(),
+    publish_time: z.string().optional(),
+    weeklyEventEnd_date: z.string().optional(),
+    weeklyEventEnd_time: z.string().optional(),
     isRegistration: z.string(),
   })
   .superRefine((q, ctx) => {
@@ -145,6 +153,34 @@ export const eventFormValuesSchema = eventSchema
         code: "custom",
         path: ["isRegistration"],
         message: "luoTapahtuma.error.oneRegistrationQuotaRequired",
+      })
+    }
+    if (q.weekly_event && !q.weeklyEventEnd_date) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["weekly_event_end_date"],
+        message: "luoTapahtuma.error.required",
+      })
+    }
+    if (q.weekly_event && !q.weeklyEventEnd_time) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["weekly_event_end_time"],
+        message: "luoTapahtuma.error.required",
+      })
+    }
+    if (!q.publish_time) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["publishing_date"],
+        message: "luoTapahtuma.error.required",
+      })
+    }
+    if (!q.publish_date) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["publishing_time"],
+        message: "luoTapahtuma.error.required",
       })
     }
   })
