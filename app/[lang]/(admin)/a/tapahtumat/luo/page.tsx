@@ -4,9 +4,8 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import EventForm from "../EventForm"
 import { buildEventPayload } from "../eventPayload"
-import type { Event } from "../validators"
-
 import styles from "./LuoTapahtuma.module.css"
+import { getTemplates } from "../eventApiConnection"
 
 type Props = {
   params: Promise<{ lang: string }>
@@ -15,24 +14,7 @@ type Props = {
 const AddEventPage = async ({ params }: Props) => {
   const { lang } = await params
   const { t } = await getAsyncTranslation(lang)
-
-  const baseUrl =
-    process.env.EVENTS_API_BASE_URL ?? "http://events-microservice:3040"
-  const token =
-    process.env.EVENT_SERVICE_TOKEN ?? process.env.SERVICE_AUTH_TOKEN
-
-  let templates: Event[] = []
-  try {
-    const res = await fetch(`${baseUrl}/api/events/templates`, {
-      headers: token ? { "X-Token": token } : {},
-      cache: "no-cache",
-    })
-    if (res.ok) {
-      templates = await res.json()
-    }
-  } catch {
-    // non-fatal: template picker will just be empty
-  }
+  const templates = await getTemplates()
 
   const createEvent = async (formData: FormData) => {
     "use server"

@@ -1,21 +1,43 @@
 "use server"
 
-import { EditEvent, editEventsSchema } from "./validators"
+import { EditEvent, editEventsSchema, Event, eventsSchema } from "./validators"
 
 const baseUrl: string | undefined = process.env.EVENTS_API_BASE_URL
 const secret: string = process.env.EVENT_SERVICE_TOKEN || ""
 
 export async function getEditEvents(): Promise<EditEvent[]> {
   try {
-    const res = await fetch(`${baseUrl}/api/events`, {
+    const result = await fetch(`${baseUrl}/api/events`, {
       cache: "no-store",
     })
 
-    if (!res.ok) {
+    if (!result.ok) {
       return []
     }
 
-    const parsed = editEventsSchema.safeParse(await res.json())
+    const parsed = editEventsSchema.safeParse(await result.json())
+
+    if (!parsed.success) {
+      return []
+    }
+
+    return parsed.data
+  } catch {
+    return []
+  }
+}
+
+export async function getTemplates(): Promise<Event[]> {
+  try {
+    const result = await fetch(`${baseUrl}/api/events`, {
+      cache: "no-store",
+    })
+
+    if (!result.ok) {
+      return []
+    }
+
+    const parsed = eventsSchema.safeParse(await result.json())
 
     if (!parsed.success) {
       return []

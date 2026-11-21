@@ -18,7 +18,7 @@ import {
 import {
   type Event,
   type RegistrationQuota,
-  EventFormValuesSchema,
+  eventFormValuesSchema,
   EventFormInput,
   EventFormOutput,
 } from "./validators"
@@ -431,7 +431,7 @@ const EventForm = ({
       ...restDefaults,
       ...splitDateTime(starts?.toLocaleDateString()),
     },
-    resolver: zodResolver(EventFormValuesSchema),
+    resolver: zodResolver(eventFormValuesSchema),
   })
 
   const isRegistration = useWatch({
