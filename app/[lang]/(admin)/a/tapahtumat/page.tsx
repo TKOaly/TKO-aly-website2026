@@ -2,14 +2,7 @@ import Link from "next/link"
 import PageHeader from "@/components/PageHeader/PageHeader"
 import { getAsyncTranslation } from "@/app/i18n"
 import styles from "./Tapahtumat.module.css"
-
-type CalendarEvent = {
-  id: number
-  name: string | null
-  starts: string | null
-  location: string | null
-  category: string | null
-}
+import { getEditEvents } from "./eventApiConnection"
 
 const TapahtumatPage = async ({
   params,
@@ -18,24 +11,7 @@ const TapahtumatPage = async ({
 }) => {
   const { lang } = await params
   const { t } = await getAsyncTranslation(lang)
-
-  const baseUrl =
-    process.env.EVENTS_API_BASE_URL ?? "http://events-microservice:3040"
-  const token =
-    process.env.EVENT_SERVICE_TOKEN ?? process.env.SERVICE_AUTH_TOKEN
-
-  let events: CalendarEvent[] = []
-  try {
-    const res = await fetch(`${baseUrl}/api/events`, {
-      headers: token ? { "X-Token": token } : {},
-      cache: "no-store",
-    })
-    if (res.ok) {
-      events = await res.json()
-    }
-  } catch {
-    // non-fatal: show empty list
-  }
+  const events = await getEditEvents()
 
   return (
     <main className={styles.main}>

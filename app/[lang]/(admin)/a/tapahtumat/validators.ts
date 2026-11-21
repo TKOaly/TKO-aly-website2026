@@ -146,6 +146,16 @@ export const EventFormValuesSchema = EventSchema.omit({
     }
   })
 
+const editEventSchema = z.object({
+  id: z.number(),
+  name: z.string().nullable(),
+  starts: z.string().nullable(),
+  location: z.string().nullable(),
+  category: z.string().nullable(),
+})
+
+export const editEventsSchema = z.array(editEventSchema)
+
 export type EventType = z.infer<typeof EventTypeSchema>
 export type Location = z.infer<typeof LocationSchema>
 export type CustomField = z.infer<typeof CustomFieldSchema>
@@ -153,3 +163,4 @@ export type RegistrationQuota = z.infer<typeof RegistrationQuotaSchema>
 export type Event = z.infer<typeof EventSchema>
 export type EventFormInput = z.input<typeof EventFormValuesSchema>
 export type EventFormOutput = z.output<typeof EventFormValuesSchema>
+export type EditEvent = z.infer<typeof editEventSchema>
