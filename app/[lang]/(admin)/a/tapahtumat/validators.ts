@@ -110,7 +110,7 @@ export const registrationQuotaSchema = z
   })
 
 export const eventSchema = z.object({
-  id: z.number().int(),
+  id: z.number().int().optional(),
   user_id: z.number().int(),
   starts: z.coerce.date(),
   alcohol_meter: z.number().optional(),
@@ -165,5 +165,5 @@ export type CustomField = z.infer<typeof customFieldSchema>
 export type RegistrationQuota = z.infer<typeof registrationQuotaSchema>
 export type Event = z.infer<typeof eventSchema>
 export type EventFormInput = z.input<typeof eventFormValuesSchema>
-export type EventFormOutput = z.output<typeof eventFormValuesSchema>
+export type EventFormValues = z.infer<typeof eventFormValuesSchema>
 export type EditEvent = z.infer<typeof editEventSchema>

@@ -20,7 +20,7 @@ import {
   type RegistrationQuota,
   eventFormValuesSchema,
   EventFormInput,
-  EventFormOutput,
+  EventFormValues,
 } from "./validators"
 import styles from "./luo/LuoTapahtuma.module.css"
 import { useTranslation } from "@/app/i18n/client"
@@ -403,7 +403,7 @@ const RegistrationQuotaForm = () => {
 }
 
 type Props = {
-  action: (formData: FormData) => Promise<void>
+  onSubmit: (formData: EventFormValues) => Promise<void>
   defaultValues?: Event
   templates?: Event[]
   templateLabel?: string
@@ -414,7 +414,7 @@ type Props = {
 }
 
 const EventForm = ({
-  action,
+  onSubmit,
   defaultValues,
   templates,
   templateLabel,
@@ -426,7 +426,7 @@ const EventForm = ({
   const { t } = useTranslation()
   const { starts, ...restDefaults } = defaultValues ?? {}
 
-  const methods = useForm<EventFormInput, unknown, EventFormOutput>({
+  const methods = useForm<EventFormInput, unknown, EventFormValues>({
     defaultValues: {
       ...restDefaults,
       ...splitDateTime(starts?.toLocaleDateString()),
@@ -453,7 +453,11 @@ const EventForm = ({
           </div>
         )}
 
-        <form id={formId} action={action} className={styles.form}>
+        <form
+          id={formId}
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className={styles.form}
+        >
           <Fieldset legend={t("luoTapahtuma.required.legend")}>
             <TranslationInput
               name="translations"

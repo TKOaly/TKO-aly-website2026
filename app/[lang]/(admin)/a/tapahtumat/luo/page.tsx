@@ -3,9 +3,9 @@ import { getAsyncTranslation } from "@/app/i18n"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import EventForm from "../EventForm"
-import { buildEventPayload } from "../eventPayload"
 import styles from "./LuoTapahtuma.module.css"
-import { getTemplates } from "../eventApiConnection"
+import { getTemplates, postEvent } from "../eventApiConnection"
+import { EventFormValues, eventSchema } from "../validators"
 
 type Props = {
   params: Promise<{ lang: string }>
@@ -16,28 +16,18 @@ const AddEventPage = async ({ params }: Props) => {
   const { t } = await getAsyncTranslation(lang)
   const templates = await getTemplates()
 
-  const createEvent = async (formData: FormData) => {
+  const createEvent = async (formData: EventFormValues) => {
     "use server"
-    const baseUrl =
-      process.env.EVENTS_API_BASE_URL ?? "http://events-microservice:3040"
-    const token =
-      process.env.EVENT_SERVICE_TOKEN ?? process.env.SERVICE_AUTH_TOKEN
-
-    const payload = buildEventPayload(formData)
-
-    const response = await fetch(`${baseUrl}/api/events`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(token ? { "X-Token": token } : {}),
-      },
-      body: JSON.stringify(payload),
-      cache: "no-store",
+    const { date, time, ...rest } = formData
+    const starts = new Date(`${date}T${time}`).toISOString()
+    const payload = eventSchema.parse({
+      starts,
+      deleted: false,
+      user_id: 0, // TODO user_id
+      ...rest,
     })
 
-    if (!response.ok) {
-      throw new Error(`Event creation failed with status ${response.status}`)
-    }
+    await postEvent(payload)
 
     revalidatePath(`/${lang}/kalenteri`)
     redirect(`/${lang}/kalenteri`)
@@ -55,7 +45,7 @@ const AddEventPage = async ({ params }: Props) => {
       </PageHeader>
 
       <EventForm
-        action={createEvent}
+        onSubmit={createEvent}
         templates={templates}
         submitLabel={t("luoTapahtuma.submit")}
         templateLabel={t("luoTapahtuma.templateLabel")}

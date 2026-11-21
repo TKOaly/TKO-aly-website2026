@@ -48,3 +48,19 @@ export async function getTemplates(): Promise<Event[]> {
     return []
   }
 }
+
+export async function postEvent(event: Event) {
+  const response = await fetch(`${baseUrl}/api/events`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Token": secret,
+    },
+    body: JSON.stringify(event),
+    cache: "no-store",
+  })
+
+  if (!response.ok) {
+    throw new Error(`Event creation failed with status ${response.status}`)
+  }
+}
