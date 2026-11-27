@@ -41,7 +41,7 @@
 }
 
 .monthTitle span {
-  color: var(--yellow);
+  color: var(--color-accent);
 }
 
 .headerRow .navButton,
@@ -99,30 +99,6 @@
   min-height: 20rem;
   /* No right padding, so the list scrollbar sits on the card edge. */
   padding: var(--space-4) 0 var(--space-4) var(--space-4);
-}
-
-.listTitle {
-  margin: 0 var(--space-4) var(--space-2) 0;
-  font-size: 0.75rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-.listWrap {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-}
-
-/* Out of flow, so the list scrolls inside the card instead of making it taller
-   than the calendar. */
-.listWrap > .list {
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  padding: 0 var(--space-4) 0 0;
-  overflow-y: auto;
 }
 
 /* Month grid */

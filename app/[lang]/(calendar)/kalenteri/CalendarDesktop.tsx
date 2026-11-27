@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import fiLocale from "@fullcalendar/core/locales/fi"
+import enGbLocale from "@fullcalendar/core/locales/en-gb"
 import type { DatesSetArg } from "@fullcalendar/core"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
@@ -11,9 +12,9 @@ import { useTranslation } from "@/app/i18n/client"
 import Card from "@/components/Cards/Card"
 import Terminal from "@/components/Cards/Terminal"
 
-import { formatTime, LEGEND, Swatch, upcomingEvents } from "./calendarShared"
+import { dateLocale, formatTime, LEGEND, Swatch } from "./calendarShared"
 import styles from "./CalendarDesktop.module.css"
-import UpcomingList from "./UpcomingList"
+import { UpcomingPanel } from "./UpcomingList"
 import type { ProcessedEvent } from "./types"
 
 export default function CalendarDesktop({
@@ -23,7 +24,8 @@ export default function CalendarDesktop({
   events: ProcessedEvent[]
   onMonthChange: (date: Date) => void
 }) {
-  const { t } = useTranslation()
+  const { t, lang } = useTranslation()
+  const locale = dateLocale(lang)
   const calendarRef = useRef<FullCalendar>(null)
   const [view, setView] = useState<{ start: Date; end: Date } | null>(null)
 
@@ -44,15 +46,13 @@ export default function CalendarDesktop({
     [events],
   )
 
-  const upcoming = useMemo(() => upcomingEvents(events), [events])
-
   const api = () => calendarRef.current?.getApi()
   // The visible month is the middle of the displayed range.
   const current = view
     ? new Date((view.start.getTime() + view.end.getTime()) / 2)
     : new Date()
   const monthName = current
-    .toLocaleDateString("fi-FI", { month: "long" })
+    .toLocaleDateString(locale, { month: "long" })
     .toUpperCase()
 
   const handleDatesSet = (arg: DatesSetArg) => {
@@ -73,10 +73,7 @@ export default function CalendarDesktop({
       </ul>
 
       <Card wide className={styles.listCard}>
-        <h2 className={styles.listTitle}>{t("event.upcomingTitle")}</h2>
-        <div className={styles.listWrap}>
-          <UpcomingList events={upcoming} className={styles.list} />
-        </div>
+        <UpcomingPanel events={events} />
       </Card>
 
       <Terminal
@@ -120,7 +117,7 @@ export default function CalendarDesktop({
           <FullCalendar
             ref={calendarRef}
             plugins={[dayGridPlugin]}
-            locale={fiLocale}
+            locale={locale === "en-GB" ? enGbLocale : fiLocale}
             headerToolbar={false}
             initialView="dayGridMonth"
             height="auto"

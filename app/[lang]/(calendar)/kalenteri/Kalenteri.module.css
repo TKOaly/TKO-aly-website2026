@@ -220,3 +220,18 @@
     display: none;
   }
 }
+
+#calendarColor {
+  --event-open: #00ff00;
+  --event-not-open: #ffff00;
+  --event-no-registration: #0066ff;
+  --event-closed: #ff0000;
+  --event-passed: #6e6e6e;
+}
+
+@media (prefers-color-scheme: light) {
+  #calendarColor {
+    --event-open: #00a000;
+    --event-not-open: var(--yellow-700);
+  }
+}

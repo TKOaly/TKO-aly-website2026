@@ -303,11 +303,6 @@ body {
 }
 
 /* @fullcalendar styles */
-.fc {
-  width: 100%;
-  height: calc(100vh - var(--space-96));
-}
-
 a.fc-event {
   text-decoration: none;
   color: var(--color-text);

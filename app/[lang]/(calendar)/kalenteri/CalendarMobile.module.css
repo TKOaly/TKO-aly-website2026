@@ -79,7 +79,7 @@
 }
 
 .monthTitle span {
-  color: var(--yellow);
+  color: var(--color-accent);
 }
 
 .grid {
