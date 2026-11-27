@@ -8,9 +8,8 @@ import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
 import { processEvents } from "../page"
 import { upcomingEvents } from "../calendarShared"
-import UpcomingList from "../UpcomingList"
+import UpcomingList, { UpcomingPanel } from "../UpcomingList"
 import pageStyles from "./EventPage.module.css"
-import listStyles from "../CalendarDesktop.module.css"
 import Card from "@/components/Cards/Card"
 import Drawer from "@/components/Drawer/Drawer"
 import { useQuery } from "@tanstack/react-query"
@@ -26,6 +25,12 @@ function formatTime(time?: string): string | null {
     hour: "2-digit",
     minute: "2-digit",
   })} ${d.toLocaleDateString("fi-FI")}`
+}
+
+function formatPrice(price: string): string {
+  const trimmed = price.trim()
+  // Regex: one or more digits, optionally followed by a dot or comma and more digits.
+  return /^\d+([.,]\d+)?$/.test(trimmed) ? `${trimmed} €` : trimmed
 }
 
 const AlcoholMeter = ({ value }: { value: number }) => {
@@ -109,7 +114,10 @@ const EventInfoView = ({ event }: { event: Event }) => {
         )}
 
         {!!event.price && (
-          <Row col_1={<>{t("event.price")}:</>} col_2={event.price} />
+          <Row
+            col_1={<>{t("event.price")}:</>}
+            col_2={formatPrice(event.price)}
+          />
         )}
 
         {!!event.registration_starts && !!event.registration_ends && (
@@ -200,7 +208,7 @@ const EventPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
 
   const id = /^\d+$/.test(rawId) ? Number(rawId) : NaN
-  if (!Number.isSafeInteger(id) && id < 0) {
+  if (!Number.isSafeInteger(id) || id < 0) {
     notFound()
   }
 
@@ -263,12 +271,10 @@ const EventPage = ({ params }: { params: Promise<{ id: string }> }) => {
         <BackButton />
         <div className={pageStyles.detailLayout}>
           <Card wide className={pageStyles.detailList}>
-            <h2 className={listStyles.listTitle}>{t("event.upcomingTitle")}</h2>
-            <div className={listStyles.listWrap}>
-              {!isEventsListLoading && !eventsListError ? (
-                <UpcomingList events={upcoming} className={listStyles.list} />
-              ) : null}
-            </div>
+            <UpcomingPanel
+              events={processedEvents}
+              ready={!isEventsListLoading && !eventsListError}
+            />
           </Card>
           <Card wide className={pageStyles.detailCard}>
             {eventPageContent}

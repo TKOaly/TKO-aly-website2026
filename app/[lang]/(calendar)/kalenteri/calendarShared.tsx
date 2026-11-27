@@ -1,28 +1,40 @@
 import type { ProcessedEvent } from "./types"
 
-export const MONTHS = [
-  "TAM",
-  "HEL",
-  "MAA",
-  "HUH",
-  "TOU",
-  "KES",
-  "HEI",
-  "ELO",
-  "SYY",
-  "LOK",
-  "MAR",
-  "JOU",
-]
-export const WEEKDAYS = ["su", "ma", "ti", "ke", "to", "pe", "la"]
+/** Locale for dates in the given site language. */
+export function dateLocale(lang: string | string[]) {
+  return String(lang) === "en" ? "en-GB" : "fi-FI"
+}
 
-// Colors come from processEvents in page.tsx.
+/** Short upper-case month, e.g. "TAM" or "JAN". */
+export function shortMonth(date: Date, locale: string) {
+  return date
+    .toLocaleDateString(locale, { month: "short" })
+    .slice(0, 3)
+    .toUpperCase()
+}
+
+export function weekdayHeaders(locale: string) {
+  return Array.from({ length: 7 }, (_, i) =>
+    new Date(2026, 0, 5 + i)
+      .toLocaleDateString(locale, { weekday: "short" })
+      .toUpperCase(),
+  )
+}
+
+export const STATUS_COLORS = {
+  open: "var(--event-open)",
+  notOpen: "var(--event-not-open)",
+  noRegistration: "var(--event-no-registration)",
+  closed: "var(--event-closed)",
+  passed: "var(--event-passed)",
+} as const
+
 export const LEGEND = [
-  { color: "#00ff00", key: "registrationOpen" },
-  { color: "#ffff00", key: "registrationNotOpen", hollow: true },
-  { color: "#0066ff", key: "canNotRegistration" },
-  { color: "#ff0000", key: "registrationClosed" },
-  { color: "#6e6e6e", key: "passedEvent" },
+  { color: STATUS_COLORS.open, key: "registrationOpen" },
+  { color: STATUS_COLORS.notOpen, key: "registrationNotOpen", hollow: true },
+  { color: STATUS_COLORS.noRegistration, key: "canNotRegistration" },
+  { color: STATUS_COLORS.closed, key: "registrationClosed" },
+  { color: STATUS_COLORS.passed, key: "passedEvent" },
 ] as const
 
 export type LegendItem = (typeof LEGEND)[number]

@@ -41,7 +41,7 @@
 
 .month {
   margin-top: var(--space-1);
-  color: var(--yellow);
+  color: var(--color-accent);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -78,4 +78,26 @@
   margin: 0;
   padding: var(--space-4);
   color: var(--color-text-muted);
+}
+
+.panelTitle {
+  margin: 0 var(--space-4) var(--space-2) 0;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.panelWrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.panelWrap > .panelList {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0 var(--space-4) 0 0;
+  overflow-y: auto;
 }

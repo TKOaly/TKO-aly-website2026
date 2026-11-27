@@ -9,26 +9,17 @@ import Card from "@/components/Cards/Card"
 import Drawer from "@/components/Drawer/Drawer"
 
 import {
+  dateLocale,
   formatTime,
   LEGEND,
   statusOf,
   Swatch,
   upcomingEvents,
+  weekdayHeaders,
 } from "./calendarShared"
 import styles from "./CalendarMobile.module.css"
 import type { ProcessedEvent } from "./types"
 import UpcomingList from "./UpcomingList"
-
-const WEEKDAY_HEADERS = ["MA", "TI", "KE", "TO", "PE", "LA", "SU"]
-const WEEKDAY_NAMES = [
-  "SUNNUNTAI",
-  "MAANANTAI",
-  "TIISTAI",
-  "KESKIVIIKKO",
-  "TORSTAI",
-  "PERJANTAI",
-  "LAUANTAI",
-]
 
 const dayKey = (date: Date) =>
   `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
@@ -58,7 +49,8 @@ export default function CalendarMobile({
   events: ProcessedEvent[]
   onMonthChange: (date: Date) => void
 }) {
-  const { t } = useTranslation()
+  const { t, lang } = useTranslation()
+  const locale = dateLocale(lang)
   const today = useMemo(() => new Date(), [])
   const [month, setMonth] = useState(
     () => new Date(today.getFullYear(), today.getMonth(), 1),
@@ -93,7 +85,7 @@ export default function CalendarMobile({
   }
 
   const monthName = month
-    .toLocaleDateString("fi-FI", { month: "long" })
+    .toLocaleDateString(locale, { month: "long" })
     .toUpperCase()
 
   return (
@@ -103,7 +95,9 @@ export default function CalendarMobile({
         className={styles.tabs}
         onKeyDown={event => {
           if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-            setTab(tab === "calendar" ? "list" : "calendar")
+            const next = tab === "calendar" ? "list" : "calendar"
+            setTab(next)
+            document.getElementById(`${tabsId}-tab-${next}`)?.focus()
           }
         }}
       >
@@ -163,7 +157,7 @@ export default function CalendarMobile({
           </div>
 
           <div className={styles.grid}>
-            {WEEKDAY_HEADERS.map(name => (
+            {weekdayHeaders(locale).map(name => (
               <span key={name} className={styles.weekday}>
                 {name}
               </span>
@@ -179,7 +173,7 @@ export default function CalendarMobile({
                   type="button"
                   className={`${styles.day} ${isOtherMonth ? styles.otherMonth : ""} ${isSelected ? styles.selected : ""}`}
                   aria-pressed={isSelected}
-                  aria-label={`${date.toLocaleDateString("fi-FI")}, ${dayEvents.length} ${t(dayEvents.length === 1 ? "event.eventSingular" : "event.eventPlural")}`}
+                  aria-label={`${date.toLocaleDateString(locale)}, ${dayEvents.length} ${t(dayEvents.length === 1 ? "event.eventSingular" : "event.eventPlural")}`}
                   onClick={() => {
                     setSelected(date)
                     if (isOtherMonth) goToMonth(date)
@@ -224,8 +218,13 @@ export default function CalendarMobile({
           closeLabel={t("common.close")}
           title={
             <>
-              {WEEKDAY_NAMES[selected.getDay()]} {selected.getDate()}.
-              {selected.getMonth() + 1}.{" "}
+              {selected
+                .toLocaleDateString(locale, { weekday: "long" })
+                .toUpperCase()}{" "}
+              {selected.toLocaleDateString(locale, {
+                day: "numeric",
+                month: "numeric",
+              })}{" "}
               <span className={styles.count}>
                 {selectedEvents.length}{" "}
                 {t(

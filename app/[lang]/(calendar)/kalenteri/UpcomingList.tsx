@@ -1,15 +1,17 @@
 "use client"
 
+import { useMemo } from "react"
 import Link from "next/link"
 
 import { useTranslation } from "@/app/i18n/client"
 
 import {
+  dateLocale,
   formatTime,
-  MONTHS,
+  shortMonth,
   statusOf,
   Swatch,
-  WEEKDAYS,
+  upcomingEvents,
 } from "./calendarShared"
 import styles from "./UpcomingList.module.css"
 import type { ProcessedEvent } from "./types"
@@ -22,7 +24,8 @@ export default function UpcomingList({
   /** Extra class for the list element. */
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t, lang } = useTranslation()
+  const locale = dateLocale(lang)
 
   if (events.length === 0) {
     return <p className={styles.empty}>{t("event.noUpcoming")}</p>
@@ -39,13 +42,14 @@ export default function UpcomingList({
               <span className={styles.dateBox}>
                 <span className={styles.day}>{starts.getDate()}</span>
                 <span className={styles.month}>
-                  {MONTHS[starts.getMonth()]}
+                  {shortMonth(starts, locale)}
                 </span>
               </span>
               <span className={styles.info}>
                 <span className={styles.name}>{event.name}</span>
                 <span className={styles.meta}>
-                  {WEEKDAYS[starts.getDay()]} {formatTime(starts)}
+                  {starts.toLocaleDateString(locale, { weekday: "short" })}{" "}
+                  {formatTime(starts)}
                   {event.location ? ` · ${event.location}` : ""}
                 </span>
                 <span className={styles.status}>
@@ -58,5 +62,27 @@ export default function UpcomingList({
         )
       })}
     </ul>
+  )
+}
+
+export function UpcomingPanel({
+  events,
+  ready = true,
+}: {
+  events: ProcessedEvent[]
+  ready?: boolean
+}) {
+  const { t } = useTranslation()
+  const upcoming = useMemo(() => upcomingEvents(events), [events])
+
+  return (
+    <>
+      <h2 className={styles.panelTitle}>{t("event.upcomingTitle")}</h2>
+      <div className={styles.panelWrap}>
+        {ready ? (
+          <UpcomingList events={upcoming} className={styles.panelList} />
+        ) : null}
+      </div>
+    </>
   )
 }

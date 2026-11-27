@@ -29,12 +29,20 @@ export default function Drawer({
 
   useEffect(() => {
     const dialog = ref.current
-    if (!dialog) return
-    if (open && !dialog.open) {
-      // Lock page scroll while the drawer is open.
-      document.documentElement.style.overflow = "hidden"
-      dialog.showModal()
-    } else if (!open && dialog.open) {
+    if (!dialog || !open) return
+
+    const desktop = window.matchMedia("(min-width: 1025px)")
+    const closeOnDesktop = () => {
+      if (desktop.matches) dialog.close()
+    }
+    desktop.addEventListener("change", closeOnDesktop)
+
+    document.documentElement.style.overflow = "hidden"
+    if (!dialog.open) dialog.showModal()
+
+    return () => {
+      desktop.removeEventListener("change", closeOnDesktop)
+      document.documentElement.style.overflow = ""
       dialog.close()
     }
   }, [open])
@@ -44,10 +52,7 @@ export default function Drawer({
       ref={ref}
       className={styles.drawer}
       aria-labelledby={titleId}
-      onClose={() => {
-        document.documentElement.style.overflow = ""
-        onClose()
-      }}
+      onClose={onClose}
       onClick={event => {
         // Close on a backdrop tap, or after following a link inside.
         const target = event.target as HTMLElement

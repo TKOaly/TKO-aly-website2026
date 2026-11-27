@@ -1,11 +1,12 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
+import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import styles from "./Kalenteri.module.css"
 import { useState, ReactNode, useMemo, useCallback } from "react"
 import type { Event, ProcessedEvent } from "./types"
 import { useTranslation } from "@/app/i18n/client"
 import { getEventList } from "./eventApiConnection"
+import { STATUS_COLORS } from "./calendarShared"
 import CalendarDesktop from "./CalendarDesktop"
 import CalendarMobile from "./CalendarMobile"
 
@@ -29,15 +30,16 @@ export function processEvents(eventsData: Event[]): ProcessedEvent[] {
       let backgroundColor: string
 
       if (!registrationStarts || !registrationEnds) {
-        backgroundColor = now < start ? "#0066ff" : "#6e6e6e"
+        backgroundColor =
+          now < start ? STATUS_COLORS.noRegistration : STATUS_COLORS.passed
       } else if (now >= registrationStarts && now <= registrationEnds) {
-        backgroundColor = "#00ff00"
+        backgroundColor = STATUS_COLORS.open
       } else if (now < registrationStarts) {
-        backgroundColor = "#ffff00"
+        backgroundColor = STATUS_COLORS.notOpen
       } else if (now > start) {
-        backgroundColor = "#6e6e6e"
+        backgroundColor = STATUS_COLORS.passed
       } else {
-        backgroundColor = "#ff0000"
+        backgroundColor = STATUS_COLORS.closed
       }
 
       return { ...event, backgroundColor }
@@ -76,6 +78,7 @@ export default function Calendar() {
   } = useQuery({
     queryKey: ["eventList", fromDate],
     queryFn: () => getEventList(fromDate),
+    placeholderData: keepPreviousData,
   })
 
   const processedEvents: ProcessedEvent[] = useMemo(() => {
