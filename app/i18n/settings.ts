@@ -8,7 +8,6 @@ export { cookieName, fallbackLang, languages }
 const runsOnServerSide = typeof window === "undefined"
 
 export const getOptions = (): InitOptions => ({
-  showSupportNotice: false,
   supportedLngs: languages,
   fallbackLng: fallbackLang,
   preload: runsOnServerSide ? languages : [],
