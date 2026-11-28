@@ -84,6 +84,7 @@
     "opensInNewWindow": "avautuu uuteen ikkunaan",
     "copy": "Kopioi",
     "copied": "Kopioitu",
+    "close": "Sulje",
     "skipToContent": "Siirry pääsisältöön"
   },
   "publicPage": {
@@ -323,6 +324,17 @@
     },
     "error": "Virhe",
     "calendar": "Tapahtumakalenteri",
+    "previousMonth": "Edellinen kuukausi",
+    "nextMonth": "Seuraava kuukausi",
+    "today": "Tänään",
+    "legendLabel": "selite",
+    "noUpcoming": "Ei tulevia tapahtumia.",
+    "upcomingTitle": "Tulevat tapahtumat",
+    "eventSingular": "tapahtuma",
+    "eventPlural": "tapahtumaa",
+    "tabCalendar": "Tapahtumakalenteri",
+    "tabList": "Tapahtumalista",
+    "eventsShort": "Tapahtumat",
     "legend": {
       "canNotRegistration": "Tapahtumaan ei ilmoittautumista",
       "registrationNotOpen": "Ilmoittautuminen ei ole alkanut",

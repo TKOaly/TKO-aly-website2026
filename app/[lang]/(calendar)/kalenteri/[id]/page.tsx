@@ -1,11 +1,17 @@
 "use client"
 
 import Link from "next/link"
-import { ReactNode, useMemo, use } from "react"
+import { ReactNode, useMemo, useState, use } from "react"
+import { ListTree } from "lucide-react"
 import type { Event, ProcessedEvent } from "../types"
 import { useTranslation } from "@/app/i18n/client"
 import styles from "../Kalenteri.module.css"
-import { EventListView, processEvents } from "../page"
+import { processEvents } from "../page"
+import { upcomingEvents } from "../calendarShared"
+import UpcomingList, { UpcomingPanel } from "../UpcomingList"
+import pageStyles from "./EventPage.module.css"
+import Card from "@/components/Cards/Card"
+import Drawer from "@/components/Drawer/Drawer"
 import { useQuery } from "@tanstack/react-query"
 import { getEventById, getEventList } from "../eventApiConnection"
 import { notFound } from "next/navigation"
@@ -19,6 +25,12 @@ function formatTime(time?: string): string | null {
     hour: "2-digit",
     minute: "2-digit",
   })} ${d.toLocaleDateString("fi-FI")}`
+}
+
+function formatPrice(price: string): string {
+  const trimmed = price.trim()
+  // Regex: one or more digits, optionally followed by a dot or comma and more digits.
+  return /^\d+([.,]\d+)?$/.test(trimmed) ? `${trimmed} €` : trimmed
 }
 
 const AlcoholMeter = ({ value }: { value: number }) => {
@@ -63,7 +75,7 @@ const EventInfoView = ({ event }: { event: Event }) => {
 
   return (
     <>
-      <h1>{event.name}</h1>
+      <h1 className={styles.eventTitle}>{event.name}</h1>
       <div className={styles.eventInfo}>
         <Row col_1={<>{t("event.time")}:</>} col_2={formatTime(event.starts)} />
 
@@ -77,7 +89,9 @@ const EventInfoView = ({ event }: { event: Event }) => {
           }
         />
 
-        <Row col_1={<>{t("event.category")}:</>} col_2={event.category} />
+        {!!event.category && (
+          <Row col_1={<>{t("event.category")}:</>} col_2={event.category} />
+        )}
 
         {!!event.alcohol_meter && (
           <Row
@@ -100,7 +114,10 @@ const EventInfoView = ({ event }: { event: Event }) => {
         )}
 
         {!!event.price && (
-          <Row col_1={<>{t("event.price")}:</>} col_2={<>{event.price} €</>} />
+          <Row
+            col_1={<>{t("event.price")}:</>}
+            col_2={formatPrice(event.price)}
+          />
         )}
 
         {!!event.registration_starts && !!event.registration_ends && (
@@ -177,18 +194,9 @@ const BackButton = () => {
   const { t } = useTranslation()
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "flex-start",
-        width: "100%",
-        marginBottom: "1rem",
-      }}
-    >
-      <Link href={"/kalenteri"} className={styles.eventRegistration}>
-        {t("event.back")}{" "}
-      </Link>
-    </div>
+    <Link href="/kalenteri" className={`btn2 ${styles.backLink}`}>
+      ← {t("event.back")}
+    </Link>
   )
 }
 
@@ -200,7 +208,7 @@ const EventPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
 
   const id = /^\d+$/.test(rawId) ? Number(rawId) : NaN
-  if (!Number.isSafeInteger(id) && id < 0) {
+  if (!Number.isSafeInteger(id) || id < 0) {
     notFound()
   }
 
@@ -252,18 +260,46 @@ const EventPage = ({ params }: { params: Promise<{ id: string }> }) => {
     )
   }
 
+  const upcoming = useMemo(
+    () => upcomingEvents(processedEvents),
+    [processedEvents],
+  )
+  const [drawerOpen, setDrawerOpen] = useState(false)
   return (
-    <div id={styles.calendar}>
-      <BackButton />
-      <div id={styles.calendarPageContainer}>
-        <div id={styles.eventsListEventPageContainer}>
-          {!isEventsListLoading && !eventsListError ? (
-            <EventListView events={processedEvents} />
-          ) : (
-            <></>
-          )}
+    <div id={styles.calendarColor}>
+      <div className={`${styles.container} ${pageStyles.page}`}>
+        <BackButton />
+        <div className={pageStyles.detailLayout}>
+          <Card wide className={pageStyles.detailList}>
+            <UpcomingPanel
+              events={processedEvents}
+              ready={!isEventsListLoading && !eventsListError}
+            />
+          </Card>
+          <Card wide className={pageStyles.detailCard}>
+            {eventPageContent}
+          </Card>
         </div>
-        <div id={styles.eventPageContentContainer}>{eventPageContent}</div>
+
+        {/* Mobile: floating button that opens the upcoming events in a drawer. */}
+        <button
+          type="button"
+          className={`btn ${pageStyles.listFab}`}
+          onClick={() => setDrawerOpen(true)}
+          aria-haspopup="dialog"
+        >
+          <ListTree size={18} aria-hidden /> {t("event.eventsShort")}
+        </button>
+        <Drawer
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          closeLabel={t("common.close")}
+          title={t("event.upcomingTitle")}
+        >
+          {!isEventsListLoading && !eventsListError ? (
+            <UpcomingList events={upcoming} />
+          ) : null}
+        </Drawer>
       </div>
     </div>
   )

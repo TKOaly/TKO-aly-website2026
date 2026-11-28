@@ -1,145 +1,97 @@
-#calendarPageContainer {
-  display: flex;
-  min-height: 80rem;
-  width: 100%;
-  margin: 0 auto;
-}
-
 #calendarColor {
-  color: #ffbb00;
-  background-color: #141414;
+  color: var(--color-text);
 }
 
-#calendar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 95%;
-  height: 80rem;
-  padding: 20px;
+/* Centered page container. */
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--screen-xl);
+  /* At least a full screen below the navbar (64px). */
+  min-height: calc(100dvh - var(--space-16));
+  margin: 0 auto;
+  padding: var(--space-24) var(--space-4) 0;
 }
 
-#calendarInstructions {
-  width: 60%;
-  margin-top: 20px;
-  color: #ffbb00;
-  font-size: 1.2rem;
-  display: flex;
-  justify-content: end;
-  align-items: flex-start;
-  font-size: 32px;
+@media (max-width: 1024px) {
+  .container {
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-16);
+  }
+
+  /* The tabs name the page on phones; keep the h1 for screen readers. */
+  .title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
-#legend {
-  display: flex;
-  flex-direction: column;
-  border: dotted 2px #ffbb00;
-  font-size: 12px;
+.title {
+  margin-bottom: var(--space-5);
+  /* Keeps the long title on one line on phones. */
+  font-size: min(12vw, calc(var(--space-10) * 2));
 }
 
-#legend p {
-  margin: 3px 5px;
-  display: flex;
-  align-items: center;
-}
-
-.legendColorBall {
+/* Event page: back link, list column (desktop) and the event itself. */
+.backLink {
   display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 8px;
-}
-
-#eventsListContainer {
-  width: 20%;
-}
-
-#eventsListEventPageContainer {
-  width: 20%;
-}
-
-#eventPageContentContainer {
-  margin-left: 48px;
-  width: 95%;
-}
-
-#calendarMobileTitle {
-  display: none;
-}
-
-#calendarTitle {
-  display: inherit;
-}
-
-#eventsList {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 90%;
-  overflow-x: visible;
-  overflow-y: scroll;
-  overscroll-behavior: contain;
-  color: #ffbb00;
-}
-
-#eventsList a {
-  max-width: 90%;
+  margin: 0 0 var(--space-6);
+  padding: var(--space-2) var(--space-4);
+  border-width: 2px;
+  box-shadow: 3px 3px 0 var(--neutral-200);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
   text-decoration: none;
-  color: inherit;
-  display: block;
 }
 
-#eventsList a:visited,
-#eventsList a:hover,
-#eventsList a:focus,
-#eventsList a:active {
-  text-decoration: none;
-  color: inherit;
+@media (prefers-color-scheme: light) {
+  .backLink {
+    box-shadow: 3px 3px 0 var(--neutral-900);
+  }
 }
 
-.eventListItem {
-  width: 100%;
-  background-color: #1a252f;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 5px;
-}
-
-.eventListItem p {
-  margin: 5px 0;
+.eventTitle {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-8);
+  font-size: clamp(2.5rem, 8vw, calc(var(--space-10) * 1.5));
 }
 
 .eventInfo {
-  background-color: var(--color-surface);
-  border: var(--border);
-  box-shadow: var(--shadow-light);
-  color: var(--text-color);
-  width: fit-content;
-  padding: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  /* Padding instead of margin, so it does not collapse with the title's
+     bottom margin. */
+  padding-top: var(--space-6);
+  margin-bottom: var(--space-8);
 }
 
 .eventInfoRow {
-  display: flex;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+  gap: var(--space-4);
   margin: 0;
 }
 
 .eventInfoRow dt {
   margin: 0;
-  font-weight: 1000;
-  font-size: medium;
+  font-weight: 800;
 }
 
 .eventInfoRow dd {
   margin: 0;
-  flex: 1;
 }
 
 @media (max-width: 768px) {
   .eventInfoRow {
-    display: inline;
-    gap: 13px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
 }
 
@@ -209,6 +161,11 @@
   margin-bottom: 15px;
 }
 
+.eventText a,
+.eventInfo a {
+  color: var(--color-accent);
+}
+
 .eventRegistration {
   text-decoration-line: none;
   color: var(--neutral-900);
@@ -219,7 +176,9 @@
   border-top: 2px solid var(--neutral-200);
   border-left: 2px solid var(--neutral-200);
   font-weight: 700;
-  padding: 5px 5px 5px 5px;
+  display: inline-block;
+  margin-bottom: var(--space-6);
+  padding: var(--space-2) var(--space-4);
   letter-spacing: 0.15em;
   cursor: pointer;
   transition:
@@ -239,6 +198,8 @@
 
 .eventSafetyDisclaimer {
   max-width: 80ch;
+  margin-top: var(--space-12);
+  font-size: 0.875rem;
   color: var(--color-text-muted);
 }
 
@@ -246,32 +207,31 @@
   color: var(--color-text-muted);
 }
 
-@media (max-width: 1024px) {
-  #eventPageContentContainer {
-    margin-left: 0;
+.desktopOnly {
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  .desktopOnly {
+    display: block;
   }
 
-  #eventsListEventPageContainer {
+  .mobileOnly {
     display: none;
   }
+}
 
-  #eventsListContainer {
-    order: 1;
-    width: 100%;
-    align-items: center;
-  }
+#calendarColor {
+  --event-open: #00ff00;
+  --event-not-open: #ffff00;
+  --event-no-registration: #0066ff;
+  --event-closed: #ff0000;
+  --event-passed: #6e6e6e;
+}
 
-  #calendarViewContainer {
-    display: none;
-  }
-
-  #calendarTitle {
-    display: none;
-  }
-
-  #calendarMobileTitle {
-    margin-top: 10px;
-    margin-left: 2.5%;
-    display: inherit;
+@media (prefers-color-scheme: light) {
+  #calendarColor {
+    --event-open: #00a000;
+    --event-not-open: var(--yellow-700);
   }
 }
