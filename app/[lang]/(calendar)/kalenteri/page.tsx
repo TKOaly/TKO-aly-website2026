@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
-import listPlugin from "@fullcalendar/list"
 import fiLocale from "@fullcalendar/core/locales/fi"
 import type { DatesSetArg } from "@fullcalendar/core"
 import Link from "next/link"
@@ -30,7 +29,7 @@ function EventCalendarView({
 
   return (
     <FullCalendar
-      plugins={[dayGridPlugin, listPlugin]}
+      plugins={[dayGridPlugin]}
       locale={fiLocale}
       headerToolbar={{
         left: "prev,next today",
