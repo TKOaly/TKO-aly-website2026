@@ -1,0 +1,23 @@
+# Ideoita sivulle
+29.12.2026
+
+me tehtii wpn kaa tierlist, s-tierii oli
+- linkkijkl.fi
+- asteriski.fi
+- skripti.org
+- etelesuomalainenosakunta.fi
+
+ja a-tierii oli
+- ky.fi
+- tietokilta.fi
+- fullstackopen.com
+- karjalainenosakunta.fi
+
+mitä opittiin hyvästä etusivusta:
+- selkeesti keskellä lukee järjestön nimi
+- jotai liikkuvaa
+- väriteema järjestön mukasesti
+- hieno alkukuva
+- kivasti kontsaa etusivul
+- kaikki ei oo iha horisontaalisesti tasasta (esim tik tai asteriski)
+- meille mielummin leikkisä ku liian grande sivu
